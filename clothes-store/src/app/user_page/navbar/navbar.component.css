@@ -1,0 +1,92 @@
+
+#container{
+    width: 100%;
+    height: 12vh;
+    /* border: 2px solid black; */
+}
+
+#conteudo{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#conteudo h2{
+    margin: 0%;
+    margin-left: 1.5rem;
+    letter-spacing: 2px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#navLinks{
+    padding: 0%;
+    margin: 0%;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+#navLinks li{
+    position: relative;
+}
+
+#navLinks li a{
+    color: black;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#navLinks li a:hover{
+    text-decoration: underline;
+    
+}
+.shopBtn{
+    text-decoration: none;
+}
+
+#navLinks li .shopBtn:hover{
+    text-decoration: none;
+}
+
+#submenu{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    list-style-type: none;
+    margin: 0%;
+    padding: 0%;
+    background-color: gray;
+}
+#submenu li a{
+    color: white;
+    text-decoration: none;
+}
+
+#dropdown:hover #submenu{
+    display: block;
+}
+
+
+#icons{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-right: 1.5rem;
+}
+#icons i{
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+#icons i:hover{
+    text-shadow: 2px 2px 5px black;
+}
+
+#icons button{
+    color: white;
+    background-color: black;
+    border: none;
+    padding: .4rem .9rem;
+    font-weight: 500;
+}

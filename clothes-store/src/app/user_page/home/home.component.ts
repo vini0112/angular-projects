@@ -8,4 +8,28 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  navigateByTheme = [
+    {
+      image: '../assets/homeImgs/short-jeans.png',
+      nameNavigationTo: 'See Shorts'
+    },
+    {
+      image: '../assets/homeImgs/jaqueta.png',
+      nameNavigationTo: 'See Jackets'
+
+    },
+    {
+      image: '../assets/homeImgs/camisa.png',
+      nameNavigationTo: 'See Shirts'
+
+    },
+    {
+      image: '../assets/homeImgs/tenis.png',
+      nameNavigationTo: 'See Sneakers'
+
+    }
+  ]
+
+  
+
 }

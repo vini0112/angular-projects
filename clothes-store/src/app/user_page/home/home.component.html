@@ -1,6 +1,5 @@
 <div id="container">
     <div id="conteudo">
-
         <div class="slideOne">
 
             <div class="infoAboutProduct">
@@ -16,7 +15,56 @@
                 <img src="../assets/homeImgs/woman.png" alt="Woman model">
             </div>
         </div>
-
-        
     </div>
+
+        <!-- conteudo two -->
+    <div class="container conteudoTwo">
+
+        <div class="categories">
+
+            <h3>Search By Category</h3>
+
+            <div id="carousel">
+                @for (item of navigateByTheme; track $index) {
+
+                    <div class="boxCategory">
+                        <img [src]="item.image" alt="">
+                        <a class="linkNavigation">{{item.nameNavigationTo}}</a> 
+                    </div>
+                }                
+            </div>
+
+
+        </div>
+
+
+        <div class="bestSellers">
+            <h3>Our BestSellers</h3>
+
+            <div class="carouselBestSellers">
+                <div class="boxBestSellers">
+                    <img src="../assets/homeImgs/bitch-short.png" alt="">
+                    
+                </div>
+                <div class="boxBestSellers">
+                    <img src="../assets/homeImgs/white-blue-jacket.png" alt="">
+                    
+                </div>
+                <div class="boxBestSellers">
+                    <img src="../assets/jackets/brown-jacket.png" alt="">
+                    
+                </div>
+                <div class="boxBestSellers">
+                    <img src="" alt="">
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
 </div>

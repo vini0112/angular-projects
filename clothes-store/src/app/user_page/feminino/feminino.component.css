@@ -1,0 +1,41 @@
+.container{
+    padding: 10px;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+
+.navagationBar h3{
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+
+.linksNav{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+}
+
+.linksNav li a{
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: rgba(128, 128, 128, 0.699);
+    
+    transition: .3s;
+    text-decoration: none;
+}
+
+.linksNav li a:hover{
+    color: black;
+}
+
+.active{
+    color: black !important;
+    font-weight: 600 !important;
+}

@@ -1,17 +1,16 @@
 <div id="container">
     <div id="conteudo">
-        <h2>Shopping</h2>
+        <h2 routerLink="/home" class="titleNav">Shopping</h2>
         <ul id="navLinks" >
-            <li><a>Home</a></li>
+            <li><a routerLink="/">Home</a></li>
             <li id="dropdown">
                 <a class="shopBtn">Shop <i class="fa-solid fa-caret-down"></i></a>
                 <ul id="submenu">
-                    <li><a>Shorts</a></li>
-                    <li><a>Suiters</a></li>
-                    <li><a>Sockets</a></li>
+                    <li><a routerLink="/feminino">Feminino</a></li>
+                    <li><a routerLink="/masculino">Masculino</a></li>
+                    
                 </ul>
             </li>
-
 
             <li><a>Our Story</a></li>
             <li><a>Blog</a></li>
@@ -22,9 +21,30 @@
         <div id="icons">
             <i class="fa-solid fa-magnifying-glass"></i>
             <i class="fa-regular fa-heart"></i>
-            <i class="fa-solid fa-store"></i>
+            <div class="boxCartIcon">
+                <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
+                <span class="contCart">0</span>
+            </div>
             <button>Login</button>
         </div>
+    </div>
+
+    <div id="aside" [ngClass]="{'active': isAsideOpen}">
+
+        <div class="closeAside">
+            <i class="fa-solid fa-xmark" (click)="btnXcloseCart()"></i>
+        </div>
+
+        <div class="asideContent">
+
+        </div>
+
+        <div class="btnCart">
+            <button class="btnBuy">0 <span>Buy</span></button>
+            <button class="btnClose" (click)="btnCloseCart()">Close</button>
+        </div>
+        
+
     </div>
     
 </div>

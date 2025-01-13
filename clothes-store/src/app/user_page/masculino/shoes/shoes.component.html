@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="struturePadraoCards">
+
+        @for(shoes of allShoes;track $index){
+            <div class="padraoCard">
+                <div class="boxImg">
+                    <img [src]="shoes.image" [alt]="shoes.name">
+                </div>
+
+                <div class="boxInfoProduct">
+                    <span>$ {{shoes.price.toFixed(2)}}</span>
+                    <span>{{shoes.info}}</span>
+                </div>
+
+                <div class="btnsProduct">
+                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="clickInHeart(shoes)">
+                        <i class="fa-regular fa-heart" *ngIf="shoes.isFavorite == false"></i>
+                        <i class="fa-solid fa-heart" *ngIf="shoes.isFavorite == true"></i>
+                    </button>
+                    <button><i class="fa-solid fa-cart-shopping"></i></button>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>

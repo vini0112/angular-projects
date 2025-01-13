@@ -7,7 +7,7 @@
                     <p>Classic Exclusive</p>
                     <h2>Women's Collection</h2>
                     <span>UP TO 40% OFF</span>
-                    <button>Shop Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button routerLink="/feminino/jackets" >Shop Now <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
 
@@ -23,48 +23,52 @@
         <div class="categories">
 
             <h3>Search By Category</h3>
-
             <div id="carousel">
                 @for (item of navigateByTheme; track $index) {
 
                     <div class="boxCategory">
                         <img [src]="item.image" alt="">
-                        <a class="linkNavigation">{{item.nameNavigationTo}}</a> 
+                        <a class="linkNavigation" [routerLink]="item.linkNavegation">{{item.nameNavigationTo}}</a>
                     </div>
                 }                
             </div>
-
-
         </div>
 
 
         <div class="bestSellers">
             <h3>Our BestSellers</h3>
+            <!-- carouselBestSellers -->
+            <div class="struturePadraoCards">
+                @for(item of clothesBestsellers; track $index){
+                    <div class="padraoCard">
 
-            <div class="carouselBestSellers">
-                <div class="boxBestSellers">
-                    <img src="../assets/homeImgs/bitch-short.png" alt="">
-                    
-                </div>
-                <div class="boxBestSellers">
-                    <img src="../assets/homeImgs/white-blue-jacket.png" alt="">
-                    
-                </div>
-                <div class="boxBestSellers">
-                    <img src="../assets/jackets/brown-jacket.png" alt="">
-                    
-                </div>
-                <div class="boxBestSellers">
-                    <img src="" alt="">
-                    
-                </div>
+                        <div class="boxImg">
+                            <img [src]="item.image" [alt]="item.name">
+                        </div>
 
+                        <div class="boxInfoProduct">
+                            <span>$ {{item.price.toFixed(2)}}</span>
+                            <span>{{item.info}}</span>
+                        </div>
+
+                        <div class="btnsProduct">
+                            <button><i class="fa-solid fa-shirt"></i></button>
+                            <button (click)="clickInHeart(item)">
+                                <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
+                                <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
+                            </button>
+                            <button><i class="fa-solid fa-cart-shopping"></i></button>
+                        </div>
+
+                        
+
+                        
+                    </div>
+                }
             </div>
-
         </div>
 
     </div>
-
 
 
 </div>

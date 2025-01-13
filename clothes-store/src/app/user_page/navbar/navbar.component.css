@@ -3,6 +3,8 @@
     width: 100%;
     height: 12vh;
     /* border: 2px solid black; */
+    position: relative;
+    overflow: hidden;
 }
 
 #conteudo{
@@ -17,6 +19,7 @@
     margin-left: 1.5rem;
     letter-spacing: 2px;
     font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
 }
 
 #navLinks{
@@ -35,6 +38,7 @@
     color: black;
     font-size: 1rem;
     cursor: pointer;
+    text-decoration: none;
 }
 
 #navLinks li a:hover{
@@ -52,12 +56,18 @@
 #submenu{
     display: none;
     position: absolute;
+    width: 250px;
+    height: 100%;
     top: 100%;
-    left: 0%;
+    left: -160%;
     list-style-type: none;
     margin: 0%;
-    padding: 0%;
+    padding: 30px;
     background-color: gray;
+
+    grid-template-columns: repeat(2, 50%);
+    justify-items: center;
+    align-content: center;
 }
 #submenu li a{
     color: white;
@@ -65,7 +75,7 @@
 }
 
 #dropdown:hover #submenu{
-    display: block;
+    display: grid;
 }
 
 
@@ -76,7 +86,7 @@
     margin-right: 1.5rem;
 }
 #icons i{
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 #icons i:hover{
@@ -90,3 +100,99 @@
     padding: .4rem .9rem;
     font-weight: 500;
 }
+
+.boxCartIcon{
+    position: relative;
+}
+
+.contCart{
+    font-size: .9rem;
+    font-weight: 500;
+    position: absolute;
+    top: 40%;
+    right: -30%;
+    pointer-events: none;
+
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color:white;
+    
+}
+
+/* aside */
+#aside{
+    position: fixed;
+    top: 0%;
+    left: 100%;
+    height: 100vh;
+    border: 2px solid black;
+    width: 300px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: .5s ease-in-out;
+}
+#aside.active{
+    left: calc(100% - 300px);
+}
+
+.closeAside{
+    position: relative;
+    width: 100%;
+    height: 60px;
+}
+.closeAside i {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: .2s;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.closeAside i:hover{
+    background-color: red;
+}
+
+.asideContent{
+    border: 2px solid green;
+    width: 100%;
+    height: 100%;
+}
+
+
+.btnCart{
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+
+.btnCart button{
+    width: 50%;
+    height: 100%;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: white;
+    border: none;
+}
+
+.btnBuy{
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btnClose{
+    background-color: red;
+}
+
+

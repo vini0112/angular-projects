@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="struturePadraoCards">
+
+        @for(coat of allCoats;track $index){
+            <div class="padraoCard">
+                <div class="boxImg">
+                    <img [src]="coat.image" [alt]="coat.name">
+                </div>
+
+                <div class="boxInfoProduct">
+                    <span>$ {{coat.price.toFixed(2)}}</span>
+                    <span>{{coat.info}}</span>
+                </div>
+
+                <div class="btnsProduct">
+                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="clickInHeart(coat)">
+                        <i class="fa-regular fa-heart" *ngIf="coat.isFavorite == false"></i>
+                        <i class="fa-solid fa-heart" *ngIf="coat.isFavorite == true"></i>
+                    </button>
+                    <button><i class="fa-solid fa-cart-shopping"></i></button>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>

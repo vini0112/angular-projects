@@ -1,0 +1,34 @@
+
+<div class="container">
+    <div class="struturePadraoCards">
+
+        @for(short of allShorts; track $index){
+            <div class="padraoCard">
+
+                <div class="boxImg">
+                    <img [src]="short.image" [alt]="short.name">
+                </div>
+
+                <div class="boxInfoProduct">
+                    <span>$ {{short.price.toFixed(2)}}</span>
+                    <span>{{short.info}}</span>
+                </div>
+
+                <div class="btnsProduct">
+                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="clickInHeart(short)">
+                        <i class="fa-regular fa-heart" *ngIf="short.isFavorite == false"></i>
+                        <i class="fa-solid fa-heart" *ngIf="short.isFavorite == true"></i>
+                    </button>
+                    <button><i class="fa-solid fa-cart-shopping"></i></button>
+                </div>
+
+            </div>
+        }
+        
+                    
+    </div>
+
+
+</div>
+

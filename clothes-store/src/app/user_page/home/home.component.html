@@ -1,6 +1,6 @@
 <div id="container">
     <div id="conteudo">
-        <div class="slideOne">
+        <div class="slideOne col-12 col-md-6">
 
             <div class="infoAboutProduct">
                 <div class="boxInfo">
@@ -14,6 +14,7 @@
             <div class="imgProduct">
                 <img src="../assets/homeImgs/woman.png" alt="Woman model">
             </div>
+            
         </div>
     </div>
 
@@ -40,9 +41,9 @@
             <!-- carouselBestSellers -->
             <div class="struturePadraoCards">
                 @for(item of clothesBestsellers; track $index){
-                    <div class="padraoCard">
+                    <div class="padraoCard" >
 
-                        <div class="boxImg">
+                        <div class="boxImg" (click)="addProductToCart(item)">
                             <img [src]="item.image" [alt]="item.name">
                         </div>
 
@@ -60,9 +61,6 @@
                             <button><i class="fa-solid fa-cart-shopping"></i></button>
                         </div>
 
-                        
-
-                        
                     </div>
                 }
             </div>

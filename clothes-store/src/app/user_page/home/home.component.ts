@@ -3,6 +3,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
 import { RouterLink } from '@angular/router';
+import { cartList } from '../../../modules/cart.list.module';
+import { listCartServices } from '../../../services/listCart.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,7 @@ import { RouterLink } from '@angular/router';
 export class HomeComponent implements OnInit{
 
   productsService = inject(ProductsService)
+  listCartServices = inject(listCartServices)
 
   clothesBestsellers: productModule[] = []
 
@@ -63,6 +66,11 @@ export class HomeComponent implements OnInit{
     })
   }
 
+  // cart
+
+  addProductToCart(item: cartList){
+    this.listCartServices.addingToCart(item)
+  }
 
 
 

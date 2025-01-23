@@ -1,6 +1,7 @@
 <div id="container">
     <div id="conteudo">
         <h2 routerLink="/home" class="titleNav">Shopping</h2>
+
         <ul id="navLinks" >
             <li><a routerLink="/">Home</a></li>
             <li id="dropdown">
@@ -8,7 +9,6 @@
                 <ul id="submenu">
                     <li><a routerLink="/feminino">Feminino</a></li>
                     <li><a routerLink="/masculino">Masculino</a></li>
-                    
                 </ul>
             </li>
 
@@ -17,26 +17,78 @@
             <li><a>Contact us</a></li>
         </ul>
 
-
-        <div id="icons">
+        <!-- normal icons -->
+        <nav id="icons">
             <i class="fa-solid fa-magnifying-glass"></i>
             <i class="fa-regular fa-heart"></i>
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
+                <span class="contCart">{{total}}</span>
+            </div>
+            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
+            <button>Login</button>
+        </nav>
+
+        <!-- mobile icons -->
+        <nav class="iconsMobile">
+            <div class="boxCartIcon">
+                <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
                 <span class="contCart">0</span>
             </div>
-            <button>Login</button>
-        </div>
-    </div>
+            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
+        </nav>
 
-    <div id="aside" [ngClass]="{'active': isAsideOpen}">
+        <!-- mobile side -->
+        <div id="mobileSide" [ngClass]="{'activeMobile': mobileSideActive}">
+
+            <ul id="mobileLinks">
+                <li><a routerLink="/"><i class="fa-solid fa-house"></i></a></li>
+                <li id="dropdown">
+                    <a class="shopBtn" (click)="showSubLinksMobile()">
+                        <i class="fa-solid fa-caret-down caretDown" [ngClass]="{'goingLeft': sexoChosen}"></i> 
+                        <i class="fa-solid fa-shirt"></i> 
+                    </a>
+                    <ul id="submenuMobile" [ngClass]="{'activeSexoSection': sexoChosen}">
+                        <li><a routerLink="/feminino">Feminine</a></li>
+                        <li><a routerLink="/masculino">Masculine</a></li>
+                    </ul>
+                </li>
+
+                <li><a><i class="fa-regular fa-heart"></i></a></li>
+                <li><a><i class="fa-solid fa-building"></i></a></li>
+                <li><a><i class="fa-solid fa-phone"></i></a></li>
+                <li><a><i class="fa-solid fa-user"></i></a></li>
+
+            </ul>
+
+        </div>
+
+        
+
+    </div>
+    
+    <!-- shadow -->
+    <div [ngClass]="{'overlay': shadowActive}" (click)="removeShadow()"></div>
+
+    <!-- cart -->
+    <aside id="aside" [ngClass]="{'active': isAsideOpen}">
 
         <div class="closeAside">
             <i class="fa-solid fa-xmark" (click)="btnXcloseCart()"></i>
         </div>
 
         <div class="asideContent">
-
+            <ul>
+                @for(product of products; track $index){
+                    <li>
+                        <img [src]="product.image" [alt]="product.name">
+                        <span>{{product.name}}</span>
+                        <span>{{product.price}}</span>
+                        <span>{{product.quantity}}</span>
+                    </li>
+                }
+            </ul>
+            
         </div>
 
         <div class="btnCart">
@@ -45,6 +97,7 @@
         </div>
         
 
-    </div>
+    </aside>
+    
     
 </div>

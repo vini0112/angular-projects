@@ -9,4 +9,5 @@ export interface productModule{
     info: string,
     sexo: string
     isBestseller: boolean
+    quantity: number
 }

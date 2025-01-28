@@ -8,7 +8,7 @@ import { listCartServices } from '../../../services/listCart.service';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, RouterLink], 
+  imports: [NgIf, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -22,25 +22,20 @@ export class HomeComponent implements OnInit{
   
   navigateByTheme = [
     {
-      image: '../assets/homeImgs/short-jeans.png',
-      nameNavigationTo: 'See Shorts',
-      linkNavegation: '/masculino/shorts'
-    },
-    {
       image: '../assets/shoes-femi/red-high-heel-shoes.png',
-      nameNavigationTo: 'See High-Heels',
+      title: 'HIGH HEALS',
       linkNavegation: '/feminino/shoesfemi'
 
     },
     {
       image: '../assets/homeImgs/camisa.png',
-      nameNavigationTo: 'See Shirts',
+      title: 'T-SHIRTS',
       linkNavegation: '/masculino/shirts'
 
     },
     {
       image: '../assets/homeImgs/tenis.png',
-      nameNavigationTo: 'See Sneakers',
+      title: 'TRAINERS',
       linkNavegation: '/masculino/shoes'
 
     }

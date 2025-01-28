@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
@@ -16,7 +16,8 @@ export class NavbarComponent implements OnInit{
 
   // cart parameters 
   products: cartList[] = []
-  total = 0
+  totalPrice = 0
+  allQtd = 0
 
   // parameters
   isAsideOpen = false
@@ -31,9 +32,13 @@ export class NavbarComponent implements OnInit{
   }
   btnCloseCart(){
     this.isAsideOpen = false
+    this.shadowActive = false
+
   }
   btnXcloseCart(){
     this.isAsideOpen = false
+    this.shadowActive = false
+
   }
 
 
@@ -60,13 +65,28 @@ export class NavbarComponent implements OnInit{
   // cart products
 
   ngOnInit(): void {
-    this.receivingProductsCart()
-    
+
+    this.listCartService.cartItems$.subscribe(items =>{
+      this.products = items
+    })
+
+    this.listCartService.total$.subscribe(tot =>{
+      this.totalPrice = tot
+    })
+
+    this.listCartService.allQtdProducts$.subscribe(allNumber =>{
+      this.allQtd = allNumber
+    })
+
   }
 
-  receivingProductsCart(){
-    this.products = this.listCartService.gettingAllProductsCart()
-    this.total = this.listCartService.getTotal()
+
+  removeFromCart(id: number){
+    this.listCartService.removingProduct(id)
+  }
+
+  addMore(id: number){
+    this.listCartService.addingOneMore(id)
   }
 
   

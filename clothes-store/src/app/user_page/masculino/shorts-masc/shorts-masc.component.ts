@@ -25,7 +25,7 @@ export default class ShortsMascComponent implements OnInit{
     this.productService.getProducts().subscribe(item => {
       // seding just shorts
       item.forEach(product => {
-        if(product.section == 'shorts') this.allShorts.push(product)
+        if(product.section == 'shorts' && product.sexo == 'masc') this.allShorts.push(product)
 
       })
     })

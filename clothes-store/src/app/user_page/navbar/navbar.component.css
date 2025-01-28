@@ -40,6 +40,8 @@
     font-size: 1rem;
     cursor: pointer;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 #navLinks li a:hover{
@@ -48,6 +50,7 @@
 }
 .shopBtn{
     text-decoration: none;
+
 }
 
 #navLinks li .shopBtn:hover{
@@ -168,7 +171,6 @@
 }
 
 .asideContent{
-    border: 2px solid green;
     width: 100%;
     height: 100%;
 }
@@ -322,8 +324,30 @@
 }
 
 
+/* structure inside cart */
+.structureCart{
+    padding: 0%;
+}
+.structureCart li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.structureCart li img{
+    width: 60px;
+    height: 60px;
+}
 
+.boxQtd{
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.boxQtd i{
+    cursor: pointer;
 
+}
 
 @media (max-width: 768px){
     #barIcon{
@@ -338,5 +362,23 @@
     }
     .iconsMobile{
         display: flex;
+    }
+
+
+
+}
+
+
+@media (max-width: 440px){
+     /* aside cart */
+    #aside{
+        position: fixed;
+        top: 0%;
+        left: 100%;
+        height: 100vh;
+        width: 100%;
+    }
+    #aside.active{
+        left: calc(100% - 100%);
     }
 }

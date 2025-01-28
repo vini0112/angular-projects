@@ -23,7 +23,7 @@
             <i class="fa-regular fa-heart"></i>
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
-                <span class="contCart">{{total}}</span>
+                <span class="contCart">{{allQtd}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
             <button>Login</button>
@@ -33,7 +33,7 @@
         <nav class="iconsMobile">
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
-                <span class="contCart">0</span>
+                <span class="contCart">{{allQtd}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
         </nav>
@@ -78,13 +78,17 @@
         </div>
 
         <div class="asideContent">
-            <ul>
+            <ul class="structureCart">
                 @for(product of products; track $index){
                     <li>
                         <img [src]="product.image" [alt]="product.name">
                         <span>{{product.name}}</span>
-                        <span>{{product.price}}</span>
-                        <span>{{product.quantity}}</span>
+                        <div class="boxQtd">
+                            <i class="fa-solid fa-plus" (click)="addMore(product.id!)"></i>
+                            <span>{{product.quantity}}</span>
+                            <i class="fa-solid fa-minus" (click)="removeFromCart(product.id!)"></i>
+                        </div>
+                        
                     </li>
                 }
             </ul>
@@ -92,7 +96,7 @@
         </div>
 
         <div class="btnCart">
-            <button class="btnBuy">0 <span>Buy</span></button>
+            <button class="btnBuy">{{totalPrice}}<span>Buy</span></button>
             <button class="btnClose" (click)="btnCloseCart()">Close</button>
         </div>
         

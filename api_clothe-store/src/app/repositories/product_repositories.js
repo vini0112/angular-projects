@@ -19,7 +19,14 @@ class productRepositories {
 
     editing(id, dados){
         let sql = "UPDATE clothes SET ? WHERE id=?"
-        return consulta(sql, [id, dados], 'Erro in Edit Product!')
+        
+        return consulta(sql, [dados, id], 'Erro in Edit Product!')
+    }
+
+    editingFavorite(id, valor){
+
+        let sql = "UPDATE clothes SET isFavorite = ? WHERE id=?"
+        return consulta(sql, [valor, id], 'Erro in Edit Product!')
     }
 
     delete(id){

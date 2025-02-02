@@ -22,5 +22,9 @@ export const routes: Routes = [
         path: 'feminino',
         component: FemininoComponent,
         loadChildren: () => import('../app/user_page/feminino/feminino.routes').then(m => m.femiRoutes)
+    },
+    {
+        path: 'favorites',
+        loadComponent: () => import('../app/user_page/favorites/favorites.component')
     }
 ];

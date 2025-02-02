@@ -16,6 +16,7 @@ router.post('/clothes', productControllers.postingClothes)
 
 // update
 router.put('/clothes/:id', productControllers.updateClothe)
+router.patch('/clothesFavorite/:id', productControllers.changeFavorite)
 
 // delete
 router.delete('/clothes/:id', productControllers.deletingClothe)

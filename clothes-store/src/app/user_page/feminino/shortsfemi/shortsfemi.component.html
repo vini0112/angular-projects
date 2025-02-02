@@ -3,7 +3,7 @@
 
         @for(short of allShortsFemi;track $index){
             <div class="padraoCard">
-                <div class="boxImg">
+                <div class="boxImg" (click)="addProductToCart(short)">
                     <img [src]="short.image" [alt]="short.name">
                 </div>
 
@@ -18,7 +18,7 @@
                         <i class="fa-regular fa-heart" *ngIf="short.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="short.isFavorite == true"></i>
                     </button>
-                    <button><i class="fa-solid fa-cart-shopping"></i></button>
+                    <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(short)"></i></button>
                 </div>
             </div>
         }

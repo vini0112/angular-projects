@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { productModule } from '../../../../modules/products.module';
 import { ProductsService } from '../../../../services/products.service';
 import { NgIf } from '@angular/common';
+import { cartList } from '../../../../modules/cart.list.module';
+import { listCartServices } from '../../../../services/listCart.service';
 
 @Component({
   selector: 'app-shoes-femi',
@@ -12,7 +14,8 @@ import { NgIf } from '@angular/common';
 export default class ShoesFemiComponent implements OnInit{
 
   productService = inject(ProductsService)
-        
+  listCartServices = inject(listCartServices)
+  
   allShoesFemi: productModule[] = []
   
   ngOnInit(): void {
@@ -30,8 +33,16 @@ export default class ShoesFemiComponent implements OnInit{
     })
   }
 
-  clickInHeart(item: any): void{
-    item.isFavorite = !item.isFavorite
+  clickInHeart(item: productModule): void{
+    this.productService.updateFavorite(item.id!, item.isFavorite).subscribe(product =>{
+      if(product){
+        item.isFavorite = !item.isFavorite
+      }
+    })
+  }
+
+  addProductToCart(item: cartList){
+    this.listCartServices.addingToCart(item)
   }
   
 }

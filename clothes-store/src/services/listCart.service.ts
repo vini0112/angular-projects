@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { cartList } from "../modules/cart.list.module";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, map, Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -8,72 +8,87 @@ import { BehaviorSubject } from "rxjs";
 
 
 export class listCartServices{
-    private cart: cartList[] = []
+    private key_local_storage = 'cartItem'
 
-    private cartSubject = new BehaviorSubject<cartList[]>(this.cart)
-    cartItems$ = this.cartSubject.asObservable() // observar mudanças no carrinho
-
-    private totalSum = new BehaviorSubject<number>(0)
-    total$ = this.totalSum.asObservable()
-
-    private qtdProducts = new BehaviorSubject<number>(0)
-    allQtdProducts$ = this.qtdProducts.asObservable()
+    private cart = new BehaviorSubject<cartList[]>(this.getFromLocalStorage())
+    cart$ = this.cart.asObservable() // observar mudanças no carrinho
 
 
-    addingToCart(product: cartList): void{
-        const ifExiste = this.cart.find(item => item.id === product.id)
 
-        if(ifExiste){
-            ifExiste.quantity += product.quantity
-            
+    private getFromLocalStorage(): cartList[]{
+        if(typeof window !== 'undefined' && localStorage){
+            const item = localStorage.getItem(this.key_local_storage)
+            return item ? JSON.parse(item) : []
+        }
+        return []
+        
+    }
+
+
+    private updateLocalStorage(cartItem: cartList[]) {
+        localStorage.setItem(this.key_local_storage, JSON.stringify(cartItem))
+        this.cart.next(cartItem)
+    }
+
+
+    addingToCart(product: cartList){
+        const currentProduct = this.cart.getValue()
+        
+        const existe = currentProduct.find(item => item.id === product.id)
+
+        if(existe){
+            existe.quantity += product.quantity
         }else{
-            this.cart.push({...product})
-        }
-        this.getTotal()
-    }
-
-    removingProduct(productId: number): void{
-        const existProduct = this.cart.find(item => item.id === productId)
-        
-        existProduct!.quantity--
-        this.getTotal()
-
-        if(existProduct?.quantity == 0){
-            this.cart = this.cart.filter(item => item.id !== productId)
-            
-            this.cartSubject.next(this.cart)
+            currentProduct.push({...product})
         }
         
+        this.updateLocalStorage(currentProduct)
     }
+
+
+    updatingQuantity(productId: number){
+        const currentProduct = this.cart.getValue()
+        const product = currentProduct.find(item => item.id === productId)
+
+        
+        product!.quantity--
+        this.updateLocalStorage(currentProduct)
+        
+        if(product!.quantity <= 0){
+            this.removingProduct(productId)
+        }
+        
+    }
+
+
+    removingProduct(productId: number){
+        const product = this.cart.getValue().filter(item => item.id !== productId)
+        this.updateLocalStorage(product)
+    }
+
 
     addingOneMore(productId: number){
-        const existProduct = this.cart.find(item => item.id == productId)
+        const product = this.cart.getValue()
+        const existProduct = product.find(item => item.id == productId)
+
         if(existProduct){
             existProduct.quantity++
-            this.getTotal()
         }
+        this.updateLocalStorage(product)
         
     }
     
-    getTotal(){
-        const totalAll = this.cart.reduce((total, item) => total + item.price * item.quantity, 0)
-        const allQtd = this.cart.reduce((total, item) => total + item.quantity, 0)
 
-        this.totalSum.next(totalAll)
-        this.qtdProducts.next(allQtd)
-    }
+    // taking all price
+    allPrice$: Observable<number> = this.cart$.pipe(
+        map(items => items.reduce((acc, item) => acc + item.price * item.quantity, 0))
+    )
 
+    // taking all quantity
+    allQtd$: Observable<number> = this.cart$.pipe(
+        map(items => items.reduce((junt, product) => junt + product.quantity,0))
+    )
 
-
-    // NOT IN USED BUT USEFUL
-
-    clearCart(){
-        this.cart = []
-    }
-
-    gettingAllProductsCart(): cartList[]{
-        return this.cart
-    }
 
 }
 

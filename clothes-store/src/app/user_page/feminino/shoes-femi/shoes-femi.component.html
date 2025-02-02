@@ -3,7 +3,7 @@
 
         @for(shoe of allShoesFemi;track $index){
             <div class="padraoCard">
-                <div class="boxImg">
+                <div class="boxImg" (click)="addProductToCart(shoe)">
                     <img [src]="shoe.image" [alt]="shoe.name">
                 </div>
 
@@ -18,7 +18,7 @@
                         <i class="fa-regular fa-heart" *ngIf="shoe.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="shoe.isFavorite == true"></i>
                     </button>
-                    <button><i class="fa-solid fa-cart-shopping"></i></button>
+                    <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(shoe)"></i></button>
                 </div>
 
             </div>

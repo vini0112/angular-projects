@@ -7,8 +7,8 @@
             <li id="dropdown">
                 <a class="shopBtn">Shop <i class="fa-solid fa-caret-down"></i></a>
                 <ul id="submenu">
-                    <li><a routerLink="/feminino">Feminino</a></li>
-                    <li><a routerLink="/masculino">Masculino</a></li>
+                    <li><a routerLink="/feminino">Feminine</a></li>
+                    <li><a routerLink="/masculino">Masculine</a></li>
                 </ul>
             </li>
 
@@ -19,11 +19,10 @@
 
         <!-- normal icons -->
         <nav id="icons">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-heart" routerLink="/favorites"></i>
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
-                <span class="contCart">{{allQtd}}</span>
+                <span class="contCart">{{allQtd$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
             <button>Login</button>
@@ -33,7 +32,7 @@
         <nav class="iconsMobile">
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
-                <span class="contCart">{{allQtd}}</span>
+                <span class="contCart">{{allQtd$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
         </nav>
@@ -54,7 +53,7 @@
                     </ul>
                 </li>
 
-                <li><a><i class="fa-regular fa-heart"></i></a></li>
+                <li><a routerLink="/favorites"><i class="fa-regular fa-heart"></i></a></li>
                 <li><a><i class="fa-solid fa-building"></i></a></li>
                 <li><a><i class="fa-solid fa-phone"></i></a></li>
                 <li><a><i class="fa-solid fa-user"></i></a></li>
@@ -85,8 +84,9 @@
                         <span>{{product.name}}</span>
                         <div class="boxQtd">
                             <i class="fa-solid fa-plus" (click)="addMore(product.id!)"></i>
+                            
                             <span>{{product.quantity}}</span>
-                            <i class="fa-solid fa-minus" (click)="removeFromCart(product.id!)"></i>
+                            <i class="fa-solid fa-minus" (click)="removeFromCart(product.id!) "></i>
                         </div>
                         
                     </li>
@@ -96,7 +96,7 @@
         </div>
 
         <div class="btnCart">
-            <button class="btnBuy">{{totalPrice}}<span>Buy</span></button>
+            <button class="btnBuy">{{totalPrice$ | async}}<span>Buy</span></button>
             <button class="btnClose" (click)="btnCloseCart()">Close</button>
         </div>
         

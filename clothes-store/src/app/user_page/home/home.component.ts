@@ -44,8 +44,14 @@ export class HomeComponent implements OnInit{
 
 
 
-  clickInHeart(item: any): void{
-    item.isFavorite = !item.isFavorite
+  clickInHeart(item: productModule){
+    
+    this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe(product =>{
+      if(product){
+        item.isFavorite = !item.isFavorite
+      }
+      
+    })
   }
 
   ngOnInit(): void {
@@ -66,7 +72,4 @@ export class HomeComponent implements OnInit{
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
   }
-
-
-
 }

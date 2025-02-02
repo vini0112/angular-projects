@@ -15,7 +15,12 @@ export class ProductsService {
   
 
   getProducts(): Observable<productModule[]>{
-    return this.http.get<productModule[]>(`${this.apiUrl}`)
+    return this.http.get<productModule[]>(`${this.apiUrl}/clothes`)
+  }
+
+  updateFavorite(id: number, isFavorite: boolean){
+
+    return this.http.patch(`${this.apiUrl}/clothesFavorite/${id}`, {isFavorite}) 
   }
 
 }

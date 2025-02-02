@@ -3,7 +3,7 @@
 
         @for(shirt of allShirtsFemi;track $index){
             <div class="padraoCard">
-                <div class="boxImg">
+                <div class="boxImg" (click)="addProductToCart(shirt)">
                     <img [src]="shirt.image" [alt]="shirt.name">
                 </div>
 
@@ -18,7 +18,7 @@
                         <i class="fa-regular fa-heart" *ngIf="shirt.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="shirt.isFavorite == true"></i>
                     </button>
-                    <button><i class="fa-solid fa-cart-shopping"></i></button>
+                    <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(shirt)"></i></button>
                 </div>
                 
             </div>

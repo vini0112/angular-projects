@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { cartList } from '../../../modules/cart.list.module';
 import { listCartServices } from '../../../services/listCart.service';
 
+
 @Component({
   selector: 'app-home',
   imports: [NgIf, RouterLink],
@@ -60,11 +61,13 @@ export class HomeComponent implements OnInit{
   }
 
   receivingProducts(){
-    this.productsService.getProducts().subscribe(item => {
-      item.forEach(clothe => {
-        if(clothe.isBestseller) this.clothesBestsellers.push(clothe)
+    
+    this.productsService.allProducts$.subscribe(item =>{
+      item.forEach(product =>{
+        if(product.isBestseller) this.clothesBestsellers.push(product)
       })
     })
+
   }
 
   // cart

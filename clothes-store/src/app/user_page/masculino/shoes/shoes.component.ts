@@ -24,7 +24,7 @@ export default class ShoesComponent implements OnInit{
 
   // getting just shirts
   gettingShoes(){
-    this.productService.getProducts().subscribe(item => {
+    this.productService.allProducts$.subscribe(item => {
       item.forEach(product => {
         if(product.section == 'shoes' && product.sexo == 'masc') this.allShoes.push(product)
       })

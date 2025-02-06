@@ -1,0 +1,34 @@
+
+
+:host h2{
+    margin: 2rem 0 4rem 0;
+    text-align: center;
+}
+
+.emptyFavorite{
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.emptyFavorite p{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+@media (max-width: 440px){
+    
+    .emptyFavorite p{
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .emptyFavorite img{
+        width: 80%;
+    }
+}
+

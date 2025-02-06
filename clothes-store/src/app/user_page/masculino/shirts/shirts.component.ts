@@ -24,7 +24,7 @@ export default class ShirtsComponent implements OnInit{
 
   // getting just shirts
   gettingShirts(){
-    this.productService.getProducts().subscribe(item => {
+    this.productService.allProducts$.subscribe(item => {
       item.forEach(product => {
         if(product.section == 'shirts') this.allShirts.push(product)
       })

@@ -7,6 +7,7 @@ const router = Router()
 
 // getting all 
 router.get('/clothes', productControllers.show)
+router.get('/favoriteClothes', productControllers.showFavorites)
 
 // getting by id
 router.get('/clothes/:id', productControllers.getById)

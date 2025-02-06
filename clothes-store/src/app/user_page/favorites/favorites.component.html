@@ -1,11 +1,32 @@
 
-<!-- @if(){
-
-} -->
-<div>
+@if(favoriteProducts.length > 0){
     <h2>Your Favorite Products</h2>
 
-    <div>
-        
+    <div class="struturePadraoCards">
+        @for(favoriteItem of favoriteProducts;track $index){
+            <div class="padraoCard">
+                <div class="boxImg" (click)="addProductToCart(favoriteItem)">
+                    <img [src]="favoriteItem.image" [alt]="favoriteItem.name">
+                </div>
+                <div class="boxInfoProduct">
+                    <span>$ {{favoriteItem.price.toFixed(2)}}</span>
+                    <span>{{favoriteItem.info}}</span>
+                </div>
+                <div class="btnsProduct">
+                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="clickInHeart(favoriteItem)">
+                        <i class="fa-regular fa-heart" *ngIf="favoriteItem.isFavorite == false"></i>
+                        <i class="fa-solid fa-heart" *ngIf="favoriteItem.isFavorite == true"></i>
+                    </button>
+                    <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(favoriteItem)"></i></button>
+                </div>
+            </div>
+        }
     </div>
-</div>
+}@else{
+    
+    <div class="emptyFavorite">
+        <img src="./assets/banners/Empty_hanger.png" alt="">
+        <p>OOPS... You don't have favorite clothes!</p>
+    </div>
+}

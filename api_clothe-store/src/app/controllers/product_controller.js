@@ -9,6 +9,10 @@ class productControllers{
         res.json(row)
     }
 
+    async showFavorites(req, res){
+        
+    }
+
     // getting by id
     async getById(req, res){
         const id = req.params.id

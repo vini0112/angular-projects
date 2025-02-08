@@ -26,5 +26,9 @@ export const routes: Routes = [
     {
         path: 'favorites',
         loadComponent: () => import('../app/user_page/favorites/favorites.component')
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('../app/user_page/login/login.component')
     }
 ];

@@ -1,4 +1,3 @@
-import connection from "../database/connection.js";
 import product_repositories from "../repositories/product_repositories.js";
 
 class productControllers{
@@ -9,9 +8,6 @@ class productControllers{
         res.json(row)
     }
 
-    async showFavorites(req, res){
-        
-    }
 
     // getting by id
     async getById(req, res){

@@ -1,0 +1,48 @@
+
+
+<div class="boxLogin">
+    <div class="singInBox" [ngClass]="{'scrollToRightBar': scrollBarTrigger, 'scrollBack': scrollBack}">
+        
+
+        @if(scrollBack == true){
+            <h4>Sing Up</h4>
+            <form>
+                <input type="text" placeholder="Username">
+
+                <input type="email" placeholder="Email">
+
+                <input type="password" placeholder="Password">
+            </form> 
+            <p>Already has an account? <a routerLink="">Sign In</a></p>
+            <button>Sing Up</button>
+        }@else{
+            <h4>Sing In</h4>
+            <form>
+                <label for=""></label>
+                <input type="text" placeholder="Email">
+
+                <label for=""></label>
+                <input type="text" placeholder="Password">
+            </form> 
+            <p>Forgot your <a routerLink="">password?</a></p>
+            <button>Sing In</button>
+        }
+        
+        
+
+    </div>
+
+    <div class="greetings" [ngClass]="{'scrollToLeftBar': scrollBarTrigger, 'scrollBack': scrollBack}">
+
+        @if(scrollBack == false){
+            <button (click)="movingBarLogin()">Sign Up</button>
+        }@else{
+            <button (click)="movingBarBack()">Sign In</button>
+        }
+        
+    </div>
+
+
+</div>
+
+

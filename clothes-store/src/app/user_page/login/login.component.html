@@ -1,31 +1,48 @@
 
 
 <div class="boxLogin">
-    <div class="singInBox" [ngClass]="{'scrollToRightBar': scrollBarTrigger, 'scrollBack': scrollBack}">
+    <div class="signInBox" [ngClass]="{'scrollToRightBar': scrollBarTrigger, 'scrollBack': scrollBack}">
         
 
         @if(scrollBack == true){
-            <h4>Sing Up</h4>
-            <form>
-                <input type="text" placeholder="Username">
+            <h4>Sign Up</h4>
+            <form [formGroup]="signUpForm" (submit)="onSubmit()">
+                <input type="text" placeholder="Username" name="username" formControlName="username">
+                @if(username?.touched || submitted && messageErro('username')){
+                    <span class="errorMsg">{{messageErro('username')}}</span>
+                }
 
-                <input type="email" placeholder="Email">
+                <input type="email" name="email" placeholder="Email" formControlName="email">
+                @if(email?.touched || submitted && messageErro('email')){
+                    <span class="errorMsg">{{messageErro('email')}}</span>
+                }
 
-                <input type="password" placeholder="Password">
+                <div class="passwordBox">
+                    <input type="password" placeholder="Password" name="password" formControlName="password">
+                    @if(password?.touched || submitted && messageErro('password')){
+                        <span class="errorMsg">{{messageErro('password')}}</span>
+                    }
+                    <i class="fa-solid fa-eye openEye"></i>
+                    <!-- <i class="fa-solid fa-eye-slash"></i> -->
+                </div>
+
+                <p>Already has an account? <a routerLink="">Sign In</a></p>
+                <button type="submit">Sign Up</button>
             </form> 
-            <p>Already has an account? <a routerLink="">Sign In</a></p>
-            <button>Sing Up</button>
+            
+            <!-- [disabled]="signUpForm.invalid" -->
         }@else{
-            <h4>Sing In</h4>
+            <h4>Sign In</h4>
             <form>
                 <label for=""></label>
                 <input type="text" placeholder="Email">
 
                 <label for=""></label>
                 <input type="text" placeholder="Password">
+                <p>Forgot your <a routerLink="">password?</a></p>
+                <button>Sign In</button>
             </form> 
-            <p>Forgot your <a routerLink="">password?</a></p>
-            <button>Sing In</button>
+            
         }
         
         
@@ -34,10 +51,23 @@
 
     <div class="greetings" [ngClass]="{'scrollToLeftBar': scrollBarTrigger, 'scrollBack': scrollBack}">
 
+        
+
         @if(scrollBack == false){
-            <button (click)="movingBarLogin()">Sign Up</button>
+            <div class="greetingSignUp">
+
+                <h3>Welcome Back!</h3>
+                <p>Enter your personal detail to use all of site features!</p>
+                <button (click)="movingBarLogin()">Sign Up</button>
+
+            </div>
         }@else{
-            <button (click)="movingBarBack()">Sign In</button>
+            <div class="greetingLogin">
+                <h3>Hello, Friend!</h3>
+
+                <p>Register with your personal details to use all of site features!</p>
+                <button (click)="movingBarBack()">Sign In</button>
+            </div>
         }
         
     </div>

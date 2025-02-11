@@ -9,6 +9,7 @@
 
 .errorMsg{
     color: red;
+    font-size: .9rem;
 }
 .passwordBox{
     width: 100%;
@@ -19,12 +20,33 @@
 }
 
 .openEye{
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     position: absolute;
     left: 90%;
     top: 25%;
     cursor: pointer;
 }
+.closeEye{
+    font-size: 1.3rem;
+    position: absolute;
+    left: 90%;
+    top: 25%;
+    cursor: pointer;
+}
+
+.arrowRight{
+    font-size: 1.5rem;
+    padding-left: 1rem;
+    cursor: pointer;
+}
+
+.forgotPassword{
+    padding-left: 5px;
+}
+
+/* @keyframes closeEye{
+
+} */
 
 
 
@@ -83,7 +105,9 @@
     outline: none;
 }
 .signInBox p{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .signInBox p a{
     text-decoration: none;

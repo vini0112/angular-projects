@@ -18,29 +18,42 @@
                 }
 
                 <div class="passwordBox">
-                    <input type="password" placeholder="Password" name="password" formControlName="password">
+                    <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" name="password" formControlName="password">
                     @if(password?.touched || submitted && messageErro('password')){
                         <span class="errorMsg">{{messageErro('password')}}</span>
                     }
-                    <i class="fa-solid fa-eye openEye"></i>
-                    <!-- <i class="fa-solid fa-eye-slash"></i> -->
+
+                    <!-- icon see password -->
+                    @if(passwordVisible == true){
+                        <i class="fa-solid fa-eye openEye" (click)="closeEye()"></i>
+                    }@else{
+                        <i class="fa-solid fa-eye-slash closeEye" (click)="openEye()"></i>
+                    }
+                    
                 </div>
 
-                <p>Already has an account? <a routerLink="">Sign In</a></p>
+                <p>Already has an account? <i class="fa-solid fa-arrow-right-long arrowRight" (click)="movingBarBack()"></i></p>
                 <button type="submit">Sign Up</button>
             </form> 
             
-            <!-- [disabled]="signUpForm.invalid" -->
         }@else{
             <h4>Sign In</h4>
-            <form>
-                <label for=""></label>
-                <input type="text" placeholder="Email">
+            <form [formGroup]="signInForm" (submit)="onSubmitSignIn()">
+                <input type="email" placeholder="Email" name="email" formControlName="email">
+                
+                <div class="passwordBox">
+                    <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" formControlName="password" name="password">
+                
+                    <!-- icon see password -->
+                    @if(passwordVisible == true){
+                        <i class="fa-solid fa-eye openEye" (click)="closeEye()"></i>
+                    }@else{
+                        <i class="fa-solid fa-eye-slash closeEye" (click)="openEye()"></i>
+                    }
+                </div>
 
-                <label for=""></label>
-                <input type="text" placeholder="Password">
-                <p>Forgot your <a routerLink="">password?</a></p>
-                <button>Sign In</button>
+                <p>Forgot your <a routerLink="" class="forgotPassword">password?</a></p>
+                <button type="submit">Sign In</button>
             </form> 
             
         }

@@ -28,6 +28,8 @@ export default class LoginComponent {
   // forms
   signUpForm: FormGroup
   submitted = false
+  submittedTwo = false
+  passwordVisible = false
 
   constructor(private fb: FormBuilder){
 
@@ -36,6 +38,12 @@ export default class LoginComponent {
         email: [null, [Validators.required, Validators.email]],
         password: [null, [Validators.required, Validators.minLength(4), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)]]
       })
+
+      this.signInForm = this.fb.group({
+        email: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.minLength(4)]]
+      })
+
     } 
 
     get username(){
@@ -59,27 +67,59 @@ export default class LoginComponent {
       
     }
 
+    // form SIGN IN
+    signInForm: FormGroup;
+
+    get passwordSignIn(){
+      return this.signInForm.get('password')
+    }
+
+    get emailSignIn(){
+      return this.signInForm.get('email')
+    }
+
+    onSubmitSignIn(){
+      this.submittedTwo = true
+      if(this.signInForm.valid){
+        console.log(this.signInForm.value)
+      }else{
+        console.log('Form invalid')
+      }
+    }
+
+
+
+
     // verification form
     messageErro(field: string): string | null{
 
       const control = this.signUpForm.get(field)
+
       if(field == 'email' && control?.hasError('required') || control?.hasError('email')){
-        return 'Invalid Email'
+        return 'Invalid Email!'
       }
       else if(field == 'username' && control?.hasError('required')){
         return 'Add a valid username!'
       }
       else if(control?.hasError('minlength')){
-        return 'Length lower than 4'
+        return 'Cannot be less than 4 characters!'
       }
       else if(control?.hasError('pattern')){
-        return 'Password must have uppcase, lowercase, numbers and special characters'
+        return 'Password must have uppcase, lowercase, numbers and special characters!'
       }
+      
+      
       return null
-    // return control?.invalid && (control?.touched || this.submitted)
     }
 
 
+    // see password
+    openEye(){
+      this.passwordVisible = true
+    }
 
+    closeEye(){
+      this.passwordVisible = false
+    }
 
 }

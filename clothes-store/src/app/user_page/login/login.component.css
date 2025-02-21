@@ -42,6 +42,7 @@
 
 .forgotPassword{
     padding-left: 5px;
+    cursor: pointer;
 }
 
 /* @keyframes closeEye{
@@ -53,6 +54,7 @@
 
 
 .boxLogin{
+    position: relative;
     max-width: 1000px;
     width: 100%;
     height: 550px;
@@ -269,4 +271,60 @@
     }to{
         transform: translate(0);
     }
+}
+
+
+
+/* pop up email */
+.popupPassword{
+    position: absolute;
+    border-radius: 10px;
+    height: 250px;
+    width: 300px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #7C8EA6;
+    top: 20%;
+    left: 40%;
+    padding: 20px;
+    z-index: 5;
+}
+.popupPassword.popActive{
+    display: flex;
+}
+
+.popupPassword input{
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    padding-left: 5px;
+
+}
+.popupPassword span{
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    padding-top: .8rem;
+    
+}
+.popupPassword button{
+    border: none;
+    margin-top: 1rem;
+    padding: .4rem 1.3rem;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+}
+
+.shadowPopup{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.441);
 }

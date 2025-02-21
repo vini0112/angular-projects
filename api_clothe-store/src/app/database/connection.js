@@ -2,12 +2,14 @@ import mysql from 'mysql2'
 
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    port: '3306',
-    user: 'root',
-    password: 'vini123',
-    database: 'db_clothes_product'
-})
+    host:process.env.DB_HOST,
+    user:process.env.DB_USER, 
+    port:process.env.DB_PASSWORD,
+    password:process.env.DB_PASSWORD,
+    database:process.env.DB_NAME
+}) // 
+
+
 
 // refatorando o processo de new Promise de repositories
 /**
@@ -31,6 +33,8 @@ export const consulta = (sql, valores='', mensagemReject) =>{
         })
     })
 }
+
+
 
 
 export default connection;

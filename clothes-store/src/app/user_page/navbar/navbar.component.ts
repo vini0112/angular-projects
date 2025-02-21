@@ -4,16 +4,19 @@ import { RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
 import { Observable } from 'rxjs';
+import { AuthLoginService } from '../../../services/auth.login.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, NgClass, AsyncPipe], 
-  templateUrl: './navbar.component.html',
+  imports: [RouterLink, NgClass, AsyncPipe, NgIf], 
+  templateUrl: './navbar.component.html', 
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
   
   listCartService = inject(listCartServices)
+  authLoginService = inject(AuthLoginService)
+
 
   // cart parameters 
   products: cartList[] = []
@@ -89,7 +92,13 @@ export class NavbarComponent implements OnInit{
     this.listCartService.addingOneMore(id)
   }
 
-  
 
+  // checking if logged
+
+  isAuthentic$ = this.authLoginService.isAuthenticated$
+
+  logout(){
+    this.authLoginService.loggingOut()
+  }
 
 }

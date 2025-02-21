@@ -9,13 +9,7 @@ const secretKey = "chaveSecretaSuperSegura";
 
 class loginController{
 
-    // getting by id
-    async getById(req, res){
-        const id = req.params.id
-        const row = await loginRepository.findById(id)
-        res.json(row) 
-    }
-
+    // login
     async entrando(req, res){
         const {email, password} = req.body
         
@@ -41,20 +35,36 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-
             const token = jwt.sign({ id: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
 
-            // res.cookie('authToken', token, {
-            //     httpOnly: true, // impede acesso ao cookie via JavaScript do lado do cliente
-            //     secure: process.env.NODE_ENV === 'production', // Somente HTTPS em produção
-            //     sameSite: 'strict' // Evita envio do cookie em requisições de outros sites
-            // }) 
+            res.cookie('token', token, {
+                httpOnly: true, // impede acesso ao cookie via JavaScript do lado do cliente
+                secure: true, // Somente HTTPS em produção
+                sameSite: 'none', // Evita envio do cookie em requisições de outros sites
+                maxAge: 60 * 60 * 1000 // expirar em 1h
+            }) 
 
-            res.json({ message: 'Login realizado com sucesso!', token});
+            res.json({ message: 'Login realizado com sucesso!'});
         })
 
     }
 
+
+    async protectedRoute(req, res){
+        const token = req.cookies.token
+        
+        if(!token){
+            return res.json({message: 'Não authorized!'})
+        }
+
+        try{
+            const decoded = jwt.verify(token, secretKey)
+            res.json({user: decoded})
+        }catch(error){
+            res.status(401).json({message: 'Invalid Token'})
+        }
+
+    }
 
 
     async validandoEmail(req, res){
@@ -66,11 +76,17 @@ class loginController{
             if(err){
                 return res.status(500).json({ error: 'Erro no servidor.' });
             }
-            
+
             let ifExisteEmail = result.some(user => user.email == email)
-            res.json({ifExisteEmail})
-        })
+            
+            if(ifExisteEmail == true){
+                res.status(400).json({error: "Email already exist!"})
+                return
+            }
+            
+        }) 
     }
+
 
 
     // criando usuario
@@ -82,23 +98,76 @@ class loginController{
             return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
         }
 
+        let sql = "SELECT * FROM users"
 
-        try {
-            const hashedPassword = await bcrypt.hash(password, saltRounds)
-             // Salvar no banco
-            connection.execute(
-                'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-                [username, email, hashedPassword] 
-            );
-            res.status(201).json({ message: 'Usuário registrado com sucesso!' });
+        connection.query(sql, async(err, result) =>{
+            if(err){
+                return res.status(500).json({ error: 'Erro no servidor.' });
+            }
 
-        } catch (error) {
-                res.status(500).json({ message: 'Erro no servidor.', error });
-        }
+            let ifExisteEmail = result.some(user => user.email == email)
+            
+            if(ifExisteEmail == true){
+                res.status(400).json({error: "Email already exist!"})
+                return
+            }
+
+            try {
+                const hashedPassword = await bcrypt.hash(password, saltRounds)
+                    // Salvar no banco
+                connection.execute(
+                    'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+                    [username, email, hashedPassword] 
+                );
+                res.status(201).json({ message: 'Usuário registrado com sucesso!' });
+    
+            } catch (error) {
+                    res.status(500).json({ message: 'Erro no servidor.', error });
+            }
+            
+        }) 
 
     }
 
-    
+    // logout
+
+    async logOut(req, res){
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/'
+        })
+        res.status(200).json({message: 'Succefull Logout'})
+    }
+
+    // forgot password
+    async resetPassword(req, res){
+
+        const {email} = req.body
+
+        if(!email){
+            res.status(400).json({message: 'Please provide email!'})
+        }
+
+        const sql = 'SELECT * FROM users WHERE email = ? LIMIT 1'
+        connection.execute(sql, [email], (err, result) =>{
+            if(err){
+                console.error('ERROR while accessing the Database')
+            }
+
+            let ifExisteEmail = result.some(user => user.email == email)
+            
+            if(ifExisteEmail == false){
+                res.status(400).json({error: "Email not found!"})
+                return
+            }
+
+            
+
+        })
+
+    }
 
 }
 

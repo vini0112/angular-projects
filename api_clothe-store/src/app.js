@@ -3,13 +3,20 @@ import express from "express"
 import cors from 'cors'
 import productRouter from "./routes/product_routes.js"
 import loginRouter from "./routes/login.routes.js"
+import cookieParse from 'cookie-parser'
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:4200', // url front
+    credentials: true // allowing cookies
+}))
+
 app.use(express.json())
+app.use(cookieParse())
 app.use(productRouter)
 app.use(loginRouter)
+
 
 
 

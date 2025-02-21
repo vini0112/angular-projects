@@ -25,7 +25,10 @@
                 <span class="contCart">{{allQtd$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
-            <a routerLink="/login">Login</a>
+            <a routerLink="/login" *ngIf="!(isAuthentic$ | async)">Login</a>
+            
+            <i *ngIf="(isAuthentic$ | async)" (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i>
+
         </nav>
 
         <!-- mobile icons -->

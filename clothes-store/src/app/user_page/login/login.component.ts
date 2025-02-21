@@ -1,35 +1,42 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
+import { AuthLoginService } from '../../../services/auth.login.service';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, NgClass, ReactiveFormsModule],  
-  templateUrl: './login.component.html',
+  imports: [NgClass, ReactiveFormsModule],  
+  templateUrl: './login.component.html', 
   styleUrl: './login.component.css'
 })
 export default class LoginComponent {
 
-  scrollBarTrigger = false
-  scrollBack = true
 
-  movingBarLogin(){
-    this.scrollBarTrigger = false
-    this.scrollBack = true
+  loginPage = false
+  singUpPage = true
+
+  movingToSignup(){
+    this.loginPage = false
+    this.singUpPage = true
   }
-  movingBarBack(){
-    this.scrollBarTrigger = true
-    this.scrollBack = false
+  movingToLogin(){
+    this.loginPage = true
+    this.singUpPage = false
   }
 
   
 
   // forms
+
+  loginService = inject(AuthLoginService)
+  router = inject(Router)
+
   signUpForm: FormGroup
   submitted = false
   submittedTwo = false
   passwordVisible = false
+  loggedIn = false
 
   constructor(private fb: FormBuilder){
 
@@ -57,10 +64,32 @@ export default class LoginComponent {
       return this.signUpForm.get('email')
     }
 
+    // 
+    clearSignup(){
+      this.submitted = false // to avoid to see errors if U come back to sign up pg
+      this.signUpForm.reset()
+
+      Object.keys(this.signUpForm.controls).forEach(key =>{
+        this.signUpForm.controls[key].markAsPristine()
+        this.signUpForm.controls[key].markAsUntouched()
+      })
+    }
+
+
+    // SIGN UP SUBMIT
     onSubmit(){
       this.submitted = true
       if(this.signUpForm.valid){
-        console.log('Formulario enviado: ', this.signUpForm.value)
+
+        this.loginService.register(this.signUpForm.value).subscribe({
+          next: (res) => {
+            console.log(res)
+            this.movingToLogin()
+            this.clearSignup()
+          },
+          error: (error) => {console.log(error.error), alert('Email already exist!')}
+        })
+        
       }else{
         console.log('Formulario invalido')
       }
@@ -78,15 +107,26 @@ export default class LoginComponent {
       return this.signInForm.get('email')
     }
 
+
+    // LOGIN SUBMIT
     onSubmitSignIn(){
       this.submittedTwo = true
       if(this.signInForm.valid){
-        console.log(this.signInForm.value)
+          this.loginService.gettingIn(this.signInForm.value).subscribe({
+            next: () =>{
+              console.log('success login')
+              this.router.navigateByUrl('/home')
+            },
+            error: (error) =>{
+              this.messageErro = error.message
+              alert('Password/Email Wrong!')
+            }
+
+          })
       }else{
-        console.log('Form invalid')
+        alert('Form Invalid!')
       }
     }
-
 
 
 
@@ -121,5 +161,23 @@ export default class LoginComponent {
     closeEye(){
       this.passwordVisible = false
     }
+
+
+    // popup
+
+    popActive = false
+    shadowPopupActive = false
+
+    retrievePassword(){
+      this.popActive = true
+      this.shadowPopupActive = true
+    }
+
+    desativateShadowPopup(){
+      this.popActive = false
+      this.shadowPopupActive = false
+    }
+
+
 
 }

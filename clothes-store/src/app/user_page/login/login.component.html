@@ -1,25 +1,25 @@
 
 
 <div class="boxLogin">
-    <div class="signInBox" [ngClass]="{'scrollToRightBar': scrollBarTrigger, 'scrollBack': scrollBack}">
+    <div class="signInBox" [ngClass]="{'scrollToRightBar': loginPage, 'scrollBack': singUpPage}">
         
 
-        @if(scrollBack == true){
+        @if(singUpPage == true){
             <h4>Sign Up</h4>
             <form [formGroup]="signUpForm" (submit)="onSubmit()">
                 <input type="text" placeholder="Username" name="username" formControlName="username">
-                @if(username?.touched || submitted && messageErro('username')){
+                @if(username?.touched || submitted){ 
                     <span class="errorMsg">{{messageErro('username')}}</span>
                 }
-
+                
                 <input type="email" name="email" placeholder="Email" formControlName="email">
-                @if(email?.touched || submitted && messageErro('email')){
+                @if(email?.touched || submitted){
                     <span class="errorMsg">{{messageErro('email')}}</span>
                 }
 
                 <div class="passwordBox">
                     <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" name="password" formControlName="password">
-                    @if(password?.touched || submitted && messageErro('password')){
+                    @if(password?.touched || submitted){
                         <span class="errorMsg">{{messageErro('password')}}</span>
                     }
 
@@ -32,7 +32,7 @@
                     
                 </div>
 
-                <p>Already has an account? <i class="fa-solid fa-arrow-right-long arrowRight" (click)="movingBarBack()"></i></p>
+                <p>Already has an account? <i class="fa-solid fa-arrow-right-long arrowRight" (click)="movingToLogin()"></i></p>
                 <button type="submit">Sign Up</button>
             </form> 
             
@@ -52,7 +52,7 @@
                     }
                 </div>
 
-                <p>Forgot your <a routerLink="" class="forgotPassword">password?</a></p>
+                <p>Forgot your <a (click)="retrievePassword()" class="forgotPassword">password?</a></p>
                 <button type="submit">Sign In</button>
             </form> 
             
@@ -62,16 +62,16 @@
 
     </div>
 
-    <div class="greetings" [ngClass]="{'scrollToLeftBar': scrollBarTrigger, 'scrollBack': scrollBack}">
+    <div class="greetings" [ngClass]="{'scrollToLeftBar': loginPage, 'scrollBack': singUpPage}">
 
         
 
-        @if(scrollBack == false){
+        @if(singUpPage == false){
             <div class="greetingSignUp">
 
                 <h3>Welcome Back!</h3>
                 <p>Enter your personal detail to use all of site features!</p>
-                <button (click)="movingBarLogin()">Sign Up</button>
+                <button (click)="movingToSignup()">Sign Up</button>
 
             </div>
         }@else{
@@ -79,13 +79,22 @@
                 <h3>Hello, Friend!</h3>
 
                 <p>Register with your personal details to use all of site features!</p>
-                <button (click)="movingBarBack()">Sign In</button>
+                <button (click)="movingToLogin()">Sign In</button>
             </div>
         }
         
     </div>
 
+    
+    <!-- pop-up -->
+    <div class="popupPassword" [ngClass]="{'popActive': popActive}">
+        <input type="email" placeholder="Email">
+        <span>Reset your password</span>
+        <button type="submit">Send</button>
+    </div>
 
 </div>
 
+<!-- shadow -->
+<div class="shadowPopup" [ngClass]="{'shadowPopup': shadowPopupActive}" (click)="desativateShadowPopup()"></div>
 

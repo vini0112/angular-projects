@@ -5,8 +5,8 @@ import loginController from "../app/controllers/login.controller.js";
 const router = Router()
 
 
-router.get('/allUsers/:id', loginController.getById)
-
+// rota protegida
+router.get('/auth/user', loginController.protectedRoute)
 
 // SIGN IN 
 router.post('/entrando', loginController.entrando)
@@ -14,5 +14,11 @@ router.post('/entrando', loginController.entrando)
 // SIGN UP
 router.post('/emailValidation', loginController.validandoEmail)
 router.post('/addingUser', loginController.adding)
+
+// LOG OUT
+router.post('/auth/logout', loginController.logOut)
+
+// RESETING PASSWORD
+router.post('/reset/password', loginController.resetPassword)
 
 export default router;

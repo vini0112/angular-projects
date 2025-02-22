@@ -34,5 +34,11 @@ export const routes: Routes = [
         loadComponent: () => import('../app/user_page/login/login.component'),
         canActivate: [authGuard]
     },
-    { path: '**', redirectTo: 'home' }
+    {
+        path: 'reset-password/:token',
+        loadComponent: () => import('../app/user_page/reset-password/reset-password.component'),
+    },
+    { 
+        path: '**', redirectTo: 'home'
+    }
 ];

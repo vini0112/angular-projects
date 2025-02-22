@@ -2,7 +2,7 @@ import loginRepository from "../repositories/login.repository.js"
 import connection from "../database/connection.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-
+import mailer from 'nodemailer'
 
 const saltRounds = 10;
 const secretKey = "chaveSecretaSuperSegura";
@@ -98,11 +98,12 @@ class loginController{
             return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
         }
 
+        
         let sql = "SELECT * FROM users"
 
         connection.query(sql, async(err, result) =>{
             if(err){
-                return res.status(500).json({ error: 'Erro no servidor.' });
+                return res.status(500).json({ error: 'Erro no servidor.', err});
             }
 
             let ifExisteEmail = result.some(user => user.email == email)
@@ -142,33 +143,63 @@ class loginController{
     }
 
     // forgot password
-    async resetPassword(req, res){
+    async requestToReset(req, res){
 
         const {email} = req.body
-
+        
         if(!email){
             res.status(400).json({message: 'Please provide email!'})
         }
 
-        const sql = 'SELECT * FROM users WHERE email = ? LIMIT 1'
-        connection.execute(sql, [email], (err, result) =>{
+        const sql = "SELECT * FROM users WHERE email = ?"
+        connection.execute(sql, [email],async(err, result) =>{
             if(err){
-                console.error('ERROR while accessing the Database')
+                return res.status(500).json({message: 'ERROR while accessing the Database'})
             }
 
-            let ifExisteEmail = result.some(user => user.email == email)
-            
+            let ifExisteEmail = result.some(user => user.email === email)
             if(ifExisteEmail == false){
                 res.status(400).json({error: "Email not found!"})
                 return
             }
 
             
+            const tokenReset = jwt.sign({email}, process.env.SECRET_RESET_PASSWORD, {expiresIn: '1h'})
 
+            const transporter = mailer.createTransport({
+                host: "smtp.gmail.com",
+                // service: meu email
+                
+                secure: true,
+                auth:{
+                    user: process.env.MY_EMAIL,
+                    pass: process.env.MY_PASSWORD
+                }
+            })
+            
+            const resetUrl = `${process.env.CLIENT_URL}/${tokenReset}`
+
+            const receiver = {
+                from: 'vinilocsilva@gmail.com',
+                to: email,
+                subject: 'Password Reset Request',
+                html: `<p>Click on the link down here to reset your password!:</p>
+                <a href="${resetUrl}" target="_blank">${resetUrl}</a>
+                <p>This link expires in an hour!</p>`
+            }
+            
+
+            await transporter.sendMail(receiver)
+
+            return res.status(200).json({message: 'Please check your email!'})
+            
         })
 
     }
 
+    async resetPassword(req, res){
+
+    }
 }
 
 export default new loginController()

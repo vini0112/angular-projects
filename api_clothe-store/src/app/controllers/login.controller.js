@@ -146,7 +146,7 @@ class loginController{
     async requestToReset(req, res){
 
         const {email} = req.body
-        
+
         if(!email){
             res.status(400).json({message: 'Please provide email!'})
         }
@@ -198,6 +198,12 @@ class loginController{
     }
 
     async resetPassword(req, res){
+
+        const {newPassword} = req.body
+
+        if(!newPassword){
+            res.status(500)
+        }
 
     }
 }

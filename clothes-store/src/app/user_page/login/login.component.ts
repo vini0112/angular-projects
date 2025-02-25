@@ -1,12 +1,14 @@
 import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
+import {FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
 import { AuthLoginService } from '../../../services/auth.login.service';
+import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
-  imports: [NgClass, ReactiveFormsModule],  
+  imports: [NgClass, ReactiveFormsModule, FormsModule, ],   
   templateUrl: './login.component.html', 
   styleUrl: './login.component.css'
 })
@@ -43,7 +45,7 @@ export default class LoginComponent {
       this.signUpForm = this.fb.group({
         username: [null, [Validators.required, Validators.minLength(4)]],
         email: [null, [Validators.required, Validators.email]],
-        password: [null, [Validators.required, Validators.minLength(4), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)]]
+        password: [null, [Validators.required, Validators.minLength(4), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/), noWhiteSpaceValidator()]]
       })
 
       this.signInForm = this.fb.group({
@@ -56,12 +58,11 @@ export default class LoginComponent {
     get username(){
       return this.signUpForm.get('username')
     }
-
     get email(){
       return this.signUpForm.get('email')
     }
     get password(){
-      return this.signUpForm.get('email') // pegando errado aquiiiiiiii
+      return this.signUpForm.get('password') // pegando errado aquiiiiiiii
     }
 
     // 
@@ -74,6 +75,7 @@ export default class LoginComponent {
         this.signUpForm.controls[key].markAsUntouched()
       })
     }
+
 
 
     // SIGN UP SUBMIT
@@ -147,6 +149,9 @@ export default class LoginComponent {
       else if(control?.hasError('pattern')){
         return 'Password must have uppcase, lowercase, numbers and special characters!'
       }
+      else if(control?.hasError('hasSpaces')){
+        return 'Spaces are not allowed!'
+      }
       
       
       return null
@@ -176,8 +181,32 @@ export default class LoginComponent {
     desativateShadowPopup(){
       this.popActive = false
       this.shadowPopupActive = false
+      this.wasSent = false
     }
 
+    // spinner
+    loadingData = false
 
+
+    // sending email to reset password
+    wasSent = false
+    submittedEmailReset = false
+    user = {sendingEmail: ''}
+    
+
+    sendingEmailReset(myForm: any){
+      this.submittedEmailReset = true
+      
+      if(myForm.valid){
+        this.loadingData = true
+
+        this.loginService.sendEmailToReset(this.user.sendingEmail)
+        .pipe(finalize(() => this.loadingData = false)) // finalize the spinner
+        .subscribe({
+          next: (res) => {console.log(res), this.wasSent = true, this.user.sendingEmail = ''},
+          error: (err) => {console.log(err), alert('Email not found!')}
+        })
+      }
+    }
 
 }

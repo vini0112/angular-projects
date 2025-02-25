@@ -21,6 +21,6 @@ router.post('/auth/logout', loginController.logOut)
 // RESETING PASSWORD
 router.post('/request/reset', loginController.requestToReset)
 
-router.post('/reset-password', loginController.resetPassword)
+router.post('/reset-password/:token', loginController.resetPassword)
 
 export default router;

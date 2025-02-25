@@ -19,7 +19,7 @@
 
                 <div class="passwordBox">
                     <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" name="password" formControlName="password">
-                    @if(password?.touched || submitted){
+                    @if(password?.touched || password?.dirty ||submitted){
                         <span class="errorMsg">{{messageErro('password')}}</span>
                     }
 
@@ -57,11 +57,10 @@
             </form> 
             
         }
-        
-        
 
     </div>
 
+    
     <div class="greetings" [ngClass]="{'scrollToLeftBar': loginPage, 'scrollBack': singUpPage}">
 
         
@@ -88,10 +87,30 @@
     
     <!-- pop-up -->
     <div class="popupPassword" [ngClass]="{'popActive': popActive}">
-        <input type="email" placeholder="Email">
-        <span>Reset your password</span>
-        <button type="submit">Send</button>
+
+        @if(loadingData){
+            <div class="spinner"></div>
+        }@else{
+
+            <form  #myForm="ngForm" (submit)="sendingEmailReset(myForm)" [ngClass]="{'hiddenFromEmailReset': wasSent}">
+                <input type="email" placeholder="Email" name="sendingEmail" required #inputEmail="ngModel" [(ngModel)]="user.sendingEmail" email>
+                @if(submittedEmailReset && inputEmail.errors?.['email']){ 
+                    <span id="errorEmail">Email Invalid</span>
+                }
+
+                <span>Reset your password</span>
+                <button type="submit">Send</button>
+            </form>
+
+            <div class="emailSentSuccessful" [ngClass]="{'emailSent': wasSent}">
+                <span>Email Sent...</span>
+                <i class="fa-solid fa-check"></i>
+                <span>Check your Email!</span>
+            </div>
+        }
+
     </div>
+    
 
 </div>
 

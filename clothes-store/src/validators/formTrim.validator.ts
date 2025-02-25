@@ -1,7 +1,13 @@
 
-import { AbstractControl, ValidationErrors } from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
-export function noWhiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
-    return control.value && control.value.trim().length === 0 ? {whitespace: true} : null
+export function noWhiteSpaceValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        const value = control.value as string;
+        if(value && /\s/.test(value)) {
+          return { hasSpaces: true }; // Retorna um erro se houver espaços
+        }
+        return null;
+    };
 }
 

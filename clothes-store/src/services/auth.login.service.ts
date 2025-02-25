@@ -83,14 +83,10 @@ export class AuthLoginService {
     this.isAuth.next(false)
   }
 
-  // isAuthenticated(): boolean{
-  //   if(typeof window !== 'undefined'){
-  //     const token = localStorage.getItem('token');
-  //     return token ? !this.jwtHelper.isTokenExpired(token) : false;
-  //   }
-  //   return false
-  // }
-
+  // reseting password
+  sendEmailToReset(email: string): Observable<string>{
+    return this.http.post<string>(`${this.api}/request/reset`, {email})
+  }
   
 
 

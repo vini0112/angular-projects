@@ -3,7 +3,7 @@ import { HomeComponent } from './user_page/home/home.component';
 import { FemininoComponent } from './user_page/feminino/feminino.component';
 import { MasculinoComponent } from './user_page/masculino/masculino.component';
 import { authGuard } from '../guards/auth.guard';
-import { secundAuthGuard } from '../guards/secund-auth.guard';
+import { resetPasswordGuard } from '../guards/reset-password.guard';
 
 export const routes: Routes = [
     {
@@ -35,8 +35,9 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-        path: 'reset-password/:token',
+        path: 'reset-password',
         loadComponent: () => import('../app/user_page/reset-password/reset-password.component'),
+        canActivate: [resetPasswordGuard]
     },
     { 
         path: '**', redirectTo: 'home'

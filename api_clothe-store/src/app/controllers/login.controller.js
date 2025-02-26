@@ -115,7 +115,7 @@ class loginController{
 
             try {
                 const hashedPassword = await bcrypt.hash(password, saltRounds)
-                    // Salvar no banco
+                // Salvar no banco
                 connection.execute(
                     'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
                     [username, email, hashedPassword] 
@@ -150,31 +150,27 @@ class loginController{
         if(!email){
             res.status(400).json({message: 'Please provide email!'})
         }
+        
 
-        const sql = "SELECT * FROM users WHERE email = ?"
-        connection.execute(sql, [email],async(err, result) =>{
-            if(err){
-                return res.status(500).json({message: 'ERROR while accessing the Database'})
+        try{
+            const [rows, fields] = await connection.promise().execute("SELECT * FROM users WHERE email = ?", [email])
+            if(rows.length === 0){
+                return res.status(404).json({ message: "E-mail não encontrado" })
             }
 
-            let ifExisteEmail = result.some(user => user.email === email)
-            if(ifExisteEmail == false){
-                res.status(400).json({error: "Email not found!"})
-                return
-            }
 
+            const tokenReset = jwt.sign({email}, process.env.SECRET_RESET_PASSWORD, {expiresIn: '15min'})
+
+
+            await connection.promise().execute("UPDATE users SET token_reset = ?, token_expires = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email = ?", [tokenReset, email])
             
-            const tokenReset = jwt.sign({email}, process.env.SECRET_RESET_PASSWORD, {expiresIn: '1h'})
-
             const transporter = mailer.createTransport({
-                host: "smtp.gmail.com",
-                // service: meu email
-                
-                secure: true,
-                auth:{
-                    user: process.env.MY_EMAIL,
-                    pass: process.env.MY_PASSWORD
-                }
+                    host: "smtp.gmail.com",                
+                    secure: true,
+                    auth:{
+                        user: process.env.MY_EMAIL,
+                        pass: process.env.MY_PASSWORD 
+                    }
             })
             
             const resetUrl = `${process.env.CLIENT_URL}/${tokenReset}`
@@ -185,25 +181,52 @@ class loginController{
                 subject: 'Password Reset Request',
                 html: `<p>Click on the link down here to reset your password!:</p>
                 <a href="${resetUrl}" target="_blank">${resetUrl}</a>
-                <p>This link expires in an hour!</p>`
+                <p>This link expires in 15min!</p>`
             }
-            
-
+                
+    
             await transporter.sendMail(receiver)
 
             return res.status(200).json({message: 'Please check your email!'})
             
-        })
+        }catch(err){
+            console.log(err)
+        }
 
     }
 
     async resetPassword(req, res){
 
-        const {newPassword} = req.body
+        const {token, newPassword} = req.body 
+        // console.log(token)
 
-        if(!newPassword){
-            res.status(500)
+        try{
+
+            const [rows, result] = await connection.promise().execute('SELECT * FROM users WHERE token_reset = ? AND token_expires > NOW()', [token])
+            if(rows.length === 0){
+                return res.status(400).json({ message: "Token inválido ou expirado" })
+            }
+
+            const email = rows[0].email
+            const hashedPassword = await bcrypt.hash(newPassword, saltRounds)
+            
+            await connection.promise().execute('UPDATE users SET password = ? WHERE email = ?',[hashedPassword, email], (err) =>{
+                if(err) return res.status(500).json({message: "Error to reset the password!"})
+            })
+
+            // it's removing the whole account!
+            await connection.promise().execute('UPDATE users SET token_reset = NULL WHERE token_reset = ?',[token], (err) =>{
+                if(err) return res.status(500).json({message: 'Error to remove the token!'})
+            })
+
+            res.json({message: 'Password Successful Updated!'})
+            
+
+        }catch(err){
+            console.log(err)
         }
+
+
 
     }
 }

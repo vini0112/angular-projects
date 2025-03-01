@@ -180,10 +180,11 @@ class loginController{
                 to: email,
                 subject: 'Password Reset Request',
                 html: `<p>Click on the link down here to reset your password!:</p>
-                <a href="${resetUrl}" target="_blank">${resetUrl}</a>
+                <a href="${resetUrl}">${resetUrl}</a> 
                 <p>This link expires in 15min!</p>`
             }
                 
+                // 
     
             await transporter.sendMail(receiver)
 
@@ -229,6 +230,17 @@ class loginController{
 
 
     }
+
+    async validatorTokenResetPassword(req, res){
+        const {token} = req.params
+
+        const [row, result] = await connection.promise().execute("SELECT * FROM users WHERE token_reset = ? AND token_expires > NOW()", [token])
+
+        if(row.length === 0) return res.status(400).json({ message: "Token inválido ou expirado" });
+        
+        res.json({valid: true });
+    }
+        
 }
 
 export default new loginController()

@@ -19,10 +19,7 @@
 
                 <div class="passwordBox">
                     <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" name="password" formControlName="password">
-                    @if(password?.touched || password?.dirty ||submitted){
-                        <span class="errorMsg">{{messageErro('password')}}</span>
-                    }
-
+                    
                     <!-- icon see password -->
                     @if(passwordVisible == true){
                         <i class="fa-solid fa-eye openEye" (click)="closeEye()"></i>
@@ -31,6 +28,9 @@
                     }
                     
                 </div>
+                @if(password?.touched || password?.dirty ||submitted){
+                    <span class="errorMsg">{{messageErro('password')}}</span>
+                }
 
                 <p>Already has an account? <i class="fa-solid fa-arrow-right-long arrowRight" (click)="movingToLogin()"></i></p>
                 <button type="submit">Sign Up</button>
@@ -53,7 +53,11 @@
                 </div>
 
                 <p>Forgot your <a (click)="retrievePassword()" class="forgotPassword">password?</a></p>
-                <button type="submit">Sign In</button>
+                <div class="submitMobileAndReplacePage">
+                    <button type="submit">Sign In</button>
+                    <i class="fa-solid fa-arrow-left-long arrowLeft" (click)="movingToSignup()"></i>
+                    
+                </div>
             </form> 
             
         }

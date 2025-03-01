@@ -3,15 +3,17 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthLoginService } from '../../../services/auth.login.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-reset-password',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
 export default class ResetPasswordComponent implements OnInit{
 
+  blockLeavePasswordResetPage = false
   token = ''
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
@@ -58,6 +60,8 @@ export default class ResetPasswordComponent implements OnInit{
   }
 
 
+  // reseting password
+  passwordWasSent = false
 
 
   reseting(){
@@ -69,12 +73,13 @@ export default class ResetPasswordComponent implements OnInit{
         this.authLoginService.resetingPassword(password, this.token).subscribe({
 
           next: (res) => {
-            alert('Password updated!'),
-            this.router.navigateByUrl('/login')
+            this.passwordWasSent = true
           },
 
           error: (err) => console.log(err)
         })
+      }else if(this.newPassword?.value !== this.confirmingPassword?.value){
+        alert("Passwords not identical!")
       }
       return
     }

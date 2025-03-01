@@ -3,6 +3,9 @@ import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import {JwtHelperService } from '@auth0/angular-jwt'
 import { BehaviorSubject, from, Observable, Subject, tap } from 'rxjs';
+import { ResetTokenResponseModule } from '../modules/resetPassword.module';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +24,8 @@ export class AuthLoginService {
   private isAuth = new BehaviorSubject<boolean>(this.hasToken())
   isAuthenticated$ = this.isAuth.asObservable()
 
-  private tokenOfResetPassword = new BehaviorSubject<string | null>(null)
-  tokenOfResetPassword$ = this.tokenOfResetPassword.asObservable()
+  // private tokenOfResetPassword = new BehaviorSubject<string | null>(null)
+  // tokenOfResetPassword$ = this.tokenOfResetPassword.asObservable()
 
 
   emailValidator(email: string):Observable<string>{
@@ -97,14 +100,20 @@ export class AuthLoginService {
     return this.http.post<string>(`${this.api}/reset-password`, {newPassword, token})
   }
 
-  setTokenOfResetPassword(token: string){
-    console.log(token)
-    this.tokenOfResetPassword.next(token)
+  // setTokenOfResetPassword(token: string){
+  //   this.tokenOfResetPassword.next(token)
+  // }
+
+  // getTokenOfResetPassword(): Observable<string | null>{
+  //   return this.tokenOfResetPassword.asObservable()
+  // }
+
+  
+
+  tokenResetPasswordValidator(token: string): Observable<ResetTokenResponseModule>{
+    return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`)
   }
 
-  getTokenOfResetPassword(): Observable<string | null>{
-    return this.tokenOfResetPassword.asObservable()
-  }
-
+  
 
 }

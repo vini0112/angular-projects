@@ -85,6 +85,7 @@ export default class LoginComponent {
 
         this.loginService.register(this.signUpForm.value).subscribe({
           next: (res) => {
+            alert('Account Created!')
             console.log(res)
             this.movingToLogin()
             this.clearSignup()

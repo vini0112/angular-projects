@@ -102,13 +102,16 @@
     text-shadow: 2px 2px 5px black;
 }
 
-#icons a{
+#icons .loginPrincipal{
     text-decoration: none;
     color: white;
     background-color: black;
     border: none;
     padding: .4rem .9rem;
     font-weight: 500;
+}
+#icons .logoutPrincipal{
+    color: black;
 }
 
 .boxCartIcon{

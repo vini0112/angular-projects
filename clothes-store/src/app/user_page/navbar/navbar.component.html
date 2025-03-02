@@ -25,9 +25,9 @@
                 <span class="contCart">{{allQtd$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
-            <a routerLink="/login" *ngIf="!(isAuthentic$ | async)">Login</a>
+            <a routerLink="/login" *ngIf="!(isAuthentic$ | async)" class="loginPrincipal">Login</a>
             
-            <i *ngIf="(isAuthentic$ | async)" (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i>
+            <a routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthentic$ | async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
 
         </nav>
 
@@ -59,7 +59,8 @@
                 <li><a routerLink="/favorites"><i class="fa-regular fa-heart"></i></a></li>
                 <li><a><i class="fa-solid fa-building"></i></a></li>
                 <li><a><i class="fa-solid fa-phone"></i></a></li>
-                <li><a><i class="fa-solid fa-user"></i></a></li>
+                <li *ngIf="!(isAuthentic$ | async)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
+                <li *ngIf="(isAuthentic$ | async)"><a routerLink="/home"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a></li>
 
             </ul>
 

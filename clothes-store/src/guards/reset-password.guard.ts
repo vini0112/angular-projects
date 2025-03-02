@@ -2,7 +2,6 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthLoginService } from '../services/auth.login.service';
 import { catchError, map, of } from 'rxjs';
-import { response } from 'express';
 
 export const resetPasswordGuard: CanActivateFn = (route, state) => {
 

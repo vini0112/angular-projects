@@ -12,10 +12,11 @@ export const erroInterceptor: HttpInterceptorFn = (req, next) => {
       if(error.status === 401){
         const isContinue = confirm('Are you sure that you want to continue')
         if(isContinue){
-          authLoginService.tokenExpired$.next(true)
+          // authLoginService.tokenExpired$.next(true)
         }        
       }
       return throwError(error)
     })
   );
+
 };

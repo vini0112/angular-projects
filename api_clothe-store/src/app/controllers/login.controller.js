@@ -1,4 +1,3 @@
-import loginRepository from "../repositories/login.repository.js"
 import connection from "../database/connection.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -49,7 +48,6 @@ class loginController{
 
     }
 
-
     async protectedRoute(req, res){
         const token = req.cookies.token
         
@@ -64,27 +62,6 @@ class loginController{
             res.status(401).json({message: 'Invalid Token'})
         }
 
-    }
-
-
-    async validandoEmail(req, res){
-        const {email} = req.body
-        
-        let sql = "SELECT * FROM users"
-
-        connection.query(sql, (err, result) =>{
-            if(err){
-                return res.status(500).json({ error: 'Erro no servidor.' });
-            }
-
-            let ifExisteEmail = result.some(user => user.email == email)
-            
-            if(ifExisteEmail == true){
-                res.status(400).json({error: "Email already exist!"})
-                return
-            }
-            
-        }) 
     }
 
 
@@ -150,7 +127,6 @@ class loginController{
         if(!email){
             res.status(400).json({message: 'Please provide email!'})
         }
-        
 
         try{
             const [rows, fields] = await connection.promise().execute("SELECT * FROM users WHERE email = ?", [email])
@@ -162,7 +138,7 @@ class loginController{
             const tokenReset = jwt.sign({email}, process.env.SECRET_RESET_PASSWORD, {expiresIn: '15min'})
 
 
-            await connection.promise().execute("UPDATE users SET token_reset = ?, token_expires = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email = ?", [tokenReset, email])
+            await connection.promise().execute("UPDATE users SET token_reset = ?, token_expires = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE email = ?", [tokenReset, email])
             
             const transporter = mailer.createTransport({
                     host: "smtp.gmail.com",                
@@ -227,8 +203,6 @@ class loginController{
             console.log(err)
         }
 
-
-
     }
 
     async validatorTokenResetPassword(req, res){
@@ -241,6 +215,28 @@ class loginController{
         res.json({valid: true });
     }
         
+
+    // not in used
+    async validandoEmail(req, res){
+        const {email} = req.body
+        
+        let sql = "SELECT * FROM users"
+
+        connection.query(sql, (err, result) =>{
+            if(err){
+                return res.status(500).json({ error: 'Erro no servidor.' });
+            }
+
+            let ifExisteEmail = result.some(user => user.email == email)
+            
+            if(ifExisteEmail == true){
+                res.status(400).json({error: "Email already exist!"})
+                return
+            }
+            
+        }) 
+    }
+
 }
 
 export default new loginController()

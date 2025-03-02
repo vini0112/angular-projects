@@ -17,17 +17,14 @@ export class AuthLoginService {
   
   constructor(private jwtHelper: JwtHelperService) { 
     this.getUser()
-    // this.loadToken()
   }
 
 
   private isAuth = new BehaviorSubject<boolean>(this.hasToken())
   isAuthenticated$ = this.isAuth.asObservable()
 
-  // private tokenOfResetPassword = new BehaviorSubject<string | null>(null)
-  // tokenOfResetPassword$ = this.tokenOfResetPassword.asObservable()
 
-
+  // nao em uso
   emailValidator(email: string):Observable<string>{
     return this.http.post<string>(`${this.api}/emailValidation`, {email})
   }
@@ -99,15 +96,6 @@ export class AuthLoginService {
   resetingPassword(newPassword: string, token: string): Observable<string>{
     return this.http.post<string>(`${this.api}/reset-password`, {newPassword, token})
   }
-
-  // setTokenOfResetPassword(token: string){
-  //   this.tokenOfResetPassword.next(token)
-  // }
-
-  // getTokenOfResetPassword(): Observable<string | null>{
-  //   return this.tokenOfResetPassword.asObservable()
-  // }
-
   
 
   tokenResetPasswordValidator(token: string): Observable<ResetTokenResponseModule>{

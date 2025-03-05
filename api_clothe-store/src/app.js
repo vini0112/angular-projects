@@ -14,8 +14,10 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieParse())
-app.use(productRouter)
+
 app.use(loginRouter)
+
+app.use(productRouter)
 
 
 

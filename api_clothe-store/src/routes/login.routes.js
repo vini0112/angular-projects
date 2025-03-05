@@ -8,8 +8,12 @@ const router = Router()
 // rota protegida
 router.get('/auth/user', loginController.protectedRoute)
 
+router.post('/refreshToken', loginController.checkingRefreshToken)
+
+
 // SIGN IN 
 router.post('/entrando', loginController.entrando)
+
 
 // SIGN UP
 router.post('/emailValidation', loginController.validandoEmail)

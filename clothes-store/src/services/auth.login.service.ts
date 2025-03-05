@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import {JwtHelperService } from '@auth0/angular-jwt'
-import { BehaviorSubject, from, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, from, Observable, of, Subject, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
 
 
@@ -17,31 +17,31 @@ export class AuthLoginService {
   
   constructor(private jwtHelper: JwtHelperService) { 
     this.getUser()
+    
   }
 
 
   private isAuth = new BehaviorSubject<boolean>(this.hasToken())
   isAuthenticated$ = this.isAuth.asObservable()
 
+  private accessToken$ = new BehaviorSubject<string | null>(null)
 
-  // nao em uso
-  emailValidator(email: string):Observable<string>{
-    return this.http.post<string>(`${this.api}/emailValidation`, {email})
-  }
 
   register(form: string): Observable<string>{
     return this.http.post<string>(`${this.api}/addingUser`, form)
   }
 
 
-  gettingIn(credentials: {form: string}): Observable<string>{
-    return this.http.post<string>(`${this.api}/entrando`, credentials, {withCredentials: true})
-    .pipe(
-      tap(() =>{
-        this.saveToken()
+
+  gettingIn(credentials: {form: string}): Observable<{accessToken: string}>{
+    return this.http.post<{accessToken: string}>(`${this.api}/entrando`, credentials, {withCredentials: true}).pipe(
+      tap(response => {
+        this.saveToken(response.accessToken),
+        this.accessToken$.next(response.accessToken)
       })
     )
   }
+
 
   private getUser(){
     this.http.get<{authenticated: boolean}>(`${this.api}/auth/user`, {withCredentials: true})
@@ -51,6 +51,9 @@ export class AuthLoginService {
       error: () => `No Token`
     })
   }
+
+
+
 
   loggingOut(){
     this.http.post<string>(`${this.api}/auth/logout`, {}, {withCredentials: true})
@@ -62,10 +65,33 @@ export class AuthLoginService {
 
 
 
+  refreshAccessToken(): Observable<{accessToken: string}>{  
+    return this.http.post<{accessToken: string}>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
+      tap((response: any) => {
+
+        if(response.accessToken){
+          this.saveToken(response.accessToken)
+          this.accessToken$.next(response.accessToken)
+        }else{
+          console.warn('[AuthService] Refresh token falhou, sem novo accessToken!');
+        }
+        
+      }),
+      
+    )
+  }
+
+
+
+  getAccessToken(): string | null {
+    return this.accessToken$.value;
+  }
+
   // implementation with localStorage 
 
-  private saveToken(){
-    localStorage.setItem('token', 'true')
+  private saveToken(accessToken: string){
+    console.log(accessToken)
+    localStorage.setItem('token', accessToken)
     this.isAuth.next(true)
   }
   
@@ -83,6 +109,7 @@ export class AuthLoginService {
   }
   
   logOut(){
+    this.accessToken$.next(null)
     localStorage.removeItem('token')
     this.isAuth.next(false)
   }
@@ -102,6 +129,13 @@ export class AuthLoginService {
     return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`)
   }
 
+
+
+
+   // nao em uso
+  emailValidator(email: string):Observable<string>{
+    return this.http.post<string>(`${this.api}/emailValidation`, {email})
+  }
   
 
 }

@@ -19,13 +19,10 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.productService.getProducts()
-
-    // this.checkingIfLogged()
+    
   }
 
-  // checkingIfLogged(){
-  //   this.authService.getUser()
-  // }
+  
 
   
 }

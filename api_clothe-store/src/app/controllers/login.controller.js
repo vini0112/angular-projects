@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken'
 import mailer from 'nodemailer'
 
 const saltRounds = 10;
-const secretKey = "chaveSecretaSuperSegura";
 
 class loginController{
 
@@ -27,27 +26,57 @@ class loginController{
             }
 
             const user = result[0]
-
+            
             const match = await bcrypt.compare(password, user.password)
             
             if(!match){
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const token = jwt.sign({ id: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
+            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
-            res.cookie('token', token, {
+            const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+
+
+            await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken, user.email])
+
+            res.cookie('refreshToken', refreshToken, {
                 httpOnly: true, // impede acesso ao cookie via JavaScript do lado do cliente
                 secure: true, // Somente HTTPS em produção
                 sameSite: 'none', // Evita envio do cookie em requisições de outros sites
-                maxAge: 60 * 60 * 1000 // expirar em 1h
+                maxAge: 7 * 24 * 60 * 60 * 1000 // expirar em 7d
             }) 
 
-            res.json({ message: 'Login realizado com sucesso!'});
+            res.json({ message: 'Login realizado com sucesso!', accessToken});
         })
 
     }
 
+    async checkingRefreshToken(req, res){
+        const refreshToken = req.cookies.refreshToken
+
+        
+        if(!refreshToken) return res.status(401).json({message: "not authorized!"})
+        
+        
+        connection.query('SELECT * FROM users WHERE token_reset = ?', [refreshToken], (err, result) =>{
+
+            // console.log(refreshToken)
+            if(err || result.length === 0) return res.status(403).json({ message: "Token inválido" });
+
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
+                if (err) return res.status(403).json({ message: "Token inválido" });
+                
+                const newAccessToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.SECRET_KEY, { expiresIn: '15m' });
+
+                res.json({accessToken: newAccessToken})
+
+
+            })
+        })
+    }
+
+    
     async protectedRoute(req, res){
         const token = req.cookies.token
         

@@ -33,7 +33,7 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
+            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15s' });
 
             const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
@@ -53,24 +53,23 @@ class loginController{
     }
 
     async checkingRefreshToken(req, res){
+        
         const refreshToken = req.cookies.refreshToken
-
+        console.log(refreshToken)
         
         if(!refreshToken) return res.status(401).json({message: "not authorized!"})
         
-        
         connection.query('SELECT * FROM users WHERE token_reset = ?', [refreshToken], (err, result) =>{
 
-            // console.log(refreshToken)
-            if(err || result.length === 0) return res.status(403).json({ message: "Token inválido" });
+            
+            if(err || result.length === 0) return res.status(401).json({ message: "Token inválido" });
 
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
-                if (err) return res.status(403).json({ message: "Token inválido" });
+                if (err) return res.status(403).json({ message: "Token inválido", refreshToken});
                 
-                const newAccessToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                const newAccessToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.SECRET_KEY, { expiresIn: '15s' });
 
                 res.json({accessToken: newAccessToken})
-
 
             })
         })

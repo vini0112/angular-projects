@@ -1,60 +1,103 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { inject, Optional } from '@angular/core';
+import { HttpErrorResponse, HttpHandler, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { inject, Inject, Optional } from '@angular/core';
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
 import { AuthLoginService } from '../services/auth.login.service';
+import { Router } from '@angular/router';
+import { AuthServiceService } from '../services/auth-service.service';
 
   
-// const isRefreshing = new BehaviorSubject<boolean>(false)
-// const refreshTokenAccess = new BehaviorSubject<string | null>(null)
+const isRefreshing = new BehaviorSubject<boolean>(false)
+const refreshTokenAccess = new BehaviorSubject<string | null>(null)
 
-export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
+export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandlerFn){
 
-  // const authLoginService = inject(AuthLoginService, {optional: true})
+  // const authLoginService = inject(AuthLoginService)
+  // console.log('second refresh token', req.url)
+
+  if (req.url.includes('/auth/user') || req.url.includes('/auth/refresh') || req.url.includes('/login')) {
+    return next(req);
+  }
+
+
+  let token: string | null = ''
+  if(typeof window !== 'undefined'){
+      token = localStorage.getItem('accessToken')
+  }
+
+  if(token){
+    req = addToken(req, token)
+    console.log('worked')
+  }
+
+
+  
+
   
   
-  return next(req)
-  // return next(req).pipe(
-  //   catchError(error => {
-  //     // console.error('[Interceptor] Erro detectado:', error);
-  //     if(error.status === 401 && !req.url.includes('/refreshToken')){
-  //       // return handle401Error(authLoginService, req, next)
-  //       console.log('chegouu aqui')
-  //     }
+  return next(req).pipe(
+    
+    catchError((error: HttpErrorResponse) => {
+      if(error.status === 401 && !req.url.includes('/refreshToken')){
+        console.log('Token expirado! Tentando fazer refresh...');
+        return handle401Error(req, next)
+      }
 
-  //     return throwError(() => error)
-  //   })
-  // )
+      return throwError(() => error)
+    })
+  )
 
 };
 
+function addToken(req: HttpRequest<unknown>, token: string){
+  return req.clone({
+      setHeaders: {
+          Authorization: `Bearer ${token}`
+      }
+  })
+}
 
-// function handle401Error(authLoginService: AuthLoginService, req: any, next: any): Observable<any>{
 
-//   if(!isRefreshing.value){
-//     isRefreshing.next(true)
-//     refreshTokenAccess.next(null)
+function handle401Error(req: any, next: any): Observable<any>{
+    const authService = inject(AuthServiceService)
+    const router = inject(Router)
 
-//     return authLoginService.refreshAccessToken().pipe(
-//       switchMap((token: any) =>{
-//         isRefreshing.next(false)
-//         refreshTokenAccess.next(token.accessToken)
-//         return next(req.clone({setHeaders: {Authorization: `Bearer ${token.accessToken}`}}))
-//       }),
-//       catchError(error =>{
-//         isRefreshing.next(false)
-//         authLoginService.loggingOut() // desloga se falhar o refresh
-//         return throwError(() => error)
+    // return authLoginService.refreshAccessToken().pipe(
+    //   switchMap((token: any) =>{
+    //     localStorage.setItem('token', token)
+    //     return next(addToken(req, token))
+    //   }),
+    //   catchError(err =>{
+    //     authLoginService.loggingOut()
+    //     router.navigateByUrl('/login')
+    //     return throwError(() => err)
+    //   })
+    // )
+  
+  if(!isRefreshing.value){
+    isRefreshing.next(true)
+    refreshTokenAccess.next(null)
 
-//       })
-//     )
-//   }else{
-//     return refreshTokenAccess.pipe(
-//       filter(token => token !== null),
-//       take(1),
-//       switchMap(token => next(req.clone({setHeaders: {Authorization: `Bearer ${token}`}})))
-//     )
-//   }
+    return authService.refreshToken().pipe(
+      switchMap((newToken: any) =>{
+        isRefreshing.next(false)
+        refreshTokenAccess.next(newToken.accessToken)
+        return next.handle(addToken(req, newToken.accessToken))
+      }),
+      catchError(error =>{
+        isRefreshing.next(false)
+        authService.logout() // desloga se falhar o refresh
+        return throwError(() => error)
+
+      })
+    )
+  }else{
+    return refreshTokenAccess.pipe(
+      filter(token => token !== null),
+      take(1),
+      switchMap(token => next.handle(addToken(req, token)))
+    )
+  }
   
 
-// }
+}
 

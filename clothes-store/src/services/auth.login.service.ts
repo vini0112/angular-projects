@@ -65,22 +65,6 @@ export class AuthLoginService {
 
 
 
-  refreshAccessToken(): Observable<{accessToken: string}>{  
-    return this.http.post<{accessToken: string}>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
-      tap((response: any) => {
-
-        if(response.accessToken){
-          this.saveToken(response.accessToken)
-          this.accessToken$.next(response.accessToken)
-        }else{
-          console.warn('[AuthService] Refresh token falhou, sem novo accessToken!');
-        }
-        
-      }),
-      
-    )
-  }
-
 
 
   getAccessToken(): string | null {
@@ -90,14 +74,13 @@ export class AuthLoginService {
   // implementation with localStorage 
 
   private saveToken(accessToken: string){
-    console.log(accessToken)
-    localStorage.setItem('token', accessToken)
+    localStorage.setItem('accessToken', accessToken)
     this.isAuth.next(true)
   }
   
   hasToken(): boolean{
     if(typeof window !== 'undefined'){
-      return !!localStorage.getItem('token')
+      return !!localStorage.getItem('accessToken')
     }
     return false
   }
@@ -110,7 +93,7 @@ export class AuthLoginService {
   
   logOut(){
     this.accessToken$.next(null)
-    localStorage.removeItem('token')
+    localStorage.removeItem('accessToken')
     this.isAuth.next(false)
   }
 

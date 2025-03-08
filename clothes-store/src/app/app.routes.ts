@@ -5,6 +5,7 @@ import { MasculinoComponent } from './user_page/masculino/masculino.component';
 import { authGuard } from '../guards/auth.guard';
 import { resetPasswordGuard } from '../guards/reset-password.guard';
 import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-reset.guard';
+import { testGuard } from '../guards/test.guard';
 
 export const routes: Routes = [
     {
@@ -33,13 +34,14 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import('../app/user_page/login/login.component'),
-        canActivate: [authGuard]
+        canActivate: [authGuard] 
     },
     {
         path: 'reset-password/:token',
         loadComponent: () => import('../app/user_page/reset-password/reset-password.component'),
         canActivate: [resetPasswordGuard],
         canDeactivate: [blockLeavePasswordResetGuard]
+
     },
     { 
         path: '**', redirectTo: 'home'

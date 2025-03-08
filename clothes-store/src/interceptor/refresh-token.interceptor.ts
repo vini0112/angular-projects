@@ -10,9 +10,8 @@ const isRefreshing = new BehaviorSubject<boolean>(false)
 const refreshTokenAccess = new BehaviorSubject<string | null>(null)
 
 export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandlerFn){
+  const authService = inject(AuthServiceService)
 
-  // const authLoginService = inject(AuthLoginService)
-  // console.log('second refresh token', req.url)
 
   if (req.url.includes('/auth/user') || req.url.includes('/auth/refresh') || req.url.includes('/login')) {
     return next(req);
@@ -29,9 +28,6 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
     console.log('worked')
   }
 
-
-  
-
   
   
   return next(req).pipe(
@@ -39,7 +35,7 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
     catchError((error: HttpErrorResponse) => {
       if(error.status === 401 && !req.url.includes('/refreshToken')){
         console.log('Token expirado! Tentando fazer refresh...');
-        return handle401Error(req, next)
+        return handle401Error(authService ,req, next)
       }
 
       return throwError(() => error)
@@ -57,23 +53,11 @@ function addToken(req: HttpRequest<unknown>, token: string){
 }
 
 
-function handle401Error(req: any, next: any): Observable<any>{
-    const authService = inject(AuthServiceService)
-    const router = inject(Router)
+function handle401Error(authService: AuthServiceService ,req: any, next: any): Observable<any>{
 
-    // return authLoginService.refreshAccessToken().pipe(
-    //   switchMap((token: any) =>{
-    //     localStorage.setItem('token', token)
-    //     return next(addToken(req, token))
-    //   }),
-    //   catchError(err =>{
-    //     authLoginService.loggingOut()
-    //     router.navigateByUrl('/login')
-    //     return throwError(() => err)
-    //   })
-    // )
-  
+
   if(!isRefreshing.value){
+
     isRefreshing.next(true)
     refreshTokenAccess.next(null)
 
@@ -85,7 +69,7 @@ function handle401Error(req: any, next: any): Observable<any>{
       }),
       catchError(error =>{
         isRefreshing.next(false)
-        authService.logout() // desloga se falhar o refresh
+        //authService.logout() // desloga se falhar o refresh
         return throwError(() => error)
 
       })

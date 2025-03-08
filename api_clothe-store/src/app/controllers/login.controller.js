@@ -33,7 +33,7 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15s' });
+            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
             const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
@@ -52,10 +52,9 @@ class loginController{
 
     }
 
-    async checkingRefreshToken(req, res){
+    async refreshToken(req, res){
         
         const refreshToken = req.cookies.refreshToken
-        console.log(refreshToken)
         
         if(!refreshToken) return res.status(401).json({message: "not authorized!"})
         
@@ -67,9 +66,9 @@ class loginController{
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
                 if (err) return res.status(403).json({ message: "Token inválido", refreshToken});
                 
-                const newAccessToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.SECRET_KEY, { expiresIn: '15s' });
+                const newAccessToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
-                res.json({accessToken: newAccessToken})
+                res.status(200).json({accessToken: newAccessToken})
 
             })
         })
@@ -138,7 +137,7 @@ class loginController{
     // logout
 
     async logOut(req, res){
-        res.clearCookie('token', {
+        res.clearCookie('refreshToken', {
             httpOnly: true,
             secure: true,
             sameSite: 'none',

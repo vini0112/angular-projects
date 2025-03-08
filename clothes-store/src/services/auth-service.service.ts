@@ -15,7 +15,6 @@ export class AuthServiceService {
   
 
   constructor() {
-    this.refreshToken()
   }
 
   getAccessToken(): string | null{
@@ -40,6 +39,7 @@ export class AuthServiceService {
 
     return this.http.post<any>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
       tap((res) => {
+        
         console.log('Access token created!')
         if(res.accessToken){
           this.setAccessToken(res.accessToken)
@@ -55,21 +55,5 @@ export class AuthServiceService {
   }
 
 
-
-  // refreshAccessToken(): Observable<{accessToken: string}>{  
-  //   return this.http.post<{accessToken: string}>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
-      // tap((response: any) => {
-
-      //   if(response.accessToken){
-      //     this.saveToken(response.accessToken)
-      //     this.accessToken$.next(response.accessToken)
-      //   }else{
-      //     console.warn('[AuthService] Refresh token falhou, sem novo accessToken!');
-      //   }
-        
-      // }),
-      
-  //   )
-  // }
 
 }

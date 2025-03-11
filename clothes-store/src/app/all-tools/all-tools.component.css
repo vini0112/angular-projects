@@ -1,0 +1,132 @@
+
+
+:host{
+    display: block;
+    background-color: rgb(0, 0, 0, 0.01);
+
+}
+
+
+.title{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+}
+
+/* h1{
+    
+} */
+
+.toolsContainer{
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    
+}
+
+.toolBox{
+    border: 2px solid black;
+    height: 280px;
+    width: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+
+}
+.toolBox:hover{
+    transform: scale(1.07);
+    z-index: 5;
+}
+
+
+.toolBox img{
+    width: 100px;
+    height: 100px;
+}
+
+.toolBox h5{
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+
+
+/* tablets */
+@media (max-width: 820px){
+
+    .toolsContainer{
+        height: 100%;
+        width: 100%;
+        grid-template-columns: repeat(3, 230px);
+        justify-content: center;
+    }
+
+    .toolBox{
+        height: 260px;
+        width: 230px;
+    }
+
+}
+
+/* small diveces */
+@media (max-width: 450px){
+
+    .title{
+        margin-bottom: 2.5rem;
+    }
+    .toolsContainer{
+        height: 100%;
+        width: 100%;
+        grid-template-columns: repeat(1, 280px);
+        justify-content: center;
+    }
+
+    .toolBox{
+        height: 260px;
+        width: 280px;
+    }
+}
+
+/* LAND SCAPE */
+
+@media screen and (orientation: landscape) and (max-width: 950px){
+    .toolsContainer{
+        height: 100%;
+        width: 100%;
+        grid-template-columns: repeat(3, 230px);
+        justify-content: center;
+    }
+
+    .toolBox{
+        height: 260px;
+        width: 230px;
+    }
+}
+
+/* iphone SE */
+@media screen and (orientation: landscape) and (max-width: 670px){
+    .toolsContainer{
+        height: 100%;
+        width: 100%;
+        grid-template-columns: repeat(2, 230px);
+        justify-content: center;
+    }
+
+    .toolBox{
+        height: 260px;
+        width: 230px;
+    }
+}
+

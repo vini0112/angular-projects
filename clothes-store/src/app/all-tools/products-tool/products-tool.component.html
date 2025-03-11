@@ -1,0 +1,43 @@
+
+
+<h2 style="text-align: center; margin: 1rem 0 3rem 0;">All Products</h2>
+
+<div class="btnManegment">
+    <a routerLink="../">Go Back</a>
+    <button>Post</button>
+</div>
+
+<table *ngIf="!isProductsTableActive()">
+    <thead>
+        <tr>
+            <th style="width: 50px;">Id</th>
+            <th style="width: 150px;">Nome</th>
+            <th style="width: 350px;">Info</th>
+            <th style="width: 80px;">Section</th>
+            <th style="width: 80px;">Sexo</th>
+            <th style="width: 50px;">Qtd</th>
+            <th style="width: 70px;">Price</th>
+            <th style="width: 160px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(item of allProducts; track $index){
+            <tr>
+                <td style="width: 50px;">{{item.id}}</td>
+                <td style="width: 150px;">{{item.name}}</td>
+                <td class="info" style="width: 350px;">{{item.info}}</td>
+                <td style="width: 80px;">{{item.section}}</td>
+                <td style="width: 80px;">{{item.sexo}}</td>
+                <td style="width: 50px;">{{item.quantity}}</td>
+                <td style="width: 70px;">{{item.price.toFixed(2)}}</td>
+                <td class="btnsCrud">
+                    <button class="edit">Edit</button>
+                    <button class="del">Del</button>
+                </td>
+                            
+            </tr>
+        }
+        
+    </tbody>
+    
+</table>

@@ -21,13 +21,20 @@ export class ProductsService {
     return this.http.get<productModule[]>(`${this.apiUrl}/clothes`).pipe(
       tap(dados => this.allProducts.next(dados))
     ).subscribe()
-
   }
 
 
   updateFavorite(id: number, isFavorite: boolean){
     return this.http.patch(`${this.apiUrl}/clothesFavorite/${id}`, {isFavorite}) 
   }
+
+
+  // CRUD
+
+  createProduct(dados: productModule){
+    return this.http.post<productModule>(`${this.apiUrl}/clothes`, dados)
+  }
+
 
   
 }

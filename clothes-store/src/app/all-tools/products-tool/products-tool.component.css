@@ -1,0 +1,84 @@
+
+:host{
+    display: block;
+}
+
+
+.btnManegment{
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    margin-bottom: 3rem;
+}
+.btnManegment a{
+    text-decoration: none;
+
+}
+.btnManegment a:hover{
+    text-decoration: underline;
+}
+.btnManegment button{
+    border: 0;
+    padding: .4rem 1.8rem;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+table{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+thead tr th{
+    border: 2px solid black;
+    text-align: center;
+}
+
+tbody tr{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+tbody tr:nth-child(even){
+    background-color: rgba(213, 213, 213, 0.37);
+}
+
+tbody tr td {
+    border-top: none;
+    text-align: center;
+}
+
+
+
+tbody tr td button{
+    border: none;
+    width: 70px;
+    height: 30px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.btnsCrud{
+    border: none;
+    width: 160px;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.edit{
+    background-color: blue;
+}
+.del{
+    
+    background-color: red;
+}
+

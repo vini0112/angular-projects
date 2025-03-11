@@ -1,0 +1,31 @@
+
+<div class="title" *ngIf="!isChildRouteActive()">
+    <h1>Welcome Back, Vini!</h1>
+</div>
+
+
+<div class="toolsContainer" *ngIf="!isChildRouteActive()">
+
+    <div class="toolBox">
+        <img src="./assets/icons/company.png" alt="">
+        <h5>Company Profile</h5>
+        <p>View your personal information.</p>
+    </div>
+
+    <div class="toolBox">
+        <img src="./assets/icons/profit_graph2.png" alt="">
+        <h5>Data & Reports</h5>
+        <p>View your company profit.</p>
+    </div>
+    
+    <div class="toolBox" (click)="warehouse()">
+        <img src="./assets/icons/warehouse.png" alt="">
+        <h5>Product Management</h5>
+        <p>View all of your products.</p>
+    </div>
+
+</div>
+
+
+<router-outlet></router-outlet>
+

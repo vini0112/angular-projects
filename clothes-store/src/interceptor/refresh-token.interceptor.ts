@@ -25,7 +25,7 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
 
   if(token){
     req = addToken(req, token)
-    console.log('worked')
+    // console.log('worked')
   }
 
   
@@ -34,7 +34,7 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
     
     catchError((error: HttpErrorResponse) => {
       if(error.status === 401 && !req.url.includes('/refreshToken')){
-        console.log('Token expirado! Tentando fazer refresh...');
+        // console.log('Token expirado! Tentando fazer refresh...');
         return handle401Error(authService ,req, next)
       }
 

@@ -2,42 +2,47 @@
 
 <h2 style="text-align: center; margin: 1rem 0 3rem 0;">All Products</h2>
 
-<div class="btnManegment">
-    <a routerLink="../">Go Back</a>
-    <button>Post</button>
+<!--productCreation-->
+<div class="linksNavigation" *ngIf="createNewProductPage()">
+    <button (click)="isProductsTableActive()" class="btnCreateProduct">Add New Product</button>
 </div>
 
-<table *ngIf="!isProductsTableActive()">
+
+<table *ngIf="createNewProductPage()">
     <thead>
         <tr>
-            <th style="width: 50px;">Id</th>
-            <th style="width: 150px;">Nome</th>
-            <th style="width: 350px;">Info</th>
-            <th style="width: 80px;">Section</th>
-            <th style="width: 80px;">Sexo</th>
-            <th style="width: 50px;">Qtd</th>
-            <th style="width: 70px;">Price</th>
-            <th style="width: 160px;">Actions</th>
+            <th class="sizeP">Id</th>
+            <th class="sizeG">Nome</th>
+            <th class="sizeGG">Info</th>
+            <th class="sizeM">Section</th>
+            <th class="sizeM">Sexo</th>
+            <th class="sizeP">Qtd</th>
+            <th class="sizeM">Price</th>
+            <th class="sizeG">Actions</th>
         </tr>
     </thead>
     <tbody>
         @for(item of allProducts; track $index){
             <tr>
-                <td style="width: 50px;">{{item.id}}</td>
-                <td style="width: 150px;">{{item.name}}</td>
-                <td class="info" style="width: 350px;">{{item.info}}</td>
-                <td style="width: 80px;">{{item.section}}</td>
-                <td style="width: 80px;">{{item.sexo}}</td>
-                <td style="width: 50px;">{{item.quantity}}</td>
-                <td style="width: 70px;">{{item.price.toFixed(2)}}</td>
+                <td class="sizeP">{{item.id}}</td>
+                <td class="sizeG">{{item.name}}</td>
+                <td class="sizeGG">{{item.info}}</td>
+                <td class="sizeM">{{item.section}}</td>
+                <td class="sizeM">{{item.sexo}}</td>
+                <td class="sizeP">{{item.quantity}}</td>
+                <td class="sizeM">{{item.price.toFixed(2)}}</td>
                 <td class="btnsCrud">
                     <button class="edit">Edit</button>
                     <button class="del">Del</button>
-                </td>
-                            
+                </td>    
             </tr>
         }
-        
     </tbody>
     
 </table>
+
+
+<!-- post new product compenet -->
+<app-creating-product *ngIf="!createNewProductPage()" (statusCreationPage)="handleResponse($event)"></app-creating-product>
+
+

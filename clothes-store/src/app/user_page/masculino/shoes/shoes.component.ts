@@ -13,6 +13,7 @@ import { listCartServices } from '../../../../services/listCart.service';
 })
 export default class ShoesComponent implements OnInit{
 
+  
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
 
@@ -25,7 +26,17 @@ export default class ShoesComponent implements OnInit{
   // getting just shirts
   gettingShoes(){
     this.productService.allProducts$.subscribe(item => {
+      
       item.forEach(product => {
+        
+        // displaying uploaded img
+        if(product.image && product.image.includes('/upload')){
+          if(!product.image.startsWith('http://localhost:3000')){
+            product.image = `http://localhost:3000${product.image}`
+          }
+        }
+        
+
         if(product.section == 'shoes' && product.sexo == 'masc') this.allShoes.push(product)
       })
     

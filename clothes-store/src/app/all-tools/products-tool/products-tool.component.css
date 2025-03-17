@@ -123,3 +123,56 @@ tbody tr td button{
     }
 }
 
+@media (max-width: 480px){
+    .btnCreateProduct{
+        margin-right: 1rem;
+    }
+
+    .boxTable{
+        width: 100%;
+        overflow-x: auto;
+    }
+    table{
+        width: 100%;
+        display: block;
+        border-collapse: collapse;
+        min-width: 730px; 
+    }
+    thead{
+        display: block;
+    }
+    
+}
+
+@media screen and (orientation: landscape) and (max-width: 950px){
+
+    .btnCreateProduct{
+        margin-right: 1rem;
+    }
+
+    .boxTable{
+        width: 100%;
+        overflow-x: auto;
+    }
+    table{
+        width: 100%;
+        display: block;
+        border-collapse: collapse;
+        min-width: 1000px; 
+    }
+    thead{
+        display: block;
+    }
+
+
+}
+
+/* landscape iphone SE */
+@media screen and (orientation: landscape) and (max-height: 380px){
+    table{
+        width: 100%;
+        display: block;
+        border-collapse: collapse;
+        min-width: 720px; 
+    }
+}

@@ -28,6 +28,14 @@ export default class CoatsComponent implements OnInit{
   gettingCoats(){
     this.productService.allProducts$.subscribe(item => {
       item.forEach(product => {
+
+        // displaying uploaded img
+        if(product.image && product.image.includes('/upload')){
+          if(!product.image.startsWith('http://localhost:3000')){
+            product.image = `http://localhost:3000${product.image}`
+          }
+        }
+
         if(product.section == 'jackets' && product.sexo == 'masc') this.allCoats.push(product)
       })
     

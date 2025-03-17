@@ -31,8 +31,14 @@ export class ProductsService {
 
   // CRUD
 
-  createProduct(dados: productModule){
-    return this.http.post<productModule>(`${this.apiUrl}/clothes`, dados)
+  createProduct(dados: any){
+    return this.http.post(`${this.apiUrl}/clothes`, dados)
+  }
+
+
+
+  deleteProduct(id: number){
+    return this.http.delete(`${this.apiUrl}/clothes/${id}`)
   }
 
 

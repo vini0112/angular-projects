@@ -14,14 +14,12 @@ export class listCartServices{
     cart$ = this.cart.asObservable() // observar mudanças no carrinho
 
 
-
     private getFromLocalStorage(): cartList[]{
         if(typeof window !== 'undefined' && localStorage){
             const item = localStorage.getItem(this.key_local_storage)
             return item ? JSON.parse(item) : []
         }
         return []
-        
     }
 
 
@@ -35,11 +33,23 @@ export class listCartServices{
         const currentProduct = this.cart.getValue()
         
         const existe = currentProduct.find(item => item.id === product.id)
-
+        
         if(existe){
-            existe.quantity += product.quantity
+
+            if(existe.cart_quantity! < existe.quantity){
+                let newQuantity = existe.cart_quantity! += 1
+
+                if(newQuantity <= existe.quantity){
+                    existe.cart_quantity = newQuantity
+                }else{
+                    alert('max reached')
+                }
+            }else{
+                alert('max reached')
+            }
+            
         }else{
-            currentProduct.push({...product})
+            currentProduct.push({...product, cart_quantity: 1})
         }
         
         this.updateLocalStorage(currentProduct)
@@ -51,10 +61,10 @@ export class listCartServices{
         const product = currentProduct.find(item => item.id === productId)
 
         
-        product!.quantity--
+        product!.cart_quantity!--
         this.updateLocalStorage(currentProduct)
         
-        if(product!.quantity <= 0){
+        if(product!.cart_quantity! <= 0){
             this.removingProduct(productId)
         }
         
@@ -72,7 +82,20 @@ export class listCartServices{
         const existProduct = product.find(item => item.id == productId)
 
         if(existProduct){
-            existProduct.quantity++
+
+            if(existProduct.cart_quantity! < existProduct.quantity){
+                let newQuantity = existProduct.cart_quantity! += 1
+
+                if(newQuantity <= existProduct.quantity){
+                    existProduct.cart_quantity = newQuantity
+                }else{
+                    alert('max reached')
+                }
+
+            }else{
+                alert('max reached')
+            }
+
         }
         this.updateLocalStorage(product)
         
@@ -81,12 +104,12 @@ export class listCartServices{
 
     // taking all price
     allPrice$: Observable<number> = this.cart$.pipe(
-        map(items => items.reduce((acc, item) => acc + item.price * item.quantity, 0))
+        map(items => items.reduce((acc, item) => acc + item.price * item.cart_quantity!, 0))
     )
 
     // taking all quantity
     allQtd$: Observable<number> = this.cart$.pipe(
-        map(items => items.reduce((junt, product) => junt + product.quantity,0))
+        map(items => items.reduce((junt, product) => junt + product.cart_quantity!,0))
     )
 
 

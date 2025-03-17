@@ -4,16 +4,18 @@ import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CreatingProductComponent } from './creating-product/creating-product.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products-tool',
-  imports: [NgIf, CreatingProductComponent], //
+  imports: [NgIf, CreatingProductComponent, AsyncPipe],
   templateUrl: './products-tool.component.html',
   styleUrl: './products-tool.component.css'
 })
 export default class ProductsToolComponent implements OnInit{
 
-  allProducts: productModule[] = [] 
+  // allProducts: productModule[] = [] 
+  allProducts$ = new Observable<productModule[]>()
 
   productService = inject(ProductsService)
   route = inject(Router)
@@ -25,9 +27,10 @@ export default class ProductsToolComponent implements OnInit{
   }
 
   fetchingAllProducts(){
-    this.productService.allProducts$.subscribe((res: productModule[]) =>{
-      this.allProducts = res
-    })
+    // this.productService.allProducts$.subscribe((res) =>{
+    //   this.allProducts = res
+    // })
+    this.allProducts$ = this.productService.allProducts$
   }
 
 
@@ -43,6 +46,17 @@ export default class ProductsToolComponent implements OnInit{
     this.createNewProductPage.set(value)
   }
 
+
+  // deleting product
+  deleteProduct(id: number){
+    this.productService.deleteProduct(id).subscribe({ // window.location.reload()
+      next: () => {
+        console.log('Product deleted')
+        
+      },
+      error: (err) => console.log('error', err)
+    })
+  }
 
 
 

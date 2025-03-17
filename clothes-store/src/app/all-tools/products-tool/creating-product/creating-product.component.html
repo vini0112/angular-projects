@@ -1,23 +1,49 @@
 
 <h5 style="text-align:center;">Create New Product</h5>
-<form >
+<form [formGroup]="postForm" (submit)="createProduct()">
     
     <div class="leftSideInputs">
-        <input type="text" name="productName" placeholder="product name">
-        <input type="text" name="section" placeholder="section">
-        <input type="text" name="sexo" placeholder="sexo">
-        <input type="number" name="price" placeholder="price">
-        <input type="number" name="qtd" placeholder="quantity">
+        <input type="text" name="name" placeholder="product name" formControlName="name">
+
+        <span class="erroMsg" *ngIf="submitted && postForm.controls['name'].invalid">Product name required</span>
+
+        <select name="section" formControlName="section">
+            <option value="" disabled selected>Clothe section</option>
+            <option value="shirts">Shirts</option>
+            <option value="shoes">Shoes</option>
+            <option value="shorts">Shorts</option>
+            <option value="jackets">Jackets</option>
+        </select>
+        <span class="erroMsg" *ngIf="submitted && postForm.controls['section'].invalid">Section required</span>
+
+
+        <select name="sexo" formControlName="sexo">
+            <option value="" disabled selected>Choose your sexo</option>
+            <option value="masc">Masculine</option>
+            <option value="femi">Feminine</option>
+        </select>
+        <span class="erroMsg" *ngIf="submitted && postForm.controls['sexo'].invalid">Sexo required</span>
+        
+    
+        <input type="number" name="price" placeholder="price" formControlName="price">
+        <span class="erroMsg" *ngIf="submitted && postForm.controls['price'].invalid">Price required</span>
+
+        <input type="number" name="quantity" placeholder="quantity" formControlName="quantity">
+        <span class="erroMsg" *ngIf="submitted && postForm.controls['quantity'].invalid">Quantity required</span>
+
     </div>
 
     
-    <div class="rightSideInputs">
-        <input type="file" name="imageProduct">
-        <textarea name="" id="" placeholder="product information..."></textarea>
+    <div class="rightSideInputs"> <!-- formControlName="image" -->
+        <input type="file" name="image" (change)="onFileSelect($event)">
+        <span class="erroMsg specialMargin" *ngIf="submitted && postForm.controls['image'].invalid">Image required</span>
+
+        <textarea name="info" placeholder="product information..." formControlName="info"></textarea>
+        <span class="erroMsg specialMargin" *ngIf="submitted && postForm.controls['info'].invalid">Description of the product required</span>
 
         <div class="btnsPostProduct">
             <button>Clear</button>
-            <button>Create</button>
+            <button type="submit">Create</button>
         </div>
     </div>
 
@@ -26,12 +52,6 @@
 <i class="fa-solid fa-arrow-left-long btnGoBack" (click)="goBackToProductTools()"></i>
 
 
-<!-- 
-price: number,
-isFavorite: boolean,
 
-
-isBestseller: boolean
-quantity: number -->
 
 

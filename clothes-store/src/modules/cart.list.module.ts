@@ -5,4 +5,5 @@ export interface cartList{
     price: number,
     image: string,
     quantity: number
+    cart_quantity?: number
 }

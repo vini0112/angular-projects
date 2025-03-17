@@ -18,7 +18,7 @@ app.use(cookieParse())
 app.use(loginRouter)
 
 app.use(productRouter)
-
+app.use('/upload', express.static('upload')) //servir arquivos staticos
 
 
 

@@ -20,9 +20,13 @@ class productControllers{
     // post product
     async postingClothes(req, res){
         const dados = req.body
+        const file = req.file
+
+        const imagePath = `/upload/${file.filename}`
+        dados.image = imagePath
         
         const row = await product_repositories.posting(dados)
-        res.json(row)
+        res.status(201).json(row)
     }
 
     // update product

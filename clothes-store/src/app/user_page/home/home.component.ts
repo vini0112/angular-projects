@@ -64,6 +64,14 @@ export class HomeComponent implements OnInit{
     
     this.productsService.allProducts$.subscribe(item =>{
       item.forEach(product =>{
+
+        // displaying uploaded img
+        if(product.image && product.image.includes('/upload')){
+          if(!product.image.startsWith('http://localhost:3000')){
+            product.image = `http://localhost:3000${product.image}`
+          }
+        }
+
         if(product.isBestseller) this.clothesBestsellers.push(product)
       })
     })

@@ -26,7 +26,7 @@ form{
     align-items: center;
     justify-content: space-evenly;
 }
-.leftSideInputs input{
+.leftSideInputs input, select{
     height: 50px;
     width: 80%;
     outline: none;
@@ -34,6 +34,11 @@ form{
     border-radius: 5px;
     border: 1px solid black;
 }
+/* .leftSideInputs select{
+    height: 50px;
+    width: 80%;
+} */
+
 
 .rightSideInputs{
     display: flex;
@@ -88,6 +93,17 @@ form{
 }
 
 
+/* erro menssage */
+.erroMsg{
+    color: red;
+    font-size: 0.9rem;
+}
+
+.specialMargin{
+    margin-top: -2rem;
+}
+
+
 @media (max-width: 820px){
     form{
         width: 80%;
@@ -100,16 +116,27 @@ form{
         border: 1px solid black;
         border-radius: 10px;
         width: 80%;
-        height: 600px;
+        height: 650px;
         display: grid;
         grid-template-columns: 1fr;
-        /* gap: 1rem; */
     }
-    .leftSideInputs input{
+    
+    .leftSideInputs{
+        margin-bottom: 1rem;
+    }
+    .leftSideInputs input, select{
         width: 90%;
+        
     }
     .rightSideInputs textarea{
         width: 90%;
     }
+
+
+    .specialMargin{
+        margin-top: .2rem;
+        margin-bottom:1rem;
+    }
+    
 }
 

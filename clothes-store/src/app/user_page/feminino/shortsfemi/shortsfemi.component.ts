@@ -27,6 +27,14 @@ export default class ShortsfemiComponent implements OnInit{
     this.productService.allProducts$.subscribe(item => {
       // seding just shorts
       item.forEach(product => {
+
+        // displaying uploaded img
+        if(product.image && product.image.includes('/upload')){
+          if(!product.image.startsWith('http://localhost:3000')){
+            product.image = `http://localhost:3000${product.image}`
+          }
+        }
+
         if(product.section == 'shorts' && product.sexo == 'femi') this.allShortsFemi.push(product)
 
       })

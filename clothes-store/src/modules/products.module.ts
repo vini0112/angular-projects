@@ -7,7 +7,7 @@ export interface productModule{
     image: string,
     section: string,
     info: string,
-    sexo: string
+    sexo: string 
     isBestseller: boolean
     quantity: number
 }

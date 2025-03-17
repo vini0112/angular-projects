@@ -7,39 +7,41 @@
     <button (click)="isProductsTableActive()" class="btnCreateProduct">Add New Product</button>
 </div>
 
-
-<table *ngIf="createNewProductPage()">
-    <thead>
-        <tr>
-            <th class="sizeP">Id</th>
-            <th class="sizeG">Nome</th>
-            <th class="sizeGG">Info</th>
-            <th class="sizeM">Section</th>
-            <th class="sizeM">Sexo</th>
-            <th class="sizeP">Qtd</th>
-            <th class="sizeM">Price</th>
-            <th class="sizeG">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for(item of allProducts; track $index){
-            <tr>
-                <td class="sizeP">{{item.id}}</td>
-                <td class="sizeG">{{item.name}}</td>
-                <td class="sizeGG">{{item.info}}</td>
-                <td class="sizeM">{{item.section}}</td>
-                <td class="sizeM">{{item.sexo}}</td>
-                <td class="sizeP">{{item.quantity}}</td>
-                <td class="sizeM">{{item.price.toFixed(2)}}</td>
-                <td class="btnsCrud">
-                    <button class="edit">Edit</button>
-                    <button class="del">Del</button>
-                </td>    
-            </tr>
-        }
-    </tbody>
+<div class="boxTable"> <!-- used just to create a scroll-x in mobile screen-->
     
-</table>
+    <table *ngIf="createNewProductPage()">
+        <thead>
+            <tr>
+                <th class="sizeP">Id</th>
+                <th class="sizeG">Nome</th>
+                <th class="sizeGG">Info</th>
+                <th class="sizeM">Section</th>
+                <th class="sizeM">Sexo</th>
+                <th class="sizeP">Qtd</th>
+                <th class="sizeM">Price</th>
+                <th class="sizeG">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(item of allProducts$ | async; track $index){
+                <tr>
+                    <td class="sizeP">{{item.id}}</td>
+                    <td class="sizeG">{{item.name}}</td>
+                    <td class="sizeGG">{{item.info}}</td>
+                    <td class="sizeM">{{item.section}}</td>
+                    <td class="sizeM">{{item.sexo}}</td>
+                    <td class="sizeP">{{item.quantity}}</td>
+                    <td class="sizeM">{{item.price.toFixed(2)}}</td>
+                    <td class="btnsCrud">
+                        <button class="edit">Edit</button>
+                        <button class="del" (click)="deleteProduct(item.id!)">Del</button>
+                    </td>
+                </tr>
+            }
+        </tbody> 
+    
+    </table>
+</div>
 
 
 <!-- post new product compenet -->

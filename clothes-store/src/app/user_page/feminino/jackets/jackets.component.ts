@@ -27,6 +27,14 @@ export default class JacketsComponent implements OnInit{
     this.productService.allProducts$.subscribe(item => {
       // seding just shorts
       item.forEach(product => {
+
+        // displaying uploaded img
+        if(product.image && product.image.includes('/upload')){
+          if(!product.image.startsWith('http://localhost:3000')){
+            product.image = `http://localhost:3000${product.image}`
+          }
+        }
+
         if(product.section == 'jackets' && product.sexo == 'femi') this.allShirtsFemi.push(product)
 
       })

@@ -50,7 +50,7 @@ class loginController{
             res.json({ message: 'Login realizado com sucesso!', accessToken});
         })
 
-    }
+    } 
 
     async refreshToken(req, res){
         

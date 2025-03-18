@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Input, signal, Signal, EventEmitter, Output, output, inject} from '@angular/core';
+import { Component, Input, signal, Signal, EventEmitter, Output, output, inject, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ProductsService } from '../../../../services/products.service';
@@ -11,18 +11,21 @@ import { productModule } from '../../../../modules/products.module';
   templateUrl: './creating-product.component.html',
   styleUrl: './creating-product.component.css'
 })
-export class CreatingProductComponent {
+export class CreatingProductComponent implements AfterViewInit{
 
   productService = inject(ProductsService)
 
   @Output() statusCreationPage = new EventEmitter<boolean>()
 
-  @Output() newProduct = new EventEmitter<any>()
+  @ViewChild('productName') inputelement!: ElementRef
+  @ViewChild('inputImage') inputImgElement!: ElementRef
+  
 
   goBackToProductTools(){
     this.statusCreationPage.emit(true)
   }
 
+  
 
   constructor(private fb: FormBuilder){
 
@@ -33,12 +36,22 @@ export class CreatingProductComponent {
       price: [null, [Validators.required]],
       quantity: [null, [Validators.required]],
       image: [null, [Validators.required]],
-      info: [null, [Validators.required, Validators.maxLength(100)]],
+      info: [null, [Validators.required, Validators.maxLength(1)]],
       isFavorite: [0],
       isBestseller: [0]
     })
 
   }
+
+  ngAfterViewInit(): void {
+    this.setFocus()
+  }
+
+  setFocus(){
+    this.inputelement.nativeElement.focus()
+  }
+
+  
 
   // form
   selectedFile: File | null = null
@@ -48,6 +61,7 @@ export class CreatingProductComponent {
 
 
   createProduct(){
+    
     this.submitted = true
     if(this.postForm.valid){
 
@@ -65,13 +79,13 @@ export class CreatingProductComponent {
       
       this.productService.createProduct(formdata).subscribe({
         next: (res) => {
-          console.log('Product Created')
-          window.location.reload()
+          alert('Product Created')
+          this.clearForm()
         },
         error: (err) => console.log('error', err)
       })
     }
-    
+
   }
 
 
@@ -81,6 +95,26 @@ export class CreatingProductComponent {
       this.selectedFile = file 
       this.postForm.patchValue({image: file})
     }
+  }
+
+
+
+  clearForm(){
+    this.submitted = false
+    
+    this.postForm.reset({
+      name: null,
+      section: '',
+      sexo: '',
+    }) 
+
+    this.inputImgElement.nativeElement.value = '' // reseting input img
+
+    // this.postForm.markAsPristine()
+    // this.postForm.markAsUntouched()
+
+    this.setFocus()
+
   }
 
 

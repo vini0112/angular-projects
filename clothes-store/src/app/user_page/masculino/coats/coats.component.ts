@@ -36,7 +36,7 @@ export default class CoatsComponent implements OnInit{
           }
         }
 
-        if(product.section == 'jackets' && product.sexo == 'masc') this.allCoats.push(product)
+        if(product.section == 'coats' && product.sexo == 'masc') this.allCoats.push(product)
       })
     
     })

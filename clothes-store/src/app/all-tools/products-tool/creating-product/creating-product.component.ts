@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, Input, signal, Signal, EventEmitter, Output, output, inject, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -7,7 +7,7 @@ import { productModule } from '../../../../modules/products.module';
 
 @Component({
   selector: 'app-creating-product',
-  imports: [ReactiveFormsModule, NgIf], 
+  imports: [ReactiveFormsModule, NgIf, NgClass], 
   templateUrl: './creating-product.component.html',
   styleUrl: './creating-product.component.css'
 })
@@ -19,6 +19,8 @@ export class CreatingProductComponent implements AfterViewInit{
 
   @ViewChild('productName') inputelement!: ElementRef
   @ViewChild('inputImage') inputImgElement!: ElementRef
+
+  textareaCounter = ''
   
 
   goBackToProductTools(){
@@ -36,9 +38,15 @@ export class CreatingProductComponent implements AfterViewInit{
       price: [null, [Validators.required]],
       quantity: [null, [Validators.required]],
       image: [null, [Validators.required]],
-      info: [null, [Validators.required, Validators.maxLength(1)]],
+      info: [null, [Validators.required, Validators.maxLength(100)]],
       isFavorite: [0],
       isBestseller: [0]
+    })
+
+
+    this.postForm.get('info')?.valueChanges.subscribe(valor => {
+      
+      this.textareaCounter = valor.length
     })
 
   }
@@ -103,10 +111,14 @@ export class CreatingProductComponent implements AfterViewInit{
     this.submitted = false
     
     this.postForm.reset({
-      name: null,
       section: '',
       sexo: '',
+      price: null,
+      quantity: null,
+      info: '',
+      name: null,
     }) 
+
 
     this.inputImgElement.nativeElement.value = '' // reseting input img
 

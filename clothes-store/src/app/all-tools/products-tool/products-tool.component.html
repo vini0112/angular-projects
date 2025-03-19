@@ -33,7 +33,7 @@
                     <td class="sizeP">{{item.quantity}}</td>
                     <td class="sizeM">{{item.price.toFixed(2)}}</td>
                     <td class="btnsCrud">
-                        <button class="edit">Edit</button>
+                        <button class="edit" (click)="editProduct(item)">Edit</button>
                         <button class="del" (click)="deleteProduct(item.id!)">Del</button>
                     </td>
                 </tr>
@@ -41,7 +41,27 @@
         </tbody> 
     
     </table>
+
 </div>
+
+<div class="boxEditModel" *ngIf="editDialogOpen">
+    <form>
+        <div class="boxInputsEdit">
+            <input type="text" >
+            <input type="text" >
+            <input type="text" >
+            <input type="text" >
+            <input type="text" >
+        </div>
+        <div class="boxBtnsEdit">
+            <button>Cancel</button>
+            <button>Save Changes</button>
+        </div>
+    </form>
+</div>
+
+<div class="shadow"></div>
+
 
 
 <!-- post new product compenet -->

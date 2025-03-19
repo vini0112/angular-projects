@@ -55,7 +55,21 @@ form{
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
+
+.textAreaWarning{
+    width: 80%;
+    text-align: end;
+    /* margin: auto; */
+}
+.textAreaWarning.active{
+    display: flex;
+    justify-content: space-between;
+    
+    /* margin: 0; */
+}
+
 
 .rightSideInputs textarea{
     padding-left: 5px;
@@ -66,17 +80,7 @@ form{
     margin: auto;
 }
 
-/* organize this! */
 
-.boxTextArea div:nth-child(1){
-    width: 80%;
-    text-align: start;
-    
-}
-.boxTextArea div:last-child{
-    margin: auto;
-    color: rgb(84, 84, 84);
-}
 
 .btnsPostProduct{
     width: 100%;

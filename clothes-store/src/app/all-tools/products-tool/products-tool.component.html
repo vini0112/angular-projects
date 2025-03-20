@@ -45,13 +45,27 @@
 </div>
 
 <div class="boxEditModel" *ngIf="editDialogOpen">
-    <form>
+    <form> <!-- #form="ngForm" [value]="'shirts'"-->
         <div class="boxInputsEdit">
-            <input type="text" >
-            <input type="text" >
-            <input type="text" >
-            <input type="text" >
-            <input type="text" >
+            <input type="text" name="productName" [(ngModel)]="editItemData.name">
+            <select name="section" [(ngModel)]="editItemData.section">
+                <option [value]="editItemData.section">{{editItemData.section}}</option>
+                <option value="shirts" *ngIf="editItemData.section !== 'shirts'">Shirts</option>
+                <option value="shoes" *ngIf="editItemData.section !== 'shoes'">Shoes</option>
+                <option value="shorts" *ngIf="editItemData.section !== 'shorts'">Shorts</option>
+                <option value="jackets" *ngIf="editItemData.section !== 'jackets'">Jackets</option>
+                <option value="coats" *ngIf="editItemData.section !== 'coats'">Coats</option>
+            </select>
+
+            <select name="sexo" [(ngModel)]="editItemData.sexo">
+                <option [value]="editItemData.sexo">{{editItemData.sexo}}</option>
+                <option value="masc" *ngIf="editItemData.sexo !== 'masc'">Masculine</option>
+                <option value="femi" *ngIf="editItemData.sexo !== 'femi'">Feminine</option>
+            </select>
+            
+            <input type="number" name="price" [(ngModel)]="editItemData.price">
+            <input type="number" name="quantity" [(ngModel)]="editItemData.quantity">
+            <textarea name="info" [(ngModel)]="editItemData.info"></textarea >
         </div>
         <div class="boxBtnsEdit">
             <button>Cancel</button>

@@ -15,12 +15,18 @@ import { FormsModule } from '@angular/forms';
 })
 export default class ProductsToolComponent implements OnInit{
 
-
-  allProducts$ = new Observable<productModule[]>()
-
   productService = inject(ProductsService)
   route = inject(Router)
 
+
+  allProducts$ = new Observable<productModule[]>()
+
+  
+
+
+  constructor(){
+    
+  }
   
 
   ngOnInit(): void {
@@ -50,8 +56,11 @@ export default class ProductsToolComponent implements OnInit{
   // editing
   editDialogOpen = true
 
-  editProduct(item: any){
+  editItemData: any = {}
 
+  editProduct(item: productModule){
+    this.editItemData = item
+    // this.editDialogOpen = true
   }
 
 

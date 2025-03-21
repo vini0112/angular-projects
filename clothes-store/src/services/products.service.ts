@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { productModule } from '../modules/products.module';
+import { EditingProduct, productModule } from '../modules/products.module';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,13 @@ export class ProductsService {
     return this.http.post(`${this.apiUrl}/clothes`, dados)
   }
 
+  updateProduct(dados: EditingProduct){
+    return this.http.put(`${this.apiUrl}/clothes/${dados.id}`, dados)
+  }
+
+  updateLocally(){
+
+  }
 
 
   deleteProduct(id: number){

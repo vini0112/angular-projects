@@ -1,5 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { productModule } from '../../../modules/products.module';
+import { EditingProduct, productModule } from '../../../modules/products.module';
 import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -54,13 +54,40 @@ export default class ProductsToolComponent implements OnInit{
 
 
   // editing
-  editDialogOpen = true
 
+
+  editDialogOpen = false
+  shadowEditDialog = false
+  indexProductToEdit = 0
   editItemData: any = {}
 
-  editProduct(item: productModule){
-    this.editItemData = item
-    // this.editDialogOpen = true
+  editProduct(item: productModule, index: number){
+    this.editItemData = {...item}
+    this.indexProductToEdit = index
+    this.editDialogOpen = true
+    this.shadowEditDialog = true
+  }
+
+  cancelEdit(){
+    this.editDialogOpen = false
+    this.shadowEditDialog = false
+  }
+
+  btnFormEditProduct(){
+    this.allProducts$.forEach(item =>{
+      if(item[this.indexProductToEdit]){
+        item[this.indexProductToEdit] = this.editItemData // updating locally first
+
+        // service to update in the DB
+        this.productService.updateProduct(this.editItemData).subscribe({
+          next: (res) => console.log(res),
+          error: (err) => console.log(err)
+        })
+        return
+      }
+      
+    })
+
   }
 
 

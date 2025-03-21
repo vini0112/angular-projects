@@ -33,8 +33,9 @@ class productControllers{
     async updateClothe(req, res){
         const dados = req.body
         const id = req.params.id 
+        
         const row = await product_repositories.editing(id, dados)
-        res.json(row)
+        res.json({message: 'Succesfull Updated!', row})
     }
 
     async changeFavorite(req, res){
@@ -50,7 +51,6 @@ class productControllers{
         res.json(row)
 
     }  
-
 
     // delete product 
     async deletingClothe(req, res){

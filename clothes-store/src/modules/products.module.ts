@@ -11,3 +11,14 @@ export interface productModule{
     isBestseller: boolean
     quantity: number
 }
+
+
+export interface EditingProduct{
+    id: number
+    name: string
+    section: string
+    info: string
+    quantity: number
+    price: number
+    sexo: string
+}

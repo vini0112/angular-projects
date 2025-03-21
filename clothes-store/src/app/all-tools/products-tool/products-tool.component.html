@@ -1,6 +1,6 @@
 
 
-<h2 style="text-align: center; margin: 1rem 0 3rem 0;">All Products</h2>
+<h2 style="text-align: center; margin: 0rem 0 1rem 0;">All Products</h2>
 
 <!--productCreation-->
 <div class="linksNavigation" *ngIf="createNewProductPage()">
@@ -33,7 +33,7 @@
                     <td class="sizeP">{{item.quantity}}</td>
                     <td class="sizeM">{{item.price.toFixed(2)}}</td>
                     <td class="btnsCrud">
-                        <button class="edit" (click)="editProduct(item)">Edit</button>
+                        <button class="edit" (click)="editProduct(item, $index)">Edit</button>
                         <button class="del" (click)="deleteProduct(item.id!)">Del</button>
                     </td>
                 </tr>
@@ -41,11 +41,14 @@
         </tbody> 
     
     </table>
-
 </div>
 
+
+<div class="shadow" *ngIf="shadowEditDialog"></div>
+
+
 <div class="boxEditModel" *ngIf="editDialogOpen">
-    <form> <!-- #form="ngForm" [value]="'shirts'"-->
+    <form #editForm="ngForm">
         <div class="boxInputsEdit">
             <input type="text" name="productName" [(ngModel)]="editItemData.name">
             <select name="section" [(ngModel)]="editItemData.section">
@@ -68,13 +71,15 @@
             <textarea name="info" [(ngModel)]="editItemData.info"></textarea >
         </div>
         <div class="boxBtnsEdit">
-            <button>Cancel</button>
-            <button>Save Changes</button>
+            <button (click)="cancelEdit()">Cancel</button>
+            <button (click)="btnFormEditProduct()">Save Changes</button>
         </div>
     </form>
+
+
 </div>
 
-<div class="shadow"></div>
+
 
 
 

@@ -1,15 +1,15 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { EditingProduct, productModule } from '../../../modules/products.module';
 import { ProductsService } from '../../../services/products.service';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CreatingProductComponent } from './creating-product/creating-product.component';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products-tool',
-  imports: [NgIf, CreatingProductComponent, AsyncPipe, FormsModule],
+  imports: [NgIf, CreatingProductComponent, AsyncPipe, FormsModule, NgClass],
   templateUrl: './products-tool.component.html',
   styleUrl: './products-tool.component.css'
 })
@@ -54,7 +54,11 @@ export default class ProductsToolComponent implements OnInit{
 
 
   // editing
+  loadingData = false
 
+  EditionSentPage = false //
+  successMsgActivated = false // if edition works fine
+  failedMsgActivated = false // if edition fails
 
   editDialogOpen = false
   shadowEditDialog = false
@@ -73,15 +77,30 @@ export default class ProductsToolComponent implements OnInit{
     this.shadowEditDialog = false
   }
 
+  leaveEdit(){
+    this.editDialogOpen = false
+    this.shadowEditDialog = false
+    this.successMsgActivated = false
+    this.failedMsgActivated = false
+    this.EditionSentPage = false 
+  }
+
+  // edits here
   btnFormEditProduct(){
+    this.EditionSentPage = true
+    this.loadingData = true
     this.allProducts$.forEach(item =>{
       if(item[this.indexProductToEdit]){
         item[this.indexProductToEdit] = this.editItemData // updating locally first
 
         // service to update in the DB
-        this.productService.updateProduct(this.editItemData).subscribe({
-          next: (res) => console.log(res),
-          error: (err) => console.log(err)
+        this.productService.updateProduct(this.editItemData)
+        .pipe(
+          finalize(() => this.loadingData = false)
+        )
+        .subscribe({
+          next: (res) => {console.log(res), this.successMsgActivated = true},
+          error: (err) => {console.log(err), this.failedMsgActivated = true}
         })
         return
       }

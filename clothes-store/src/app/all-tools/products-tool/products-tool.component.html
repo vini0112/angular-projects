@@ -47,8 +47,8 @@
 <div class="shadow" *ngIf="shadowEditDialog"></div>
 
 
-<div class="boxEditModel" *ngIf="editDialogOpen">
-    <form #editForm="ngForm">
+<div class="boxEditModel" *ngIf="editDialogOpen" [ngClass]="{'EditionSentPage': EditionSentPage}">
+    <form #editForm="ngForm" [ngClass]="{'EditionSentPage': EditionSentPage}">
         <div class="boxInputsEdit">
             <input type="text" name="productName" [(ngModel)]="editItemData.name">
             <select name="section" [(ngModel)]="editItemData.section">
@@ -75,6 +75,27 @@
             <button (click)="btnFormEditProduct()">Save Changes</button>
         </div>
     </form>
+
+    <div class="responseOfEdition" [ngClass]="{'EditionSentPage': !EditionSentPage}">
+
+        @if(loadingData){
+            <div class="spinner"></div> <!-- OTIMIZAR E SINCRONIZAR AQUI-->
+        }@else{
+
+            <div class="successEdition" [ngClass]="{'activateSuccess': successMsgActivated}">
+                <p class="messageEditionRes">Product Edited Successfully!</p>
+                <i class="fa-solid fa-check markEditionStatus"></i>
+                <button class="respEditionBtn" (click)="leaveEdit()">Leave</button>
+            </div>
+
+            <div class="failEdition" [ngClass]="{'activateFailed': failedMsgActivated}">
+                <p class="messageEditionRes">Product Not Uptaded</p>
+                <i class="fa-solid fa-x markEditionStatus"></i>
+                <button class="respEditionBtn" (click)="leaveEdit()">Leave</button>
+            </div>
+        }
+
+    </div>
 
 
 </div>

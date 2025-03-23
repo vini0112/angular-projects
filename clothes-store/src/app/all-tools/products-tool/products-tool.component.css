@@ -5,6 +5,29 @@
     
 }
 
+/* erro menssage */
+.erroMsg{
+    color: red;
+    font-size: 0.9rem;
+    margin-top: -1.5rem;
+    margin-right: 2rem;
+    width: 100%;
+}
+
+/* .TextAreaSpecialError{
+    margin-top: -1.5rem;
+    margin-right: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: sp;
+}
+.TextAreaSpecialError:first-child{
+    color: red;
+    font-size: 0.9rem;
+} */
+
+/*  */
+
 .linksNavigation{
     max-width: 950px;
     width: 100%;
@@ -191,10 +214,18 @@ form{
 .responseOfEdition{
     width: 100%;
     height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.responseOfEdition.responseToEdition{
+    display: flex;
 }
 
 .successEdition{
     height: 100%;
+    width: 100%;
     display: none;
     flex-direction: column;
     justify-content: space-evenly;
@@ -203,6 +234,7 @@ form{
 }
 .failEdition{
     height: 100%;
+    width: 100%;
     display: none;
     background-color: rgb(227, 66, 66);
     flex-direction: column;
@@ -219,7 +251,7 @@ form{
 .markEditionStatus{
     color: white;
     text-shadow: 1px 1px 1px black;
-    font-size: 2.3rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 .respEditionBtn{

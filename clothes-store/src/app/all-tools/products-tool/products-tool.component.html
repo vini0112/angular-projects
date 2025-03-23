@@ -33,7 +33,7 @@
                     <td class="sizeP">{{item.quantity}}</td>
                     <td class="sizeM">{{item.price.toFixed(2)}}</td>
                     <td class="btnsCrud">
-                        <button class="edit" (click)="editProduct(item, $index)">Edit</button>
+                        <button class="edit" (click)="productToBeEdited(item, $index)">Edit</button>
                         <button class="del" (click)="deleteProduct(item.id!)">Del</button>
                     </td>
                 </tr>
@@ -44,13 +44,20 @@
 </div>
 
 
+
 <div class="shadow" *ngIf="shadowEditDialog"></div>
 
+
+
+<!-- EDITION PAGE -->
 
 <div class="boxEditModel" *ngIf="editDialogOpen" [ngClass]="{'EditionSentPage': EditionSentPage}">
     <form #editForm="ngForm" [ngClass]="{'EditionSentPage': EditionSentPage}">
         <div class="boxInputsEdit">
-            <input type="text" name="productName" [(ngModel)]="editItemData.name">
+
+            <input type="text" name="productName" [(ngModel)]="editItemData.name" #productName="ngModel" required>
+            <span class="erroMsg" *ngIf="productName.errors?.['required']">Required</span>
+
             <select name="section" [(ngModel)]="editItemData.section">
                 <option [value]="editItemData.section">{{editItemData.section}}</option>
                 <option value="shirts" *ngIf="editItemData.section !== 'shirts'">Shirts</option>
@@ -60,37 +67,54 @@
                 <option value="coats" *ngIf="editItemData.section !== 'coats'">Coats</option>
             </select>
 
+
+
             <select name="sexo" [(ngModel)]="editItemData.sexo">
                 <option [value]="editItemData.sexo">{{editItemData.sexo}}</option>
                 <option value="masc" *ngIf="editItemData.sexo !== 'masc'">Masculine</option>
                 <option value="femi" *ngIf="editItemData.sexo !== 'femi'">Feminine</option>
             </select>
             
-            <input type="number" name="price" [(ngModel)]="editItemData.price">
-            <input type="number" name="quantity" [(ngModel)]="editItemData.quantity">
-            <textarea name="info" [(ngModel)]="editItemData.info"></textarea >
+            <input type="number" name="price" [(ngModel)]="editItemData.price" #price="ngModel" required>
+            <span class="erroMsg" *ngIf="price.errors?.['required']">Required</span>
+
+
+            <input type="number" name="quantity" [(ngModel)]="editItemData.quantity" #qtd="ngModel" required>
+            <span class="erroMsg" *ngIf="qtd.errors?.['required']">Required</span>
+
+            <textarea name="info" [(ngModel)]="editItemData.info" #info="ngModel" maxlength="3" required></textarea >
+            
+            <span class="erroMsg" *ngIf="info.errors?.['required']">Required</span>
+
+            <span class="erroMsg" *ngIf="!info.errors?.['required'] && info.errors?.['maxlength']">Characters limit reached!</span>
+            
+            
+            
         </div>
         <div class="boxBtnsEdit">
             <button (click)="cancelEdit()">Cancel</button>
-            <button (click)="btnFormEditProduct()">Save Changes</button>
+            <button (click)="btnFormEditProduct(editForm)">Save Changes</button>
         </div>
     </form>
 
-    <div class="responseOfEdition" [ngClass]="{'EditionSentPage': !EditionSentPage}">
+    <!-- RESPONSE TO EDITION -->
+    <div class="responseOfEdition" [ngClass]="{'responseToEdition': EditionSentPage}">
 
         @if(loadingData){
-            <div class="spinner"></div> <!-- OTIMIZAR E SINCRONIZAR AQUI-->
+            <div class="spinner"></div> <!-- SPINNER -->
         }@else{
 
+            <!-- SUCCESS EDITION -->
             <div class="successEdition" [ngClass]="{'activateSuccess': successMsgActivated}">
                 <p class="messageEditionRes">Product Edited Successfully!</p>
                 <i class="fa-solid fa-check markEditionStatus"></i>
                 <button class="respEditionBtn" (click)="leaveEdit()">Leave</button>
             </div>
 
+            <!-- FAILED EDITION -->
             <div class="failEdition" [ngClass]="{'activateFailed': failedMsgActivated}">
                 <p class="messageEditionRes">Product Not Uptaded</p>
-                <i class="fa-solid fa-x markEditionStatus"></i>
+                <i class="fa-solid fa-triangle-exclamation markEditionStatus"></i>
                 <button class="respEditionBtn" (click)="leaveEdit()">Leave</button>
             </div>
         }
@@ -104,7 +128,7 @@
 
 
 
-<!-- post new product compenet -->
+<!-- CREATING NEW PRODUCT (POST METHOD) -->
 <app-creating-product *ngIf="!createNewProductPage()" (statusCreationPage)="handleResponse($event)"></app-creating-product>
 
 

@@ -56,16 +56,18 @@ export default class ProductsToolComponent implements OnInit{
   // editing
   loadingData = false
 
-  EditionSentPage = false //
+  EditionSentPage = false // trigged just when the edition button is clicked
   successMsgActivated = false // if edition works fine
   failedMsgActivated = false // if edition fails
 
   editDialogOpen = false
   shadowEditDialog = false
+
   indexProductToEdit = 0
   editItemData: any = {}
 
-  editProduct(item: productModule, index: number){
+  // takes the information of the product to be edited
+  productToBeEdited(item: productModule, index: number){
     this.editItemData = {...item}
     this.indexProductToEdit = index
     this.editDialogOpen = true
@@ -86,26 +88,34 @@ export default class ProductsToolComponent implements OnInit{
   }
 
   // edits here
-  btnFormEditProduct(){
-    this.EditionSentPage = true
-    this.loadingData = true
-    this.allProducts$.forEach(item =>{
-      if(item[this.indexProductToEdit]){
-        item[this.indexProductToEdit] = this.editItemData // updating locally first
+  btnFormEditProduct(editForm: any){
 
-        // service to update in the DB
-        this.productService.updateProduct(this.editItemData)
-        .pipe(
-          finalize(() => this.loadingData = false)
-        )
-        .subscribe({
-          next: (res) => {console.log(res), this.successMsgActivated = true},
-          error: (err) => {console.log(err), this.failedMsgActivated = true}
-        })
-        return
-      }
-      
-    })
+    if(editForm.valid){
+
+      this.EditionSentPage = true
+      this.loadingData = true
+
+      this.allProducts$.forEach(item =>{
+        if(item[this.indexProductToEdit]){//checking if exist the product with the given index
+          item[this.indexProductToEdit] = this.editItemData // updating locally first
+
+          // service to update in the DB
+          this.productService.updateProduct(this.editItemData)
+          .pipe(
+            finalize(() => this.loadingData = false) // loading
+          )
+          .subscribe({
+            next: (res) => {console.log(res), this.successMsgActivated = true},
+            error: (err) => {console.log(err), this.failedMsgActivated = true}
+          })
+          // return
+        }
+        
+      })
+      return 
+    }
+
+    console.log('Product invalid')
 
   }
 

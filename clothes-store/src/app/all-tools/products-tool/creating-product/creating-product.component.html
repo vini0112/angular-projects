@@ -23,6 +23,7 @@
             <option value="masc" *ngIf="postForm.controls['section'].value !== 'jackets'">Masculine</option>
             <option value="femi" *ngIf="postForm.controls['section'].value !== 'coats'">Feminine</option>
         </select>
+        
         <span class="erroMsg" *ngIf="submitted && postForm.controls['sexo'].invalid">Sexo required</span>
         
     
@@ -45,7 +46,6 @@
             <div class="textAreaWarning" [ngClass]="{'active': submitted && postForm.controls['info'].invalid || postForm.controls['info'].hasError('maxlength')}">
 
 
-                <!-- || postForm.controls['info'].touched -->
                 <span class="erroMsg" *ngIf="submitted && postForm.controls['info'].invalid && !postForm.controls['info'].hasError('maxlength') ">Description of the product required</span>
 
                 <span class="erroMsg" *ngIf="postForm.controls['info'].hasError('maxlength')">Characters limit reached!</span>

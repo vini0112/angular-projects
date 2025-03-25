@@ -7,6 +7,7 @@ import { resetPasswordGuard } from '../guards/reset-password.guard';
 import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-reset.guard';
 import { testGuard } from '../guards/test.guard';
 import AllToolsComponent from './all-tools/all-tools.component';
+import { devLoginGuard } from '../guards/dev-login.guard';
 
 
 export const routes: Routes = [
@@ -48,7 +49,8 @@ export const routes: Routes = [
     {
         path: 'developer_side',
         component: AllToolsComponent,
-        loadChildren: () => import('./all-tools/devtools.routes').then(m => m.DevToolsRoutes)
+        loadChildren: () => import('./all-tools/devtools.routes').then(m => m.DevToolsRoutes),
+        canActivate: [devLoginGuard]
     },
     
     { 

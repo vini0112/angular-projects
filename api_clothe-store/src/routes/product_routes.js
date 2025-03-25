@@ -2,6 +2,9 @@ import  Router from "express";
 import productControllers from "../app/controllers/product_controller.js";
 import {storage} from '../multer.config.js'
 import multer from "multer";
+import verifyJWT from "../middleware/verifyJWT.js";
+
+// FAZER O ACCESS TOKEN EXPIRAR EM 15S PARA TESTAR O REFRESH TOKEN!
 
 const router = Router()
 
@@ -16,16 +19,16 @@ router.get('/clothes', productControllers.show)
 router.get('/clothes/:id', productControllers.getById)
 
 // post
-router.post('/clothes',upload.single('image'), productControllers.postingClothes)
+router.post('/clothes', verifyJWT, upload.single('image'), productControllers.postingClothes)
 
 // update
-router.put('/clothes/:id', productControllers.updateClothe)
+router.put('/clothes/:id', verifyJWT, productControllers.updateClothe)
 
 // update favorite with patch
 router.patch('/clothesFavorite/:id', productControllers.changeFavorite)
 
 // delete
-router.delete('/clothes/:id', productControllers.deletingClothe)
+router.delete('/clothes/:id',verifyJWT, productControllers.deletingClothe)
 
 
 

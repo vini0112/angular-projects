@@ -68,7 +68,6 @@
             </select>
 
 
-
             <select name="sexo" [(ngModel)]="editItemData.sexo">
                 <option [value]="editItemData.sexo">{{editItemData.sexo}}</option>
                 <option value="masc" *ngIf="editItemData.sexo !== 'masc'">Masculine</option>
@@ -82,12 +81,11 @@
             <input type="number" name="quantity" [(ngModel)]="editItemData.quantity" #qtd="ngModel" required>
             <span class="erroMsg" *ngIf="qtd.errors?.['required']">Required</span>
 
-            <textarea name="info" [(ngModel)]="editItemData.info" #info="ngModel" maxlength="3" required></textarea >
+            <textarea name="info" [(ngModel)]="editItemData.info" #info="ngModel" maxlength="100" required></textarea>
             
             <span class="erroMsg" *ngIf="info.errors?.['required']">Required</span>
 
             <span class="erroMsg" *ngIf="!info.errors?.['required'] && info.errors?.['maxlength']">Characters limit reached!</span>
-            
             
             
         </div>

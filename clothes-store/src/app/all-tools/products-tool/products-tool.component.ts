@@ -108,7 +108,6 @@ export default class ProductsToolComponent implements OnInit{
             next: (res) => {console.log(res), this.successMsgActivated = true},
             error: (err) => {console.log(err), this.failedMsgActivated = true}
           })
-          // return
         }
         
       })

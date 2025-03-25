@@ -114,7 +114,7 @@ export class AuthLoginService {
 
 
 
-   // nao em uso
+   // NOT IN USE
   emailValidator(email: string):Observable<string>{
     return this.http.post<string>(`${this.api}/emailValidation`, {email})
   }

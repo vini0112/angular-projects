@@ -12,7 +12,7 @@ class loginController{
         const {email, password} = req.body
         
         if(!email || !password){
-            return res.status(400).json({ error: 'Username e password são obrigatórios.' });
+            return res.status(400).json({ error: 'Username e Password são obrigatórios.' });
         }
 
         // conexao com DB
@@ -26,7 +26,32 @@ class loginController{
             }
 
             const user = result[0]
+
+            // DEVELOPER LOGIN 
+            if(email === 'vinilocsilva@gmail.com'){
+                const match = await bcrypt.compare(password, user.password)
+                if(match){
+                    
+                    const accessToken = jwt.sign({ id: user.idusers, role: 'developer' }, process.env.SECRET_KEY, { expiresIn: '15m' });
+
+                    const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+
+                    await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken,  user.email])
+
+                    res.cookie('refreshToken', refreshToken, {
+                        httpOnly: true, // impede acesso ao cookie via JavaScript do lado do cliente
+                        secure: true, // Somente HTTPS em produção
+                        sameSite: 'none', // Evita envio do cookie em requisições de outros sites
+                        maxAge: 7 * 24 * 60 * 60 * 1000 // expirar em 7d
+                    })
+                    
+                    return res.json({message: "Developer Logged!", accessToken})
+                }
+
+            }
             
+
+            // USER LOGIN
             const match = await bcrypt.compare(password, user.password)
             
             if(!match){

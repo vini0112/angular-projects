@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
-
+import {jwtDecode} from 'jwt-decode'
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,24 @@ export class AuthServiceService {
   logout(): void {
     this.clearTokens();
     window.location.href = '/login'
+  }
+
+  
+  // GETTING ROLE
+
+  getLoginRole(): string | null{
+    const accessToken = localStorage.getItem('accessToken')
+    if(!accessToken) return null
+
+    try{
+      const decoded: any = jwtDecode(accessToken)
+      return decoded.role || null
+
+    }catch(err){
+      console.log("Decoding error!", err)
+      return null
+    }
+
   }
 
 

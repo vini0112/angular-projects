@@ -18,17 +18,16 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
   }
 
 
-  let token: string | null = ''
+  let token: string | null = null
   if(typeof window !== 'undefined'){
       token = localStorage.getItem('accessToken')
   }
 
   if(token){
     req = addToken(req, token)
-    // console.log('worked')
+    console.log('worked')
   }
 
-  
   
   return next(req).pipe(
     
@@ -43,6 +42,7 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
   )
 
 };
+
 
 function addToken(req: HttpRequest<unknown>, token: string){
   return req.clone({
@@ -69,7 +69,7 @@ function handle401Error(authService: AuthServiceService ,req: any, next: any): O
       }),
       catchError(error =>{
         isRefreshing.next(false)
-        //authService.logout() // desloga se falhar o refresh
+        
         return throwError(() => error)
 
       })

@@ -4,18 +4,26 @@ import { AuthLoginService } from '../services/auth.login.service';
 
 
 export const authGuard: CanActivateFn = (route, state) => {
+
   const authService = inject(AuthLoginService)
   const router = inject(Router)
+  
+  let token = null
 
-
-  const token = authService.getAccessToken()
-
-  if(token == null) return true // nao feito login ainda
-
-  else if(token){
-    router.navigateByUrl('home')
-    return false
+  if(typeof window !== 'undefined'){
+    token = localStorage.getItem('accessToken')
   }
 
-  return true
+  
+
+  if(token){
+    router.navigate(['/home'])
+    return false
+  }
+  else{
+    return true
+  }
+
+
+  
 };

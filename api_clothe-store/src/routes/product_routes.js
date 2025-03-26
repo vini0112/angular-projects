@@ -4,10 +4,9 @@ import {storage} from '../multer.config.js'
 import multer from "multer";
 import verifyJWT from "../middleware/verifyJWT.js";
 
-// FAZER O ACCESS TOKEN EXPIRAR EM 15S PARA TESTAR O REFRESH TOKEN!
+
 
 const router = Router()
-
 
 const upload = multer({storage})
 

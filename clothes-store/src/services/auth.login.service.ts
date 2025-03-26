@@ -65,10 +65,10 @@ export class AuthLoginService {
 
 
 
-
-  getAccessToken(): string | null {
-    return this.accessToken$.value;
-  }
+// STOPPED USING
+  // getAccessToken(): string | null {
+  //   return this.accessToken$.value;
+  // }
 
   // implementation with localStorage 
 

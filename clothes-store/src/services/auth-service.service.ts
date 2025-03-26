@@ -14,13 +14,9 @@ export class AuthServiceService {
     api = environment.api
   
 
-  constructor() {
-  }
-
   getAccessToken(): string | null{
     return localStorage.getItem('accessToken')
   }
-
 
   setAccessToken(token: string): void {
     localStorage.setItem('accessToken', token);
@@ -31,13 +27,14 @@ export class AuthServiceService {
   }
 
   refreshToken(): Observable<any>{
-    const refreshToken = this.getAccessToken()
 
-    if(!refreshToken){
+    const accessToken = this.getAccessToken()
+
+    if(!accessToken){
       throw new Error('Refresh token not found!')
     }
 
-    return this.http.post<any>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
+    return this.http.post<any>(`${this.api}/refreshToken`, {accessToken}, {withCredentials: true}).pipe(
       tap((res) => {
         
         console.log('Access token created!')
@@ -58,7 +55,11 @@ export class AuthServiceService {
   // GETTING ROLE
 
   getLoginRole(): string | null{
-    const accessToken = localStorage.getItem('accessToken')
+    let accessToken = null
+    if(typeof window !== 'undefined'){
+      accessToken = localStorage.getItem('accessToken')
+    }
+
     if(!accessToken) return null
 
     try{

@@ -39,9 +39,9 @@ export class ProductsService {
     return this.http.put(`${this.apiUrl}/clothes/${dados.id}`, dados)
   }
 
-  updateLocally(){
+  // updateLocally(){
 
-  }
+  // }
 
 
   deleteProduct(id: number){

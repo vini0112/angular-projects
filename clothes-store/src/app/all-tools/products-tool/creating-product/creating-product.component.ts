@@ -69,7 +69,6 @@ export class CreatingProductComponent implements AfterViewInit{
 
 
   createProduct(){
-    
     this.submitted = true
     if(this.postForm.valid){
 
@@ -118,7 +117,6 @@ export class CreatingProductComponent implements AfterViewInit{
       info: '',
       name: null,
     }) 
-
 
     this.inputImgElement.nativeElement.value = '' // reseting input img
 

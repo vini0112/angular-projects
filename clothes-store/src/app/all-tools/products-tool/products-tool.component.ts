@@ -22,17 +22,14 @@ export default class ProductsToolComponent implements OnInit{
   allProducts$ = new Observable<productModule[]>()
 
   
-
-
-  constructor(){
-    
-  }
+  constructor(){}
   
 
   ngOnInit(): void {
     this.fetchingAllProducts()
   }
 
+  // FAZER O POST REATIVO
   fetchingAllProducts(){
     
     this.allProducts$ = this.productService.allProducts$
@@ -97,7 +94,6 @@ export default class ProductsToolComponent implements OnInit{
 
       this.allProducts$.forEach(item =>{
         if(item[this.indexProductToEdit]){//checking if exist the product with the given index
-          item[this.indexProductToEdit] = this.editItemData // updating locally first
 
           // service to update in the DB
           this.productService.updateProduct(this.editItemData)
@@ -105,7 +101,12 @@ export default class ProductsToolComponent implements OnInit{
             finalize(() => this.loadingData = false) // loading
           )
           .subscribe({
-            next: (res) => {console.log(res), this.successMsgActivated = true},
+            
+            next: (res) => {
+              console.log(res),
+              item[this.indexProductToEdit] = this.editItemData // updating locally first
+              this.successMsgActivated = true
+            },
             error: (err) => {console.log(err), this.failedMsgActivated = true}
           })
         }
@@ -134,8 +135,6 @@ export default class ProductsToolComponent implements OnInit{
     }
 
   }
-
-
 
 
 

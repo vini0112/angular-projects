@@ -37,7 +37,7 @@ export class AuthServiceService {
     return this.http.post<any>(`${this.api}/refreshToken`, {accessToken}, {withCredentials: true}).pipe(
       tap((res) => {
         
-        console.log('Access token created!')
+        console.log('Access Token Refreshed!')
         if(res.accessToken){
           this.setAccessToken(res.accessToken)
         }

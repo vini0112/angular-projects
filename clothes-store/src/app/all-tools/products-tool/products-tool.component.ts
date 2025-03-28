@@ -4,13 +4,13 @@ import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CreatingProductComponent } from './creating-product/creating-product.component';
-import { finalize, Observable } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products-tool',
-  imports: [NgIf, CreatingProductComponent, AsyncPipe, FormsModule, NgClass],
-  templateUrl: './products-tool.component.html',
+  imports: [NgIf, CreatingProductComponent, AsyncPipe, FormsModule, NgClass, RouterLink],
+  templateUrl: './products-tool.component.html', 
   styleUrl: './products-tool.component.css'
 })
 export default class ProductsToolComponent implements OnInit{
@@ -124,14 +124,9 @@ export default class ProductsToolComponent implements OnInit{
   deleteProduct(id: number){
 
     if(window.confirm('Are you sure you wanna delete this item?')){
+      
+      this.productService.deleteProduct(id)
 
-      this.productService.deleteProduct(id).subscribe({
-        next: () => {
-          console.log('Product deleted')
-          window.location.reload()
-        },
-        error: (err) => console.log('error', err)
-      })
     }
 
   }

@@ -5,6 +5,8 @@
     
 }
 
+
+
 /* erro menssage */
 .erroMsg{
     color: red;
@@ -20,14 +22,25 @@
     width: 100%;
     margin: auto;
     display: flex;
-    justify-content: end;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+}
+
+.btnGoBack{
+    background-color: black;
+    padding: .2rem 1.5rem;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
 }
 
 .btnCreateProduct{
     border: none;
     text-decoration: none;
-    padding: .4rem 1.8rem;
+    padding: .3rem 1.8rem;
     background-color: black;
     color: white;
     border-radius: 5px;
@@ -305,6 +318,9 @@ form{
     .btnCreateProduct{
         margin-right: 2rem;
     }
+    .btnGoBack{
+        margin-left: 2rem;
+    }
 }
 
 @media(max-width: 768px){
@@ -336,6 +352,11 @@ form{
 @media (max-width: 480px){
     .btnCreateProduct{
         margin-right: 1rem;
+        margin-right: 1rem;
+        padding: .2rem 1.1rem;
+    }
+    .btnGoBack{
+        margin-left: 0rem;
     }
 
     .boxTable{

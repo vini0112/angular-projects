@@ -32,20 +32,31 @@ export class ProductsService {
   // CRUD
 
   createProduct(dados: any){
-    return this.http.post(`${this.apiUrl}/clothes`, dados)
+    return this.http.post(`${this.apiUrl}/clothes`, dados).pipe(
+      tap(() => this.getProducts()) // creating in the reactive way
+    )
   }
+
 
   updateProduct(dados: EditingProduct){
     return this.http.put(`${this.apiUrl}/clothes/${dados.id}`, dados)
   }
 
-  // updateLocally(){
-
-  // }
 
 
   deleteProduct(id: number){
-    return this.http.delete(`${this.apiUrl}/clothes/${id}`)
+    this.http.delete(`${this.apiUrl}/clothes/${id}`).subscribe({
+
+      next: () =>{
+        const NewArray = this.allProducts.value.filter(item => item.id !== id)
+        this.allProducts.next(NewArray)
+        console.log('Product Deleted')
+      },
+      error: (err) => {
+        console.log('Product Not deleted!', err)
+      }
+      
+    })
   }
 
 

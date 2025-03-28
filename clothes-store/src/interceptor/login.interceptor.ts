@@ -1,14 +1,14 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { LocalStorageService } from '../services/localStorage.service';
 
 export const loginInterceptor: HttpInterceptorFn = (req, next) => {
 
-  let token = null // tava '
-  // impede que o código acesse localStorage em ambientes server-side
-  //  Agora o interceptor só acessa localStorage no navegador, evitando o erro
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token') || null;
-  }
-  
+  const localstorageService = inject(LocalStorageService)
+
+  const token = localstorageService.getItem('token')
+
+
   if(token){
     const newReq = req.clone({
       setHeaders:{
@@ -17,6 +17,7 @@ export const loginInterceptor: HttpInterceptorFn = (req, next) => {
     })
     return next(newReq);
   }
+  
   return next(req)
   
   

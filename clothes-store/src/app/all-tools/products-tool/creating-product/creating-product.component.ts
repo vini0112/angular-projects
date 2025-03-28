@@ -25,6 +25,7 @@ export class CreatingProductComponent implements AfterViewInit{
 
   goBackToProductTools(){
     this.statusCreationPage.emit(true)
+    
   }
 
   

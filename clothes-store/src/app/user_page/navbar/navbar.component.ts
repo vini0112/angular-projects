@@ -5,6 +5,7 @@ import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
 import { Observable } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
+import { AuthServiceService } from '../../../services/auth-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit{
   
   listCartService = inject(listCartServices)
   authLoginService = inject(AuthLoginService)
-
+  authService = inject(AuthServiceService)
 
   // cart parameters 
   products: cartList[] = []
@@ -67,6 +68,8 @@ export class NavbarComponent implements OnInit{
     this.sexoChosen = !this.sexoChosen
   }
 
+
+
   // cart products
 
   constructor(){
@@ -75,14 +78,19 @@ export class NavbarComponent implements OnInit{
     this.allQtd$ = this.listCartService.allQtd$
   }
 
+
   ngOnInit(): void {
 
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
     })
 
+    this.checkingRoleOfLogin()
+
   }
 
+
+  
 
   removeFromCart(id: number){
     this.listCartService.updatingQuantity(id)
@@ -99,6 +107,26 @@ export class NavbarComponent implements OnInit{
 
   logout(){
     this.authLoginService.loggingOut()
+    this.isDeveloper = false
   }
+
+
+   // checking if devepoler is logged 
+  isDeveloper = false
+
+  checkingRoleOfLogin(){
+    const role = this.authService.getLoginRole()
+    if(role === 'developer'){
+      this.isDeveloper = true
+    }
+    
+  }
+
+  // FAZER O ICON DEVELOPER ATIVAR AO LOGIN DO DEVELOPER
+  
+
+  
+  
+  
 
 }

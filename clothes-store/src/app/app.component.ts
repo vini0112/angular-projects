@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.productService.getProducts()
-    // this.authSeriveToken.refreshToken().subscribe()
+
   }
 
   

@@ -154,7 +154,6 @@ export default class LoginComponent {
         return 'Spaces are not allowed!'
       }
       
-      
       return null
     }
 

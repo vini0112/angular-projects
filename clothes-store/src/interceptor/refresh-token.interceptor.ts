@@ -1,15 +1,16 @@
-import { HttpErrorResponse, HttpHandler, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject, Inject, Optional } from '@angular/core';
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
-import { AuthLoginService } from '../services/auth.login.service';
-import { Router } from '@angular/router';
+
 import { AuthServiceService } from '../services/auth-service.service';
+import { LocalStorageService } from '../services/localStorage.service';
 
   
 const isRefreshing = new BehaviorSubject<boolean>(false)
 const refreshTokenAccess = new BehaviorSubject<string | null>(null)
 
 export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandlerFn){
+  const localStorageService = inject(LocalStorageService)
   const authService = inject(AuthServiceService)
 
 
@@ -17,15 +18,11 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
     return next(req);
   }
 
+  let token = localStorageService.getItem('accessToken')
 
-  let token: string | null = null
-  if(typeof window !== 'undefined'){
-      token = localStorage.getItem('accessToken')
-  }
 
   if(token){
     req = addToken(req, token)
-    console.log('worked')
   }
 
   

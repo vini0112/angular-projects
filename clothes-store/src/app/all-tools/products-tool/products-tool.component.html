@@ -4,6 +4,8 @@
 
 <!--productCreation-->
 <div class="linksNavigation" *ngIf="createNewProductPage()">
+    <i class="fa-solid fa-arrow-left-long btnGoBack" routerLink="../"></i>
+
     <button (click)="isProductsTableActive()" class="btnCreateProduct">Add New Product</button>
 </div>
 

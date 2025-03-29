@@ -1,0 +1,41 @@
+
+:host{
+    position: fixed;
+    top: 0%;
+    left: 20%;
+}
+
+
+.alertBody{
+    width: 200px;
+    height: 80px;
+}
+
+.alertBody.error{
+    background-color: red;
+}
+
+.alertBody.warning{
+    background-color: #4d4c53;
+}
+
+.alertBody.info{
+    background-color: blue;
+}
+
+.alertBody.success{
+    background-color: green;
+
+}
+
+
+p{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+

@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Valida
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
 import { finalize } from 'rxjs';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { finalize } from 'rxjs';
 })
 export default class LoginComponent {
 
+  message = inject(MessageService)
 
   loginPage = false
   singUpPage = true
@@ -84,17 +86,21 @@ export default class LoginComponent {
       if(this.signUpForm.valid){
 
         this.loginService.register(this.signUpForm.value).subscribe({
-          next: (res) => {
-            alert('Account Created!')
-            console.log(res)
+          next: () => {
+            this.message.showMessage('Account Created!', "success")
             this.movingToLogin()
             this.clearSignup()
           },
-          error: (error) => {console.log(error.error), alert('Email already exist!')}
+          error: () => {
+            
+            this.message.showMessage('Email already exist!', "error")
+          }
+
         })
         
       }else{
-        console.log('Formulario invalido')
+        this.message.showMessage('Formulario invalido!', "error")
+
       }
       
     }
@@ -118,16 +124,19 @@ export default class LoginComponent {
           this.loginService.gettingIn(this.signInForm.value).subscribe({
             next: () =>{
               console.log('success login')
+              this.message.showMessage('Successful Login!', "success")
               this.router.navigateByUrl('/home')
+
             },
             error: (error) =>{
               this.messageErro = error.message
-              alert('Password/Email Wrong!')
+              this.message.showMessage('Password/Email Wrong!', "error")
             }
 
           })
       }else{
-        alert('Form Invalid!')
+        
+        this.message.showMessage('Form Invalid!', "error")
       }
     }
 
@@ -203,8 +212,18 @@ export default class LoginComponent {
         this.loginService.sendEmailToReset(this.user.sendingEmail)
         .pipe(finalize(() => this.loadingData = false)) // finalize the spinner
         .subscribe({
-          next: (res) => {console.log(res), this.wasSent = true, this.user.sendingEmail = ''},
-          error: (err) => {console.log(err), alert('Email not found!')}
+          next: (res) => {
+            console.log(res),
+            this.wasSent = true, 
+            this.user.sendingEmail = ''
+          },
+
+
+          error: (err) => {
+            console.log(err), 
+            this.message.showMessage('Email not found!', "error")
+
+          }
         })
       }
     }

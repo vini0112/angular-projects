@@ -1,0 +1,8 @@
+
+@if(message()){
+    <div class="alertBody" [ngClass]="message()?.severity">
+        
+        <p>{{message()?.text}}</p>
+
+    </div>
+}

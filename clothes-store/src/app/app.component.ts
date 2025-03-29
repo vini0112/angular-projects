@@ -4,10 +4,11 @@ import { NavbarComponent } from './user_page/navbar/navbar.component';
 import { ProductsService } from '../services/products.service';
 import { AuthLoginService } from '../services/auth.login.service';
 import { AuthServiceService } from '../services/auth-service.service';
+import { MessageComponent } from './message/message.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, MessageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
-import {jwtDecode} from 'jwt-decode'
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +9,8 @@ import {jwtDecode} from 'jwt-decode'
 export class AuthServiceService {
 
   private http = inject(HttpClient)
+
+
 
     api = environment.api
   
@@ -52,26 +53,6 @@ export class AuthServiceService {
   }
 
   
-  // GETTING ROLE
-
-  getLoginRole(): string | null{
-    let accessToken = null
-    if(typeof window !== 'undefined'){
-      accessToken = localStorage.getItem('accessToken')
-    }
-
-    if(!accessToken) return null
-
-    try{
-      const decoded: any = jwtDecode(accessToken)
-      return decoded.role || null
-
-    }catch(err){
-      console.log("Decoding error!", err)
-      return null
-    }
-
-  }
 
 
 

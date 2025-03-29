@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { AuthServiceService } from '../../../services/auth-service.service';
 
@@ -78,15 +78,18 @@ export class NavbarComponent implements OnInit{
     this.allQtd$ = this.listCartService.allQtd$
   }
 
+  // ICON STATUS ACCORDING TO THIS OBESERVABLE
+  DEVLogin$ = new Observable<boolean>;
+
 
   ngOnInit(): void {
 
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
     })
-
-    this.checkingRoleOfLogin()
-
+  
+    this.DEVLogin$ = this.authLoginService.IsDeveloper$
+    
   }
 
 
@@ -107,20 +110,20 @@ export class NavbarComponent implements OnInit{
 
   logout(){
     this.authLoginService.loggingOut()
-    this.isDeveloper = false
+    // this.isDeveloper = false
   }
 
 
    // checking if devepoler is logged 
-  isDeveloper = false
+  // isDeveloper = false
 
-  checkingRoleOfLogin(){
-    const role = this.authService.getLoginRole()
-    if(role === 'developer'){
-      this.isDeveloper = true
-    }
+  // checkingRoleOfLogin(){
+  //   const role = this.authService.getLoginRole()
+  //   if(role === 'developer'){
+  //     this.isDeveloper = true
+  //   }
     
-  }
+  // }
 
   // FAZER O ICON DEVELOPER ATIVAR AO LOGIN DO DEVELOPER
   

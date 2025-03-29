@@ -1,13 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthLoginService } from '../services/auth.login.service';
 
 export const devLoginGuard: CanActivateFn = (route, state) => {
 
-  const authService = inject(AuthServiceService)
+  const authLoginService = inject(AuthLoginService)
   const router= inject(Router)
 
-  const role = authService.getLoginRole()
+  const role = authLoginService.getLoginRole()
 
   if(role === 'developer'){
     return true

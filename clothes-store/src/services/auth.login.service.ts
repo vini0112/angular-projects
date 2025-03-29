@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {JwtHelperService } from '@auth0/angular-jwt'
 import { BehaviorSubject, catchError, from, Observable, of, Subject, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
+import {jwtDecode} from 'jwt-decode'
 
 
 
@@ -17,7 +18,7 @@ export class AuthLoginService {
   
   constructor(private jwtHelper: JwtHelperService) { 
     this.getUser()
-    
+    this.checkingDevLogin()
   }
 
 
@@ -25,6 +26,10 @@ export class AuthLoginService {
   isAuthenticated$ = this.isAuth.asObservable()
 
   private accessToken$ = new BehaviorSubject<string | null>(null)
+
+  private IsDeveloper = new BehaviorSubject<boolean>(false)
+  IsDeveloper$ = this.IsDeveloper.asObservable()
+
 
 
   register(form: string): Observable<string>{
@@ -38,6 +43,8 @@ export class AuthLoginService {
       tap(response => {
         this.saveToken(response.accessToken),
         this.accessToken$.next(response.accessToken)
+        this.checkingDevLogin()
+        
       })
     )
   }
@@ -58,17 +65,12 @@ export class AuthLoginService {
   loggingOut(){
     this.http.post<string>(`${this.api}/auth/logout`, {}, {withCredentials: true})
     .subscribe({
-      next: () => this.logOut(),
+      next: () => this.logOut()
   
     })
   }
 
 
-
-// STOPPED USING
-  // getAccessToken(): string | null {
-  //   return this.accessToken$.value;
-  // }
 
   // implementation with localStorage 
 
@@ -94,6 +96,7 @@ export class AuthLoginService {
     this.accessToken$.next(null)
     localStorage.removeItem('accessToken')
     this.isAuth.next(false)
+    this.IsDeveloper.next(false)
   }
 
   // reseting password
@@ -109,6 +112,41 @@ export class AuthLoginService {
 
   tokenResetPasswordValidator(token: string): Observable<ResetTokenResponseModule>{
     return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`)
+  }
+
+
+
+   // GETTING ROLE
+  getLoginRole(): string | null{
+    let accessToken = null
+    if(typeof window !== 'undefined'){
+      accessToken = localStorage.getItem('accessToken')
+    }
+
+    if(!accessToken) return null
+
+    try{
+      const decoded: any = jwtDecode(accessToken)
+      
+      return decoded.role || null
+
+    }catch(err){
+      console.log("Decoding error!", err)
+      return null
+    }
+
+  }
+
+  checkingDevLogin(){
+    const role = this.getLoginRole()
+    if(role === 'developer'){
+      this.IsDeveloper.next(true)
+    }
+    else{
+      this.IsDeveloper.next(false)
+    }
+
+    
   }
 
 

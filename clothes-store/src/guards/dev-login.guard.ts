@@ -1,19 +1,27 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthLoginService } from '../services/auth.login.service';
+import { map, Observable, take } from 'rxjs';
 
 export const devLoginGuard: CanActivateFn = (route, state) => {
 
   const authLoginService = inject(AuthLoginService)
   const router= inject(Router)
 
-  const role = authLoginService.getLoginRole()
+    //  CHECKING IF IS_DEVELOPER IS TRUE TO ALLOW ACCESS TO THE DEV TOOLS!
+  return authLoginService.IsDeveloper$.pipe(
+    take(1),
+    map(isLogged => {
 
-  if(role === 'developer'){
-    return true
-  }else{
-    router.navigate(['/home'])
-    return false
-  }
+      if(!isLogged){
+        router.navigate(['/home'])
+        return false
+
+      }else{
+        return true
+      }
+    })
+  )
+  
   
 };

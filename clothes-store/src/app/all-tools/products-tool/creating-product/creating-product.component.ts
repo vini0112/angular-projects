@@ -1,9 +1,8 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, Input, signal, Signal, EventEmitter, Output, output, inject, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import { Component, EventEmitter, Output, inject, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ProductsService } from '../../../../services/products.service';
-import { productModule } from '../../../../modules/products.module';
+import { MessageService } from '../../../../services/message.service';
 
 @Component({
   selector: 'app-creating-product',
@@ -14,6 +13,7 @@ import { productModule } from '../../../../modules/products.module';
 export class CreatingProductComponent implements AfterViewInit{
 
   productService = inject(ProductsService)
+  messageService = inject(MessageService)
 
   @Output() statusCreationPage = new EventEmitter<boolean>()
 
@@ -52,6 +52,7 @@ export class CreatingProductComponent implements AfterViewInit{
 
   }
 
+
   ngAfterViewInit(): void {
     this.setFocus()
   }
@@ -86,11 +87,14 @@ export class CreatingProductComponent implements AfterViewInit{
 
       
       this.productService.createProduct(formdata).subscribe({
-        next: (res) => {
-          alert('Product Created')
+        next: () => {
+          this.messageService.showMessage('Product Created!', "success")
           this.clearForm()
         },
-        error: (err) => console.log('error', err)
+        error: (err) => {
+          console.log('product not created!', err)
+          // this.messageService.showMessage("Product Not Created!", "error")
+        }
       })
     }
 
@@ -120,9 +124,6 @@ export class CreatingProductComponent implements AfterViewInit{
     }) 
 
     this.inputImgElement.nativeElement.value = '' // reseting input img
-
-    // this.postForm.markAsPristine()
-    // this.postForm.markAsUntouched()
 
     this.setFocus()
 

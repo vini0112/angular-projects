@@ -12,6 +12,9 @@ router.get('/auth/user', loginController.protectedRoute)
 router.post('/refreshToken', loginController.refreshToken)
 
 
+// CHECKING IF IS LOGGED
+router.get('/isLogged', loginController.isLogged)
+
 // SIGN IN  
 router.post('/entrando', loginController.entrando)
 

@@ -7,13 +7,14 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptors, with
 import { loginInterceptor } from '../interceptor/login.interceptor';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { AuthInterceptorToken } from '../interceptor/refresh-token.interceptor';
+import { refreshingTokenInterceptor } from '../interceptor/refreshing-token.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(
       withFetch(),
-      withInterceptors([loginInterceptor, AuthInterceptorToken]),
+      withInterceptors([loginInterceptor, AuthInterceptorToken]), //
       withInterceptorsFromDi()
     ),
     {provide: JWT_OPTIONS, useValue: {}}, 

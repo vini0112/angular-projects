@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throw
 
 import { AuthServiceService } from '../services/auth-service.service';
 import { LocalStorageService } from '../services/localStorage.service';
+import { MessageService } from '../services/message.service';
 
   
 const isRefreshing = new BehaviorSubject<boolean>(false)
@@ -25,9 +26,9 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
     req = addToken(req, token)
   }
 
+  // return next(req)
   
   return next(req).pipe(
-    
     catchError((error: HttpErrorResponse) => {
       if(error.status === 401 && !req.url.includes('/refreshToken')){
         // console.log('Token expirado! Tentando fazer refresh...');
@@ -52,19 +53,21 @@ function addToken(req: HttpRequest<unknown>, token: string){
 
 function handle401Error(authService: AuthServiceService ,req: any, next: any): Observable<any>{
 
-
   if(!isRefreshing.value){
 
     isRefreshing.next(true)
     refreshTokenAccess.next(null)
 
     return authService.refreshToken().pipe(
+
       switchMap((newToken: any) =>{
+        
         isRefreshing.next(false)
         refreshTokenAccess.next(newToken.accessToken)
         return next.handle(addToken(req, newToken.accessToken))
       }),
       catchError(error =>{
+        
         isRefreshing.next(false)
         
         return throwError(() => error)
@@ -72,6 +75,7 @@ function handle401Error(authService: AuthServiceService ,req: any, next: any): O
       })
     )
   }else{
+
     return refreshTokenAccess.pipe(
       filter(token => token !== null),
       take(1),

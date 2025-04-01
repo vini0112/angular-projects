@@ -1,11 +1,12 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { EditingProduct, productModule } from '../../../modules/products.module';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { productModule } from '../../../modules/products.module';
 import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CreatingProductComponent } from './creating-product/creating-product.component';
-import { finalize, map, Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-products-tool',
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export default class ProductsToolComponent implements OnInit{
 
+  messageService = inject(MessageService)
   productService = inject(ProductsService)
   route = inject(Router)
 
@@ -29,9 +31,8 @@ export default class ProductsToolComponent implements OnInit{
     this.fetchingAllProducts()
   }
 
-  // FAZER O POST REATIVO
+
   fetchingAllProducts(){
-    
     this.allProducts$ = this.productService.allProducts$
   }
 
@@ -102,12 +103,14 @@ export default class ProductsToolComponent implements OnInit{
           )
           .subscribe({
             
-            next: (res) => {
-              console.log(res),
+            next: () => {
               item[this.indexProductToEdit] = this.editItemData // updating locally first
               this.successMsgActivated = true
             },
-            error: (err) => {console.log(err), this.failedMsgActivated = true}
+            error: () => {
+              
+              this.failedMsgActivated = true
+            }
           })
         }
         
@@ -115,7 +118,7 @@ export default class ProductsToolComponent implements OnInit{
       return 
     }
 
-    console.log('Product invalid')
+    this.messageService.showMessage("Product invalid", "error")
 
   }
 
@@ -126,12 +129,9 @@ export default class ProductsToolComponent implements OnInit{
     if(window.confirm('Are you sure you wanna delete this item?')){
       
       this.productService.deleteProduct(id)
-
+      this.messageService.showMessage("Product Deleted!", "success")
     }
 
   }
-
-
-
 
 }

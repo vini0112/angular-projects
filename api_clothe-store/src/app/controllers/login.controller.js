@@ -7,6 +7,26 @@ const saltRounds = 10;
 
 class loginController{
 
+    // FAST REQUEST OF THE APP      
+    async isLogged(req, res){
+        const token = req.cookies.refreshToken
+
+        if(!token){
+            return res.status(404).send("No Token!");
+        }
+
+        jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
+            if(err) return res.status(403).json({ message: "Token inválido!"})
+            
+            if(user.role === process.env.ADM_ROLE){
+                return res.json({developerMsg: "Developer_Logged"})
+            }
+
+            res.json(user)
+        })
+
+    }
+
     // login
     async entrando(req, res){
         const {email, password} = req.body
@@ -26,15 +46,16 @@ class loginController{
             }
 
             const user = result[0]
+            
 
             // DEVELOPER LOGIN 
-            if(email === 'vinilocsilva@gmail.com'){
+            if(email === process.env.EMAIL_OF_DEVELOPER && user.roles === process.env.ADM_ROLE){
                 const match = await bcrypt.compare(password, user.password)
                 if(match){
                     
-                    const accessToken = jwt.sign({ id: user.idusers, role: 'developer' }, process.env.SECRET_KEY, { expiresIn: '15s' });
+                    const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '30m' });
 
-                    const refreshToken = jwt.sign({ id: user.idusers }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
+                    const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
                     await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken,  user.email])
 
@@ -42,10 +63,10 @@ class loginController{
                         httpOnly: true, // impede acesso ao cookie via JavaScript do lado do cliente
                         secure: true, // Somente HTTPS em produção
                         sameSite: 'none', // Evita envio do cookie em requisições de outros sites
-                        maxAge: 7 * 24 * 60 * 60 * 1000 // expirar em 7d
+                        maxAge:  7 * 24 * 60 * 60 * 1000 // expirar em 7d
                     })
                     
-                    return res.json({message: "Developer Logged!", accessToken})
+                    return res.json({developerMsg: "Developer_Logged!", accessToken})
                 }
 
             }
@@ -58,7 +79,7 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15s' });
+            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
             const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
@@ -72,7 +93,7 @@ class loginController{
                 maxAge: 7 * 24 * 60 * 60 * 1000 // expirar em 7d
             }) 
 
-            res.json({ message: 'Login realizado com sucesso!', accessToken});
+            res.json({ userMsg: 'Login realizado com sucesso!', accessToken});
         })
 
     } 
@@ -85,8 +106,8 @@ class loginController{
         // have to check if it has a role developer or user
         const oldAccessToken = req.body.accessToken 
         const decoded = jwt.decode(oldAccessToken)
-        
-        
+
+
         if(!refreshToken) return res.status(401).json({message: "not authorized!"})
         
         connection.query('SELECT * FROM users WHERE token_reset = ?', [refreshToken], (err, result) =>{
@@ -95,17 +116,18 @@ class loginController{
             if(err || result.length === 0) return res.status(401).json({ message: "Token inválido" });
 
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
-                if (err) return res.status(403).json({ message: "Token inválido", refreshToken});
+                if (err) return res.status(401).json({ message: "Token inválido", refreshToken});
+
 
                 // IF ROLE DEVELOPER
-                if(decoded.role == "developer"){
-                    const newAccessToken = jwt.sign({ id: user.idusers, role: "developer" }, process.env.SECRET_KEY, { expiresIn: '15s' });
+                if(decoded.role == process.env.ADM_ROLE){
+                    const newAccessToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE }, process.env.SECRET_KEY, { expiresIn: '30m' });
                 
                     return res.status(200).json({accessToken: newAccessToken})
                 }
 
 
-                const newAccessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15s' });
+                const newAccessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
                 
                 res.status(200).json({accessToken: newAccessToken})
 

@@ -18,7 +18,7 @@ export class AuthLoginService {
   
   constructor(private jwtHelper: JwtHelperService) { 
     this.getUser()
-    this.checkingDevLogin()
+    this.checkIfIsLogged()
   }
 
 
@@ -38,12 +38,16 @@ export class AuthLoginService {
 
 
 
-  gettingIn(credentials: {form: string}): Observable<{accessToken: string}>{
-    return this.http.post<{accessToken: string}>(`${this.api}/entrando`, credentials, {withCredentials: true}).pipe(
+  gettingIn(credentials: {form: string}): Observable<{accessToken: string, developerMsg: string}>{
+    return this.http.post<{accessToken: string, developerMsg: string}>(`${this.api}/entrando`, credentials, {withCredentials: true}).pipe(
       tap(response => {
+
+        if(response.developerMsg === 'Developer_Logged!'){
+          this.IsDeveloper.next(true)
+        }
+
         this.saveToken(response.accessToken),
         this.accessToken$.next(response.accessToken)
-        this.checkingDevLogin()
         
       })
     )
@@ -94,7 +98,8 @@ export class AuthLoginService {
   
   logOut(){
     this.accessToken$.next(null)
-    localStorage.removeItem('accessToken')
+    if(this.hasToken()) localStorage.removeItem('accessToken')
+    
     this.isAuth.next(false)
     this.IsDeveloper.next(false)
   }
@@ -111,43 +116,63 @@ export class AuthLoginService {
   
 
   tokenResetPasswordValidator(token: string): Observable<ResetTokenResponseModule>{
-    return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`)
+    return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`) 
+  }
+
+
+
+  checkIfIsLogged(){
+    this.http.get<{developerMsg: string}>(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
+      next: (res) => {
+
+        if(res.developerMsg == 'Developer_Logged'){
+          this.IsDeveloper.next(true)
+        }else{
+          this.IsDeveloper.next(false)
+        }
+      },
+      error: () => {
+        this.logOut()
+      }
+
+    })
   }
 
 
 
    // GETTING ROLE
-  getLoginRole(): string | null{
-    let accessToken = null
-    if(typeof window !== 'undefined'){
-      accessToken = localStorage.getItem('accessToken')
-    }
+  // getLoginRole(): string | null{
+  //   let accessToken = null
+  //   if(typeof window !== 'undefined'){
+  //     accessToken = localStorage.getItem('accessToken')
+  //   }
 
-    if(!accessToken) return null
+  //   if(!accessToken) return null
 
-    try{
-      const decoded: any = jwtDecode(accessToken)
+  //   try{
+  //     const decoded: any = jwtDecode(accessToken)
       
-      return decoded.role || null
+  //     return decoded.role || null
 
-    }catch(err){
-      console.log("Decoding error!", err)
-      return null
-    }
+  //   }catch(err){
+  //     console.log("Decoding error!", err)
+  //     return null
+  //   }
 
-  }
+  // }
 
-  checkingDevLogin(){
-    const role = this.getLoginRole()
-    if(role === 'developer'){
-      this.IsDeveloper.next(true)
-    }
-    else{
-      this.IsDeveloper.next(false)
-    }
+
+  // checkingDevLogin(){
+  //   const role = this.getLoginRole()
+  //   if(role === 'developer'){
+  //     this.IsDeveloper.next(true)
+  //   }
+  //   else{
+  //     this.IsDeveloper.next(false)
+  //   }
 
     
-  }
+  // }
 
 
 

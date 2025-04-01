@@ -64,7 +64,7 @@ export default class LoginComponent {
       return this.signUpForm.get('email')
     }
     get password(){
-      return this.signUpForm.get('password') // pegando errado aquiiiiiiii
+      return this.signUpForm.get('password')
     }
 
     // 

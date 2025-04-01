@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { environment } from '../environments/environment.development';
 export class AuthServiceService {
 
   private http = inject(HttpClient)
+  private messageService = inject(MessageService)
 
 
 
@@ -38,7 +40,7 @@ export class AuthServiceService {
     return this.http.post<any>(`${this.api}/refreshToken`, {accessToken}, {withCredentials: true}).pipe(
       tap((res) => {
         
-        console.log('Access Token Refreshed!')
+        this.messageService.showMessage("Token Refreshed! Try Again!", "info")
         if(res.accessToken){
           this.setAccessToken(res.accessToken)
         }

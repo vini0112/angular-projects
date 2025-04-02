@@ -5,6 +5,8 @@ import productRouter from "./routes/product_routes.js"
 import loginRouter from "./routes/login.routes.js"
 import cookieParse from 'cookie-parser'
 
+import mercadoPagoRoute from "./routes/mercadoPago.js"
+
 const app = express()
 
 app.use(cors({
@@ -19,7 +21,7 @@ app.use(loginRouter)
 
 app.use(productRouter)
 app.use('/upload', express.static('upload')) //servir arquivos staticos
-
+app.use(mercadoPagoRoute)
 
 
 export default app;

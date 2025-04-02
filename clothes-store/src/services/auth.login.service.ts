@@ -87,13 +87,16 @@ export class AuthLoginService {
     if(typeof window !== 'undefined'){
       return !!localStorage.getItem('accessToken')
     }
+    
     return false
   }
 
   private loadToken(){
+
     if(this.hasToken()){
       this.isAuth.next(true)
     }
+    
   }
   
   logOut(){

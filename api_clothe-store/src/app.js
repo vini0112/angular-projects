@@ -5,7 +5,7 @@ import productRouter from "./routes/product_routes.js"
 import loginRouter from "./routes/login.routes.js"
 import cookieParse from 'cookie-parser'
 
-import mercadoPagoRoute from "./routes/mercadoPago.js"
+import mercadoPagoRoute from "./routes/mercadoPago.routes.js"
 
 const app = express()
 

@@ -1,5 +1,5 @@
 
-import {Preference, MercadoPagoConfig} from 'mercadopago'
+import {MercadoPagoConfig} from 'mercadopago'
 
 
 const client = new MercadoPagoConfig({
@@ -7,4 +7,4 @@ const client = new MercadoPagoConfig({
 })
 
 
-export default {client, Preference};
+export default client;

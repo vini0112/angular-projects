@@ -6,6 +6,7 @@ import loginRouter from "./routes/login.routes.js"
 import cookieParse from 'cookie-parser'
 
 import mercadoPagoRoute from "./routes/mercadoPago.routes.js"
+import stripeRoute from './routes/stripe.route.js'
 
 const app = express()
 
@@ -21,7 +22,8 @@ app.use(loginRouter)
 
 app.use(productRouter)
 app.use('/upload', express.static('upload')) //servir arquivos staticos
-app.use(mercadoPagoRoute)
+app.use(stripeRoute)
+
 
 
 export default app;

@@ -52,6 +52,11 @@ export const routes: Routes = [
         loadChildren: () => import('./all-tools/devtools.routes').then(m => m.DevToolsRoutes),
         canActivate: [devLoginGuard]
     },
+
+    {
+        path: 'checkout-payment',
+        loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component')
+    },
     
     { 
         path: '**', redirectTo: 'home'

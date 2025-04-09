@@ -1,0 +1,43 @@
+:host{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    max-width: 500px;
+    width: 100%;
+    border: 2px solid black;
+}
+
+.boxBtn{
+    display: flex;
+    justify-content: end;
+}
+
+button{
+    margin-top: .3rem;
+    border: none;
+    background-color: blue;
+    color: white;
+    font-weight: 600;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 1px black;
+}
+
+.messageERROR{
+    text-align: center;
+    color: red;
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+
+
+.shippingForm div{
+    display: flex;
+    flex-direction: column;
+}

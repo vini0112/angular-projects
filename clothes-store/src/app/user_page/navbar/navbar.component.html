@@ -102,7 +102,7 @@
         </div>
 
         <div class="btnCart">
-            <button class="btnBuy">{{totalPrice$ | async}}<span>Buy</span></button>
+            <button class="btnBuy" (click)="buying()">{{totalPrice$ | async}}<span>Buy</span></button>
             <button class="btnClose" (click)="btnCloseCart()">Close</button>
         </div>
         

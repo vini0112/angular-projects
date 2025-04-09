@@ -1,0 +1,82 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { Stripe, StripeElements, loadStripe } from '@stripe/stripe-js';
+import { NgxStripeModule } from 'ngx-stripe';
+import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
+import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+// import {Mat} from '@angular/ma'
+
+import { environment } from '../../../environments/environment.development';
+
+@Component({
+  selector: 'app-checkout-payment',
+  imports: [NgxStripeModule, NgIf, FormsModule], 
+  templateUrl: './checkout-payment.component.html',
+  styleUrl: './checkout-payment.component.css'
+})
+export default class CheckoutPaymentComponent implements OnInit{ 
+
+  checkoutService = inject(CheckoutPaymentService)
+
+  shippingForm = false
+
+  stripe: Stripe | null = null;
+  clientSecret = this.checkoutService.getClientSecret()
+  amount = this.checkoutService.getAmount()
+
+  elements: StripeElements | null = null;
+  loading = false;
+  paymentElement: any
+  message = '';
+
+
+
+  async ngOnInit() {
+    this.stripe = await loadStripe(environment.stripe_public_key)
+
+    
+    if (!this.stripe || !this.clientSecret) {
+      this.message = 'Error: Payment not initialized!';
+      return;
+    }
+      
+      this.elements = this.stripe.elements({ clientSecret: this.clientSecret });
+      const paymentElement = this.elements.create('payment');
+      paymentElement.mount('#payment-element');
+      console.log(this.amount)
+      // this.paymentElement = this.elements.create('payment');
+      // this.paymentElement.mount('#payment-element');
+
+  }
+
+
+  async handleSubmit(){
+    
+    if(!this.stripe || !this.clientSecret || !this.elements) return 
+
+    const {error} = await this.stripe.confirmPayment({
+      elements: this.elements, 
+      confirmParams: {
+        return_url: 'http://localhost:4200/home'
+      }
+    })
+
+
+    
+    if (error) {
+      console.error('Payment Error:', error.message);
+      alert('❌ Payment failed: ' + error.message);
+    }
+
+    
+  }
+
+
+
+  constructor(){
+
+  }
+
+
+  
+}

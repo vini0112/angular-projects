@@ -1,11 +1,13 @@
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
 import { map, Observable } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
-import { AuthServiceService } from '../../../services/auth-service.service';
+import { LocalStorageService } from '../../../services/localStorage.service';
+import { checkoutProduct } from '../../../modules/checkout.module';
+import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +18,10 @@ import { AuthServiceService } from '../../../services/auth-service.service';
 export class NavbarComponent implements OnInit{
   
   listCartService = inject(listCartServices)
+  localStorageService = inject(LocalStorageService)
+  checkoutService = inject(CheckoutPaymentService)
   authLoginService = inject(AuthLoginService)
-  authService = inject(AuthServiceService)
+  router = inject(Router)
 
   // cart parameters 
   products: cartList[] = []
@@ -110,22 +114,39 @@ export class NavbarComponent implements OnInit{
 
   logout(){
     this.authLoginService.loggingOut()
-    // this.isDeveloper = false
+  
   }
 
 
-   // checking if devepoler is logged 
-  // isDeveloper = false
+  // going to payment page and sending the data
 
-  // checkingRoleOfLogin(){
-  //   const role = this.authService.getLoginRole()
-  //   if(role === 'developer'){
-  //     this.isDeveloper = true
-  //   }
-    
+  // finalizeShop(){    
+  //   this.router.navigateByUrl('/checkout-payment')
   // }
 
-  // FAZER O ICON DEVELOPER ATIVAR AO LOGIN DO DEVELOPER
+  buying(){
+    let productsInfo: checkoutProduct[] = []
+    let dados = JSON.parse(this.localStorageService.getItem('cartItem'))
+    
+    dados.forEach((product:any) => {
+      productsInfo.push({id: product.id, quantity: product.quantity})
+    })
+
+    this.checkoutService.stripeCheckout(productsInfo).subscribe({
+      next: (res: any) => {
+        // console.log(res)
+        this.checkoutService.setClientSecret(res.clientSecret)
+        this.checkoutService.setAmount(res.amount)
+        this.router.navigateByUrl('/checkout-payment')
+      },
+      error: (err) => console.log(err)
+    })
+
+    
+  }
+
+
+  
   
 
   

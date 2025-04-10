@@ -7,18 +7,20 @@ import { FormsModule } from '@angular/forms';
 // import {Mat} from '@angular/ma'
 
 import { environment } from '../../../environments/environment.development';
+import { ShippingFormComponent } from './shipping-form/shipping-form.component';
 
 @Component({
   selector: 'app-checkout-payment',
-  imports: [NgxStripeModule, NgIf, FormsModule], 
+  imports: [NgxStripeModule, NgIf, FormsModule, ShippingFormComponent], 
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.css'
 })
 export default class CheckoutPaymentComponent implements OnInit{ 
 
   checkoutService = inject(CheckoutPaymentService)
+  
 
-  shippingForm = false
+  shippingForm = true
 
   stripe: Stripe | null = null;
   clientSecret = this.checkoutService.getClientSecret()
@@ -29,6 +31,10 @@ export default class CheckoutPaymentComponent implements OnInit{
   paymentElement: any
   message = '';
 
+
+  receveingResFromFormShip(event: boolean){
+    this.shippingForm = event
+  }
 
 
   async ngOnInit() {
@@ -73,9 +79,7 @@ export default class CheckoutPaymentComponent implements OnInit{
 
 
 
-  constructor(){
-
-  }
+  
 
 
   

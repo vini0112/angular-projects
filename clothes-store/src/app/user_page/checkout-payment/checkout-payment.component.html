@@ -1,57 +1,32 @@
 
-<form class="shippingForm">
-    <h5>Address</h5>
-
-    <div>
-        <label for="">Street</label>
-        <input type="text">
-
-        <label for="">House Number</label>
-        <input type="number" name="" id="">
-
-    </div>
-
-    <div>
-        <label for="">Apartment, suite (optional)</label>
-        <input type="text">
-    </div>
-
-    <div>
-        <label for="">City</label>
-        <input type="text">
-
-        <label for="">ZIP code</label>
-        <input type="number">
-    </div>
-
-    <div>
-        <label for="">State</label>
-        <input type="text">
-
-        <label for="">Country</label>
-        <input type="text">
-    </div>
-
+@if(!shippingForm){
+    <app-shipping-form (validFormShipping)="receveingResFromFormShip($event)" />
+}@else{
+    <form (submit)="handleSubmit()">
     
-    <button>Finalize</button>
-    
+        <div id="payment-element">
+
+        </div>
+
+        <div class="subTotalBox">
+            <span>SubTotal (0 items)</span>
+            <span>${{amount}}</span>
+        </div>
+
+        <div class="totalAmount">
+            <span>Total Amount</span>
+            <span>${{amount}}</span>
+        </div>
+        
+        <div class="boxBtn">
+            <button type="submit" [disabled]="loading" *ngIf="!message">
+                {{ loading ? 'Processando...' : 'Pagar' }}
+            </button>
+        </div>
+
+        <div *ngIf="message" class="messageERROR">{{ message }}</div>
+    </form>
+}
 
 
-</form>
 
-
-<form (submit)="handleSubmit()" *ngIf="shippingForm">
-    <h3 style="text-align: center;">Total a pagar: R$ {{ amount }}</h3>
-    <div id="payment-element">
-
-    </div>
-
-    
-    <div class="boxBtn">
-        <button type="submit" [disabled]="loading" *ngIf="!message">
-            {{ loading ? 'Processando...' : 'Pagar' }}
-        </button>
-    </div>
-
-    <div *ngIf="message" class="messageERROR">{{ message }}</div>
-</form>

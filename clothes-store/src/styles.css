@@ -7,6 +7,11 @@
 }
 
 
+.errorMsg{
+    color: red;
+    font-size: .9rem;
+}
+
 /* spinner */
 
 .spinner{

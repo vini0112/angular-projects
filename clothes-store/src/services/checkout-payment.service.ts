@@ -1,5 +1,5 @@
 import { inject, Injectable, OnInit } from '@angular/core';
-import { checkoutProduct } from '../modules/checkout.module';
+import { checkoutProduct, responseData } from '../modules/checkout.module';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -16,25 +16,20 @@ export class CheckoutPaymentService{
   private http = inject(HttpClient)
 
   
-  private Client_Secret: string = ''
-  private Amount: number = 0
 
-  getClientSecret(): string{
-      return this.Client_Secret
+  private paymentResponseData: responseData[] = []
+
+
+
+  setAllResData(data: responseData[]){
+    this.paymentResponseData = data
   }
 
-  setClientSecret(secret: string){
-    this.Client_Secret = secret
+  getAllResData(): responseData[]{
+    return this.paymentResponseData
   }
 
-  getAmount(): number{
-    return this.Amount
-  }
 
-  setAmount(num: number){
-    this.Amount = num
-  }
-  
 
 
 

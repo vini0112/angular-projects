@@ -79,7 +79,6 @@ export class HomeComponent implements OnInit{
   }
 
   // cart
-
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
   }

@@ -6,3 +6,10 @@ export interface checkoutProduct{
 
 }
 
+
+export interface responseData{
+    clientSecret: string
+    amount: number 
+    quantity: number
+}
+

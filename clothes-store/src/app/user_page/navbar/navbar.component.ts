@@ -118,25 +118,21 @@ export class NavbarComponent implements OnInit{
   }
 
 
-  // going to payment page and sending the data
-
-  // finalizeShop(){    
-  //   this.router.navigateByUrl('/checkout-payment')
-  // }
+  // 
 
   buying(){
     let productsInfo: checkoutProduct[] = []
     let dados = JSON.parse(this.localStorageService.getItem('cartItem'))
     
+    
     dados.forEach((product:any) => {
-      productsInfo.push({id: product.id, quantity: product.quantity})
+      productsInfo.push({id: product.id, quantity: product.cart_quantity})
     })
 
     this.checkoutService.stripeCheckout(productsInfo).subscribe({
       next: (res: any) => {
-        // console.log(res)
-        this.checkoutService.setClientSecret(res.clientSecret)
-        this.checkoutService.setAmount(res.amount)
+        
+        this.checkoutService.setAllResData(res)
         this.router.navigateByUrl('/checkout-payment')
       },
       error: (err) => console.log(err)

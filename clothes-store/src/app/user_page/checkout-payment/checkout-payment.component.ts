@@ -4,10 +4,10 @@ import { NgxStripeModule } from 'ngx-stripe';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import {Mat} from '@angular/ma'
 
 import { environment } from '../../../environments/environment.development';
 import { ShippingFormComponent } from './shipping-form/shipping-form.component';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -18,13 +18,17 @@ import { ShippingFormComponent } from './shipping-form/shipping-form.component';
 export default class CheckoutPaymentComponent implements OnInit{ 
 
   checkoutService = inject(CheckoutPaymentService)
-  
+  messageService = inject(MessageService)
 
   shippingForm = true
 
+  
+  private dataRes: any = this.checkoutService.getAllResData() // response data from node
+
   stripe: Stripe | null = null;
-  clientSecret = this.checkoutService.getClientSecret()
-  amount = this.checkoutService.getAmount()
+  clientSecret = this.dataRes.clientSecret
+  amount = this.dataRes.amount
+  quantity = this.dataRes.quantity
 
   elements: StripeElements | null = null;
   loading = false;
@@ -37,7 +41,11 @@ export default class CheckoutPaymentComponent implements OnInit{
   }
 
 
+  
+
+
   async ngOnInit() {
+    
     this.stripe = await loadStripe(environment.stripe_public_key)
 
     
@@ -49,7 +57,7 @@ export default class CheckoutPaymentComponent implements OnInit{
       this.elements = this.stripe.elements({ clientSecret: this.clientSecret });
       const paymentElement = this.elements.create('payment');
       paymentElement.mount('#payment-element');
-      console.log(this.amount)
+      
       // this.paymentElement = this.elements.create('payment');
       // this.paymentElement.mount('#payment-element');
 
@@ -71,15 +79,12 @@ export default class CheckoutPaymentComponent implements OnInit{
     
     if (error) {
       console.error('Payment Error:', error.message);
-      alert('❌ Payment failed: ' + error.message);
+      this.messageService.showMessage('Payment failed!', 'error')
+      // alert('' + error.message);
     }
 
     
-  }
-
-
-
-  
+  }  
 
 
   

@@ -8,6 +8,7 @@ import { BehaviorSubject, map, Observable } from "rxjs";
 
 
 export class listCartServices{
+
     private key_local_storage = 'cartItem'
 
     private cart = new BehaviorSubject<cartList[]>(this.getFromLocalStorage())
@@ -31,7 +32,6 @@ export class listCartServices{
 
     addingToCart(product: cartList){
         const currentProduct = this.cart.getValue()
-        
         const existe = currentProduct.find(item => item.id === product.id)
         
         if(existe){
@@ -85,6 +85,7 @@ export class listCartServices{
 
             if(existProduct.cart_quantity! < existProduct.quantity){
                 let newQuantity = existProduct.cart_quantity! += 1
+                
 
                 if(newQuantity <= existProduct.quantity){
                     existProduct.cart_quantity = newQuantity

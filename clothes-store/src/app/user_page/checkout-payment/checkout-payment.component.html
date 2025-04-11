@@ -8,12 +8,12 @@
 
         </div>
 
-        <div class="subTotalBox">
-            <span>SubTotal (0 items)</span>
+        <div class="subTotalBox" *ngIf="!message">
+            <span>SubTotal ({{quantity}} items)</span>
             <span>${{amount}}</span>
         </div>
 
-        <div class="totalAmount">
+        <div class="totalAmount" *ngIf="!message">
             <span>Total Amount</span>
             <span>${{amount}}</span>
         </div>

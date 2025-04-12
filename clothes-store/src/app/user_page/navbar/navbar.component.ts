@@ -121,22 +121,22 @@ export class NavbarComponent implements OnInit{
   // 
 
   buying(){
-    let productsInfo: checkoutProduct[] = []
-    let dados = JSON.parse(this.localStorageService.getItem('cartItem'))
+    // let productsInfo: checkoutProduct[] = []
+    // let dados = JSON.parse(this.localStorageService.getItem('cartItem'))
     
     
-    dados.forEach((product:any) => {
-      productsInfo.push({id: product.id, quantity: product.cart_quantity})
-    })
+    // dados.forEach((product:any) => {
+    //   productsInfo.push({id: product.id, quantity: product.cart_quantity})
+    // })
 
-    this.checkoutService.stripeCheckout(productsInfo).subscribe({
-      next: (res: any) => {
+    // this.checkoutService.stripeCheckout(productsInfo).subscribe({
+    //   next: (res: any) => {
         
-        this.checkoutService.setAllResData(res)
-        this.router.navigateByUrl('/checkout-payment')
-      },
-      error: (err) => console.log(err)
-    })
+    //     this.checkoutService.setAllResData(res)
+    //   },
+    //   error: (err) => console.log(err)
+    // })
+    this.router.navigateByUrl('/ship-address')
 
     
   }

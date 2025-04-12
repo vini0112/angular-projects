@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px;
 }
 
 .messageERROR{
@@ -54,11 +55,14 @@ button{
     color: black;
     text-shadow: none;
 }
-.subTotalBox span, .totalAmount span{
+
+.subTotalBox span:first-child, .totalAmount span:first-child{
+    margin-left: 5px;
     font-weight: 600;
     color: white;
     text-shadow: 1px 1px 2px black;
 }
+
 
 .totalAmount{
     border-radius: 5px;
@@ -70,6 +74,7 @@ button{
     height: 35px;
     margin-bottom: 1rem;
 }
+
 
 
 @media screen and (max-width:380px){

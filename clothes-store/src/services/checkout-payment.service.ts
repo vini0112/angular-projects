@@ -15,24 +15,21 @@ export class CheckoutPaymentService{
 
   private http = inject(HttpClient)
 
-  
-
-  private paymentResponseData: responseData[] = []
+  private paymentResponseData!: responseData
 
 
-
-  setAllResData(data: responseData[]){
+  setAllResData(data: responseData){
     this.paymentResponseData = data
   }
 
-  getAllResData(): responseData[]{
+  getAllResData(): responseData{
     return this.paymentResponseData
   }
 
 
 
 
-
+  // SENDING ID/QUANTITY FROM CARTLIST
   stripeCheckout(products: checkoutProduct[]){
     return this.http.post(`${this.api}/stripeCheckout`,{products})
   }

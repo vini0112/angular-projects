@@ -6,12 +6,14 @@ import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { environment } from '../../../environments/environment.development';
-import { ShippingFormComponent } from './shipping-form/shipping-form.component';
+
 import { MessageService } from '../../../services/message.service';
+import { responseData } from '../../../modules/checkout.module';
+
 
 @Component({
   selector: 'app-checkout-payment',
-  imports: [NgxStripeModule, NgIf, FormsModule, ShippingFormComponent], 
+  imports: [NgxStripeModule, NgIf, FormsModule], 
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.css'
 })
@@ -20,10 +22,9 @@ export default class CheckoutPaymentComponent implements OnInit{
   checkoutService = inject(CheckoutPaymentService)
   messageService = inject(MessageService)
 
-  shippingForm = true
-
   
-  private dataRes: any = this.checkoutService.getAllResData() // response data from node
+  // response data from node
+  private dataRes: responseData = this.checkoutService.getAllResData() 
 
   stripe: Stripe | null = null;
   clientSecret = this.dataRes.clientSecret
@@ -36,34 +37,24 @@ export default class CheckoutPaymentComponent implements OnInit{
   message = '';
 
 
-  receveingResFromFormShip(event: boolean){
-    this.shippingForm = event
-  }
-
-
-  
-
-
+  // ACTIVATING PAYMENT FORM 
   async ngOnInit() {
-    
-    this.stripe = await loadStripe(environment.stripe_public_key)
+    this.stripe = await loadStripe(environment.stripe_public_key, {locale: 'en'})
 
     
     if (!this.stripe || !this.clientSecret) {
       this.message = 'Error: Payment not initialized!';
       return;
     }
-      
+
+      // ADDING THE ELEMENTS IN THE FORM
       this.elements = this.stripe.elements({ clientSecret: this.clientSecret });
       const paymentElement = this.elements.create('payment');
       paymentElement.mount('#payment-element');
-      
-      // this.paymentElement = this.elements.create('payment');
-      // this.paymentElement.mount('#payment-element');
-
+    
   }
 
-
+  // CLICK OF PAYMENT!
   async handleSubmit(){
     
     if(!this.stripe || !this.clientSecret || !this.elements) return 
@@ -71,19 +62,16 @@ export default class CheckoutPaymentComponent implements OnInit{
     const {error} = await this.stripe.confirmPayment({
       elements: this.elements, 
       confirmParams: {
-        return_url: 'http://localhost:4200/home'
+        return_url: 'http://localhost:4200/success-payment'
       }
     })
 
 
-    
     if (error) {
       console.error('Payment Error:', error.message);
       this.messageService.showMessage('Payment failed!', 'error')
-      // alert('' + error.message);
     }
 
-    
   }  
 
 

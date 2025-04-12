@@ -1,32 +1,30 @@
 
-@if(!shippingForm){
-    <app-shipping-form (validFormShipping)="receveingResFromFormShip($event)" />
-}@else{
-    <form (submit)="handleSubmit()">
+
+<form (submit)="handleSubmit()">
+
+    <div id="payment-element">
+
+    </div>
+
+    <div class="subTotalBox" *ngIf="!message">
+        <span>SubTotal ({{quantity}} items)</span>
+        <span>${{amount}}</span>
+    </div>
+
+    <div class="totalAmount" *ngIf="!message">
+        <span>Total Amount</span>
+        <span>${{amount}}</span>
+    </div>
     
-        <div id="payment-element">
+    <div class="boxBtn">
+        <button type="submit" [disabled]="loading" *ngIf="!message">
+            {{ loading ? 'Loading...' : 'Buy' }}
+        </button>
+    </div>
 
-        </div>
+    <div *ngIf="message" class="messageERROR">{{ message }}</div>
+</form>
 
-        <div class="subTotalBox" *ngIf="!message">
-            <span>SubTotal ({{quantity}} items)</span>
-            <span>${{amount}}</span>
-        </div>
-
-        <div class="totalAmount" *ngIf="!message">
-            <span>Total Amount</span>
-            <span>${{amount}}</span>
-        </div>
-        
-        <div class="boxBtn">
-            <button type="submit" [disabled]="loading" *ngIf="!message">
-                {{ loading ? 'Processando...' : 'Pagar' }}
-            </button>
-        </div>
-
-        <div *ngIf="message" class="messageERROR">{{ message }}</div>
-    </form>
-}
 
 
 

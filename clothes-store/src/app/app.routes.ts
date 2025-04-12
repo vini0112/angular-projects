@@ -52,10 +52,19 @@ export const routes: Routes = [
         loadChildren: () => import('./all-tools/devtools.routes').then(m => m.DevToolsRoutes),
         canActivate: [devLoginGuard]
     },
+    {
+        path: 'ship-address',
+        loadComponent: () => import('./user_page/shipping-form/shipping-form.component')
+    },
 
     {
         path: 'checkout-payment',
         loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component')
+    },
+    
+    {
+        path: 'success-payment',
+        loadComponent: () => import('./user_page/success-payment/success-payment.component')
     },
     
     { 

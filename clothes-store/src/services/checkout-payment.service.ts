@@ -35,14 +35,11 @@ export class CheckoutPaymentService{
   }
 
 
-  statusPayment(userInfo: userInfo[]){
-    return this.http.post(`${this.api}/checkPaymentStatus`, {userInfo})
+  statusPayment(userInfo: userInfo[]): Observable<{status: boolean}>{
+    return this.http.post<{status: boolean}>(`${this.api}/checkPaymentStatus`, {userInfo})
   }
 
-  //
-  // confirmePayment(paymentIntentId: string): Observable<{success: boolean}>{
-  //   return this.http.get<{success: boolean}>(`${this.api}/`)
-  // }
+
 
 
 

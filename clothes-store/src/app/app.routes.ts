@@ -69,7 +69,7 @@ export const routes: Routes = [
     {
         path: 'payment-status',
         loadComponent: () => import('./user_page/payment-status/payment-status.component'),
-        // canActivate: [paymentSuccessPage]
+        // canActivate: []
     },
     
     { 

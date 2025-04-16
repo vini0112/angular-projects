@@ -104,6 +104,9 @@ class stripeController{
             }
         }
 
+
+        
+
         switch(event.type){
 
             case 'payment_intent.succeeded':
@@ -152,18 +155,46 @@ class stripeController{
                 break
         }
 
-        
-
         res.json({ received: true });
     }
 
+
     async checkPaymentStatus(req, res){
 
-        const {user} = req.body
-        console.log(user)
-        res.json('worked')
-        // connection.query("SELECT status ")
+        const {userInfo} = JSON.parse(req.body)
+        const userId = userInfo[0].userId
+        const email = userInfo[0].email
 
+        // SELECTING THE STATUS ACCORDIND TO THE IDUSER AND EMAIL   
+        connection.query('SELECT status FROM users WHERE idusers = ? AND email = ?', [userId, email], (erro, response) =>{
+
+            if(erro){
+                console.log('Erro while selecting the status payment!')
+                return response.status(500).json('Erro while selecting the status payment!')
+            }
+
+            const statusPayment = response[0].status // FLAG PAID HERE
+            
+            if(statusPayment === 'paid'){
+                console.log('✅ Flag paid found!')
+
+                // SETTING FLAG PAID TO NULL AND RETURN TRUE TO FRONT
+                connection.query('UPDATE users SET status = ? WHERE idusers = ? AND email = ?', [null, userId, email], (erro2, response2) =>{
+                    if(erro2){
+                        console.log('column status of DB was not updated!')
+                        return response2.status(500).json('colunm status from the DB was not updated!')
+                    }
+
+                    console.log('✅ Flag updated to null!')
+                    return res.status(202).json({status: true}) // FRONT RECEIVES THIS
+                })
+
+            }else{ // IF NO FLAG IN DB
+                console.log('Not paid flag found in status!')
+                return res.json({status: false})
+            }
+        })
+        
     }
 
 

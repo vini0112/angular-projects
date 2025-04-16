@@ -83,11 +83,14 @@ button{
     font-weight: 600;
     font-size: 1.1rem;
 }
+/* success page */
+.successStatus{
+    width: 100%;
+}
 
 /* denied page */
 .deniedStatus{
     padding: 5px;
-    border: 2px solid black;
     max-width: 800px;
     width: 100%;
     height: 100%;

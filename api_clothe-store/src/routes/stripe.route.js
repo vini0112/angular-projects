@@ -13,7 +13,7 @@ router.post('/stripeCheckout', verifyJWT, express.raw({ type: 'application/json'
 
 router.post('/webhook',express.raw({ type: 'application/json' }), stripeController.webHook)
 
-router.post('/checkPaymentStatus', stripeController.checkPaymentStatus)
+router.post('/checkPaymentStatus', express.raw({ type: 'application/json' }), stripeController.checkPaymentStatus)
 
 
 

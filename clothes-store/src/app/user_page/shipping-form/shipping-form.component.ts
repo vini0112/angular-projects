@@ -80,7 +80,6 @@ export default class ShippingFormComponent {
           email: decoded.email
         }
       )
-        
       
 
       // SENDING ID/QUANTITY TO NODE AND OUTPUTING THE RESPONSE

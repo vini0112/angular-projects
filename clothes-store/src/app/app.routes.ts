@@ -8,6 +8,8 @@ import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-res
 import { testGuard } from '../guards/test.guard';
 import AllToolsComponent from './all-tools/all-tools.component';
 import { devLoginGuard } from '../guards/dev-login.guard';
+import { loginActiveGuard } from '../guards/login-active.guard';
+import { paymentSuccessPage } from '../guards/payment.success.page.guard';
 
 
 export const routes: Routes = [
@@ -37,7 +39,7 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import('../app/user_page/login/login.component'),
-        canActivate: [authGuard] 
+        canActivate: [authGuard]
     },
     {
         path: 'reset-password/:token',
@@ -54,17 +56,21 @@ export const routes: Routes = [
     },
     {
         path: 'ship-address',
-        loadComponent: () => import('./user_page/shipping-form/shipping-form.component')
+        loadComponent: () => import('./user_page/shipping-form/shipping-form.component'),
+        canActivate: [loginActiveGuard]
     },
 
     {
         path: 'checkout-payment',
-        loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component')
+        loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component'),
+        canActivate: [loginActiveGuard]
+
     },
     
     {
         path: 'success-payment',
-        loadComponent: () => import('./user_page/success-payment/success-payment.component')
+        loadComponent: () => import('./user_page/success-payment/success-payment.component'),
+        // canActivate: [paymentSuccessPage]
     },
     
     { 

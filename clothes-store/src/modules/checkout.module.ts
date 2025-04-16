@@ -1,4 +1,8 @@
 
+export interface userInfo{
+    userId: number
+    email: string
+}
 
 export interface checkoutProduct{
     id: number

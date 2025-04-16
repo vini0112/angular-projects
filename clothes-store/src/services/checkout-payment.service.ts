@@ -1,9 +1,8 @@
-import { inject, Injectable, OnInit } from '@angular/core';
-import { checkoutProduct, responseData } from '../modules/checkout.module';
+import { inject, Injectable } from '@angular/core';
+import { checkoutProduct, responseData, userInfo } from '../modules/checkout.module';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
-import { BehaviorSubject, Observable } from 'rxjs';
-import {Stripe, loadStripe} from '@stripe/stripe-js'
+import {Stripe} from '@stripe/stripe-js'
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +28,16 @@ export class CheckoutPaymentService{
 
 
 
-  // SENDING ID/QUANTITY FROM CARTLIST
-  stripeCheckout(products: checkoutProduct[]){
-    return this.http.post(`${this.api}/stripeCheckout`,{products})
+  // SENDING ID/QUANTITY FROM CARTLIST AND USER INFO
+  stripeCheckout(products: checkoutProduct[], userInfo: userInfo[]){
+    return this.http.post(`${this.api}/stripeCheckout`,{products, userInfo})
   }
+
+
+  //
+  // confirmePayment(paymentIntentId: string): Observable<{success: boolean}>{
+  //   return this.http.get<{success: boolean}>(`${this.api}/`)
+  // }
 
 
 

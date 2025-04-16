@@ -1,9 +1,11 @@
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { checkoutProduct, responseData } from '../../../modules/checkout.module';
+import { checkoutProduct, responseData, userInfo } from '../../../modules/checkout.module';
 import { LocalStorageService } from '../../../services/localStorage.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-shipping-form',
@@ -18,7 +20,7 @@ export default class ShippingFormComponent {
   localStorageService = inject(LocalStorageService)
   checkoutService = inject(CheckoutPaymentService)
   router = inject(Router)
-  
+  messageService = inject(MessageService)
   
 
   shipForm = this.fb.group({
@@ -31,28 +33,59 @@ export default class ShippingFormComponent {
       country: [null, [Validators.required]],
     })
 
-
-
-
   submited = false
 
+
+  token = this.localStorageService.getItem('accessToken')
+  
+  
   nextStep(){
     this.submited = true
 
     if(this.shipForm.invalid){
 
-      // ACTIVATING PAYMENT FORM
       let productsInfo: checkoutProduct[] = []
+      let userInfo: userInfo[] = []
+
+      // ACTIVATING PAYMENT FORM AND SENDING PRODUCTS INFO TO THE SERVER
+      
       let itemsFromCart_list = JSON.parse(this.localStorageService.getItem('cartItem'))
       
+      if(itemsFromCart_list.length <= 0){
+        return this.messageService.showMessage("Cart is empty!", "info")
+      }
       
       itemsFromCart_list.forEach((product:any) => {
-        productsInfo.push({id: product.id, quantity: product.cart_quantity})
+
+        productsInfo.push(
+          {
+            id: product.id, 
+            quantity: product.cart_quantity
+          }
+        )
+        
       })
+
+      // USER INFO 
+
+      if(!this.token){
+        return this.messageService.showMessage("Are you sure that you're logged?", "info")
+      }
+
+      const decoded: any = jwtDecode(this.token);
+
+      userInfo.push(
+        {
+          userId: decoded.id,
+          email: decoded.email
+        }
+      )
+        
+      
 
       // SENDING ID/QUANTITY TO NODE AND OUTPUTING THE RESPONSE
       
-      this.checkoutService.stripeCheckout(productsInfo).subscribe({
+      this.checkoutService.stripeCheckout(productsInfo, userInfo).subscribe({
         next: (res: any) => {
           this.checkoutService.setAllResData(res)
           this.router.navigateByUrl('/checkout-payment')

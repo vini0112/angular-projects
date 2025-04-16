@@ -3,11 +3,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { LocalStorageService } from '../../../services/localStorage.service';
 import { checkoutProduct } from '../../../modules/checkout.module';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +18,7 @@ import { CheckoutPaymentService } from '../../../services/checkout-payment.servi
 })
 export class NavbarComponent implements OnInit{
   
+  messageService = inject(MessageService)
   listCartService = inject(listCartServices)
   localStorageService = inject(LocalStorageService)
   checkoutService = inject(CheckoutPaymentService)
@@ -114,29 +116,29 @@ export class NavbarComponent implements OnInit{
 
   logout(){
     this.authLoginService.loggingOut()
-  
   }
 
 
-  // 
-
   buying(){
-    // let productsInfo: checkoutProduct[] = []
-    // let dados = JSON.parse(this.localStorageService.getItem('cartItem'))
-    
-    
-    // dados.forEach((product:any) => {
-    //   productsInfo.push({id: product.id, quantity: product.cart_quantity})
-    // })
 
-    // this.checkoutService.stripeCheckout(productsInfo).subscribe({
-    //   next: (res: any) => {
-        
-    //     this.checkoutService.setAllResData(res)
-    //   },
-    //   error: (err) => console.log(err)
-    // })
-    this.router.navigateByUrl('/ship-address')
+    this.isAuthentic$.subscribe(res =>{
+      if(!res){
+        this.router.navigateByUrl('/login')
+        this.messageService.showMessage("You can't buy without being logged!", "info")
+        return
+      }
+      
+      else if(this.products.length <= 0){ // if no product in the cart
+        return this.messageService.showMessage("Cart is empty!", "info")
+      }
+
+      // closing cart
+      this.isAsideOpen = false
+      this.shadowActive = false
+
+      this.authLoginService.setPageAccess(true) //allowing access to address
+      this.router.navigateByUrl('/ship-address')
+    })
 
     
   }

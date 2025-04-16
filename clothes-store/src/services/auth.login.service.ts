@@ -30,7 +30,9 @@ export class AuthLoginService {
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper$ = this.IsDeveloper.asObservable()
 
-
+  // PAGE ACCESS
+  private allowPageAccess = false
+  private pagePayment = false
 
   register(form: string): Observable<string>{
     return this.http.post<string>(`${this.api}/addingUser`, form)
@@ -96,9 +98,10 @@ export class AuthLoginService {
     if(this.hasToken()){
       this.isAuth.next(true)
     }
-    
   }
   
+
+
   logOut(){
     this.accessToken$.next(null)
     if(this.hasToken()) localStorage.removeItem('accessToken')
@@ -107,12 +110,36 @@ export class AuthLoginService {
     this.IsDeveloper.next(false)
   }
 
+
+
+  // checks if logged every time u load the components
+
+  checkIfIsLogged(){
+    this.http.get<{developerMsg: string}>(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
+      next: (res) => {
+        
+        if(res.developerMsg == 'Developer_Logged'){
+          this.IsDeveloper.next(true)
+        }else{
+          this.IsDeveloper.next(false)
+        }
+      },
+      error: () => {
+        this.logOut()        
+      }
+
+    })
+  }
+
+
+
   // reseting password
 
   sendEmailToReset(email: string): Observable<string>{
     return this.http.post<string>(`${this.api}/request/reset`, {email})
   }
   
+
   resetingPassword(newPassword: string, token: string): Observable<string>{
     return this.http.post<string>(`${this.api}/reset-password`, {newPassword, token})
   }
@@ -123,59 +150,26 @@ export class AuthLoginService {
   }
 
 
+  // PAGE ACCESS
 
-  checkIfIsLogged(){
-    this.http.get<{developerMsg: string}>(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
-      next: (res) => {
-
-        if(res.developerMsg == 'Developer_Logged'){
-          this.IsDeveloper.next(true)
-        }else{
-          this.IsDeveloper.next(false)
-        }
-      },
-      error: () => {
-        this.logOut()
-      }
-
-    })
+  setPageAccess(status: boolean){
+    this.allowPageAccess = status
+  }
+  
+  getPageAccess(): boolean{
+    return this.allowPageAccess
   }
 
 
+  setPaymentPageAccess(status: boolean){
+    this.pagePayment = status
+  }
 
-   // GETTING ROLE
-  // getLoginRole(): string | null{
-  //   let accessToken = null
-  //   if(typeof window !== 'undefined'){
-  //     accessToken = localStorage.getItem('accessToken')
-  //   }
-
-  //   if(!accessToken) return null
-
-  //   try{
-  //     const decoded: any = jwtDecode(accessToken)
-      
-  //     return decoded.role || null
-
-  //   }catch(err){
-  //     console.log("Decoding error!", err)
-  //     return null
-  //   }
-
-  // }
+  getPaymentPageAccess(): boolean{
+    return this.pagePayment
+  }
 
 
-  // checkingDevLogin(){
-  //   const role = this.getLoginRole()
-  //   if(role === 'developer'){
-  //     this.IsDeveloper.next(true)
-  //   }
-  //   else{
-  //     this.IsDeveloper.next(false)
-  //   }
-
-    
-  // }
 
 
 

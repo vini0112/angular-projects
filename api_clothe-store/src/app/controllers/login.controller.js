@@ -21,8 +21,8 @@ class loginController{
             if(user.role === process.env.ADM_ROLE){
                 return res.json({developerMsg: "Developer_Logged"})
             }
-
-            res.json(user)
+            
+            res.json({message: "UserLogged"})
         })
 
     }
@@ -53,7 +53,7 @@ class loginController{
                 const match = await bcrypt.compare(password, user.password)
                 if(match){
                     
-                    const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    const accessToken = jwt.sign({ id: user.idusers, email: email }, process.env.SECRET_KEY, { expiresIn: '30m' });
 
                     const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
@@ -79,7 +79,7 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const accessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
+            const accessToken = jwt.sign({ id: user.idusers, email: email }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
             const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
@@ -118,16 +118,17 @@ class loginController{
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
                 if (err) return res.status(401).json({ message: "Token inválido", refreshToken});
 
+                
 
                 // IF ROLE DEVELOPER
                 if(decoded.role == process.env.ADM_ROLE){
-                    const newAccessToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    const newAccessToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
                 
                     return res.status(200).json({accessToken: newAccessToken})
                 }
 
 
-                const newAccessToken = jwt.sign({ id: user.idusers }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                const newAccessToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
                 
                 res.status(200).json({accessToken: newAccessToken})
 
@@ -247,8 +248,7 @@ class loginController{
                 <a href="${resetUrl}">${resetUrl}</a> 
                 <p>This link expires in 15min!</p>`
             }
-                
-                // 
+            
     
             await transporter.sendMail(receiver)
 

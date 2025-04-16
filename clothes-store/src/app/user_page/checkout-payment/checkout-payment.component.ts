@@ -9,6 +9,9 @@ import { environment } from '../../../environments/environment.development';
 
 import { MessageService } from '../../../services/message.service';
 import { responseData } from '../../../modules/checkout.module';
+import { AuthServiceService } from '../../../services/auth-service.service';
+import { AuthLoginService } from '../../../services/auth.login.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,8 +24,8 @@ export default class CheckoutPaymentComponent implements OnInit{
 
   checkoutService = inject(CheckoutPaymentService)
   messageService = inject(MessageService)
-
-  
+  authServiceLogin = inject(AuthLoginService)
+  router = inject(Router)
   // response data from node
   private dataRes: responseData = this.checkoutService.getAllResData() 
 
@@ -40,7 +43,6 @@ export default class CheckoutPaymentComponent implements OnInit{
   // ACTIVATING PAYMENT FORM 
   async ngOnInit() {
     this.stripe = await loadStripe(environment.stripe_public_key, {locale: 'en'})
-
     
     if (!this.stripe || !this.clientSecret) {
       this.message = 'Error: Payment not initialized!';
@@ -60,12 +62,14 @@ export default class CheckoutPaymentComponent implements OnInit{
     if(!this.stripe || !this.clientSecret || !this.elements) return 
 
     const {error} = await this.stripe.confirmPayment({
-      elements: this.elements, 
+      
+      elements: this.elements,
       confirmParams: {
         return_url: 'http://localhost:4200/success-payment'
-      }
+      },
     })
 
+    
 
     if (error) {
       console.error('Payment Error:', error.message);

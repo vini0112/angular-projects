@@ -11,6 +11,7 @@ const endpointSecret = process.env.STRIPE_SECRET_ENDPOINT
 
 class stripeController{
 
+    
 
     async checkout(req, res){ 
 
@@ -97,23 +98,29 @@ class stripeController{
 
                 event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
 
-                // if(event.type === "payment_intent.succeeded"){
-                //     const paymentIntent = event.data.object;
-                //     console.log("✅ Pagamento bem-sucedido:", paymentIntent.id);
-                // }
-
             }catch(error){
                 console.error("Erro ao validar webhook:", error.message);
                 return res.status(400).send(`Webhook Error: ${error.message}`);
             }
         }
 
-        switch(event.type){ // MARK PAYEID IN THE DB TO CHECK IF PAYEID SUCCEED IN THE FRONT
+        switch(event.type){
 
             case 'payment_intent.succeeded':
                 const paymentIntent = event.data.object;
                 console.log("✅ Pagamento bem-sucedido:", paymentIntent.id);
                 const email = paymentIntent.metadata.email
+                
+                // Mark as paid to sinalize the frontend
+                connection.query('UPDATE users SET status = ? WHERE email = ?', ['paid', email], (err, res) =>{
+                    if(err) return res.status(500).json({error: 'webhook did not set the value in DB correctly!'})
+                    
+                    if(res.length == 0){
+                        return res.status(500).json({error: 'webhook did not set the value in DB!'})
+                    }
+
+                    console.log('✅ FLAG (payeid) added in DB!')
+                })
 
                 // SENDING EMAIL
                 const transporter = mailer.createTransport({
@@ -134,7 +141,6 @@ class stripeController{
 
                 await transporter.sendMail(receiver)
 
-
                 break
 
             case 'payment_intent.payment_failed':
@@ -151,7 +157,14 @@ class stripeController{
         res.json({ received: true });
     }
 
+    async checkPaymentStatus(req, res){
 
+        const {user} = req.body
+        console.log(user)
+        res.json('worked')
+        // connection.query("SELECT status ")
+
+    }
 
 
 

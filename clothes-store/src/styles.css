@@ -23,6 +23,15 @@
     animation: spin .4s linear infinite;
 }
 
+.bigSpinner{
+    border: 4px solid white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border-left-color: #3498db;
+    animation: spin .5s linear infinite;
+}
+
 
 @keyframes spin {
     to {

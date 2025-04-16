@@ -53,9 +53,9 @@ class loginController{
                 const match = await bcrypt.compare(password, user.password)
                 if(match){
                     
-                    const accessToken = jwt.sign({ id: user.idusers, email: email }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    const accessToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
 
-                    const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
+                    const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
                     await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken,  user.email])
 
@@ -79,9 +79,9 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const accessToken = jwt.sign({ id: user.idusers, email: email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+            const accessToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
-            const refreshToken = jwt.sign({ id: user.idusers, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+            const refreshToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
 
             await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken, user.email])
@@ -96,7 +96,7 @@ class loginController{
             res.json({ userMsg: 'Login realizado com sucesso!', accessToken});
         })
 
-    } 
+    }
 
 
     async refreshToken(req, res){
@@ -104,9 +104,8 @@ class loginController{
         const refreshToken = req.cookies.refreshToken
 
         // have to check if it has a role developer or user
-        const oldAccessToken = req.body.accessToken 
-        const decoded = jwt.decode(oldAccessToken)
-
+        // const oldAccessToken = req.body.accessToken 
+        // const decoded = jwt.decode(oldAccessToken)
 
         if(!refreshToken) return res.status(401).json({message: "not authorized!"})
         
@@ -117,18 +116,17 @@ class loginController{
 
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
                 if (err) return res.status(401).json({ message: "Token inválido", refreshToken});
-
                 
 
                 // IF ROLE DEVELOPER
-                if(decoded.role == process.env.ADM_ROLE){
-                    const newAccessToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
-                
+                if(user.role === process.env.ADM_ROLE){
+                    const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    
                     return res.status(200).json({accessToken: newAccessToken})
                 }
 
 
-                const newAccessToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                const newAccessToken = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
                 
                 res.status(200).json({accessToken: newAccessToken})
 

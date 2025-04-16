@@ -3,6 +3,7 @@ import { checkoutProduct, responseData, userInfo } from '../modules/checkout.mod
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import {Stripe} from '@stripe/stripe-js'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,10 @@ export class CheckoutPaymentService{
     return this.http.post(`${this.api}/stripeCheckout`,{products, userInfo})
   }
 
+
+  statusPayment(userInfo: userInfo[]){
+    return this.http.post(`${this.api}/checkPaymentStatus`, {userInfo})
+  }
 
   //
   // confirmePayment(paymentIntentId: string): Observable<{success: boolean}>{

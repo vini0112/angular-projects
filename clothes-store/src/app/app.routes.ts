@@ -9,7 +9,6 @@ import { testGuard } from '../guards/test.guard';
 import AllToolsComponent from './all-tools/all-tools.component';
 import { devLoginGuard } from '../guards/dev-login.guard';
 import { loginActiveGuard } from '../guards/login-active.guard';
-import { paymentSuccessPage } from '../guards/payment.success.page.guard';
 
 
 export const routes: Routes = [
@@ -68,8 +67,8 @@ export const routes: Routes = [
     },
     
     {
-        path: 'success-payment',
-        loadComponent: () => import('./user_page/success-payment/success-payment.component'),
+        path: 'payment-status',
+        loadComponent: () => import('./user_page/payment-status/payment-status.component'),
         // canActivate: [paymentSuccessPage]
     },
     

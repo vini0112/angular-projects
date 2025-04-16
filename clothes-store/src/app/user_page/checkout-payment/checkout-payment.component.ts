@@ -65,7 +65,7 @@ export default class CheckoutPaymentComponent implements OnInit{
       
       elements: this.elements,
       confirmParams: {
-        return_url: 'http://localhost:4200/success-payment'
+        return_url: 'http://localhost:4200/payment-status'
       },
     })
 

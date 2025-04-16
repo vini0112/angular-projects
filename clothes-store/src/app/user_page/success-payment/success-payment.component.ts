@@ -8,24 +8,8 @@ import { deflate } from 'zlib';
   templateUrl: './success-payment.component.html',
   styleUrl: './success-payment.component.css'
 })
-export default class SuccessPaymentComponent implements OnInit{
-  route = inject(ActivatedRoute)
-  router = inject(Router)
-
-  goToHome(){
-    this.router.navigateByUrl('/home')
-  }
-
-  ngOnInit(): void {
-    // this.route.queryParams.subscribe(async params =>{
-    //   const paymentIntentId = params['payment_intent'];
-
-    //   if(paymentIntentId){
-        
-    //   }
-    // })
-
-  }
+export default class SuccessPaymentComponent{
+  
 
 
 }

@@ -61,14 +61,15 @@ export default class CheckoutPaymentComponent implements OnInit{
     
     if(!this.stripe || !this.clientSecret || !this.elements) return 
 
-    const {error} = await this.stripe.confirmPayment({
+      
+      const {error} = await this.stripe.confirmPayment({
       
       elements: this.elements,
       confirmParams: {
         return_url: 'http://localhost:4200/payment-status'
       },
     })
-
+  
     
 
     if (error) {

@@ -16,7 +16,7 @@ export class CheckoutPaymentService{
   private http = inject(HttpClient)
 
   private paymentResponseData!: responseData
-
+  private statusPaymentPage = false
 
   setAllResData(data: responseData){
     this.paymentResponseData = data
@@ -25,7 +25,6 @@ export class CheckoutPaymentService{
   getAllResData(): responseData{
     return this.paymentResponseData
   }
-
 
 
 

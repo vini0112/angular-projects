@@ -12,10 +12,12 @@ export const loginActiveGuard: CanActivateFn = (route, state) => {
   return authLoginService.isAuthenticated$.pipe(
     map(res =>{
       
-      if(!res || !accessPage){
+      if(!res){
         router.navigateByUrl('/login')
-        console.log('second ', res)
+        return false
 
+      }else if(!accessPage){
+        router.navigateByUrl('/home')
         return false
       }
       

@@ -5,10 +5,10 @@ import { MasculinoComponent } from './user_page/masculino/masculino.component';
 import { authGuard } from '../guards/auth.guard';
 import { resetPasswordGuard } from '../guards/reset-password.guard';
 import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-reset.guard';
-import { testGuard } from '../guards/test.guard';
 import AllToolsComponent from './all-tools/all-tools.component';
 import { devLoginGuard } from '../guards/dev-login.guard';
 import { loginActiveGuard } from '../guards/login-active.guard';
+import { testGuard } from '../guards/test.guard';
 
 
 export const routes: Routes = [
@@ -45,7 +45,6 @@ export const routes: Routes = [
         loadComponent: () => import('../app/user_page/reset-password/reset-password.component'),
         canActivate: [resetPasswordGuard],
         canDeactivate: [blockLeavePasswordResetGuard]
-
     },
     {
         path: 'developer_side',
@@ -63,13 +62,11 @@ export const routes: Routes = [
         path: 'checkout-payment',
         loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component'),
         canActivate: [loginActiveGuard]
-
     },
     
     {
         path: 'payment-status',
         loadComponent: () => import('./user_page/payment-status/payment-status.component'),
-        // canActivate: []
     },
     
     { 

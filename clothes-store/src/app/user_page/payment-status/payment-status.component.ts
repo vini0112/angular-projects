@@ -5,6 +5,8 @@ import { jwtDecode } from 'jwt-decode';
 import { userInfo } from '../../../modules/checkout.module';
 import { MessageService } from '../../../services/message.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
+import { clearTimeout } from 'timers';
+import { map, takeWhile, timer } from 'rxjs';
 
 @Component({
   selector: 'app-payment-status',
@@ -18,7 +20,7 @@ export default class PaymentStatusComponent implements OnInit{
   messageService = inject(MessageService)
   checkoutService = inject(CheckoutPaymentService)
   
-
+  counter = 6
   loading = true
   successPayment = false
   userInfo: userInfo[] = []
@@ -53,8 +55,10 @@ export default class PaymentStatusComponent implements OnInit{
 
         if(res.status === true){
           this.successPayment = true
-        }else{
+        }
+        else{
           this.successPayment = false
+
         }
 
       },

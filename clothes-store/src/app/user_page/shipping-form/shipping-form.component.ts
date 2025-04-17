@@ -44,6 +44,7 @@ export default class ShippingFormComponent {
 
     if(this.shipForm.invalid){
 
+
       let productsInfo: checkoutProduct[] = []
       let userInfo: userInfo[] = []
 

@@ -42,7 +42,7 @@ export default class ShippingFormComponent {
   nextStep(){
     this.submited = true
 
-    if(this.shipForm.invalid){
+    if(this.shipForm.valid){
 
 
       let productsInfo: checkoutProduct[] = []

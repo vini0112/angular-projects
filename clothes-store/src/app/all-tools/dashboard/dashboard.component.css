@@ -1,0 +1,79 @@
+
+:host{
+    display: block;
+    position: relative;
+}
+
+aside{
+    height: 88vh;
+    border: 2px solid black;
+    max-width: 280px;
+    width: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+
+}
+
+/* profile */
+
+.profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: .5rem;
+    border: 2px solid red;
+}
+
+.profile img{
+    width: 90px;
+    height: 90px;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px black;
+}
+.profile span{
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+
+/* links */
+
+.navigationLinks{
+    list-style: none;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 0;
+    margin-top: 1.5rem;
+}
+
+.navigationLinks li{
+    height: 30px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+.navigationLinks li:hover{
+    background-color: rgb(205, 109, 109);
+}
+.navigationLinks li.active{
+    background-color: rgb(205, 109, 109);
+}
+
+.navigationLinks li a{
+    width: 100%;
+    text-decoration: none;
+    color: gray;
+    text-shadow: 1px 1px 1px black;
+    font-size: 1.07rem;
+    letter-spacing: 1px;
+}
+
+

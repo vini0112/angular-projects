@@ -1,6 +1,7 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { cartList } from "../modules/cart.list.module";
 import { BehaviorSubject, map, Observable } from "rxjs";
+import { MessageService } from "./message.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,7 @@ export class listCartServices{
     private cart = new BehaviorSubject<cartList[]>(this.getFromLocalStorage())
     cart$ = this.cart.asObservable() // observar mudanças no carrinho
 
+    messageService = inject(MessageService)
 
     private getFromLocalStorage(): cartList[]{
         if(typeof window !== 'undefined' && localStorage){
@@ -42,10 +44,10 @@ export class listCartServices{
                 if(newQuantity <= existe.quantity){
                     existe.cart_quantity = newQuantity
                 }else{
-                    alert('max reached')
+                    this.messageService.showMessage('Max Reached', 'info')
                 }
             }else{
-                alert('max reached')
+                this.messageService.showMessage('Max Reached', 'info')
             }
             
         }else{
@@ -90,11 +92,13 @@ export class listCartServices{
                 if(newQuantity <= existProduct.quantity){
                     existProduct.cart_quantity = newQuantity
                 }else{
-                    alert('max reached')
+
+                    this.messageService.showMessage('Max Reached', 'info')
+
                 }
 
             }else{
-                alert('max reached')
+                this.messageService.showMessage('Max Reached', 'info')
             }
 
         }

@@ -11,10 +11,11 @@ const router = Router()
 
 router.post('/stripeCheckout', verifyJWT, express.raw({ type: 'application/json' }),stripeController.checkout)
 
-router.post('/webhook',express.raw({ type: 'application/json' }), stripeController.webHook)
 
 router.post('/checkPaymentStatus', express.raw({ type: 'application/json' }), stripeController.checkPaymentStatus)
 
+// stripe listen --forward-to localhost:3000/webhook
+router.post('/webhook',express.raw({ type: 'application/json' }), stripeController.webHook)
 
 
 

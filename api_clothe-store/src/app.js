@@ -14,13 +14,15 @@ app.use(cors({
     credentials: true // allowing cookies
 }))
 
+
 app.use(stripeRoute)
+
 app.use(express.json())
 app.use(cookieParse())
 
 app.use(loginRouter)
 app.use(productRouter)
-app.use('/upload', express.static('upload')) //servir arquivos staticos
+app.use('/upload', express.static('upload')) 
 
 
 

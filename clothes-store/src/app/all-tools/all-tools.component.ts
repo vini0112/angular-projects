@@ -15,6 +15,13 @@ export default class AllToolsComponent {
     this.route.navigate(['developer_side/productmanagement'])
   }
 
+  dashborad(){
+    this.route.navigateByUrl('developer_side/dashboard')
+  }
+
+
+
+  
   isChildRouteActive(): boolean{
     return this.route.url !== '/developer_side'
   }

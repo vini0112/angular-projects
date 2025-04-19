@@ -1,19 +1,23 @@
 
 :host{
-    display: block;
-    position: relative;
+    height: calc(100vh - 12vh);
+    display: grid;
+    grid-template-areas: 
+    'aside main'
+    ;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: auto;
+    gap: 10px;
 }
 
-aside{
-    height: 88vh;
+main{
     border: 2px solid black;
-    max-width: 280px;
-    width: 100%;
-    position: absolute;
-    left: 0%;
-    top: 0%;
-
 }
+
+/* aside{
+    
+
+} */
 
 /* profile */
 
@@ -24,7 +28,6 @@ aside{
     align-items: center;
     margin-top: 1rem;
     gap: .5rem;
-    border: 2px solid red;
 }
 
 .profile img{
@@ -45,7 +48,6 @@ aside{
 
 .navigationLinks{
     list-style: none;
-    border: 2px solid red;
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
@@ -55,20 +57,22 @@ aside{
 
 .navigationLinks li{
     height: 30px;
-    border: 1px solid black;
     display: flex;
     align-items: center;
-    padding-left: 5px;
 }
-.navigationLinks li:hover{
-    background-color: rgb(205, 109, 109);
+.navigationLinks li a:hover{
+    background-color: rgba(0, 0, 0, 0.295);
+    transition: .3s ease-out;
+
 }
-.navigationLinks li.active{
-    background-color: rgb(205, 109, 109);
+.navigationLinks li a.active{
+    background-image: linear-gradient(to left, #0000004b, white);
 }
 
 .navigationLinks li a{
+    padding-left: 5px;
     width: 100%;
+    height: 100%;
     text-decoration: none;
     color: gray;
     text-shadow: 1px 1px 1px black;

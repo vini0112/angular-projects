@@ -1,5 +1,6 @@
 
 import { Routes } from "@angular/router";
+import { DashboardComponent } from "./dashboard/dashboard.component";
 
 export const DevToolsRoutes: Routes = [
     
@@ -9,6 +10,8 @@ export const DevToolsRoutes: Routes = [
     },
     {
         path: 'dashboard',
-        loadComponent: () => import('./dashboard/dashboard.component')
+        component: DashboardComponent,
+        loadChildren: () => import('./dashboard/dashboard.routes').then(m => m.DashboardRoutes)
+
     }
 ]

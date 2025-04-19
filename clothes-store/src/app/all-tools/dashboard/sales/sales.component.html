@@ -1,0 +1,45 @@
+
+
+<div class="firstBlock">
+    <div class="yearSales">
+        <apx-chart
+            [series]="chartOptions.series!"
+            [chart]="chartOptions.chart!"
+            [xaxis]="chartOptions.xaxis!"
+            [title]="chartOptions.title!"
+        ></apx-chart>
+    </div>
+    
+    <div class="allprice">
+        <div class="boxOfSales">
+            <div>
+                <span>Total Sales</span>
+                <span>1.243</span>
+            </div>
+            <p>
+                <i class="fa-solid fa-arrow-up"></i>
+                <span class="porcetagem">+11.5%</span>
+                <span>Since last week</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="secondBlock">
+    <div class="weekSales">
+        <div>
+            <span>Week Sales</span>
+            <span>1.000</span>
+        </div>
+        <apx-chart
+            [series]="allSales.series!"
+            [chart]="allSales.chart!"
+            [labels]="allSales.labels!"
+        ></apx-chart>
+    </div>
+
+</div>
+
+
+

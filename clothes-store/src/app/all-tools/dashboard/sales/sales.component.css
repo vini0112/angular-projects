@@ -1,0 +1,121 @@
+
+
+:host{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    
+}
+
+/* first */
+.firstBlock{
+    height: 50%;
+    border: 2px solid yellow;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.yearSales{
+    border: 1px solid red;
+    max-width: 700px;
+    width: 100%;
+    height: 100%;
+}
+
+.allprice{
+    width: 300px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid green;
+
+}
+.boxOfSales{
+    max-width: 250px;
+    width: 100%;
+    height: 150px;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1rem;
+    
+}
+
+
+.boxOfSales div{
+    display: flex;
+    flex-direction: column;
+    border-left: 5px solid #008FFB;
+}
+.boxOfSales div span{
+    padding-left: .7rem;
+}
+.boxOfSales div span:first-child{
+    font-size: .9rem;
+}
+.boxOfSales div span:last-child{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+.boxOfSales p{
+    padding-top: .8rem;
+}
+.boxOfSales p i{
+    padding-right: .3rem;
+}
+.boxOfSales p .porcetagem{
+    color: #008FFB;
+    font-weight: bold;
+    padding-right: .4rem;
+
+}
+.boxOfSales p span{
+    font-size: .9rem;
+}
+
+/* second */
+.secondBlock{
+    height: 50%;
+    border: 2px solid blue;
+}
+
+
+.weekSales{
+    border: 2px solid purple;
+    height: 100%;
+    width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: .8rem;
+}
+
+.weekSales div{
+    width: 96%;
+    margin-left: auto;
+    border-left: 5px solid #008FFB;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weekSales span{
+    padding-left: .7rem;
+}
+
+.weekSales div span:first-child{
+    font-size: .9rem;
+}
+.weekSales div span:last-child{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+

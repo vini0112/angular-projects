@@ -1,32 +1,6 @@
 
 
 <div class="firstBlock">
-    <div class="yearSales">
-        <apx-chart
-            [series]="chartOptions.series!"
-            [chart]="chartOptions.chart!"
-            [xaxis]="chartOptions.xaxis!"
-            [title]="chartOptions.title!"
-        ></apx-chart>
-    </div>
-    
-    <div class="allprice">
-        <div class="boxOfSales">
-            <div>
-                <span>Total Sales</span>
-                <span>1.243</span>
-            </div>
-            <p>
-                <i class="fa-solid fa-arrow-up"></i>
-                <span class="porcetagem">+11.5%</span>
-                <span>Since last week</span>
-            </p>
-        </div>
-    </div>
-</div>
-
-
-<div class="secondBlock">
     <div class="weekSales">
         <div>
             <span>Week Sales</span>
@@ -37,6 +11,77 @@
             [chart]="allSales.chart!"
             [labels]="allSales.labels!"
         ></apx-chart>
+    </div>
+
+    <div class="allprice">
+        <div class="boxOfSales">
+            <div>
+                <span>Revenue</span>
+                <span>$2.345</span>
+            </div>
+            <p>
+                <i class="fa-solid fa-arrow-down"></i>
+                <span class="decreased">-0.10%</span>
+                <span>Since last week</span>
+            </p>
+        </div>
+    </div>
+    
+    
+    <div class="allprice">
+        <div class="boxOfSales">
+            <div>
+                <span>Total Sales</span>
+                <span>1.243</span>
+            </div>
+            <p>
+                <i class="fa-solid fa-arrow-up"></i>
+                <span class="increased">+11.5%</span>
+                <span>Since last week</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="secondBlock">
+    <div class="yearSales">
+        <apx-chart class="dataYear"
+            [series]="chartOptions.series!"
+            [chart]="chartOptions.chart!"
+            [xaxis]="chartOptions.xaxis!"
+            [title]="chartOptions.title!"
+        ></apx-chart>
+    </div>
+    
+    <div class="boxInvoices">
+        <div class="nav">
+            <span style="padding-left: 5px;">Recent Invoices</span>
+            <i class="fa-solid fa-angle-down" style="padding-right: 5px;"></i>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Vinicius</td>
+                    <td>23/10/2004</td>
+                    <td ><span class="statusPayment paid">Paid</span></td>
+                    <td>$200</td>
+                </tr>
+                
+
+            </tbody>
+        </table>
     </div>
 
 </div>

@@ -23,22 +23,24 @@
 
 /* first */
 .firstBlock{
-    height: 43%;
-    /* border: 2px solid yellow; */
+    height: 45%;
+    border: 2px solid #011290;
     display: flex;
     justify-content: space-evenly;
-}
-
-
-.allprice{
-    width: 300px;
-    height: 100%;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    /* border: 2px solid green; */
-
 }
+
+.boxAllPrices{
+    border: 2px solid green;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
 .boxOfSales{
     max-width: 250px;
     width: 100%;
@@ -49,7 +51,6 @@
     flex-direction: column;
     justify-content: center;
     padding-left: 1rem;
-    
 }
 
 
@@ -86,7 +87,7 @@
 
 .weekSales{
     /* border: 2px solid purple; */
-    height: 100%;
+    height: 280px;
     width: 300px;
 
     display: flex;
@@ -125,7 +126,6 @@
 .secondBlock{
     display: flex;
     height: 55%;
-    /* border: 2px solid blue; */
 }
 
 .yearSales{
@@ -184,4 +184,80 @@ table tbody tr td{
 .statusPayment.paid{
     color: green;
     background-color: #0cf04d;
+}
+
+
+@media (max-width: 1200px){
+
+    :host{
+        justify-content: start;
+    }
+
+    .firstBlock{
+        height: 30%;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .secondBlock{
+        display: flex;
+        height: 70%;
+    }
+
+
+    .yearSales{
+        width: 50%;
+        height: 95%;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+    }
+
+}
+
+@media (max-width: 820px){
+
+    :host{
+        justify-content: start;
+    }
+
+    .firstBlock{
+        height: 30%;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .boxAllPrices{
+        border: 2px solid green;
+        max-width: 800px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+
+    .secondBlock{
+        display: flex;
+        flex-direction: column;
+        /* height: 70%; */
+    }
+
+
+    .yearSales{
+        width: 100%;
+        height: 300px;
+        border: 2px solid black;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+    }
+
+    .boxInvoices{
+        width: 100%;
+        /* border: 2px solid red; */
+        padding: 10px;
+    }
+
 }

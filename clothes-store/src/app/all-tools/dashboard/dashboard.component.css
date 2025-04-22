@@ -9,9 +9,15 @@
     gap: 10px;
 }
 
+aside{
+    grid-area: aside;
+}
+
 main{
     border: 2px solid black;
+    grid-area: main;
 }
+
 
 
 
@@ -88,7 +94,29 @@ main{
         grid-template-rows: auto;
         gap: 10px;
     }
-
-
 }
 
+@media screen and (max-width: 480px){
+    :host{
+        
+        grid-template-areas: 
+        "aside"
+        "main";
+        grid-template-columns: 1fr;
+    }
+
+    .navigationLinks{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0rem;
+        justify-content: space-evenly;        
+    }
+    
+}
+
+@media screen and (max-width: 380px){
+    
+
+    
+}

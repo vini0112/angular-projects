@@ -35,7 +35,7 @@ export default class SalesComponent implements OnInit{
 
 // DATE
   weekdays = signal(new Date().getDay())
-  currentMonth = signal(5)//signal(new Date().getMonth())
+  currentMonth = signal(3)//signal(new Date().getMonth())
   
 
 
@@ -52,16 +52,17 @@ export default class SalesComponent implements OnInit{
   ]
 
   // YEAR
-  annuallySales = signal<number[]>([5])
+  private monthsData = this.localstorageService.getItem('currMonthsData')
 
-  yearSales = signal(this.annuallySales().reduce((sum, month) => sum + month))
+  private annuallySales = signal<number[]>(JSON.parse(this.monthsData))
+  yearSales = signal(2)// signal(this.annuallySales().reduce((sum, month) => sum + month))
 
   
   // MONTH
   private lastUpdatedMonth!: number
   allMonths = ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"] 
 
-  organizingMonth = this.allMonths.splice(this.currentMonth()).concat(this.allMonths.slice(0, this.currentMonth()))
+  // organizingMonth = this.allMonths.splice(this.currentMonth()).concat(this.allMonths.slice(0, this.currentMonth()))
 
   // WEEK
   weekSales = signal(0)
@@ -74,6 +75,12 @@ export default class SalesComponent implements OnInit{
       this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
     }
 
+    // if(!this.localstorageService.getItem('currMonthsData')){
+    //   // let curr = [0, 0, 0]
+    //   this.localstorageService.setItem('currMonthsData', this.monthsData)
+    // }
+
+
     // console.log(this.annuallySales)
     this.checkingMonthChange()
 
@@ -85,13 +92,14 @@ export default class SalesComponent implements OnInit{
   
 
   ngOnInit(): void {
-    
+    console.log('OnInit - ', this.monthsData)
     this.allSalesDuringYear = {
 
       series: [
         {
           name: "Sales",
           data: this.annuallySales()
+
         }
       ],
       chart: {
@@ -105,7 +113,7 @@ export default class SalesComponent implements OnInit{
         text: "Year Sales"
       },
       xaxis: {
-        categories: this.organizingMonth
+        categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"]//this.organizingMonth
       } 
 
 
@@ -155,13 +163,13 @@ export default class SalesComponent implements OnInit{
 
     if(this.currentMonth() !== this.lastUpdatedMonth){
       // updating new data
-      // this.lastUpdatedMonth = this.currentMonth()
-      // this.localstorageService.removeItem('lastUpdatedMonth')
-      // this.localstorageService.setItem('lastUpdatedMonth', this.lastUpdatedMonth)
-      // console.log("Month changed!")
+      this.lastUpdatedMonth = this.currentMonth()
+      this.localstorageService.removeItem('lastUpdatedMonth')
+      this.localstorageService.setItem('lastUpdatedMonth', this.lastUpdatedMonth)
+      console.log("Month changed!")
 
       console.log('before ', this.annuallySales())
-      this.annuallySales.update(prev =>[...prev, 0])
+      this.annuallySales.update(prev =>[...prev, 1])
       console.log('after ', this.annuallySales())
 
     }

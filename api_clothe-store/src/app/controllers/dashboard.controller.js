@@ -11,10 +11,16 @@ class dashBoardController{
     async adding(req, res){
         const body = req.body
         const row = await dashboardRepository.postingPurchaseData(body)
-        // console.log(body[total_sales])
-        res.json(row) 
-        // res.json(body) 
+        res.json(row.table2)
     }
+
+    async monthChanged(req, res){
+        const newMonth = req.body
+        const row = await dashboardRepository.patchMonth(newMonth)
+        res.json(row)
+    }
+
+
 
 }
 

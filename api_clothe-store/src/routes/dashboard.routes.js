@@ -9,6 +9,8 @@ router.get('/dashboard-data', dashBoardController.show)
 
 router.post('/purchase-made', dashBoardController.adding)
 
+router.patch('/newMonth', dashBoardController.monthChanged)
+
 
 export default router;
 

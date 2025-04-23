@@ -8,7 +8,7 @@ import {
     ApexLegend
 } from 'ng-apexcharts'
 
-export type ChartOptions = {
+export type yearSalesModule = {
     series: ApexAxisChartSeries;
     chart: ApexChart;
     xaxis: ApexXAxis;

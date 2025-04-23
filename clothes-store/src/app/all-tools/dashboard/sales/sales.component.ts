@@ -1,7 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ViewChild } from '@angular/core';
 
 import {NgApexchartsModule, ChartComponent} from 'ng-apexcharts'
-import { ChartOptions, PieChart } from '../../../../modules/dashboardGraphs.module';
+import { PieChart, yearSalesModule } from '../../../../modules/dashboardGraphs.module';
+import { LocalStorageService } from '../../../../services/localStorage.service';
+
 
 
 @Component({
@@ -10,19 +12,86 @@ import { ChartOptions, PieChart } from '../../../../modules/dashboardGraphs.modu
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
-export default class SalesComponent {
+export default class SalesComponent implements OnInit{
+
+  localstorageService = inject(LocalStorageService)
+
   @ViewChild("chart") chart!: ChartComponent;
 
-  public chartOptions!: Partial<ChartOptions>;
-  public allSales!: Partial<PieChart>;
+  public allSalesDuringYear!: Partial<yearSalesModule>;
+  public allSalesDuringWeek!: Partial<PieChart>;
+
+
+  weekDaySales = {
+    mon: 0,
+    tues: 0,
+    wed: 0,
+    thurs: 0,
+    fri: 0,
+    sat: 0,
+    sun: 0
+  }
+
+
+// DATE
+  weekdays = signal(new Date().getDay())
+  currentMonth = signal(5)//signal(new Date().getMonth())
+  
+
+
+  // DASHBOARD DATA
+
+  // PASSED A YEAR
+  dataOfYears = [
+    { // example
+      year: 2025,
+      allSales: 0,
+      profit: 0,
+      avenue: 0
+    }
+  ]
+
+  // YEAR
+  annuallySales = signal<number[]>([5])
+
+  yearSales = signal(this.annuallySales().reduce((sum, month) => sum + month))
+
+  
+  // MONTH
+  private lastUpdatedMonth!: number
+  allMonths = ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"] 
+
+  organizingMonth = this.allMonths.splice(this.currentMonth()).concat(this.allMonths.slice(0, this.currentMonth()))
+
+  // WEEK
+  weekSales = signal(0)
+
 
   constructor(){
-    this.chartOptions = {
+    
+    if(!this.localstorageService.getItem('lastUpdatedMonth')){ // adding date of month
+      
+      this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
+    }
+
+    // console.log(this.annuallySales)
+    this.checkingMonthChange()
+
+    this.isMonday() // reseting the week sales data
+    
+
+  }
+
+  
+
+  ngOnInit(): void {
+    
+    this.allSalesDuringYear = {
 
       series: [
         {
           name: "Sales",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 190, 0 , 0]
+          data: this.annuallySales()
         }
       ],
       chart: {
@@ -36,25 +105,67 @@ export default class SalesComponent {
         text: "Year Sales"
       },
       xaxis: {
-        categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"]
-      }
+        categories: this.organizingMonth
+      } 
+
 
     }
 
-    this.allSales = {
-      series: [0, 1, 2, 3, 4, 5, 6],
+    this.allSalesDuringWeek = {
+      series: [
+        this.weekDaySales.mon,
+        this.weekDaySales.tues,
+        this.weekDaySales.wed,
+        this.weekDaySales.thurs,
+        this.weekDaySales.fri,
+        this.weekDaySales.sat,
+        this.weekDaySales.sun,
+
+      ],
       chart: {
         height: 300,
         type: "donut",
       },
 
       labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
-
       
     }
 
-    
+  } 
 
+
+
+  // if monday update all the sales
+  isMonday(){
+    
+    if(this.weekdays() === 1){
+      console.log("It's Monday")
+
+      for(const key in this.weekDaySales){
+        this.weekDaySales[key as keyof typeof this.weekDaySales] = 0
+      }
+
+      this.weekSales.set(Object.values(this.weekDaySales).reduce((sum, day) => sum + day)) // refreshing 
+    }
   }
+
+  checkingMonthChange(){
+
+    this.lastUpdatedMonth = parseInt(this.localstorageService.getItem('lastUpdatedMonth'))
+
+    if(this.currentMonth() !== this.lastUpdatedMonth){
+      // updating new data
+      // this.lastUpdatedMonth = this.currentMonth()
+      // this.localstorageService.removeItem('lastUpdatedMonth')
+      // this.localstorageService.setItem('lastUpdatedMonth', this.lastUpdatedMonth)
+      // console.log("Month changed!")
+
+      console.log('before ', this.annuallySales())
+      this.annuallySales.update(prev =>[...prev, 0])
+      console.log('after ', this.annuallySales())
+
+    }
+  }
+
 
 }

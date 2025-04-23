@@ -9,6 +9,14 @@
     
 }
 
+.noSalesWarn{
+    color: red;
+    margin-bottom: 8rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
 .decreased{
     color: red;
     font-weight: bold;
@@ -59,21 +67,24 @@
     flex-direction: column;
     border-left: 5px solid #008FFB;
 }
+
 .boxOfSales div span{
     padding-left: .7rem;
 }
+
 .boxOfSales div span:first-child{
     font-size: .9rem;
 }
+
 .boxOfSales div span:last-child{
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-
 .boxOfSales p{
     padding-top: .8rem;
 }
+
 .boxOfSales p i{
     padding-right: .3rem;
 }
@@ -260,6 +271,14 @@ table tbody tr td{
 @media screen and (max-width: 480px){
     :host{
         justify-content: start;
+    }
+
+    .noSalesWarn{
+        color: red;
+        margin-bottom: 0rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.2rem;
     }
 
     .firstBlock{

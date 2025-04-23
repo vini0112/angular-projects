@@ -4,45 +4,48 @@
     <div class="weekSales">
         <div>
             <span>Week Sales</span>
-            <span>1.000</span>
+            <span>{{weekSales()}}</span>
         </div>
-        <apx-chart
-            [series]="allSales.series!"
-            [chart]="allSales.chart!"
-            [labels]="allSales.labels!"
-        ></apx-chart>
+        @if(weekSales() <= 0){
+            <span class="noSalesWarn">
+                No sales yet!
+            </span>
+        }@else{
+            <apx-chart
+            [series]="allSalesDuringWeek.series!"
+            [chart]="allSalesDuringWeek.chart!"
+            [labels]="allSalesDuringWeek.labels!"
+            ></apx-chart> 
+        }
+        
     </div>
 
     <div class="boxAllPrices">
 
-        <!-- <div class="allprice"> -->
-            <div class="boxOfSales">
-                <div>
-                    <span>Revenue</span>
-                    <span>$2.345</span>
-                </div>
-                <p>
-                    <i class="fa-solid fa-arrow-down"></i>
-                    <span class="decreased">-0.10%</span>
-                    <span>Since last week</span>
-                </p>
+        <div class="boxOfSales">
+            <div>
+                <span>Revenue</span> <!--  -->
+                <span>$2.345</span>
             </div>
-        <!-- </div> -->
-        
-        
-        <!-- <div class="allprice"> -->
-            <div class="boxOfSales">
-                <div>
-                    <span>Total Sales</span>
-                    <span>1.243</span>
-                </div>
-                <p>
-                    <i class="fa-solid fa-arrow-up"></i>
-                    <span class="increased">+11.5%</span>
-                    <span>Since last week</span>
-                </p>
+            <p>
+                <i class="fa-solid fa-arrow-down"></i>
+                <span class="decreased">-0.10%</span>
+                <span>Since last week</span>
+            </p>
+        </div>
+    
+        <div class="boxOfSales">
+            <div>
+                <span>Total Sales</span>
+                <span>{{this.yearSales()}}</span>
             </div>
-        <!-- </div> -->
+            <p>
+                <i class="fa-solid fa-arrow-up"></i>
+                <span class="increased">+11.5%</span>
+                <span>Since last week</span>
+            </p>
+        </div>
+    
     </div>
 
 </div>
@@ -51,10 +54,10 @@
 <div class="secondBlock">
     <div class="yearSales">
         <apx-chart class="dataYear"
-            [series]="chartOptions.series!"
-            [chart]="chartOptions.chart!"
-            [xaxis]="chartOptions.xaxis!"
-            [title]="chartOptions.title!"
+            [series]="allSalesDuringYear.series!"
+            [chart]="allSalesDuringYear.chart!"
+            [xaxis]="allSalesDuringYear.xaxis!"
+            [title]="allSalesDuringYear.title!"
         ></apx-chart>
     </div>
     

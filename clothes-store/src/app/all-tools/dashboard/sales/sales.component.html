@@ -25,11 +25,11 @@
         <div class="boxOfSales">
             <div>
                 <span>Revenue</span> <!--  -->
-                <span>$2.345</span>
+                <span>${{this.revenue}}</span>
             </div>
             <p>
                 <i class="fa-solid fa-arrow-down"></i>
-                <span class="decreased">-0.10%</span>
+                <span class="decreased">- 0.10%</span>
                 <span>Since last week</span>
             </p>
         </div>
@@ -37,7 +37,7 @@
         <div class="boxOfSales">
             <div>
                 <span>Total Sales</span>
-                <span>{{this.yearSales()}}</span>
+                <span>{{this.yearSales}}</span>
             </div>
             <p>
                 <i class="fa-solid fa-arrow-up"></i>
@@ -78,15 +78,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Vinicius</td>
-                    <td>23/10/2004</td>
-                    <td ><span class="statusPayment paid">Paid</span></td>
-                    <td>$200</td>
-                </tr>
+                @for(user of invoices$ | async;track $index){
                 
-
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>23/10/2004</td>
+                        <td ><span class="statusPayment paid">{{user.status}}</span></td>
+                        <td>${{user.price}}</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

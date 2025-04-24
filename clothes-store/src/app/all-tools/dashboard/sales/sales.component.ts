@@ -3,15 +3,16 @@ import { Component, computed, inject, OnInit, signal, ViewChild } from '@angular
 import {NgApexchartsModule, ChartComponent} from 'ng-apexcharts'
 import { PieChart, yearSalesModule } from '../../../../modules/dashboardGraphs.module';
 import { LocalStorageService } from '../../../../services/localStorage.service';
-import { Observable, tap } from 'rxjs';
-import { dashboardData } from '../../../../modules/dashboard.module';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { dashboardData, userPurchaseDetail } from '../../../../modules/dashboard.module';
 import { dashboardService } from '../../../../services/dashboard.service';
+import { AsyncPipe } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-sales',
-  imports: [NgApexchartsModule],
+  imports: [NgApexchartsModule, AsyncPipe],  
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
@@ -45,20 +46,16 @@ export default class SalesComponent implements OnInit{
 
   // DASHBOARD DATA
 
-  dashboardData: dashboardData[]= []
+  revenue!: number
+  yearSales!: number
+  // private allInvoices = new BehaviorSubject<userPurchaseDetail[]>([])
+  // invoices$ = this.allInvoices.asObservable()
+  invoices$ = new Observable<userPurchaseDetail[]>()
 
-  
-
-  // YEAR
-  // private monthsData!: number[]
-
-  private annuallySales = signal<number[]>([])
-  yearSales = signal(2)// signal(this.annuallySales().reduce((sum, month) => sum + month))
 
   
   // MONTH
   private lastUpdatedMonth!: number
-  allMonths = ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"] 
 
 
   // WEEK
@@ -67,35 +64,60 @@ export default class SalesComponent implements OnInit{
 
   constructor(){
     
-    if(!this.localstorageService.getItem('lastUpdatedMonth')){ // adding date of month
-      
+    if(!this.localstorageService.getItem('lastUpdatedMonth')){ //adding date of month
       this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
     }
 
-
-    // console.log(this.annuallySales)
     this.checkingMonthChange()
 
     this.isMonday() // reseting the week sales data
     
-
   }
 
   
 
   ngOnInit(): void {
-    // console.log('OnInit - ', this.monthsData)
-    // console.log('hah', this.annuallySales())
-    // console.log('hah', this.monthsData)
     
-    this.gettingDashboardData()
-    
+    this.dashboardData()
+  } 
+
+
+
+  // DATA
+  dashboardData(){
+    this.dashboardService.getDashboardData().subscribe({
+      next: (res: any) =>{
+        console.log('Dashboard Data Received!', res[0])
+
+        // PARSING THE INVOICES OF STRING JSON FORMAT TO OBJECT
+        const stringsJSON = res[0].invoices 
+        const invoicesParsed = stringsJSON.map((invoice: string) => JSON.parse(invoice))
+        
+        
+        this.invoices$ = of(invoicesParsed) 
+
+        this.yearSales = res[0].total_sales
+        this.revenue = res[0].revenue
+        
+        this.chartSalesDuringYear(res[0].yearMonthsData)
+        this.chartSalesDuringWeek()
+      },
+
+      error: (err) => console.log(err)
+    })
+  }
+  
+
+  // DASHBOARD CHARTS!
+
+  chartSalesDuringYear(annuallySales: number[]){
+
     this.allSalesDuringYear = {
 
       series: [
         {
           name: "Sales",
-          data: this.annuallySales()
+          data: annuallySales
 
         }
       ],
@@ -110,45 +132,36 @@ export default class SalesComponent implements OnInit{
         text: "Year Sales"
       },
       xaxis: {
-        categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"]//this.organizingMonth
+        categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"]
       } 
 
 
     }
 
+  }
+
+
+  chartSalesDuringWeek(){
     this.allSalesDuringWeek = {
-      series: [
-        this.weekDaySales.mon,
-        this.weekDaySales.tues,
-        this.weekDaySales.wed,
-        this.weekDaySales.thurs,
-        this.weekDaySales.fri,
-        this.weekDaySales.sat,
-        this.weekDaySales.sun,
+          series: [
+            this.weekDaySales.mon,
+            this.weekDaySales.tues,
+            this.weekDaySales.wed,
+            this.weekDaySales.thurs,
+            this.weekDaySales.fri,
+            this.weekDaySales.sat,
+            this.weekDaySales.sun,
 
-      ],
-      chart: {
-        height: 300,
-        type: "donut",
-      },
+          ],
+          chart: {
+            height: 300,
+            type: "donut",
+          },
 
-      labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
-      
+          labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+          
     }
 
-  } 
-
-  gettingDashboardData(){
-    this.dashboardService.getDashboardData().subscribe({
-      next: (res: any) =>{
-
-        this.annuallySales = res[0].yearMonthsData
-        
-        console.log('months', this.annuallySales)
-      },
-
-      error: (err) => console.log(err)
-    })
   }
 
 
@@ -166,6 +179,8 @@ export default class SalesComponent implements OnInit{
     }
   }
 
+
+
   checkingMonthChange(){
 
     this.lastUpdatedMonth = parseInt(this.localstorageService.getItem('lastUpdatedMonth'))
@@ -177,9 +192,6 @@ export default class SalesComponent implements OnInit{
       this.localstorageService.setItem('lastUpdatedMonth', this.lastUpdatedMonth)
       console.log("Month changed!")
 
-      console.log('before ', this.annuallySales())
-      this.annuallySales.update(prev =>[...prev, 1])
-      console.log('after ', this.annuallySales())
 
     }
   }

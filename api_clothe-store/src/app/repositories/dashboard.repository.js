@@ -9,6 +9,16 @@ class dashboardRepository{
     getAll(){
         const sql = 'SELECT * FROM dashboard'
         return consulta(sql, '', 'Table dashboard not found!')
+
+        // return new Promise((resolve, reject) =>{
+        //     connection.query(sql, '', (err, result) =>{
+        //         if(err) return reject('ERRO while selecting data from dashboard table')
+        //         console.log(JSON.parse(result[0]))
+                
+        //         // return resolve(result)
+
+        //     })
+        // })
     }
 
     postingPurchaseData(body){

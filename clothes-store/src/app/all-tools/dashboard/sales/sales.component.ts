@@ -3,6 +3,9 @@ import { Component, computed, inject, OnInit, signal, ViewChild } from '@angular
 import {NgApexchartsModule, ChartComponent} from 'ng-apexcharts'
 import { PieChart, yearSalesModule } from '../../../../modules/dashboardGraphs.module';
 import { LocalStorageService } from '../../../../services/localStorage.service';
+import { Observable, tap } from 'rxjs';
+import { dashboardData } from '../../../../modules/dashboard.module';
+import { dashboardService } from '../../../../services/dashboard.service';
 
 
 
@@ -15,6 +18,7 @@ import { LocalStorageService } from '../../../../services/localStorage.service';
 export default class SalesComponent implements OnInit{
 
   localstorageService = inject(LocalStorageService)
+  dashboardService = inject(dashboardService)
 
   @ViewChild("chart") chart!: ChartComponent;
 
@@ -41,20 +45,14 @@ export default class SalesComponent implements OnInit{
 
   // DASHBOARD DATA
 
-  // PASSED A YEAR
-  dataOfYears = [
-    { // example
-      year: 2025,
-      allSales: 0,
-      profit: 0,
-      avenue: 0
-    }
-  ]
+  dashboardData: dashboardData[]= []
+
+  
 
   // YEAR
-  private monthsData = this.localstorageService.getItem('currMonthsData')
+  // private monthsData!: number[]
 
-  private annuallySales = signal<number[]>(JSON.parse(this.monthsData))
+  private annuallySales = signal<number[]>([])
   yearSales = signal(2)// signal(this.annuallySales().reduce((sum, month) => sum + month))
 
   
@@ -62,7 +60,6 @@ export default class SalesComponent implements OnInit{
   private lastUpdatedMonth!: number
   allMonths = ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"] 
 
-  // organizingMonth = this.allMonths.splice(this.currentMonth()).concat(this.allMonths.slice(0, this.currentMonth()))
 
   // WEEK
   weekSales = signal(0)
@@ -74,11 +71,6 @@ export default class SalesComponent implements OnInit{
       
       this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
     }
-
-    // if(!this.localstorageService.getItem('currMonthsData')){
-    //   // let curr = [0, 0, 0]
-    //   this.localstorageService.setItem('currMonthsData', this.monthsData)
-    // }
 
 
     // console.log(this.annuallySales)
@@ -92,7 +84,12 @@ export default class SalesComponent implements OnInit{
   
 
   ngOnInit(): void {
-    console.log('OnInit - ', this.monthsData)
+    // console.log('OnInit - ', this.monthsData)
+    // console.log('hah', this.annuallySales())
+    // console.log('hah', this.monthsData)
+    
+    this.gettingDashboardData()
+    
     this.allSalesDuringYear = {
 
       series: [
@@ -141,6 +138,18 @@ export default class SalesComponent implements OnInit{
 
   } 
 
+  gettingDashboardData(){
+    this.dashboardService.getDashboardData().subscribe({
+      next: (res: any) =>{
+
+        this.annuallySales = res[0].yearMonthsData
+        
+        console.log('months', this.annuallySales)
+      },
+
+      error: (err) => console.log(err)
+    })
+  }
 
 
   // if monday update all the sales

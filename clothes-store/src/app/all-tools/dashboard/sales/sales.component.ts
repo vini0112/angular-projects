@@ -12,10 +12,11 @@ import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-sales',
-  imports: [NgApexchartsModule, AsyncPipe, NgIf, DatePipe],
+  imports: [NgApexchartsModule, AsyncPipe, NgIf, DatePipe],  
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
+
 export default class SalesComponent implements OnInit{
 
   localstorageService = inject(LocalStorageService)
@@ -27,15 +28,6 @@ export default class SalesComponent implements OnInit{
   public allSalesDuringWeek!: Partial<PieChart>;
 
 
-  weekDaySales = {
-    mon: 0,
-    tues: 0,
-    wed: 0,
-    thurs: 0,
-    fri: 0,
-    sat: 0,
-    sun: 0
-  }
 
 
 // DATE
@@ -48,25 +40,28 @@ export default class SalesComponent implements OnInit{
 
   revenue!: number
   yearSales!: number
-  // private allInvoices = new BehaviorSubject<userPurchaseDetail[]>([])
-  // invoices$ = this.allInvoices.asObservable()
   invoices$ = new Observable<userPurchaseDetail[]>()
 
 
   
-  // MONTH
-  private lastUpdatedMonth!: number
 
 
   // WEEK
+  
+  weekDaySales = {
+    mon: 0,
+    tues: 0,
+    wed: 0,
+    thurs: 0,
+    fri: 0,
+    sat: 0,
+    sun: 0
+  }
+
   weekSales = signal(0)
 
 
   constructor(){
-    
-    // if(!this.localstorageService.getItem('lastUpdatedMonth')){ //adding date of month
-    //   this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
-    // }
 
     this.checkingMonthChange()
 
@@ -90,11 +85,11 @@ export default class SalesComponent implements OnInit{
         // console.log('Dashboard Data Received!', res[0])
 
         // PARSING THE INVOICES OF STRING JSON FORMAT TO OBJECT
-        const stringsJSON = res[0].invoices 
+        const stringsJSON = res[0].invoices
         const invoicesParsed = stringsJSON.map((invoice: string) => JSON.parse(invoice))
         
         
-        this.invoices$ = of(invoicesParsed) 
+        this.invoices$ = of(invoicesParsed)
 
         this.yearSales = res[0].total_sales
         this.revenue = res[0].revenue
@@ -118,7 +113,6 @@ export default class SalesComponent implements OnInit{
         {
           name: "Sales",
           data: annuallySales
-
         }
       ],
       chart: {
@@ -186,7 +180,7 @@ export default class SalesComponent implements OnInit{
     this.dashboardService.currentMonth().subscribe({
       next: (res: any) => {
         if(this.currentMonth() !== res[0].currentMonth){
-          console.log('Months Different!')
+          
           this.updatingMonth(this.currentMonth()) // passing current month!
         }
         
@@ -199,8 +193,9 @@ export default class SalesComponent implements OnInit{
 
   updatingMonth(newMonth: number){
     this.dashboardService.updateNewMonth(newMonth).subscribe({
-      next: (res) =>{
-        console.log('Month Updated!', res)
+      next: () =>{
+        console.log('Month Updated!')
+        this.dashboardData()
       },
       error: (err) => console.log(err)
     })

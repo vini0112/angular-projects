@@ -46,7 +46,6 @@ class loginController{
             }
 
             const user = result[0]
-            console.log(user)
 
             // DEVELOPER LOGIN 
             if(email === process.env.EMAIL_OF_DEVELOPER && user.roles === process.env.ADM_ROLE){

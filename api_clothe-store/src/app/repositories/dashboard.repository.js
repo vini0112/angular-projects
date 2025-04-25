@@ -19,7 +19,7 @@ class dashboardRepository{
 
 
     patchMonth(newMonth){
-        const sql = "UPDATE dashboard SET yearMonthsData = JSON_ARRAY_APPEND(yearMonthsData, '$', ?) WHERE idDashboard = 1"
+        const sql = "UPDATE dashboard SET yearMonthsData = JSON_ARRAY_APPEND(yearMonthsData, '$', 0), currentMonth = ? WHERE idDashboard = 1"
 
         return new Promise((resolve, reject) =>{
 

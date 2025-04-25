@@ -6,15 +6,16 @@
     justify-content: space-between;
     height: 100%;
     width: 100%;
-    
+    /* overflow-y:hidden ; */
 }
 
-.noSalesWarn{
+.salesWarn{
     color: red;
     margin-bottom: 8rem;
     text-align: center;
     font-weight: 600;
     font-size: 1.2rem;
+    margin: auto;
 }
 
 .decreased{
@@ -107,7 +108,10 @@
     padding-top: .8rem;
 }
 
-.weekSales div{
+
+
+
+.weekSales .yesSalesNow{
     width: 96%;
     margin-left: auto;
     border-left: 5px solid #008FFB;
@@ -117,11 +121,11 @@
     justify-content: center;
 }
 
-.weekSales span{
+.weekSales .yesSalesNow span{
     padding-left: .7rem;
 }
 
-.weekSales div span:first-child{
+.weekSales div  span:first-child{
     font-size: .9rem;
 }
 .weekSales div span:last-child{
@@ -150,10 +154,13 @@
     width: 100%;
 }
 
+
 .boxInvoices{
     width: 50%;
-    /* border: 2px solid red; */
-    padding: 10px;
+    height: 100%;
+    border: 2px solid red;
+    padding: 5px;
+    overflow-y: hidden;
 }
 
 .nav{
@@ -167,28 +174,68 @@
 
 .nav span, i{
     font-weight: bold;
-    
-}
-table{
-    margin-top: .5rem;
-    width: 100%;
 }
 
+table{
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table thead{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 table thead tr{
-    text-align: center;
     box-shadow: 1px 1px 5px black;
 }
 
 
+table tbody{
+    margin-top: .3rem;
+    border: 2px solid black;
+    height: 260px; 
+    width: 100%;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+tbody::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+    /* border: 2px solid black; */
+}
+
+
+
+table tbody tr{
+    height: 35px;
+}
+
 table tbody tr td{
     text-align: center;
     padding-top: .5rem;
+    padding-bottom: 5px;
+}
+
+.statusTD{
+    border: 2px solid black;
+    width: 100%;
 }
 
 .statusPayment{
+    /* border: 2px solid black; */
     font-weight: bold;
     padding: 6px;
     border-radius: 10px;
+    font-size: .9rem;
 }
 
 
@@ -196,6 +243,20 @@ table tbody tr td{
     color: green;
     background-color: #0cf04d;
 }
+
+/* columns THEAD size */
+.sizeP{
+    width: 80px;
+    text-align: center;
+    /* border: 2px solid black; */
+}
+
+
+.sizeM{
+    width: 125px;
+    text-align: center;
+}
+
 
 
 @media (max-width: 1200px){

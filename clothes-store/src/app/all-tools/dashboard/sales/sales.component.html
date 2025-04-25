@@ -2,15 +2,17 @@
 
 <div class="firstBlock">
     <div class="weekSales">
-        <div>
-            <span>Week Sales</span>
-            <span>{{weekSales()}}</span>
-        </div>
+        
         @if(weekSales() <= 0){
-            <span class="noSalesWarn">
-                No sales yet!
+            <span class="salesWarn">
+                No sales this week!
             </span>
         }@else{
+            <div class="yesSalesNow">
+                <span>Week Sales</span>
+                <span>{{weekSales()}}</span>
+            </div>
+
             <apx-chart *ngIf="allSalesDuringWeek"
             [series]="allSalesDuringWeek.series!"
             [chart]="allSalesDuringWeek.chart!"
@@ -70,11 +72,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>User</th>
-                    <th>Order Date</th>
-                    <th>Status</th>
-                    <th>Price</th>
+                    <th class="sizeP">ID</th>
+                    <th class="sizeM">User</th>
+                    <th class="sizeM">Order Date</th>
+                    <th class="sizeM">Status</th>
+                    <th class="sizeM">Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,10 +86,76 @@
                         <td>{{user.userId}}</td>
                         <td>{{user.username}}</td>
                         <td>{{user.date | date:'MM/dd/yyyy'}}</td>
-                        <td ><span class="statusPayment paid">{{user.status}}</span></td>
+                        <td><span class="statusPayment paid">{{user.status}}</span></td>
                         <td>${{user.price}}</td>
                     </tr>
                 }
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM statusTD"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                <tr>
+                    <td class="sizeP">23</td>
+                    <td class="sizeM">viniajdkfj</td>
+                    <td class="sizeM">23/23/3233</td>
+                    <td class="sizeM"><span class="statusPayment paid">paid</span></td>
+                    <td class="sizeM">234</td>
+                </tr>
+                
+
+
             </tbody>
         </table>
     </div>

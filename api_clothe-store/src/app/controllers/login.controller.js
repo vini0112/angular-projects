@@ -46,14 +46,14 @@ class loginController{
             }
 
             const user = result[0]
-            
+            console.log(user)
 
             // DEVELOPER LOGIN 
             if(email === process.env.EMAIL_OF_DEVELOPER && user.roles === process.env.ADM_ROLE){
                 const match = await bcrypt.compare(password, user.password)
                 if(match){
                     
-                    const accessToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
 
                     const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
@@ -79,7 +79,7 @@ class loginController{
                 return res.status(401).json({erro: 'Wrong password'})
             }
             
-            const accessToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+            const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
             const refreshToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
@@ -120,13 +120,13 @@ class loginController{
 
                 // IF ROLE DEVELOPER
                 if(user.role === process.env.ADM_ROLE){
-                    const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email,username: user.username  }, process.env.SECRET_KEY, { expiresIn: '30m' });
                     
                     return res.status(200).json({accessToken: newAccessToken})
                 }
 
 
-                const newAccessToken = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                const newAccessToken = jwt.sign({ id: user.id, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
                 
                 res.status(200).json({accessToken: newAccessToken})
 

@@ -6,10 +6,10 @@ const router = Router()
 
 
 router.get('/dashboard-data', dashBoardController.show)
+router.get('/current-month', dashBoardController.getCurrentMonth)
 
-router.post('/purchase-made', dashBoardController.adding)
 
-router.patch('/newMonth', dashBoardController.monthChanged)
+router.patch('/new-month', dashBoardController.monthChanged)
 
 
 export default router;

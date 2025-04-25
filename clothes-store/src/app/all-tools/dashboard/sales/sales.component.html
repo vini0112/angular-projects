@@ -11,7 +11,7 @@
                 No sales yet!
             </span>
         }@else{
-            <apx-chart
+            <apx-chart *ngIf="allSalesDuringWeek"
             [series]="allSalesDuringWeek.series!"
             [chart]="allSalesDuringWeek.chart!"
             [labels]="allSalesDuringWeek.labels!"
@@ -53,7 +53,7 @@
 
 <div class="secondBlock">
     <div class="yearSales">
-        <apx-chart class="dataYear"
+        <apx-chart class="dataYear" *ngIf="allSalesDuringYear"
             [series]="allSalesDuringYear.series!"
             [chart]="allSalesDuringYear.chart!"
             [xaxis]="allSalesDuringYear.xaxis!"
@@ -71,7 +71,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>User</th>
                     <th>Order Date</th>
                     <th>Status</th>
                     <th>Price</th>
@@ -81,9 +81,9 @@
                 @for(user of invoices$ | async;track $index){
                 
                     <tr>
-                        <td>{{user.id}}</td>
+                        <td>{{user.userId}}</td>
                         <td>{{user.username}}</td>
-                        <td>23/10/2004</td>
+                        <td>{{user.date | date:'MM/dd/yyyy'}}</td>
                         <td ><span class="statusPayment paid">{{user.status}}</span></td>
                         <td>${{user.price}}</td>
                     </tr>

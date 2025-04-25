@@ -42,7 +42,7 @@ export default class ShippingFormComponent {
   nextStep(){
     this.submited = true
 
-    if(this.shipForm.valid){
+    if(this.shipForm.invalid){ // CHANGED HERE !
 
 
       let productsInfo: checkoutProduct[] = []
@@ -74,11 +74,12 @@ export default class ShippingFormComponent {
       }
 
       const decoded: any = jwtDecode(this.token);
-
+      
       userInfo.push(
         {
           userId: decoded.id,
-          email: decoded.email
+          email: decoded.email,
+          username: decoded.username
         }
       )
       

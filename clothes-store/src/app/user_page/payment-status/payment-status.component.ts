@@ -43,7 +43,8 @@ export default class PaymentStatusComponent implements OnInit{
     this.userInfo.push(
       {
         userId: decoded.id,
-        email: decoded.email
+        email: decoded.email,
+        username: decoded.username
       }
     )
 
@@ -55,6 +56,7 @@ export default class PaymentStatusComponent implements OnInit{
 
         if(res.status === true){
           this.successPayment = true
+          
         }
         else{
           this.successPayment = false

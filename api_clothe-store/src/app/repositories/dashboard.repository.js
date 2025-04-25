@@ -6,23 +6,42 @@ import connection from "../database/connection.js";
 
 class dashboardRepository{
 
+    
     getAll(){
         const sql = 'SELECT * FROM dashboard'
         return consulta(sql, '', 'Table dashboard not found!')
-
-        // return new Promise((resolve, reject) =>{
-        //     connection.query(sql, '', (err, result) =>{
-        //         if(err) return reject('ERRO while selecting data from dashboard table')
-        //         console.log(JSON.parse(result[0]))
-                
-        //         // return resolve(result)
-
-        //     })
-        // })
     }
 
+    currentMonth(){
+        const sql = "SELECT currentMonth FROM dashboard WHERE idDashboard = 1"
+        return consulta(sql, '', "Error while getting current month!")
+    }
+
+
+    patchMonth(newMonth){
+        const sql = "UPDATE dashboard SET yearMonthsData = JSON_ARRAY_APPEND(yearMonthsData, '$', ?) WHERE idDashboard = 1"
+
+        return new Promise((resolve, reject) =>{
+
+            connection.query(sql, newMonth.newMonth, (err, result) =>{
+                if(err){
+                    console.log("ERROR while updating the new month!")
+                    return reject(err)
+                }
+    
+                return resolve(result)
+            })
+        })
+        
+    }
+
+
+
+
+    //  WEBHOOK DOING THIS FUNCTION! (NOT IN USED HERE!)
     postingPurchaseData(body){
         
+        // UPDATES ALONE -> TOTAL SALES
         const sql = `UPDATE dashboard SET total_sales = total_sales + 1, invoices = JSON_ARRAY_APPEND(invoices, '$', ?) ,revenue = revenue + ?, yearMonthsData = ? WHERE idDashboard = 1`
 
         return new Promise((resolve, reject) =>{
@@ -57,28 +76,7 @@ class dashboardRepository{
 
 
         })
-
-        
     }
-
-
-    patchMonth(newMonth){
-        const sql = "UPDATE dashboard SET yearMonthsData = JSON_ARRAY_APPEND(yearMonthsData, '$', ?) WHERE idDashboard = 1"
-
-        return new Promise((resolve, reject) =>{
-
-            connection.query(sql, newMonth.newMonth, (err, result) =>{
-                if(err){
-                    console.log("ERROR while updating the new month!")
-                    return reject(err)
-                }
-    
-                return resolve(result)
-            })
-        })
-        
-    }
-
 
 }
 

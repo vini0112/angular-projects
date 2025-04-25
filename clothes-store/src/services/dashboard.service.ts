@@ -20,6 +20,17 @@ export class dashboardService{
         return this.http.get<dashboardData[]>(`${this.api}/dashboard-data`)
     }
 
+    
+    currentMonth(): Observable<number>{
+        return this.http.get<number>(`${this.api}/current-month`)
+    }
+
+    updateNewMonth(newMonth: number): Observable<number>{
+        return this.http.patch<number>(`${this.api}/new-month`, {newMonth})
+    }
+
+
+
 }
 
 

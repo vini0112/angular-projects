@@ -8,9 +8,11 @@ export interface dashboardData{
 }
 
 export interface userPurchaseDetail{
-    id: number
+    userId: number
     username: string
     date: string
     status: string 
     price: number
 }
+
+

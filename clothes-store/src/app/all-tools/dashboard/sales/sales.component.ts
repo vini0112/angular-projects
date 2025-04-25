@@ -6,13 +6,13 @@ import { LocalStorageService } from '../../../../services/localStorage.service';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { dashboardData, userPurchaseDetail } from '../../../../modules/dashboard.module';
 import { dashboardService } from '../../../../services/dashboard.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-sales',
-  imports: [NgApexchartsModule, AsyncPipe],  
+  imports: [NgApexchartsModule, AsyncPipe, NgIf, DatePipe],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
@@ -40,7 +40,7 @@ export default class SalesComponent implements OnInit{
 
 // DATE
   weekdays = signal(new Date().getDay())
-  currentMonth = signal(3)//signal(new Date().getMonth())
+  currentMonth = signal(new Date().getMonth())
   
 
 
@@ -64,9 +64,9 @@ export default class SalesComponent implements OnInit{
 
   constructor(){
     
-    if(!this.localstorageService.getItem('lastUpdatedMonth')){ //adding date of month
-      this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
-    }
+    // if(!this.localstorageService.getItem('lastUpdatedMonth')){ //adding date of month
+    //   this.localstorageService.setItem('lastUpdatedMonth', this.currentMonth().toString())
+    // }
 
     this.checkingMonthChange()
 
@@ -87,7 +87,7 @@ export default class SalesComponent implements OnInit{
   dashboardData(){
     this.dashboardService.getDashboardData().subscribe({
       next: (res: any) =>{
-        console.log('Dashboard Data Received!', res[0])
+        // console.log('Dashboard Data Received!', res[0])
 
         // PARSING THE INVOICES OF STRING JSON FORMAT TO OBJECT
         const stringsJSON = res[0].invoices 
@@ -183,18 +183,27 @@ export default class SalesComponent implements OnInit{
 
   checkingMonthChange(){
 
-    this.lastUpdatedMonth = parseInt(this.localstorageService.getItem('lastUpdatedMonth'))
-
-    if(this.currentMonth() !== this.lastUpdatedMonth){
-      // updating new data
-      this.lastUpdatedMonth = this.currentMonth()
-      this.localstorageService.removeItem('lastUpdatedMonth')
-      this.localstorageService.setItem('lastUpdatedMonth', this.lastUpdatedMonth)
-      console.log("Month changed!")
-
-
-    }
+    this.dashboardService.currentMonth().subscribe({
+      next: (res: any) => {
+        if(this.currentMonth() !== res[0].currentMonth){
+          console.log('Months Different!')
+          this.updatingMonth(this.currentMonth()) // passing current month!
+        }
+        
+      },
+      error: (err) => console.log(err)
+    })
+    
   }
 
+
+  updatingMonth(newMonth: number){
+    this.dashboardService.updateNewMonth(newMonth).subscribe({
+      next: (res) =>{
+        console.log('Month Updated!', res)
+      },
+      error: (err) => console.log(err)
+    })
+  }
 
 }

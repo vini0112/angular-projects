@@ -15,13 +15,14 @@ class stripeController{
 
     async checkout(req, res){ 
 
+        const dateNow = new Date().toLocaleDateString('en-CA')
 
         const {products, userInfo} = JSON.parse(req.body)
 
         const productsID = products.map(product => product.id)
         const userId = userInfo[0].userId
         const email = userInfo[0].email
-
+        const username = userInfo[0].username
 
         // CHECK THE USER IN DB
         connection.query(
@@ -69,7 +70,11 @@ class stripeController{
                 },
                 metadata:{
                     userId: userId,
-                    email: email
+                    username: username,
+                    email: email,
+                    status: "paid",
+                    price: amount,
+                    date: dateNow
                 }
     
             })
@@ -113,7 +118,9 @@ class stripeController{
                 const paymentIntent = event.data.object;
                 console.log("✅ Pagamento bem-sucedido:", paymentIntent.id);
                 const email = paymentIntent.metadata.email
-                
+                const amount = paymentIntent.amount
+                const metadata = paymentIntent.metadata
+                console.log(metadata)
                 // Mark as paid to sinalize the frontend
                 connection.query('UPDATE users SET status = ? WHERE email = ?', ['paid', email], (err, res) =>{
                     if(err) return res.status(500).json({error: 'webhook did not set the value in DB correctly!'})
@@ -123,7 +130,40 @@ class stripeController{
                     }
 
                     console.log('✅ FLAG (payeid) added in DB!')
+                }) 
+
+
+                // UPDATES DASHBOARD TABLE
+
+                const sql = `UPDATE dashboard SET total_sales = total_sales + 1, invoices = JSON_ARRAY_APPEND(invoices, '$', ?) ,revenue = revenue + ?, yearMonthsData = ? WHERE idDashboard = 1`
+
+                connection.query("SELECT yearMonthsData FROM dashboard WHERE idDashboard = 1", (err1, result1) =>{
+                    if(err1) {
+                        console.log('ERROR column yearMonthData not found!')
+                        return res.json(err1)
+                    }
+
+                    // INCREASES ONE IN THE SALES OF THE CURRENT MONTH
+                    let arrayMonths = result1[0].yearMonthsData
+                    arrayMonths[arrayMonths.length-1] += 1
+
+                    // UPDATES ALONG WITH ALL THE PURCHASE INFO
+                    // TOTAL SALE, INVOICES OF THE USER, AND THE TOTAL REVENUE
+                    connection.query(sql, [JSON.stringify(metadata), amount, JSON.stringify(arrayMonths)], (err2, result2) =>{
+
+                        if(err2) {
+                            console.log('ERROR while updating dashboard table!')
+                            return res.json(err2)
+                        }
+
+                        console.log('✅ Dashboard table updated successfully!');
+
+                    })
+
                 })
+                    
+    
+
 
                 // SENDING EMAIL
                 const transporter = mailer.createTransport({

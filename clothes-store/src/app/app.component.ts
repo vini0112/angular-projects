@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   currentMonth = signal(new Date().getMonth())
   
   constructor(){
-    this.checkingMonthChange()
+    // this.checkCurrentMonth()
   }
 
   ngOnInit(): void {
@@ -28,6 +28,15 @@ export class AppComponent implements OnInit{
   }
   
   
+  checkCurrentMonth(){
+    this.dashboardService.currentMonth().subscribe({
+      next: (res: any) => {
+        console.log(res)
+      },
+      error: (err) => console.log(err)
+    })
+
+  }
   
   checkingMonthChange(){
 

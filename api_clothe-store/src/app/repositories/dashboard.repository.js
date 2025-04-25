@@ -14,8 +14,44 @@ class dashboardRepository{
 
     currentMonth(){
         const sql = "SELECT currentMonth FROM dashboard WHERE idDashboard = 1"
-        return consulta(sql, '', "Error while getting current month!")
+        const currentMonth = new Date().getMonth()
+
+        return new Promise((resolve, reject) =>{
+
+            // SELECTING THE CURRENT MONTH IN DB
+            connection.query(sql, '', (err1, result1) =>{
+                if(err1) {
+                    console.log('ERROR while selecting currentMonth!')
+                    return reject(err1)
+                }
+
+                
+                const atualMonth = result1[0].currentMonth
+                
+                // VERIFYING IF CHANGED
+                if(atualMonth !== currentMonth){
+
+            // IF CHANGED, SET THE CURRENT MONTH AND A NEW MONTH DATA (0) TO THE MONTH
+                    connection.query("UPDATE dashboard SET currentMonth = ?, yearMonthsData = JSON_ARRAY_APPEND(yearMonthsData, '$', 0) WHERE idDashboard = 1", [currentMonth], (err2, result2) =>{
+                        if(err2) {
+                            console.log('ERROR while modifying the currentMonth to a new month!')
+                            return reject(err2)
+                        }
+
+                        console.log('✅ Month Updated!')
+                        return resolve({response1: result1, response2: result2})
+                    })
+                }
+
+                console.log("ℹ️ Month didn't change yet!")
+                return resolve("Month didn't change yet!")
+
+            })
+        })
     }
+
+
+
 
 
     patchMonth(newMonth){
@@ -35,7 +71,7 @@ class dashboardRepository{
         
     }
 
-
+    
 
 
     //  WEBHOOK DOING THIS FUNCTION! (NOT IN USED HERE!)

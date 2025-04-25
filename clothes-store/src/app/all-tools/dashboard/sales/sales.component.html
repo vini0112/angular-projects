@@ -83,11 +83,11 @@
                 @for(user of invoices$ | async;track $index){
                 
                     <tr>
-                        <td>{{user.userId}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.date | date:'MM/dd/yyyy'}}</td>
-                        <td><span class="statusPayment paid">{{user.status}}</span></td>
-                        <td>${{user.price}}</td>
+                        <td class="sizeP">{{user.userId}}</td>
+                        <td class="sizeM">{{user.username}}</td>
+                        <td class="sizeM">{{user.date | date:'MM/dd/yyyy'}}</td>
+                        <td class="sizeM"><span class="statusPayment paid">{{user.status}}</span></td>
+                        <td class="sizeM">${{user.price}}</td>
                     </tr>
                 }
 

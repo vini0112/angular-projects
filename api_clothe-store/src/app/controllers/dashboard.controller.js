@@ -13,6 +13,8 @@ class dashBoardController{
         res.json(row) 
     }
 
+    
+
 
     async monthChanged(req, res){
         const newMonth = req.body

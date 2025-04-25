@@ -63,9 +63,7 @@ export default class SalesComponent implements OnInit{
 
   constructor(){
 
-    // this.checkingMonthChange()
-
-    this.isMonday() // reseting the week sales data
+    //this.isMonday() // reseting the week sales data
     
   }
 
@@ -173,32 +171,5 @@ export default class SalesComponent implements OnInit{
     }
   }
 
-
-
-  checkingMonthChange(){
-
-    this.dashboardService.currentMonth().subscribe({
-      next: (res: any) => {
-        if(this.currentMonth() !== res[0].currentMonth){
-          
-          this.updatingMonth(this.currentMonth()) // passing current month!
-        }
-        
-      },
-      error: (err) => console.log(err)
-    })
-    
-  }
-
-
-  updatingMonth(newMonth: number){
-    this.dashboardService.updateNewMonth(newMonth).subscribe({
-      next: () =>{
-        console.log('Month Updated!')
-        this.dashboardData()
-      },
-      error: (err) => console.log(err)
-    })
-  }
 
 }

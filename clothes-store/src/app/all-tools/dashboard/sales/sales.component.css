@@ -158,7 +158,7 @@
 .boxInvoices{
     width: 50%;
     height: 100%;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     padding: 5px;
     overflow-y: hidden;
 }
@@ -177,7 +177,7 @@
 }
 
 table{
-    border: 2px solid red;
+    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -185,6 +185,7 @@ table{
 }
 
 table thead{
+    margin-top: .5rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -196,21 +197,16 @@ table thead tr{
 
 table tbody{
     margin-top: .3rem;
-    border: 2px solid black;
     height: 260px; 
-    width: 100%;
     overflow-y: auto;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 tbody::-webkit-scrollbar{
-    width: 0px;
-    height: 0px;
-    /* border: 2px solid black; */
+    width: 5px;
+    border-radius: 50%;
+    background-color: black;
+    border: 2px solid black;
+    cursor: pointer;
 }
 
 
@@ -225,16 +221,11 @@ table tbody tr td{
     padding-bottom: 5px;
 }
 
-.statusTD{
-    border: 2px solid black;
-    width: 100%;
-}
 
 .statusPayment{
-    /* border: 2px solid black; */
     font-weight: bold;
-    padding: 6px;
-    border-radius: 10px;
+    padding: .3rem 1.1rem;
+    border-radius:50%;
     font-size: .9rem;
 }
 
@@ -248,7 +239,6 @@ table tbody tr td{
 .sizeP{
     width: 80px;
     text-align: center;
-    /* border: 2px solid black; */
 }
 
 
@@ -291,8 +281,19 @@ table tbody tr td{
 
     .boxInvoices{
         width: 100%;
-        /* border: 2px solid red; */
         padding: 10px;
+    }
+
+    /* columns THEAD size */
+    .sizeP{
+        width: 80px;
+        text-align: center;
+    }
+
+
+    .sizeM{
+        width: 160px;
+        text-align: center;
     }
 
 }
@@ -324,6 +325,25 @@ table tbody tr td{
         flex-direction: column;
         justify-content: center;
         padding-left: 1rem;
+    }
+
+    /* columns THEAD size */
+    table tbody{
+        margin-top: .3rem;
+        /* border: 2px solid black; */
+        height: 200px; 
+        overflow-y: auto;
+    }
+    .sizeP{
+        width: 60px;
+        text-align: center;
+        /* border: 2px solid black; */
+    }
+
+
+    .sizeM{
+        width: 120px;
+        text-align: center;
     }
 
 }
@@ -368,6 +388,27 @@ table tbody tr td{
         display: flex;
         flex-direction: column;
     }
+
+    /* columns THEAD size */
+    table tbody{
+        margin-top: .3rem;
+        height: 200px; 
+        overflow-y: auto;
+    }
+    .sizeP{
+        width: 50px;
+        text-align: center;
+        font-size: .9rem;
+    }
+
+
+    .sizeM{
+        width: 100px;
+        text-align: center;
+        font-size: .9rem;
+
+    }
+
 }
 
 

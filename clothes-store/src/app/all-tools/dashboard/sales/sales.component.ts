@@ -63,7 +63,7 @@ export default class SalesComponent implements OnInit{
 
   constructor(){
 
-    this.checkingMonthChange()
+    // this.checkingMonthChange()
 
     this.isMonday() // reseting the week sales data
     

@@ -21,15 +21,15 @@ export class dashboardService{
     }
 
     
-    currentMonth(): Observable<number>{
-        return this.http.get<number>(`${this.api}/current-month`)
-    }
+    // currentMonth(): Observable<number>{
+    //     return this.http.get<number>(`${this.api}/current-month`)
+    // }
 
 
 
-    updateNewMonth(newMonth: number): Observable<number>{
-        return this.http.patch<number>(`${this.api}/new-month`, {newMonth})
-    }
+    // updateNewMonth(newMonth: number): Observable<number>{
+    //     return this.http.patch<number>(`${this.api}/new-month`, {newMonth})
+    // }
 
 
 

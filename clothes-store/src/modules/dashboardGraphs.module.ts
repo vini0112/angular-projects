@@ -21,6 +21,6 @@ export type PieChart = {
     series: ApexNonAxisChartSeries
     chart: ApexChart;
     labels: string[];
-    legend: ApexLegend
+    // legend: ApexLegend
 }
 

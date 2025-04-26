@@ -23,6 +23,7 @@ class stripeController{
         const userId = userInfo[0].userId
         const email = userInfo[0].email
         const username = userInfo[0].username
+        
 
         // CHECK THE USER IN DB
         connection.query(
@@ -139,65 +140,40 @@ class stripeController{
                 }) 
 
 
-                // CHECKING MONTH CHANGES!
-                connection.query("SELECT currentMonth FROM dashboard WHERE idDashboard = 1", '', (err1, result1) =>{
-                    if(err1) {
-                        console.log('ERROR while selecting currentMonth!')
-                        return err1
-                    }
-                    
-                    console.log("SELECTING: ", result1)
-                    
-                    const atualMonth = result1[0].currentMonth
-                    
-                    // VERIFYING IF CHANGED
-                    if(atualMonth !== currentMonth){
-    
-                // IF CHANGED, SET THE CURRENT MONTH AND A NEW MONTH DATA (0) TO THE MONTH
-                        connection.query("UPDATE dashboard SET currentMonth = ?, yearMonthsData = JSON_ARRAY_APPEND(yearMonthsData, '$', 0) WHERE idDashboard = 1", [currentMonth], (err2, result2) =>{
-
-                            if(err2) {
-                                console.log('ERROR while modifying the currentMonth to a new month!')
-                                return reject(err2)
-                            }
-                            console.log("UPDATED: ", result2)
-                            
-                            console.log('✅ Month Updated!')
-                        })
-
-                    }else{
-                        console.log("ℹ️ Month didn't change yet!") 
-                    }
-    
-                    
-    
-                })
-
-
 
                 // UPDATES DASHBOARD TABLE
 
-                const sql = `UPDATE dashboard SET total_sales = total_sales + 1, invoices = JSON_ARRAY_APPEND(invoices, '$', ?) ,revenue = revenue + ?, yearMonthsData = ?, weekdays = ? WHERE idDashboard = 1`
+                const sql = `UPDATE dashboard SET total_sales = total_sales + 1, invoices = JSON_ARRAY_APPEND(invoices, '$', ?) ,revenue = revenue + ?, yearMonthsData = ?, weekdays = ?,currentMonth = ? WHERE idDashboard = 1`
+
 
                 connection.query("SELECT yearMonthsData, weekdays, currentMonth FROM dashboard WHERE idDashboard = 1", (err1, result1) =>{
                     if(err1) {
                         console.log('ERROR column yearMonthData not found!')
                         return res.json(err1)
                     }
-                    console.log('CURRENT: ', result1[0].yearMonthsData)
-                    // INCREASES ONE IN SALES OF THE CURRENT MONTH
+
+                    let atualMonth = result1[0].currentMonth
                     let arrayMonths = result1[0].yearMonthsData
+
+                    //CHECK IF THE MONTH CHANGED! IF IT'S ADD A NEW DATA(0) TO THE ARRAYMONTHS
+                    if(atualMonth !== currentMonth){
+                        arrayMonths.push(0)
+                        atualMonth = currentMonth
+                    }
+
+
+                    // INCREASES ONE IN SALES OF THE CURRENT MONTH
                     arrayMonths[arrayMonths.length-1] += 1
 
                     // INCREASES ONE IN WEEKDAYS SALE ACCORDING TO THE DAY
                     let weekdays = result1[0].weekdays
                     weekdays[WeekDay] += 1
 
-                    
+
 
                     // UPDATES ALONG WITH ALL THE PURCHASE INFO
                     
-                    connection.query(sql, [JSON.stringify(metadata), amount, JSON.stringify(arrayMonths), JSON.stringify(weekdays)], (err2, result2) =>{
+                    connection.query(sql, [JSON.stringify(metadata), amount, JSON.stringify(arrayMonths), JSON.stringify(weekdays), atualMonth], (err2, result2) =>{
 
                         if(err2) {
                             console.log('ERROR while updating dashboard table!')
@@ -205,9 +181,7 @@ class stripeController{
                         }
 
                         console.log('✅ Dashboard table updated successfully!');
-
-                    })
-
+                    }) 
                 })
                     
     
@@ -289,61 +263,7 @@ class stripeController{
 
 }
 
-// const checkout = async(req, res) =>{
 
-
-//     const {products} = req.body
-
-//     // console.log(products)
-    
-//     const productsID = products.map(product => product.id)
-
-//     // 01 GETTING PRODUCTS FROM DB
-//     const [rows] = await connection.promise().execute(
-//             `SELECT id, name, price FROM clothes WHERE id IN (${productsID.map(() => '?').join(',')})`,productsID
-//         );
-
-//         // calculating price according to quantity
-//     let totalAmount = 0
-
-//     products.forEach(item => {
-//         const productFromDB = rows.find(p => p.id === item.id)
-//         if(productFromDB){
-//             totalAmount += productFromDB.price * item.quantity
-//         }
-//     })
-
-
-//     // TAKING AMOUNT       
-//     const amount = rows.reduce((total, pro) => total + pro.price,0)
-
-//     const quantity = products.reduce((quant, pro) => quant + pro.quantity,0)
-    
-
-
-//     try{
-
-//         const paymentIntent = await stripe.paymentIntents.create({
-//             amount,
-//             currency: 'brl',
-//             automatic_payment_methods: {
-//                 enabled: true,
-//             },
-
-//         })
-
-//         return res.json({
-//             clientSecret: paymentIntent.client_secret,
-//             amount: totalAmount,
-//             quantity: quantity
-//         }) 
-
-//     }catch(error){
-//         console.log(error)
-//         res.status(400).json({error: error})
-//     }
-
-// }
 
 
 export default new stripeController();

@@ -48,15 +48,6 @@ export default class SalesComponent implements OnInit{
 
   // WEEK
   
-  weekDaySales = {
-    mon: 0,
-    tues: 0,
-    wed: 0,
-    thurs: 0,
-    fri: 0,
-    sat: 0,
-    sun: 0
-  }
 
   weekSales = signal(0)
 
@@ -80,7 +71,7 @@ export default class SalesComponent implements OnInit{
   dashboardData(){
     this.dashboardService.getDashboardData().subscribe({
       next: (res: any) =>{
-        // console.log('Dashboard Data Received!', res[0])
+        // console.log('Dashboard Data Received!', res[0].weekdays)
 
         // PARSING THE INVOICES OF STRING JSON FORMAT TO OBJECT
         const stringsJSON = res[0].invoices
@@ -91,9 +82,10 @@ export default class SalesComponent implements OnInit{
 
         this.yearSales = res[0].total_sales
         this.revenue = res[0].revenue
-        
+
+        this.chartSalesDuringWeek(res[0].weekdays)
         this.chartSalesDuringYear(res[0].yearMonthsData)
-        this.chartSalesDuringWeek()
+        
       },
 
       error: (err) => console.log(err)
@@ -133,24 +125,19 @@ export default class SalesComponent implements OnInit{
   }
 
 
-  chartSalesDuringWeek(){
+  chartSalesDuringWeek(weekdays: number[]){
+
+    const total = weekdays.reduce((sum, day) => sum + day,0)
+    this.weekSales.set(total)
+    
     this.allSalesDuringWeek = {
-          series: [
-            this.weekDaySales.mon,
-            this.weekDaySales.tues,
-            this.weekDaySales.wed,
-            this.weekDaySales.thurs,
-            this.weekDaySales.fri,
-            this.weekDaySales.sat,
-            this.weekDaySales.sun,
+        series: weekdays,
+        chart: {
+          height: 300,
+          type: "donut",
+        },
 
-          ],
-          chart: {
-            height: 300,
-            type: "donut",
-          },
-
-          labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+        labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
           
     }
 
@@ -158,18 +145,18 @@ export default class SalesComponent implements OnInit{
 
 
   // if monday update all the sales
-  isMonday(){
+  // isMonday(){
     
-    if(this.weekdays() === 1){
-      console.log("It's Monday")
+  //   if(this.weekdays() === 1){
+  //     console.log("It's Monday")
 
-      for(const key in this.weekDaySales){
-        this.weekDaySales[key as keyof typeof this.weekDaySales] = 0
-      }
+  //     for(const key in this.weekDaySales){
+  //       this.weekDaySales[key as keyof typeof this.weekDaySales] = 0
+  //     }
 
-      this.weekSales.set(Object.values(this.weekDaySales).reduce((sum, day) => sum + day)) // refreshing 
-    }
-  }
+  //     this.weekSales.set(Object.values(this.weekDaySales).reduce((sum, day) => sum + day)) // refreshing 
+  //   }
+  // }
 
 
 }

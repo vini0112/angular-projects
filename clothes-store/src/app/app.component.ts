@@ -28,40 +28,40 @@ export class AppComponent implements OnInit{
   }
   
   
-  checkCurrentMonth(){
-    this.dashboardService.currentMonth().subscribe({
-      next: (res: any) => {
-        console.log(res)
-      },
-      error: (err) => console.log(err)
-    })
+  // checkCurrentMonth(){
+  //   this.dashboardService.currentMonth().subscribe({
+  //     next: (res: any) => {
+  //       console.log(res)
+  //     },
+  //     error: (err) => console.log(err)
+  //   })
 
-  }
+  // }
   
-  checkingMonthChange(){
+  // checkingMonthChange(){
 
-    this.dashboardService.currentMonth().subscribe({
-      next: (res: any) => {
-        if(this.currentMonth() !== res[0].currentMonth){
+  //   this.dashboardService.currentMonth().subscribe({
+  //     next: (res: any) => {
+  //       if(this.currentMonth() !== res[0].currentMonth){
           
-          this.updatingMonth(this.currentMonth()) // passing current month!
-        }
+  //         this.updatingMonth(this.currentMonth()) // passing current month!
+  //       }
         
-      },
-      error: (err) => console.log(err)
-    })
+  //     },
+  //     error: (err) => console.log(err)
+  //   })
     
-  }
+  // }
 
 
-  updatingMonth(newMonth: number){
-    this.dashboardService.updateNewMonth(newMonth).subscribe({
-      next: () =>{
-        console.log('Month Updated!')
-      },
-      error: (err) => console.log(err)
-    })
-  }
+  // updatingMonth(newMonth: number){
+  //   this.dashboardService.updateNewMonth(newMonth).subscribe({
+  //     next: () =>{
+  //       console.log('Month Updated!')
+  //     },
+  //     error: (err) => console.log(err)
+  //   })
+  // }
 
   
 }

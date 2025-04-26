@@ -3,7 +3,7 @@
 <div class="firstBlock">
     <div class="weekSales">
         
-        @if(weekSales() <= 0){
+        @if(this.weekSales() === 0){
             <span class="salesWarn">
                 No sales this week!
             </span>
@@ -13,7 +13,7 @@
                 <span>{{weekSales()}}</span>
             </div>
 
-            <apx-chart *ngIf="allSalesDuringWeek"
+            <apx-chart *ngIf="allSalesDuringWeek" 
             [series]="allSalesDuringWeek.series!"
             [chart]="allSalesDuringWeek.chart!"
             [labels]="allSalesDuringWeek.labels!"

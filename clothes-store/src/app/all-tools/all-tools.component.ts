@@ -8,7 +8,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './all-tools.component.html', 
   styleUrl: './all-tools.component.css'
 })
-export default class AllToolsComponent {
+export class AllToolsComponent {
   route = inject(Router)
 
   warehouse(){

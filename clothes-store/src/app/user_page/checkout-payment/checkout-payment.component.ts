@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.css'
 })
-export default class CheckoutPaymentComponent implements OnInit{ 
+export class CheckoutPaymentComponent implements OnInit{ 
 
   checkoutService = inject(CheckoutPaymentService)
   messageService = inject(MessageService)

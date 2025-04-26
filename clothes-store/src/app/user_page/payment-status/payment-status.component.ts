@@ -5,8 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { userInfo } from '../../../modules/checkout.module';
 import { MessageService } from '../../../services/message.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
-import { clearTimeout } from 'timers';
-import { map, takeWhile, timer } from 'rxjs';
+
 
 @Component({
   selector: 'app-payment-status',
@@ -14,7 +13,7 @@ import { map, takeWhile, timer } from 'rxjs';
   templateUrl: './payment-status.component.html',
   styleUrl: './payment-status.component.css'
 })
-export default class PaymentStatusComponent implements OnInit{
+export class PaymentStatusComponent implements OnInit{
   router = inject(Router)
   localStorageService = inject(LocalStorageService)
   messageService = inject(MessageService)

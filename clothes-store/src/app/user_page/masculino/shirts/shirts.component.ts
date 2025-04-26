@@ -11,7 +11,7 @@ import { cartList } from '../../../../modules/cart.list.module';
   templateUrl: './shirts.component.html',
   styleUrl: './shirts.component.css'
 })
-export default class ShirtsComponent implements OnInit{
+export class ShirtsComponent implements OnInit{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)

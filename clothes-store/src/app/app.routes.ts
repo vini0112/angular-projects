@@ -8,7 +8,7 @@ import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-res
 import AllToolsComponent from './all-tools/all-tools.component';
 import { devLoginGuard } from '../guards/dev-login.guard';
 import { loginActiveGuard } from '../guards/login-active.guard';
-import { testGuard } from '../guards/test.guard';
+
 
 
 export const routes: Routes = [
@@ -33,16 +33,16 @@ export const routes: Routes = [
     },
     {
         path: 'favorites',
-        loadComponent: () => import('../app/user_page/favorites/favorites.component')
+        loadComponent: () => import('../app/user_page/favorites/favorites.component').then(m => m.FavoritesComponent)
     },
     {
         path: 'login',
-        loadComponent: () => import('../app/user_page/login/login.component'),
+        loadComponent: () => import('../app/user_page/login/login.component').then(m => m.LoginComponent),
         canActivate: [authGuard]
     },
     {
         path: 'reset-password/:token',
-        loadComponent: () => import('../app/user_page/reset-password/reset-password.component'),
+        loadComponent: () => import('../app/user_page/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
         canActivate: [resetPasswordGuard],
         canDeactivate: [blockLeavePasswordResetGuard]
     },
@@ -54,19 +54,19 @@ export const routes: Routes = [
     },
     {
         path: 'ship-address',
-        loadComponent: () => import('./user_page/shipping-form/shipping-form.component'),
+        loadComponent: () => import('./user_page/shipping-form/shipping-form.component').then(m => m.ShippingFormComponent),
         canActivate: [loginActiveGuard]
     },
 
     {
         path: 'checkout-payment',
-        loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component'),
+        loadComponent: () => import('./user_page/checkout-payment/checkout-payment.component').then(m => m.CheckoutPaymentComponent),
         canActivate: [loginActiveGuard]
     },
     
     {
         path: 'payment-status',
-        loadComponent: () => import('./user_page/payment-status/payment-status.component'),
+        loadComponent: () => import('./user_page/payment-status/payment-status.component').then(m => m.PaymentStatusComponent),
     },
     
     { 

@@ -8,15 +8,15 @@ export const femiRoutes: Routes = [
     },
     {
         path: 'shortsfemi',
-        loadComponent: () => import('./shortsfemi/shortsfemi.component')
+        loadComponent: () => import('./shortsfemi/shortsfemi.component').then(m => m.ShortsfemiComponent)
     },
     {
         path: 'shoesfemi',
-        loadComponent: () => import('./shoes-femi/shoes-femi.component')
+        loadComponent: () => import('./shoes-femi/shoes-femi.component').then(m => m.ShoesFemiComponent)
     },
     {
         path: 'jackets',
-        loadComponent: () => import('./jackets/jackets.component')
+        loadComponent: () => import('./jackets/jackets.component').then(m => m.JacketsComponent)
     }
     
 ]

@@ -13,7 +13,7 @@ import { MessageService } from '../../../services/message.service';
   templateUrl: './login.component.html', 
   styleUrl: './login.component.css'
 })
-export default class LoginComponent {
+export class LoginComponent {
 
   message = inject(MessageService)
 

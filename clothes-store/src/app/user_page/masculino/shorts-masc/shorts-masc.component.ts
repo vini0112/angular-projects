@@ -11,7 +11,7 @@ import { listCartServices } from '../../../../services/listCart.service';
   templateUrl: './shorts-masc.component.html',
   styleUrl: './shorts-masc.component.css'
 })
-export default class ShortsMascComponent implements OnInit{
+export class ShortsMascComponent implements OnInit{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)

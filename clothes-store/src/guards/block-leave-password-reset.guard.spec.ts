@@ -1,17 +1,31 @@
 import { TestBed } from '@angular/core/testing';
-import { CanDeactivateFn } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { blockLeavePasswordResetGuard } from './block-leave-password-reset.guard';
+import { ResetPasswordComponent } from '../app/user_page/reset-password/reset-password.component';
 
 describe('blockLeavePasswordResetGuard', () => {
-  const executeGuard: CanDeactivateFn<unknown> = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => blockLeavePasswordResetGuard(...guardParameters));
+
+  let mockComponent: ResetPasswordComponent;
+  let mockCurrentRoute: ActivatedRouteSnapshot;
+  let mockCurrentState: RouterStateSnapshot;
+  let mockNextState: RouterStateSnapshot;
+  
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    mockComponent = {} as ResetPasswordComponent;
+    mockCurrentRoute = {} as ActivatedRouteSnapshot;
+    mockCurrentState = {} as RouterStateSnapshot;
+    mockNextState = {} as RouterStateSnapshot;
   });
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+  it('should not allow navigation away (return false)', () => {
+    const result = TestBed.runInInjectionContext(() =>
+      blockLeavePasswordResetGuard(mockComponent, mockCurrentRoute, mockCurrentState, mockNextState)
+    )
+
+    expect(result).toBeFalse()
+
   });
+
 });

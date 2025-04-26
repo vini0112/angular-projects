@@ -11,7 +11,7 @@ import { NgClass } from '@angular/common';
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
-export default class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent implements OnInit{
 
   blockLeavePasswordResetPage = false
   token = ''

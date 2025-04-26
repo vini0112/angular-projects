@@ -17,7 +17,7 @@ import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
   styleUrl: './sales.component.css'
 })
 
-export default class SalesComponent implements OnInit{
+export class SalesComponent implements OnInit{
 
   localstorageService = inject(LocalStorageService)
   dashboardService = inject(dashboardService)

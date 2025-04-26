@@ -6,7 +6,7 @@ export const DevToolsRoutes: Routes = [
     
     {
         path: 'productmanagement',
-        loadComponent: () => import('./products-tool/products-tool.component')
+        loadComponent: () => import('./products-tool/products-tool.component').then(m => m.ProductsToolComponent)
     },
     {
         path: 'dashboard',

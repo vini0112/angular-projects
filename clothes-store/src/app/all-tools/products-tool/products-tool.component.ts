@@ -14,7 +14,7 @@ import { MessageService } from '../../../services/message.service';
   templateUrl: './products-tool.component.html', 
   styleUrl: './products-tool.component.css'
 })
-export default class ProductsToolComponent implements OnInit{
+export class ProductsToolComponent implements OnInit{
 
   messageService = inject(MessageService)
   productService = inject(ProductsService)

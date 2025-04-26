@@ -11,7 +11,7 @@ import { cartList } from '../../../modules/cart.list.module';
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
 })
-export default class FavoritesComponent implements OnInit{
+export class FavoritesComponent implements OnInit{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)

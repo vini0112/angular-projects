@@ -1,6 +1,6 @@
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { checkoutProduct, responseData, userInfo } from '../../../modules/checkout.module';
+import { checkoutProduct, userInfo } from '../../../modules/checkout.module';
 import { LocalStorageService } from '../../../services/localStorage.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { MessageService } from '../../../services/message.service';
   templateUrl: './shipping-form.component.html',
   styleUrl: './shipping-form.component.css'
 })
-export default class ShippingFormComponent {
+export class ShippingFormComponent {
 
 
   private fb = inject(FormBuilder)

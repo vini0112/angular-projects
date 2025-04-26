@@ -12,7 +12,7 @@ import { cartList } from '../../../../modules/cart.list.module';
   templateUrl: './coats.component.html',
   styleUrl: './coats.component.css'
 })
-export default class CoatsComponent implements OnInit{
+export class CoatsComponent implements OnInit{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)

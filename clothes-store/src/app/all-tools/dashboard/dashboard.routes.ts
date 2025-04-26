@@ -9,7 +9,7 @@ export const DashboardRoutes: Routes = [
     },
     {
         path: "sales",
-        loadComponent: () => import('./sales/sales.component')
+        loadComponent: () => import('./sales/sales.component').then(m => m.SalesComponent)
     }
 
 ]

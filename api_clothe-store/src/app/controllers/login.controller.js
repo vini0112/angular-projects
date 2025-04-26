@@ -54,7 +54,7 @@ class loginController{
                     
                     const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
 
-                    const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
+                    const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
                     await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken,  user.email])
 
@@ -80,7 +80,7 @@ class loginController{
             
             const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
 
-            const refreshToken = jwt.sign({ id: user.idusers, email: user.email }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+            const refreshToken = jwt.sign({ id: user.idusers, email: user.email, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
 
 
             await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken, user.email])
@@ -116,10 +116,9 @@ class loginController{
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
                 if (err) return res.status(401).json({ message: "Token inválido", refreshToken});
                 
-
                 // IF ROLE DEVELOPER
                 if(user.role === process.env.ADM_ROLE){
-                    const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email,username: user.username  }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                    const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email, username: user.username  }, process.env.SECRET_KEY, { expiresIn: '30m' });
                     
                     return res.status(200).json({accessToken: newAccessToken})
                 }

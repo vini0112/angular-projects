@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   currentMonth = signal(new Date().getMonth())
   
   constructor(){
-    // this.checkCurrentMonth()
+    
   }
 
   ngOnInit(): void {
@@ -28,40 +28,6 @@ export class AppComponent implements OnInit{
   }
   
   
-  // checkCurrentMonth(){
-  //   this.dashboardService.currentMonth().subscribe({
-  //     next: (res: any) => {
-  //       console.log(res)
-  //     },
-  //     error: (err) => console.log(err)
-  //   })
-
-  // }
   
-  // checkingMonthChange(){
-
-  //   this.dashboardService.currentMonth().subscribe({
-  //     next: (res: any) => {
-  //       if(this.currentMonth() !== res[0].currentMonth){
-          
-  //         this.updatingMonth(this.currentMonth()) // passing current month!
-  //       }
-        
-  //     },
-  //     error: (err) => console.log(err)
-  //   })
-    
-  // }
-
-
-  // updatingMonth(newMonth: number){
-  //   this.dashboardService.updateNewMonth(newMonth).subscribe({
-  //     next: () =>{
-  //       console.log('Month Updated!')
-  //     },
-  //     error: (err) => console.log(err)
-  //   })
-  // }
-
   
 }

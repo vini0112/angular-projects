@@ -137,7 +137,7 @@ export default class SalesComponent implements OnInit{
           type: "donut",
         },
 
-        labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+        labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
           
     }
 

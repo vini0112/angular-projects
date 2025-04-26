@@ -127,6 +127,7 @@ class stripeController{
                 const WeekDay = new Date().getDay()
                 const currentMonth = new Date().getMonth()
 
+                console.log("METADATA: ", metadata)
                 
                 // Mark as paid to sinalize the frontend
                 connection.query('UPDATE users SET status = ? WHERE email = ?', ['paid', email], (err, res) =>{
@@ -143,10 +144,10 @@ class stripeController{
 
                 // UPDATES DASHBOARD TABLE
 
-                const sql = `UPDATE dashboard SET total_sales = total_sales + 1, invoices = JSON_ARRAY_APPEND(invoices, '$', ?) ,revenue = revenue + ?, yearMonthsData = ?, weekdays = ?,currentMonth = ? WHERE idDashboard = 1`
+                const sql = `UPDATE dashboard SET total_sales = total_sales + 1, invoices = JSON_ARRAY_APPEND(invoices, '$', ?) ,revenue = revenue + ?, yearMonthsData = ?, weekdays = ?,currentMonth = ?, currentDay = ? WHERE idDashboard = 1`
 
 
-                connection.query("SELECT yearMonthsData, weekdays, currentMonth FROM dashboard WHERE idDashboard = 1", (err1, result1) =>{
+                connection.query("SELECT yearMonthsData, weekdays, currentMonth, currentDay FROM dashboard WHERE idDashboard = 1", (err1, result1) =>{
                     if(err1) {
                         console.log('ERROR column yearMonthData not found!')
                         return res.json(err1)
@@ -165,15 +166,28 @@ class stripeController{
                     // INCREASES ONE IN SALES OF THE CURRENT MONTH
                     arrayMonths[arrayMonths.length-1] += 1
 
+
                     // INCREASES ONE IN WEEKDAYS SALE ACCORDING TO THE DAY
+                    let currentDay = result1[0].currentDay
                     let weekdays = result1[0].weekdays
-                    weekdays[WeekDay] += 1
+
+                    // REFRESHING THE WEEK CHART EVERY MONDAY AND UPDATING THE DAY
+                    if(currentDay !== WeekDay && WeekDay === 1){
+                        currentDay = WeekDay
+                        weekdays = [0, 0, 0, 0, 0, 0, 0]
+                    }else{
+                        currentDay = WeekDay
+                    }
+
+                    // COUNTING THE SALES
+                    weekdays[currentDay] += 1
+
 
 
 
                     // UPDATES ALONG WITH ALL THE PURCHASE INFO
                     
-                    connection.query(sql, [JSON.stringify(metadata), amount, JSON.stringify(arrayMonths), JSON.stringify(weekdays), atualMonth], (err2, result2) =>{
+                    connection.query(sql, [JSON.stringify(metadata), amount, JSON.stringify(arrayMonths), JSON.stringify(weekdays), atualMonth, currentDay], (err2, result2) =>{
 
                         if(err2) {
                             console.log('ERROR while updating dashboard table!')

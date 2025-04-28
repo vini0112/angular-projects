@@ -1,10 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import {JwtHelperService } from '@auth0/angular-jwt'
-import { BehaviorSubject, catchError, from, Observable, of, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
-import {jwtDecode} from 'jwt-decode'
 
 
 
@@ -16,7 +14,7 @@ export class AuthLoginService {
 
   private http = inject(HttpClient)
   
-  constructor(private jwtHelper: JwtHelperService) { 
+  constructor() { 
     this.getUser()
     this.checkIfIsLogged()
   }

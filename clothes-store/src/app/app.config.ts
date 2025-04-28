@@ -20,7 +20,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideNgxStripe(environment.stripe_public_key),
     {provide: JWT_OPTIONS, useValue: {}}, 
-    JwtHelperService,
+    JwtHelperService,    
+
     // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
 
   ]

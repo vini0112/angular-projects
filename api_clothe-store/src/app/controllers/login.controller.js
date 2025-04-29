@@ -7,12 +7,14 @@ const saltRounds = 10;
 
 class loginController{
 
-    // FAST REQUEST OF THE APP      
+    // FIRST REQUEST OF THE APP      
     async isLogged(req, res){
         const token = req.cookies.refreshToken
 
+        console.log('ISLOGGED: ', token) 
+
         if(!token){
-            return res.status(404).send("No Token!");
+            return res.send("No token!"); // .status(404)
         }
 
         jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
@@ -27,6 +29,7 @@ class loginController{
 
     }
 
+    
     // login
     async entrando(req, res){
         const {email, password} = req.body
@@ -134,7 +137,9 @@ class loginController{
 
     
     async protectedRoute(req, res){
-        const token = req.cookies.token
+        const token = req.cookies.refreshToken
+        
+        console.log('PROTECTED ROUTE: ', token)
         
         if(!token){
             return res.json({message: 'Não authorized!'})
@@ -143,6 +148,7 @@ class loginController{
         try{
             const decoded = jwt.verify(token, secretKey)
             res.json({user: decoded})
+
         }catch(error){
             res.status(401).json({message: 'Invalid Token'})
         }
@@ -200,6 +206,7 @@ class loginController{
             sameSite: 'none',
             path: '/'
         })
+        
         res.status(200).json({message: 'Succefull Logout'})
     }
 

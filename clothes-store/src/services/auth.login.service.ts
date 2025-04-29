@@ -3,7 +3,7 @@ import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
-import { registering } from '../modules/login.module';
+import { login, registering } from '../modules/login.module';
 
 
 
@@ -14,10 +14,12 @@ export class AuthLoginService {
   api = environment.api
 
   private http = inject(HttpClient)
+
   
   constructor() { 
-    this.getUser()
     this.checkIfIsLogged()
+    this.getUser()
+    
   }
 
 
@@ -39,7 +41,7 @@ export class AuthLoginService {
 
 
 
-  gettingIn(credentials: {form: string}): Observable<{accessToken: string, developerMsg: string}>{
+  gettingIn(credentials: {form: login}): Observable<{accessToken: string, developerMsg: string}>{
     return this.http.post<{accessToken: string, developerMsg: string}>(`${this.api}/entrando`, credentials, {withCredentials: true}).pipe(
       tap(response => {
 
@@ -68,10 +70,15 @@ export class AuthLoginService {
 
 
 
-  loggingOut(){
-    this.http.post<string>(`${this.api}/auth/logout`, {}, {withCredentials: true})
+  loggingOut(){ //<string>
+    this.http.post(`${this.api}/auth/logout`, {}, {withCredentials: true})
     .subscribe({
-      next: () => this.logOut()
+      next: () => this.logOut() ,
+
+      error: (err) => {
+        console.log('Logout Failed!')
+        alert('Logout Failed!')
+      }
   
     })
   }
@@ -85,6 +92,7 @@ export class AuthLoginService {
     this.isAuth.next(true)
   }
   
+
   hasToken(): boolean{
     if(typeof window !== 'undefined'){
       return !!localStorage.getItem('accessToken')
@@ -123,9 +131,12 @@ export class AuthLoginService {
         }else{
           this.IsDeveloper.next(false)
         }
+        console.log('Logged!')
       },
+
       error: () => {
-        this.logOut()        
+        this.logOut()  
+        console.log('No Logged!')      
       }
 
     })
@@ -145,6 +156,7 @@ export class AuthLoginService {
   }
   
 
+
   tokenResetPasswordValidator(token: string): Observable<ResetTokenResponseModule>{
     return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`) 
   }
@@ -155,6 +167,7 @@ export class AuthLoginService {
   setPageAccess(status: boolean){
     this.allowPageAccess = status
   }
+
   
   getPageAccess(): boolean{
     return this.allowPageAccess

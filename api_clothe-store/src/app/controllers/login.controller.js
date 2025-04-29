@@ -7,25 +7,24 @@ const saltRounds = 10;
 
 class loginController{
 
-    // FIRST REQUEST OF THE APP      
+    // FIRST REQUEST OF THE APP        
     async isLogged(req, res){
         const token = req.cookies.refreshToken
 
-        console.log('ISLOGGED: ', token) 
 
         if(!token){
-            return res.send("No token!"); // .status(404)
+            return res.status(404).send("No Refresh Token!"); // 
         }
 
         jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
             if(err) return res.status(403).json({ message: "Token inválido!"})
             
             if(user.role === process.env.ADM_ROLE){
-                return res.json({developerMsg: "Developer_Logged"})
+                return res.json({message: "Developer_Logged"})
             }
             
             res.json({message: "UserLogged"})
-        })
+        }) 
 
     }
 
@@ -136,26 +135,35 @@ class loginController{
     }
 
     
-    async protectedRoute(req, res){
-        const token = req.cookies.refreshToken
+    // async protectedRoute(req, res){
+
+    //     let authHeader = await req.headers.authorization;
+
+    //     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    //         return res.send('No Header-Authorization')
+    //     }
         
-        console.log('PROTECTED ROUTE: ', token)
+    //     let token = await authHeader.split(' ')[1];
+
         
-        if(!token){
-            return res.json({message: 'Não authorized!'})
-        }
-
-        try{
-            const decoded = jwt.verify(token, secretKey)
-            res.json({user: decoded})
-
-        }catch(error){
-            res.status(401).json({message: 'Invalid Token'})
-        }
-
-    }
+    //     if(!token){
+    //         return res.status(404).json({message: 'Token not found!'})
+    //     }
 
 
+    //     try{
+    //         const decoded = jwt.verify(token, process.env.SECRET_KEY)
+    //         res.json({user: decoded})
+
+    //     }catch(error){
+    //         res.status(403).json({message: 'Invalid Token'})
+    //     }
+
+    // }
+
+
+
+    
     // criando usuario
     async adding(req, res){
 
@@ -200,13 +208,16 @@ class loginController{
 
     // logout
     async logOut(req, res){
+        console.log('arrived') 
+
         res.clearCookie('refreshToken', {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
             path: '/'
         })
-        
+        console.log('executed')
+
         res.status(200).json({message: 'Succefull Logout'})
     }
 
@@ -304,7 +315,7 @@ class loginController{
         if(row.length === 0) return res.status(400).json({ message: "Token inválido ou expirado" });
         
         res.json({valid: true });
-    }
+    } 
         
 
     // not in used

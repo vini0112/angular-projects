@@ -6,7 +6,7 @@ export const loginInterceptor: HttpInterceptorFn = (req, next) => {
 
   const localstorageService = inject(LocalStorageService)
 
-  const token = localstorageService.getItem('token')
+  const token = localstorageService.getItem('accessToken')
 
 
   if(token){

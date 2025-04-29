@@ -18,7 +18,7 @@ export class AuthLoginService {
   
   constructor() { 
     this.checkIfIsLogged()
-    this.getUser()
+    // this.getUser()
     
   }
 
@@ -58,22 +58,30 @@ export class AuthLoginService {
 
 
 
-  private getUser(){
-    this.http.get<{authenticated: boolean}>(`${this.api}/auth/user`, {withCredentials: true})
+  // getUser(){
+  //   this.http.get<{authenticated: boolean}>(`${this.api}/auth/user`, {withCredentials: true})
+  //   .subscribe({
+  //     next: () => {
+  //       this.loadToken()
+  //       console.log('Authorization Header Set!')
+  //     },
+
+  //     error: () => {
+  //       console.log('Authorization-Header not set!')
+  //     }
+
+  //   })
+  // }
+
+
+
+  loggingOut(){ //
+    this.http.post<string>(`${this.api}/auth/logout`, {}, {withCredentials: true})
     .subscribe({
-      next: () => this.loadToken(),
-
-      error: () => `No Token`
-    })
-  }
-
-
-
-
-  loggingOut(){ //<string>
-    this.http.post(`${this.api}/auth/logout`, {}, {withCredentials: true})
-    .subscribe({
-      next: () => this.logOut() ,
+      next: (res: any) => {
+        console.log(res.message)
+        this.logOut()
+      },
 
       error: (err) => {
         console.log('Logout Failed!')
@@ -82,6 +90,37 @@ export class AuthLoginService {
   
     })
   }
+
+
+
+   // checks if logged every time u load the components <{developerMsg: string}>
+
+  checkIfIsLogged(){
+    this.http.get(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
+      next: (res: any) => {
+        if(res.message == 'Developer_Logged'){
+          this.IsDeveloper.next(true)
+          console.log('DEV: Logged!')
+
+        }else if(res.message == 'UserLogged'){
+          this.IsDeveloper.next(false)
+          console.log('USER: Logged!')
+        }
+        else{
+          this.loggingOut()
+          // this.loadToken()
+        }
+        
+      },
+
+      error: () => {
+        // this.loadToken() 
+        console.log('No Logged!')       
+      }
+
+    })
+  }
+
 
 
 
@@ -97,14 +136,20 @@ export class AuthLoginService {
     if(typeof window !== 'undefined'){
       return !!localStorage.getItem('accessToken')
     }
-    
+
     return false
   }
+
 
   private loadToken(){
 
     if(this.hasToken()){
       this.isAuth.next(true)
+    }
+    else{
+      console.log('THERE"S NOT')
+      
+      this.loggingOut()
     }
   }
   
@@ -120,27 +165,7 @@ export class AuthLoginService {
 
 
 
-  // checks if logged every time u load the components
-
-  checkIfIsLogged(){
-    this.http.get<{developerMsg: string}>(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
-      next: (res) => {
-        
-        if(res.developerMsg == 'Developer_Logged'){
-          this.IsDeveloper.next(true)
-        }else{
-          this.IsDeveloper.next(false)
-        }
-        console.log('Logged!')
-      },
-
-      error: () => {
-        this.logOut()  
-        console.log('No Logged!')      
-      }
-
-    })
-  }
+ 
 
 
 

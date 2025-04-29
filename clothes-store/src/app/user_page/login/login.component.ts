@@ -146,7 +146,7 @@ export class LoginComponent {
     messageErro(field: string): string | null{
 
       const control = this.signUpForm.get(field)
-      console.log(control)
+
       if(field == 'email' && control?.hasError('required') || control?.hasError('email')){
         return 'Invalid Email!'
       }

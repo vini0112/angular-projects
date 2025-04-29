@@ -3,6 +3,7 @@ import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
+import { registering } from '../modules/login.module';
 
 
 
@@ -32,7 +33,7 @@ export class AuthLoginService {
   private allowPageAccess = false
   private pagePayment = false
 
-  register(form: string): Observable<string>{
+  register(form: registering): Observable<string>{
     return this.http.post<string>(`${this.api}/addingUser`, form)
   }
 
@@ -52,6 +53,7 @@ export class AuthLoginService {
       })
     )
   }
+
 
 
   private getUser(){

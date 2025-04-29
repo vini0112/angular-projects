@@ -5,9 +5,9 @@ import { MasculinoComponent } from './user_page/masculino/masculino.component';
 import { authGuard } from '../guards/auth.guard';
 import { resetPasswordGuard } from '../guards/reset-password.guard';
 import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-reset.guard';
-import AllToolsComponent from './all-tools/all-tools.component';
 import { devLoginGuard } from '../guards/dev-login.guard';
 import { loginActiveGuard } from '../guards/login-active.guard';
+import { AllToolsComponent } from './all-tools/all-tools.component';
 
 
 

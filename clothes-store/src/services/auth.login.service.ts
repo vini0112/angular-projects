@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnInit } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
@@ -10,7 +10,7 @@ import { login, registering } from '../modules/login.module';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthLoginService {
+export class AuthLoginService implements OnInit{
   api = environment.api
 
   private http = inject(HttpClient)
@@ -18,7 +18,10 @@ export class AuthLoginService {
   
   constructor() { 
     this.checkIfIsLogged()
-    // this.getUser()
+  }
+
+  ngOnInit(): void {
+    
     
   }
 
@@ -30,6 +33,12 @@ export class AuthLoginService {
 
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper$ = this.IsDeveloper.asObservable()
+
+
+  // FOR TEST
+  getIsAuthData(){
+    return this.isAuth.getValue()
+  }
 
   // PAGE ACCESS
   private allowPageAccess = false
@@ -58,24 +67,9 @@ export class AuthLoginService {
 
 
 
-  // getUser(){
-  //   this.http.get<{authenticated: boolean}>(`${this.api}/auth/user`, {withCredentials: true})
-  //   .subscribe({
-  //     next: () => {
-  //       this.loadToken()
-  //       console.log('Authorization Header Set!')
-  //     },
-
-  //     error: () => {
-  //       console.log('Authorization-Header not set!')
-  //     }
-
-  //   })
-  // }
 
 
-
-  loggingOut(){ //
+  loggingOut(){
     this.http.post<string>(`${this.api}/auth/logout`, {}, {withCredentials: true})
     .subscribe({
       next: (res: any) => {
@@ -99,23 +93,21 @@ export class AuthLoginService {
     this.http.get(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
       next: (res: any) => {
         if(res.message == 'Developer_Logged'){
+          
           this.IsDeveloper.next(true)
           console.log('DEV: Logged!')
+        }
 
-        }else if(res.message == 'UserLogged'){
+        else{
           this.IsDeveloper.next(false)
           console.log('USER: Logged!')
         }
-        else{
-          this.loggingOut()
-          // this.loadToken()
-        }
+        
         
       },
 
       error: () => {
-        // this.loadToken() 
-        console.log('No Logged!')       
+        console.log('No Logged!')
       }
 
     })
@@ -146,11 +138,10 @@ export class AuthLoginService {
     if(this.hasToken()){
       this.isAuth.next(true)
     }
-    else{
-      console.log('THERE"S NOT')
-      
-      this.loggingOut()
-    }
+
+    return false
+    
+
   }
   
 
@@ -164,8 +155,6 @@ export class AuthLoginService {
   }
 
 
-
- 
 
 
 

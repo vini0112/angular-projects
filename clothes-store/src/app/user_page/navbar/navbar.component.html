@@ -19,7 +19,7 @@
 
         <!-- normal icons -->
         <nav id="icons">
-            <a routerLink="/developer_side" *ngIf="DEVLogin$| async"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+            <a routerLink="/developer_side" *ngIf="(DEVLogin$ | async) && (isAuthentic$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i></a>
 
             <i class="fa-regular fa-heart" routerLink="/favorites"></i>
             <div class="boxCartIcon">

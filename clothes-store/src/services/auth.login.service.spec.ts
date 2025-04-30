@@ -16,7 +16,7 @@ describe('AuthLoginService', () => {
     service = TestBed.inject(AuthLoginService);
     httpmock = TestBed.inject(HttpTestingController)
 
-    httpmock.expectOne(req => req.url.endsWith('/auth/user')).flush({}) // ignoring unnecessary
+    
     httpmock.expectOne(req => req.url.endsWith('/isLogged')).flush({})  // requests
   });
 
@@ -52,6 +52,7 @@ describe('AuthLoginService', () => {
     service.gettingIn({form}).subscribe({
       next: (res: any) =>{
         expect(res.success).toBeTrue()
+        expect(service.getIsAuthData()).toBeTrue()
         done()
       },
       error: (err) => {console.log(err), done()}
@@ -93,7 +94,6 @@ describe('AuthLoginService', () => {
 
 
   it("Should check if not logged in", () =>{
-    spyOn(service, 'logOut')
 
     service.checkIfIsLogged()
 
@@ -104,7 +104,6 @@ describe('AuthLoginService', () => {
       {status: 500, statusText: 'Network Error'}
     )
 
-    expect(service.logOut).toHaveBeenCalled()
     
   })
 

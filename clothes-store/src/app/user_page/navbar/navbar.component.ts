@@ -84,8 +84,8 @@ export class NavbarComponent implements OnInit{
     this.allQtd$ = this.listCartService.allQtd$
   }
 
-  // ICON STATUS ACCORDING TO THIS OBESERVABLE
-  DEVLogin$ = new Observable<boolean>;
+  // ICON STATUS ACCORDING TO THIS OBESERVABLE  //new Observable<boolean>;
+  DEVLogin$ = this.authLoginService.IsDeveloper$
 
 
   ngOnInit(): void {
@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit{
       this.products = items
     })
   
-    this.DEVLogin$ = this.authLoginService.IsDeveloper$
+    // this.DEVLogin$ = this.authLoginService.IsDeveloper$
     
   }
 

@@ -1,5 +1,5 @@
 
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'   
 
 const protectedRoute = (req, res) => {
     let authHeader = req.headers.authorization;

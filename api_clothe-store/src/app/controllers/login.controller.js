@@ -13,11 +13,12 @@ class loginController{
 
 
         if(!token){
-            return res.status(404).send("No Refresh Token!"); // 
+            return res.status(404).send("No Refresh Token!");
         }
 
         jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
             if(err) return res.status(403).json({ message: "Token inválido!"})
+            
             
             if(user.role === process.env.ADM_ROLE){
                 return res.json({message: "Developer_Logged"})
@@ -135,33 +136,6 @@ class loginController{
     }
 
     
-    // async protectedRoute(req, res){
-
-    //     let authHeader = await req.headers.authorization;
-
-    //     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    //         return res.send('No Header-Authorization')
-    //     }
-        
-    //     let token = await authHeader.split(' ')[1];
-
-        
-    //     if(!token){
-    //         return res.status(404).json({message: 'Token not found!'})
-    //     }
-
-
-    //     try{
-    //         const decoded = jwt.verify(token, process.env.SECRET_KEY)
-    //         res.json({user: decoded})
-
-    //     }catch(error){
-    //         res.status(403).json({message: 'Invalid Token'})
-    //     }
-
-    // }
-
-
 
     
     // criando usuario
@@ -208,16 +182,15 @@ class loginController{
 
     // logout
     async logOut(req, res){
-        console.log('arrived') 
 
-        res.clearCookie('refreshToken', {
+        res.clearCookie('refreshToken', { 
             httpOnly: true,
             secure: true,
             sameSite: 'none',
             path: '/'
         })
-        console.log('executed')
-
+        
+        console.log('Lougout Successfully')
         res.status(200).json({message: 'Succefull Logout'})
     }
 

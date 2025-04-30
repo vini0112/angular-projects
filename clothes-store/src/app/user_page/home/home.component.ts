@@ -45,11 +45,12 @@ export class HomeComponent implements OnInit{
 
 
 
-  clickInHeart(item: productModule){
+  clickInHeart(id: number, isFavorite: boolean){
     
-    this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe(product =>{
+    
+    this.productsService.updateFavorite(id, isFavorite).subscribe(product =>{
       if(product){
-        item.isFavorite = !item.isFavorite
+        isFavorite = !isFavorite
       }
       
     })

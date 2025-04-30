@@ -4,7 +4,7 @@
 
 
 <div class="slideOne col-12 col-md-6">
-    
+    <button class="tamanco">haha</button>
     <div class="boxBanner">
         <img src="../assets/banners/banner-grandient.png" alt="Woman model">
         <div class="advertasing">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="btnsProduct">
                         <button><i class="fa-solid fa-shirt"></i></button>
-                        <button (click)="clickInHeart(item)">
+                        <button (click)="clickInHeart(item.id!, item.isFavorite)">
                             <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
                             <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
                         </button>

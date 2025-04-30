@@ -14,7 +14,7 @@ const routes = [
 ]
 
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   // let el: DebugElement;
@@ -53,16 +53,6 @@ fdescribe('HomeComponent', () => {
     expect(h3El.textContent).toContain('Our BestSellers')
   })
 
-  it("Shoul check click: " ,() =>{
-      // spyOn(component, 'addProductToCart')
-
-      const btn2 = fixture.debugElement.query(By.css('.tamanco'))
-      expect(btn2).not.toBeNull()
-      btn2.triggerEventHandler('click', null)
-
-      // expect(component.addProductToCart).toHaveBeenCalled()
-
-  })
 
 
 

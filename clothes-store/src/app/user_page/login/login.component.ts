@@ -18,15 +18,15 @@ export class LoginComponent {
   message = inject(MessageService)
 
   loginPage = false
-  singUpPage = true
+  signUpPage = true
 
   movingToSignup(){
     this.loginPage = false
-    this.singUpPage = true
+    this.signUpPage = true
   }
   movingToLogin(){
     this.loginPage = true
-    this.singUpPage = false
+    this.signUpPage = false
   }
 
   

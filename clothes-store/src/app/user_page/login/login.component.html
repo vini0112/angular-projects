@@ -1,12 +1,14 @@
 
 
 <div class="boxLogin">
-    <div class="signInBox" [ngClass]="{'scrollToRightBar': loginPage, 'scrollBack': singUpPage}">
-        
 
-        @if(singUpPage == true){
+    <!-- FORMS -->
+    <div class="signInBox" [ngClass]="{'scrollToRightBar': loginPage, 'scrollBack': signUpPage}">
+        
+        <!-- SIGN UP FORM -->
+        @if(signUpPage == true){
             <h4>Sign Up</h4>
-            <form [formGroup]="signUpForm" (submit)="onSubmit()">
+            <form [formGroup]="signUpForm" (submit)="onSubmit()" data-testid="signupSubmit">
                 <input type="text" placeholder="Username" name="username" formControlName="username">
                 @if(username?.touched || submitted){ 
                     <span class="errorMsg">{{messageErro('username')}}</span>
@@ -65,16 +67,17 @@
     </div>
 
     
-    <div class="greetings" [ngClass]="{'scrollToLeftBar': loginPage, 'scrollBack': singUpPage}">
+    <!-- GREETINGS -->
+    <div class="greetings" [ngClass]="{'scrollToLeftBar': loginPage, 'scrollBack': signUpPage}">
 
         
 
-        @if(singUpPage == false){
+        @if(signUpPage == false){
             <div class="greetingSignUp">
 
                 <h3>Welcome Back!</h3>
                 <p>Enter your personal detail to use all of site features!</p>
-                <button (click)="movingToSignup()">Sign Up</button>
+                <button (click)="movingToSignup()" data-testid="signInGreetingsPage">Sign Up</button>
 
             </div>
         }@else{
@@ -82,7 +85,7 @@
                 <h3>Hello, Friend!</h3>
 
                 <p>Register with your personal details to use all of site features!</p>
-                <button (click)="movingToLogin()">Sign In</button>
+                <button (click)="movingToLogin()" data-testid="signupGreetingsPage">Sign In</button>
             </div>
         }
         

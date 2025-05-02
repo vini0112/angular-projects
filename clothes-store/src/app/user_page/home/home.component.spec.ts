@@ -17,7 +17,6 @@ const routes = [
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  // let el: DebugElement;
 
 
   beforeEach(async () => {
@@ -30,7 +29,6 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    // let el = fixture.debugElement
   });
 
 

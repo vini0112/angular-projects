@@ -4,12 +4,12 @@
 
     <div class="struturePadraoCards">
         @for(favoriteItem of favoriteProducts;track $index){
-            <div class="padraoCard">
+            <div class="padraoCard" data-testid="card">
                 <div class="boxImg" (click)="addProductToCart(favoriteItem)">
                     <img [src]="favoriteItem.image" [alt]="favoriteItem.name">
                 </div>
                 <div class="boxInfoProduct">
-                    <span>$ {{favoriteItem.price.toFixed(2)}}</span>
+                    <span class="pricing">$ {{favoriteItem.price.toFixed(2)}}</span>
                     <span>{{favoriteItem.info}}</span>
                 </div>
                 <div class="btnsProduct">

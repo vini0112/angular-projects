@@ -100,7 +100,6 @@ export class LoginComponent {
         
       }else{
         this.message.showMessage('Formulario invalido!', "error")
-
       }
       
     }

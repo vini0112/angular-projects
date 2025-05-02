@@ -40,7 +40,7 @@
             
         }@else{
             <h4>Sign In</h4>
-            <form [formGroup]="signInForm" (submit)="onSubmitSignIn()">
+            <form [formGroup]="signInForm" (submit)="onSubmitSignIn()" data-testid="SingInForm">
                 <input type="email" placeholder="Email" name="email" formControlName="email">
                 
                 <div class="passwordBox">
@@ -99,8 +99,8 @@
             <div class="spinner"></div>
         }@else{
 
-            <form  #myForm="ngForm" (submit)="sendingEmailReset(myForm)" [ngClass]="{'hiddenFromEmailReset': wasSent}">
-                <input type="email" placeholder="Email" name="sendingEmail" required #inputEmail="ngModel" [(ngModel)]="user.sendingEmail" email>
+            <form  #myForm="ngForm" (submit)="sendingEmailReset(myForm)" [ngClass]="{'hiddenFromEmailReset': wasSent}" data-testid="emailResetPasswordForm">
+                <input type="email" placeholder="Email" name="sendingEmail" required #inputEmail="ngModel" [(ngModel)]="user.sendingEmail" email data-testid="sendingEmail">
                 @if(submittedEmailReset && inputEmail.errors?.['email']){ 
                     <span id="errorEmail">Email Invalid</span>
                 }

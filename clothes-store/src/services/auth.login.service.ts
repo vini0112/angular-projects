@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
 import { login, registering } from '../modules/login.module';
+import { LocalStorageService } from './localStorage.service';
 
 
 
@@ -11,9 +12,10 @@ import { login, registering } from '../modules/login.module';
   providedIn: 'root'
 })
 export class AuthLoginService implements OnInit{
-  api = environment.api
 
+  api = environment.api
   private http = inject(HttpClient)
+  localstorageService = inject(LocalStorageService)
 
   
   constructor() { 
@@ -22,23 +24,20 @@ export class AuthLoginService implements OnInit{
 
   ngOnInit(): void {
     
-    
   }
 
-
+  // STATUS OF AUTHENTICATION
   private isAuth = new BehaviorSubject<boolean>(this.hasToken())
   isAuthenticated$ = this.isAuth.asObservable()
 
-  private accessToken$ = new BehaviorSubject<string | null>(null)
-
+  // STATUS OF DEV AUTHENTICATION
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper$ = this.IsDeveloper.asObservable()
 
+  // WHERE AM I USING IT?
+  private accessToken$ = new BehaviorSubject<string | null>(null)
 
-  // FOR TEST
-  getIsAuthData(){
-    return this.isAuth.getValue()
-  }
+
 
   // PAGE ACCESS
   private allowPageAccess = false
@@ -103,7 +102,6 @@ export class AuthLoginService implements OnInit{
           console.log('USER: Logged!')
         }
         
-        
       },
 
       error: () => {
@@ -126,10 +124,10 @@ export class AuthLoginService implements OnInit{
 
   hasToken(): boolean{
     if(typeof window !== 'undefined'){
-      return !!localStorage.getItem('accessToken')
+      return !!localStorage.getItem('accessToken') // return true if it's a string
     }
 
-    return false
+    return false    
   }
 
 

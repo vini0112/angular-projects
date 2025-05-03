@@ -15,7 +15,7 @@ const routes = [
   {path: 'home', component: HomeComponent}
 ]
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let spyService: jasmine.SpyObj<AuthLoginService>

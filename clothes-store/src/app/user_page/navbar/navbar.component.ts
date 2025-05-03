@@ -17,13 +17,14 @@ import { MessageService } from '../../../services/message.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
-  
+  // localStorageService = inject(LocalStorageService)
+  // checkoutService = inject(CheckoutPaymentService)
+
   messageService = inject(MessageService)
   listCartService = inject(listCartServices)
-  localStorageService = inject(LocalStorageService)
-  checkoutService = inject(CheckoutPaymentService)
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
+
 
   // cart parameters 
   products: cartList[] = []
@@ -32,23 +33,25 @@ export class NavbarComponent implements OnInit{
 
   
   // parameters
-  isAsideOpen = false
+  isAsideCartOpen = false
   mobileSideActive = false
   shadowActive = false
   sexoChosen = false
 
   
+  // ASIDE CART OPEN/CLOSE
   openCart(){
-    this.isAsideOpen = !this.isAsideOpen
+    this.isAsideCartOpen = !this.isAsideCartOpen
     this.shadowActive = true
   }
-  btnCloseCart(){
-    this.isAsideOpen = false
-    this.shadowActive = false
 
+  btnCloseCart(){
+    this.isAsideCartOpen = false
+    this.shadowActive = false
   }
+
   btnXcloseCart(){
-    this.isAsideOpen = false
+    this.isAsideCartOpen = false
     this.shadowActive = false
 
   }
@@ -56,7 +59,7 @@ export class NavbarComponent implements OnInit{
 
   // mobile
 
-  openMobile(){
+  openMobileAsideBar(){
     this.mobileSideActive = !this.mobileSideActive
     this.shadowActive = true
   }
@@ -64,42 +67,42 @@ export class NavbarComponent implements OnInit{
   removeShadow(){
     if(this.shadowActive == true){
       this.shadowActive = false
-      this.isAsideOpen = false
+      this.isAsideCartOpen = false
       this.mobileSideActive = false
       this.sexoChosen = false
     }
   }
 
+  //MOBILE -> shows two options feminine/masculine this gonna show U clothes according to the sexo
   showSubLinksMobile(){
     this.sexoChosen = !this.sexoChosen
   }
 
 
 
-  // cart products
 
   constructor(){
-    // reactive update of values
+    // RECEIVING QUANTITY AND AMOUNT  
     this.totalPrice$ = this.listCartService.allPrice$
     this.allQtd$ = this.listCartService.allQtd$
   }
 
-  // ICON STATUS ACCORDING TO THIS OBESERVABLE  //new Observable<boolean>;
-  DEVLogin$ = this.authLoginService.IsDeveloper$
+
+  // DEV ICON DISPLAYS ACCORDING TO THIS OBESERVABLE
+  DEV_logged$ = this.authLoginService.IsDeveloper$
 
 
   ngOnInit(): void {
 
+    // PASSING THE PRODUCTS ITEMS TO THE CART LIST
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
     })
-  
-    // this.DEVLogin$ = this.authLoginService.IsDeveloper$
-    
+      
   }
 
 
-  
+  // METHODS FROM INSIDE CART LIST
 
   removeFromCart(id: number){
     this.listCartService.updatingQuantity(id)
@@ -110,18 +113,21 @@ export class NavbarComponent implements OnInit{
   }
 
 
-  // checking if logged
 
-  isAuthentic$ = this.authLoginService.isAuthenticated$
+  // STATUS OF AUTHENTICATION
+  isAuthenticated$ = this.authLoginService.isAuthenticated$
+
+
 
   logout(){
     this.authLoginService.loggingOut()
   }
 
 
+
   buying(){
 
-    this.isAuthentic$.subscribe(res =>{
+    this.isAuthenticated$.subscribe(res =>{
       if(!res){
         this.router.navigateByUrl('/login')
         this.messageService.showMessage("You can't buy without being logged!", "info")
@@ -133,7 +139,7 @@ export class NavbarComponent implements OnInit{
       }
 
       // closing cart
-      this.isAsideOpen = false
+      this.isAsideCartOpen = false
       this.shadowActive = false
 
       this.authLoginService.setPageAccess(true) //allowing access to address

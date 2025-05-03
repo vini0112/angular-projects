@@ -19,17 +19,17 @@
 
         <!-- normal icons -->
         <nav id="icons">
-            <a routerLink="/developer_side" *ngIf="(DEVLogin$ | async) && (isAuthentic$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+            <a routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i></a>
 
             <i class="fa-regular fa-heart" routerLink="/favorites"></i>
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
                 <span class="contCart">{{allQtd$ | async}}</span>
             </div>
-            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
-            <a routerLink="/login" *ngIf="!(isAuthentic$ | async)" class="loginPrincipal">Login</a>
+            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
+            <a routerLink="/login" *ngIf="!(isAuthenticated$ | async)" class="loginPrincipal">Login</a>
             
-            <a routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthentic$ | async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
+            <a routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
         </nav>
 
         <!-- mobile icons -->
@@ -38,7 +38,7 @@
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
                 <span class="contCart">{{allQtd$ | async}}</span>
             </div>
-            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobile()"></i>
+            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
         </nav>
 
         <!-- mobile side -->
@@ -59,11 +59,11 @@
 
                 <li><a routerLink="/favorites"><i class="fa-regular fa-heart"></i></a></li>
                 <li><a><i class="fa-solid fa-building"></i></a></li>
-                <!-- *ngIf="isDeveloper" -->
+                
                 <li ><a routerLink="/developer_side"><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
 
-                <li *ngIf="!(isAuthentic$ | async)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
-                <li *ngIf="(isAuthentic$ | async)"><a routerLink="/home"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a></li>
+                <li *ngIf="!(isAuthenticated$ | async)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
+                <li *ngIf="(isAuthenticated$ | async)"><a routerLink="/home"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a></li>
 
             </ul>
 
@@ -76,7 +76,7 @@
     <div [ngClass]="{'overlay': shadowActive}" (click)="removeShadow()"></div>
 
     <!-- cart -->
-    <aside id="aside" [ngClass]="{'active': isAsideOpen}">
+    <aside id="aside" [ngClass]="{'active': isAsideCartOpen}">
 
         <div class="closeAside">
             <i class="fa-solid fa-xmark" (click)="btnXcloseCart()"></i>

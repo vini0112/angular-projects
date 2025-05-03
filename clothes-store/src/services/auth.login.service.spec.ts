@@ -4,7 +4,7 @@ import { AuthLoginService } from './auth.login.service';
 import { HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http';
 
-describe('AuthLoginService', () => {
+fdescribe('AuthLoginService', () => {
   let service: AuthLoginService;
   let httpmock: HttpTestingController
 
@@ -52,7 +52,8 @@ describe('AuthLoginService', () => {
     service.gettingIn({form}).subscribe({
       next: (res: any) =>{
         expect(res.success).toBeTrue()
-        expect(service.getIsAuthData()).toBeTrue()
+
+        service.isAuthenticated$.subscribe(res => expect(res).toBeTrue())
         done()
       },
       error: (err) => {console.log(err), done()}

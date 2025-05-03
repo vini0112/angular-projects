@@ -52,6 +52,7 @@ export const routes: Routes = [
         loadChildren: () => import('./all-tools/devtools.routes').then(m => m.DevToolsRoutes),
         canActivate: [devLoginGuard]
     },
+
     {
         path: 'ship-address',
         loadComponent: () => import('./user_page/shipping-form/shipping-form.component').then(m => m.ShippingFormComponent),
@@ -72,4 +73,5 @@ export const routes: Routes = [
     { 
         path: '**', redirectTo: 'home'
     }
+    
 ];

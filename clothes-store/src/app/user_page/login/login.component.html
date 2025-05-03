@@ -8,14 +8,14 @@
         <!-- SIGN UP FORM -->
         @if(signUpPage == true){
             <h4>Sign Up</h4>
-            <form [formGroup]="signUpForm" (submit)="onSubmit()" data-testid="signupSubmit">
+            <form [formGroup]="signUpForm" (submit)="submitSignUpForm()" data-testid="signupSubmit">
                 <input type="text" placeholder="Username" name="username" formControlName="username">
-                @if(username?.touched || submitted){ 
+                @if(SignUp_username?.touched || submittedSignUpForm){ 
                     <span class="errorMsg">{{messageErro('username')}}</span>
                 }
                 
                 <input type="email" name="email" placeholder="Email" formControlName="email">
-                @if(email?.touched || submitted){
+                @if(SignUp_email?.touched || submittedSignUpForm){
                     <span class="errorMsg">{{messageErro('email')}}</span>
                 }
 
@@ -30,7 +30,7 @@
                     }
                     
                 </div>
-                @if(password?.touched || password?.dirty ||submitted){
+                @if(SignUp_password?.touched || SignUp_password?.dirty ||submittedSignUpForm){
                     <span class="errorMsg">{{messageErro('password')}}</span>
                 }
 
@@ -41,6 +41,7 @@
         }@else{
             <h4>Sign In</h4>
             <form [formGroup]="signInForm" (submit)="onSubmitSignIn()" data-testid="SingInForm">
+                
                 <input type="email" placeholder="Email" name="email" formControlName="email">
                 
                 <div class="passwordBox">
@@ -70,8 +71,6 @@
     <!-- GREETINGS -->
     <div class="greetings" [ngClass]="{'scrollToLeftBar': loginPage, 'scrollBack': signUpPage}">
 
-        
-
         @if(signUpPage == false){
             <div class="greetingSignUp">
 
@@ -99,7 +98,8 @@
             <div class="spinner"></div>
         }@else{
 
-            <form  #myForm="ngForm" (submit)="sendingEmailReset(myForm)" [ngClass]="{'hiddenFromEmailReset': wasSent}" data-testid="emailResetPasswordForm">
+            <form  #myForm="ngForm" (submit)="sendingEmailReset(myForm)" [ngClass]="{'hiddenFromEmailReset': EmailWasSent}" data-testid="emailResetPasswordForm">
+
                 <input type="email" placeholder="Email" name="sendingEmail" required #inputEmail="ngModel" [(ngModel)]="user.sendingEmail" email data-testid="sendingEmail">
                 @if(submittedEmailReset && inputEmail.errors?.['email']){ 
                     <span id="errorEmail">Email Invalid</span>
@@ -109,7 +109,7 @@
                 <button type="submit">Send</button>
             </form>
 
-            <div class="emailSentSuccessful" [ngClass]="{'emailSent': wasSent}">
+            <div class="emailSentSuccessful" [ngClass]="{'emailSent': EmailWasSent}">
                 <span>Email Sent...</span>
                 <i class="fa-solid fa-check"></i>
                 <span>Check your Email!</span>

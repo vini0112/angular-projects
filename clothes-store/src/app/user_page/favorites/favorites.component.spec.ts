@@ -4,7 +4,7 @@ import { FavoritesComponent } from './favorites.component';
 import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 
-fdescribe('FavoritesComponent', () => {
+describe('FavoritesComponent', () => {
   let component: FavoritesComponent;
   let fixture: ComponentFixture<FavoritesComponent>;
 
@@ -40,12 +40,10 @@ fdescribe('FavoritesComponent', () => {
 
     // checking if it has price
     const price = card.nativeElement.querySelector('.pricing')
-    expect(price.textContent).not.toBeNull()
-    
-    
-    
-
+    expect(price.textContent).not.toBeNull()  
 
   })
+
+  
 
 });

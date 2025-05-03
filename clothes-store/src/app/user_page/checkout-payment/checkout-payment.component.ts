@@ -4,12 +4,9 @@ import { NgxStripeModule } from 'ngx-stripe';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { environment } from '../../../environments/environment.development';
-
 import { MessageService } from '../../../services/message.service';
 import { responseData } from '../../../modules/checkout.module';
-import { AuthServiceService } from '../../../services/auth-service.service';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { Router } from '@angular/router';
 
@@ -26,6 +23,7 @@ export class CheckoutPaymentComponent implements OnInit{
   messageService = inject(MessageService)
   authServiceLogin = inject(AuthLoginService)
   router = inject(Router)
+
   // response data from node
   private dataRes: responseData = this.checkoutService.getAllResData() 
 
@@ -46,7 +44,7 @@ export class CheckoutPaymentComponent implements OnInit{
     
     if (!this.stripe || !this.clientSecret) {
       this.message = 'Error: Payment not initialized!';
-      return;
+      return 
     }
 
       // ADDING THE ELEMENTS IN THE FORM
@@ -70,7 +68,6 @@ export class CheckoutPaymentComponent implements OnInit{
       },
     })
   
-    
 
     if (error) {
       console.error('Payment Error:', error.message);
@@ -78,7 +75,5 @@ export class CheckoutPaymentComponent implements OnInit{
     }
 
   }  
-
-
   
 }

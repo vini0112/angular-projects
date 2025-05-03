@@ -15,7 +15,7 @@ const routes = [
   {path: 'home', component: HomeComponent}
 ]
 
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let spyService: jasmine.SpyObj<AuthLoginService>
@@ -95,7 +95,7 @@ describe('LoginComponent', () => {
 
 
     expect(component.signUpForm.valid).toBeTrue()
-    expect(component.submitted).toBeTrue()
+    expect(component.submittedSignUpForm).toBeTrue()
 
     // checking if register service was called
     spyService.register.and.returnValue(of(component.signUpForm.value))
@@ -117,7 +117,7 @@ describe('LoginComponent', () => {
     component.signInForm.controls['password'].setValue('Vini10@')
     
     expect(component.signInForm.valid).toBeTrue()
-    expect(component.submittedTwo).toBeFalse()
+    expect(component.submittedSignInForm).toBeFalse()
 
     // updating 
     fixture.detectChanges()
@@ -130,7 +130,7 @@ describe('LoginComponent', () => {
 
     fixture.detectChanges() // updating
 
-    expect(component.submittedTwo).toBeTrue() // checking if it was sumitted
+    expect(component.submittedSignInForm).toBeTrue() // checking if it was sumitted
 
 
     // check if the gettinIn service was called
@@ -172,7 +172,7 @@ describe('LoginComponent', () => {
 
     fixture.detectChanges() // updating
 
-    expect(component.wasSent).toBeTrue()
+    expect(component.EmailWasSent).toBeTrue()
 
 
 
@@ -195,7 +195,7 @@ describe('LoginComponent', () => {
     const form = fixture.debugElement.query(By.css('[data-testid="SingInForm"]'))
     expect(form).not.toBeNull()
     form.triggerEventHandler('submit', {preventDefault: () => {}})
-    expect(component.submittedTwo).toBeTrue()
+    expect(component.submittedSignInForm).toBeTrue()
 
 
     // check if the message service was called

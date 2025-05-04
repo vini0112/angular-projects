@@ -19,8 +19,6 @@ router.get('/isLogged', loginController.isLogged)
 router.post('/entrando', loginController.entrando)
 
 
-// SIGN UP verifyJWT,
-// router.post('/emailValidation', protectedRoute, loginController.validandoEmail)
 
 router.post('/addingUser', loginController.adding)
 

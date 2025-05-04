@@ -4,7 +4,6 @@ import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throw
 
 import { AuthServiceService } from '../services/auth-service.service';
 import { LocalStorageService } from '../services/localStorage.service';
-import { MessageService } from '../services/message.service';
 
   
 const isRefreshing = new BehaviorSubject<boolean>(false)
@@ -26,7 +25,6 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
     req = addToken(req, token)
   }
 
-  // return next(req)
   
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {

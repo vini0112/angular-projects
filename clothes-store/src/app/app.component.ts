@@ -4,6 +4,7 @@ import { NavbarComponent } from './user_page/navbar/navbar.component';
 import { ProductsService } from '../services/products.service';
 import { MessageComponent } from './message/message.component';
 import { dashboardService } from '../services/dashboard.service';
+import { AuthLoginService } from '../services/auth.login.service';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,9 @@ import { dashboardService } from '../services/dashboard.service';
 export class AppComponent implements OnInit{
   title = 'clothes-store';
 
-  dashboardService = inject(dashboardService)
+  // dashboardService = inject(dashboardService)
   productService = inject(ProductsService)
+  authLoginService = inject(AuthLoginService)
 
   currentMonth = signal(new Date().getMonth())
   
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.productService.getProducts()
+    this.authLoginService.checkIfIsLogged() 
   }
   
   

@@ -10,20 +10,31 @@ class loginController{
     // FIRST REQUEST OF THE APP        
     async isLogged(req, res){
         const token = req.cookies.refreshToken
-
+        
+        console.log(req.method)
+        
 
         if(!token){
+            console.log('No Refresh Token!') 
             return res.status(404).send("No Refresh Token!");
-        }
+        }  
+
+        console.log(token) 
+
 
         jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
-            if(err) return res.status(403).json({ message: "Token inválido!"})
-            
-            
-            if(user.role === process.env.ADM_ROLE){
-                return res.json({message: "Developer_Logged"})
+            if(err) {
+                console.log('Token inválido!')
+                return res.status(403).json({ message: "Token inválido!"})
             }
             
+            
+            if(user.role === process.env.ADM_ROLE){  
+                console.log('✅ DEV')
+                return res.json({message: "Developer_Logged"})
+            }
+
+            console.log('✅ USER')
             res.json({message: "UserLogged"})
         }) 
 
@@ -140,7 +151,6 @@ class loginController{
     
     // criando usuario
     async adding(req, res){
-
         const {password, email, username} = req.body
 
         if(!email || !password || !username){
@@ -190,14 +200,13 @@ class loginController{
             path: '/'
         })
         
-        console.log('Lougout Successfully')
+        console.log('Logout Successfully')
         res.status(200).json({message: 'Succefull Logout'})
     }
 
 
     // forgot password
     async requestToReset(req, res){
-
         const {email} = req.body
 
         if(!email){

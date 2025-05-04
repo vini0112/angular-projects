@@ -11,7 +11,7 @@ import { LocalStorageService } from './localStorage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthLoginService implements OnInit{
+export class AuthLoginService implements OnInit{  
 
   api = environment.api
   private http = inject(HttpClient)
@@ -19,11 +19,17 @@ export class AuthLoginService implements OnInit{
 
   
   constructor() { 
-    this.checkIfIsLogged()
+    
+    // if(!this.isAuth.value){
+    //   
+    // }
+
   }
 
   ngOnInit(): void {
     
+    // console.log('heere ', this.isAuth.value)
+    // console.log(this.IsDeveloper.value)
   }
 
   // STATUS OF AUTHENTICATION
@@ -34,7 +40,7 @@ export class AuthLoginService implements OnInit{
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper$ = this.IsDeveloper.asObservable()
 
-  // WHERE AM I USING IT?
+  // 
   private accessToken$ = new BehaviorSubject<string | null>(null)
 
 
@@ -50,9 +56,10 @@ export class AuthLoginService implements OnInit{
 
 
   gettingIn(credentials: {form: login}): Observable<{accessToken: string, developerMsg: string}>{
-    return this.http.post<{accessToken: string, developerMsg: string}>(`${this.api}/entrando`, credentials, {withCredentials: true}).pipe(
+    return this.http.post<{accessToken: string, developerMsg: string}>(`${this.api}/entrando`, credentials, {withCredentials: true})
+    .pipe(
       tap(response => {
-
+        
         if(response.developerMsg === 'Developer_Logged!'){
           this.IsDeveloper.next(true)
         }
@@ -86,26 +93,19 @@ export class AuthLoginService implements OnInit{
 
 
 
-   // checks if logged every time u load the components <{developerMsg: string}>
+   // checks if logged every time u load the components
 
   checkIfIsLogged(){
+    // debugger
+    // console.log(this.IsDeveloper.value)
+
     this.http.get(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
-      next: (res: any) => {
-        if(res.message == 'Developer_Logged'){
-          
-          this.IsDeveloper.next(true)
-          console.log('DEV: Logged!')
-        }
-
-        else{
-          this.IsDeveloper.next(false)
-          console.log('USER: Logged!')
-        }
-        
+      next: (res) =>{
+        console.log(res)
       },
-
-      error: () => {
-        console.log('No Logged!')
+      error: (err) =>{
+        console.log('failed')
+        
       }
 
     })
@@ -131,21 +131,18 @@ export class AuthLoginService implements OnInit{
   }
 
 
-  private loadToken(){
+  // private loadToken(){
+  //   if(this.hasToken()){
+  //     this.isAuth.next(true)
+  //   }
 
-    if(this.hasToken()){
-      this.isAuth.next(true)
-    }
-
-    return false
-    
-
-  }
+  //   return false
+  // }
   
 
 
   logOut(){
-    this.accessToken$.next(null)
+    // this.accessToken$.next(null)
     if(this.hasToken()) localStorage.removeItem('accessToken')
     
     this.isAuth.next(false)

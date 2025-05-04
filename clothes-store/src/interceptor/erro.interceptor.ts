@@ -5,7 +5,7 @@ import { AuthLoginService } from '../services/auth.login.service';
 
 export const erroInterceptor: HttpInterceptorFn = (req, next) => {
 
-  const authLoginService = inject(AuthLoginService)
+  // NOT IN USED YET
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) =>{

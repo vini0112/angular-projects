@@ -120,9 +120,9 @@ export class LoginComponent {
             console.log('success login')
             this.message.showMessage('Successful Login!', "success")
             this.router.navigateByUrl('/home')
-
           },
           error: (error) =>{
+            console.log('error sign in')
             this.messageErro = error.message
             this.message.showMessage('Password/Email Wrong!', "error")
           }

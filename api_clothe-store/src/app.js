@@ -10,10 +10,16 @@ import stripeRoute from './routes/stripe.route.js'
 
 const app = express()
 
+
 app.use(cors({
     origin: 'http://localhost:4200', // url front
-    credentials: true // allowing cookies
+    credentials: true ,// allowing cookies
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+
 }))
+
+app.options("*", cors()) 
 
 
 app.use(stripeRoute)

@@ -7,6 +7,7 @@ export const resetPasswordGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router)
   const authLoginService = inject(AuthLoginService)
+  
   const token = route.params['token']
   
 

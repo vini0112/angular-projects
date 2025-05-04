@@ -90,6 +90,7 @@ export class NavbarComponent implements OnInit{
 
   // DEV ICON DISPLAYS ACCORDING TO THIS OBESERVABLE
   DEV_logged$ = this.authLoginService.IsDeveloper$
+  
 
 
   ngOnInit(): void {
@@ -98,6 +99,8 @@ export class NavbarComponent implements OnInit{
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
     })
+
+
       
   }
 

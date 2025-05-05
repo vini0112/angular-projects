@@ -9,22 +9,20 @@ class loginController{
 
     // FIRST REQUEST OF THE APP        
     async isLogged(req, res){
-        const token = req.cookies.refreshToken
-        
-        console.log(req.method)
-        
+        const token = req.cookies['refreshToken']
+                
 
         if(!token){
-            console.log('No Refresh Token!') 
-            return res.status(404).send("No Refresh Token!");
-        }  
+            console.log('ℹ️  PREFLIGHT tested or No token found!') 
+            return res.json({message: "PREFLIGHT tested (OPTION) or No token found!"});
+        } 
 
-        console.log(token) 
+        console.log("✅ It was just PREFLIGHT (OPTION) the token exist")
 
 
         jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
             if(err) {
-                console.log('Token inválido!')
+                console.log('❌ Token inválido!')
                 return res.status(403).json({ message: "Token inválido!"})
             }
             
@@ -35,7 +33,7 @@ class loginController{
             }
 
             console.log('✅ USER')
-            res.json({message: "UserLogged"})
+            res.json({message: "User_Logged"})
         }) 
 
     }

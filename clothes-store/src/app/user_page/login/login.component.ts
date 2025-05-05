@@ -111,7 +111,7 @@ export class LoginComponent {
 
   // STARTING IN SIGN-IN FORM
   
-  onSubmitSignIn(){
+  onSubmitSignIn(){  
     this.submittedSignInForm = true
 
     if(this.signInForm.valid){

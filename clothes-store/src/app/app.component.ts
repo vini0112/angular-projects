@@ -27,7 +27,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.productService.getProducts()
-    this.authLoginService.checkIfIsLogged() 
   }
   
   

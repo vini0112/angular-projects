@@ -23,11 +23,11 @@ export class AuthLoginService implements OnInit{
     // if(!this.isAuth.value){
     //   
     // }
+    this.checkIfIsLogged()
 
   }
 
   ngOnInit(): void {
-    
     // console.log('heere ', this.isAuth.value)
     // console.log(this.IsDeveloper.value)
   }
@@ -40,12 +40,12 @@ export class AuthLoginService implements OnInit{
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper$ = this.IsDeveloper.asObservable()
 
-  // 
-  private accessToken$ = new BehaviorSubject<string | null>(null)
+  // SEEM TO NOT BE IN USED SO IT'S GONNA BE DELETED SOON!
+  // private accessToken$ = new BehaviorSubject<string | null>(null)
 
 
 
-  // PAGE ACCESS
+  // PAGE ACCESS // CHANGE THIS!!!!!!!!
   private allowPageAccess = false
   private pagePayment = false
 
@@ -64,8 +64,8 @@ export class AuthLoginService implements OnInit{
           this.IsDeveloper.next(true)
         }
 
-        this.saveToken(response.accessToken),
-        this.accessToken$.next(response.accessToken)
+        this.saveToken(response.accessToken)
+        // this.accessToken$.next(response.accessToken)
         
       })
     )
@@ -96,18 +96,26 @@ export class AuthLoginService implements OnInit{
    // checks if logged every time u load the components
 
   checkIfIsLogged(){
-    // debugger
-    // console.log(this.IsDeveloper.value)
-
+    
     this.http.get(`${this.api}/isLogged`, { withCredentials: true }).subscribe({
-      next: (res) =>{
-        console.log(res)
+      next: (res: any) =>{
+        
+        if(res.message === 'Developer_Logged'){
+          this.IsDeveloper.next(true)
+          console.log('DEV LOGGED')
+
+        }
+        else if(res.message === 'User_Logged'){
+          console.log('USER LOGGED')
+        }
+        else{
+          console.log(res.message)
+        }
+        
       },
       error: (err) =>{
-        console.log('failed')
-        
+        console.log("ERROR in isLogged: ", err)
       }
-
     })
   }
 
@@ -129,16 +137,6 @@ export class AuthLoginService implements OnInit{
 
     return false    
   }
-
-
-  // private loadToken(){
-  //   if(this.hasToken()){
-  //     this.isAuth.next(true)
-  //   }
-
-  //   return false
-  // }
-  
 
 
   logOut(){

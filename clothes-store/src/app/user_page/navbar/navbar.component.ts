@@ -145,7 +145,7 @@ export class NavbarComponent implements OnInit{
       this.isAsideCartOpen = false
       this.shadowActive = false
 
-      this.authLoginService.setPageAccess(true) //allowing access to address
+      this.authLoginService.setPageAccess(true) //allowing access to address page
       this.router.navigateByUrl('/ship-address')
     })
 

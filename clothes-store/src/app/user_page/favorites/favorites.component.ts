@@ -1,13 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
+import { BehaviorSubject, filter, map, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-favorites',
-  imports: [NgIf], 
+  imports: [NgIf, AsyncPipe], 
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
 })
@@ -16,38 +17,64 @@ export class FavoritesComponent implements OnInit{
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
 
-  favoriteProducts: productModule[] = []
+  favoriteProducts$ = new Observable<productModule[]>()  
+
+
 
   ngOnInit(): void {
     this.gettingFavoriteProducts()
+
   }
 
+
   gettingFavoriteProducts(){
-    this.productsService.allProducts$.subscribe(item =>{
-      item.forEach(product => {
-        if(product.isFavorite == true) this.favoriteProducts.push(product)
-      })
+
+    this.productsService.getProducts().subscribe({
+      next: (res: any) =>{
+
+        this.favoriteProducts$ = of(res).pipe(
+          map((products: any[]) => 
+                products.filter(product => product.isFavorite == true)
+            
+          ),
+        )
+      },
+
+      error(err) {
+        console.log('ERROR getting favorites ', err)
+      },
     })
-  
   }
 
 
   clickInHeart(item: productModule): void{
     this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe(product =>{
+
+      // toggling the heart status
       if(product){
         item.isFavorite = !item.isFavorite
       }
+      
+      // removing the products when clicked
       if(item.isFavorite == false){
-        const index = this.favoriteProducts.findIndex(product => product.id == item.id)
-        this.favoriteProducts.splice(index, 1)
+
+        this.favoriteProducts$
+        .pipe(
+          map(products => products.filter(product => product.id !== item.id))
+        )
+        
+        .subscribe((res: any) =>{
+          this.favoriteProducts$ = of(res)
+        })
+        
       }
+
     })
   }
 
 
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
-
   }
 
 

@@ -19,7 +19,6 @@ export class PaymentStatusComponent implements OnInit{
   messageService = inject(MessageService)
   checkoutService = inject(CheckoutPaymentService)
   
-  counter = 6
   loading = true
   successPayment = false
   userInfo: userInfo[] = []
@@ -28,7 +27,6 @@ export class PaymentStatusComponent implements OnInit{
   
   ngOnInit(){
     this.checkPaymentPageStatus()
-    
   }
 
   checkPaymentPageStatus(){

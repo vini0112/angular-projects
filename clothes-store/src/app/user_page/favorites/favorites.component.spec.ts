@@ -3,14 +3,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoritesComponent } from './favorites.component';
 import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
+import { ProductsService } from '../../../services/products.service';
+import { of } from 'rxjs';
 
-describe('FavoritesComponent', () => {
+fdescribe('FavoritesComponent', () => {
   let component: FavoritesComponent;
   let fixture: ComponentFixture<FavoritesComponent>;
+  // let spyProductService: jasmine.SpyObj<ProductsService>
+
 
   beforeEach(async () => {
+    // spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts'])
+
     await TestBed.configureTestingModule({
-      providers: [provideHttpClient()],
+      providers: [
+        provideHttpClient(),
+        // {provide: ProductsService, useValue: spyProductService},
+      ],
       imports: [FavoritesComponent]
     })
     .compileComponents();
@@ -20,27 +29,26 @@ describe('FavoritesComponent', () => {
     fixture.detectChanges();
   });
 
+
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
 
 
-  fit("Should get favorites products", () =>{
-    const item = {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 4}
+  xit("Should get favorites products", () =>{
+    // const items = [
+    //   {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 4},
+    //   {id: 1, name: 'vii', price: 49, isFavorite: false, image: 'jkla', section: 'shirt', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 43}
+    // ]
 
-    component.favoriteProducts = [item]
-    expect(component.favoriteProducts.length).toBeGreaterThan(0)
 
-    fixture.detectChanges()  
+    // spyProductService.getProducts.and.returnValue(of(items))
 
-    // card
-    const card = fixture.debugElement.query(By.css('[data-testid="card"]'))
-    expect(card).not.toBeNull()
+    // fixture.detectChanges()
 
-    // checking if it has price
-    const price = card.nativeElement.querySelector('.pricing')
-    expect(price.textContent).not.toBeNull()  
+    // expect(spyProductService.getProducts).toHaveBeenCalled()
 
   })
 

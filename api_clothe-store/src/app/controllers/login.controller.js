@@ -206,7 +206,8 @@ class loginController{
     // forgot password
     async requestToReset(req, res){
         const {email} = req.body
-
+        console.log(email)
+        
         if(!email){
             res.status(400).json({message: 'Please provide email!'})
         }
@@ -224,12 +225,13 @@ class loginController{
             await connection.promise().execute("UPDATE users SET token_reset = ?, token_expires = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE email = ?", [tokenReset, email])
             
             const transporter = mailer.createTransport({
-                    host: "smtp.gmail.com",                
-                    secure: true,
-                    auth:{
-                        user: process.env.MY_EMAIL,
-                        pass: process.env.MY_PASSWORD 
-                    }
+
+                host: "smtp.gmail.com",                
+                secure: true,
+                auth:{
+                    user: process.env.MY_EMAIL,
+                    pass: process.env.MY_PASSWORD 
+                }
             })
             
             const resetUrl = `${process.env.CLIENT_URL}/${tokenReset}`

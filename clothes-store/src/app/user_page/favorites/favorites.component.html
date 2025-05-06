@@ -1,9 +1,11 @@
 
-@if(favoriteProducts.length > 0){
+
+@if((favoriteProducts$ | async)?.length !== 0){
+    
     <h2>Your Favorite Products</h2>
 
     <div class="struturePadraoCards">
-        @for(favoriteItem of favoriteProducts;track $index){
+        @for(favoriteItem of favoriteProducts$ | async;track $index){
             <div class="padraoCard" data-testid="card">
                 <div class="boxImg" (click)="addProductToCart(favoriteItem)">
                     <img [src]="favoriteItem.image" [alt]="favoriteItem.name">
@@ -23,8 +25,8 @@
             </div>
         }
     </div>
-}@else{
-    
+}
+@else{
     <div class="emptyFavorite">
         <img src="./assets/banners/Empty_hanger.png" alt="">
         <p>OOPS... You don't have favorite clothes!</p>

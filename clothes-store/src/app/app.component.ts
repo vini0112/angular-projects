@@ -13,13 +13,12 @@ import { AuthLoginService } from '../services/auth.login.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
+  
   title = 'clothes-store';
 
   // dashboardService = inject(dashboardService)
   productService = inject(ProductsService)
-  authLoginService = inject(AuthLoginService)
 
-  currentMonth = signal(new Date().getMonth())
   
   constructor(){
     

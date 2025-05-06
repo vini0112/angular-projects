@@ -11,13 +11,14 @@ import { NgClass } from '@angular/common';
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
-export class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent{
 
   blockLeavePasswordResetPage = false
   token = ''
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
   resetPassword: FormGroup
+
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute){ 
     this.resetPassword = fb.group({
@@ -34,9 +35,6 @@ export class ResetPasswordComponent implements OnInit{
 
   }
 
-  ngOnInit(): void {
-
-  }
 
   get newPassword(){
     return this.resetPassword.get('newPassword')
@@ -46,6 +44,7 @@ export class ResetPasswordComponent implements OnInit{
   get confirmingPassword(){
     return this.resetPassword.get('checkingPassword')
   }
+
 
 
   messageErro(field: string): string | null{

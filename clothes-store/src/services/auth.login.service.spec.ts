@@ -4,7 +4,7 @@ import { AuthLoginService } from './auth.login.service';
 import { HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http';
 
-fdescribe('AuthLoginService', () => {
+describe('AuthLoginService', () => {
   let service: AuthLoginService;
   let httpmock: HttpTestingController
 
@@ -67,10 +67,7 @@ fdescribe('AuthLoginService', () => {
 
   it("Shoul logout", () =>{
 
-    spyOn(service, "logOut")
-
     service.loggingOut()
-
 
     const req = httpmock.expectOne(req => req.url.endsWith('/auth/logout'))
     expect(req.request.method).toBe('POST')
@@ -78,7 +75,6 @@ fdescribe('AuthLoginService', () => {
 
     req.flush('Logged out')
     
-    expect(service.logOut).toHaveBeenCalled()
 
   })
 

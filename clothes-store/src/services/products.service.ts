@@ -17,10 +17,8 @@ export class ProductsService {
   allProducts$: Observable<productModule[]> = this.allProducts.asObservable()
 
 
-  getProducts(){
-    return this.http.get<productModule[]>(`${this.apiUrl}/clothes`).pipe(
-      tap(dados => this.allProducts.next(dados))
-    ).subscribe()
+  getProducts(): Observable<productModule[]>{
+    return this.http.get<productModule[]>(`${this.apiUrl}/clothes`)
   }
 
 

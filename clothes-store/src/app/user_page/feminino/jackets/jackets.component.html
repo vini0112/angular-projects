@@ -1,7 +1,7 @@
 <div class="container">
     <div class="struturePadraoCards">
 
-        @for(shirt of allShirtsFemi;track $index){
+        @for(shirt of JackectsFemi$ | async;track $index){
             <div class="padraoCard">
                 <div class="boxImg" (click)="addProductToCart(shirt)">
                     <img [src]="shirt.image" [alt]="shirt.name">
@@ -9,7 +9,7 @@
 
                 <div class="boxInfoProduct">
                     <span>$ {{shirt.price.toFixed(2)}}</span>
-                    <span>{{shirt.info}}</span>
+                    <span>{{shirt.info}}</span> 
                 </div>
 
                 <div class="btnsProduct">

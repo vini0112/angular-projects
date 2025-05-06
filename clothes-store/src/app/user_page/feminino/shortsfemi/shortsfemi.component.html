@@ -1,7 +1,7 @@
 <div class="container">
     <div class="struturePadraoCards">
 
-        @for(short of allShortsFemi;track $index){
+        @for(short of allShortsFemi$ | async;track $index){
             <div class="padraoCard">
                 <div class="boxImg" (click)="addProductToCart(short)">
                     <img [src]="short.image" [alt]="short.name">

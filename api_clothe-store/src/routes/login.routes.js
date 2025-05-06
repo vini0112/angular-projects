@@ -6,8 +6,6 @@ import protectedRoute from "../middleware/protected.route.js";
 const router = Router()
 
 
-// rota protegida
-// router.get('/auth/user', loginController.protectedRoute)
 
 router.post('/refreshToken', loginController.refreshToken)
 
@@ -26,7 +24,7 @@ router.post('/addingUser', loginController.adding)
 router.post('/auth/logout', loginController.logOut)
 
 // RESETING PASSWORD
-router.post('/request/reset', protectedRoute,loginController.requestToReset)
+router.post('/request/reset',loginController.requestToReset)
 
 router.post('/reset-password', loginController.resetPassword)
 

@@ -11,7 +11,7 @@ import { LocalStorageService } from './localStorage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthLoginService implements OnInit{  
+export class AuthLoginService{  
 
   api = environment.api
   private http = inject(HttpClient)
@@ -20,34 +20,24 @@ export class AuthLoginService implements OnInit{
   
   constructor() { 
     
-    // if(!this.isAuth.value){
-    //   
-    // }
     this.checkIfIsLogged()
-
   }
 
-  ngOnInit(): void {
-    // console.log('heere ', this.isAuth.value)
-    // console.log(this.IsDeveloper.value)
-  }
+  
 
   // STATUS OF AUTHENTICATION
-  private isAuth = new BehaviorSubject<boolean>(this.hasToken())
+  private isAuth = new BehaviorSubject<boolean>(false)
   isAuthenticated$ = this.isAuth.asObservable()
 
   // STATUS OF DEV AUTHENTICATION
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper$ = this.IsDeveloper.asObservable()
 
-  // SEEM TO NOT BE IN USED SO IT'S GONNA BE DELETED SOON!
-  // private accessToken$ = new BehaviorSubject<string | null>(null)
 
 
 
-  // PAGE ACCESS // CHANGE THIS!!!!!!!!
-  private allowPageAccess = false
-  private pagePayment = false
+  // PAGE ACCESS // CHANGE THIS!!!!!!!!  
+  private accessToForm_shipping_and_Payment = false
 
   register(form: registering): Observable<string>{
     return this.http.post<string>(`${this.api}/addingUser`, form)
@@ -65,7 +55,7 @@ export class AuthLoginService implements OnInit{
         }
 
         this.saveToken(response.accessToken)
-        // this.accessToken$.next(response.accessToken)
+        this.isAuth.next(true)
         
       })
     )
@@ -102,14 +92,18 @@ export class AuthLoginService implements OnInit{
         
         if(res.message === 'Developer_Logged'){
           this.IsDeveloper.next(true)
+          this.isAuth.next(true)
           console.log('DEV LOGGED')
 
         }
         else if(res.message === 'User_Logged'){
+          this.isAuth.next(true)
           console.log('USER LOGGED')
         }
         else{
           console.log(res.message)
+          this.isAuth.next(false)
+
         }
         
       },
@@ -126,11 +120,10 @@ export class AuthLoginService implements OnInit{
 
   private saveToken(accessToken: string){
     localStorage.setItem('accessToken', accessToken)
-    this.isAuth.next(true)
   }
   
 
-  hasToken(): boolean{
+  private hasToken(): boolean{
     if(typeof window !== 'undefined'){
       return !!localStorage.getItem('accessToken') // return true if it's a string
     }
@@ -139,8 +132,7 @@ export class AuthLoginService implements OnInit{
   }
 
 
-  logOut(){
-    // this.accessToken$.next(null)
+  private logOut(){
     if(this.hasToken()) localStorage.removeItem('accessToken')
     
     this.isAuth.next(false)
@@ -169,35 +161,19 @@ export class AuthLoginService implements OnInit{
   }
 
 
-  // PAGE ACCESS
+  // PAGE ACCESS TO SHIPPING FORM AND PAYMENT FORM TO BUY SOMETHING
 
   setPageAccess(status: boolean){
-    this.allowPageAccess = status
+    this.accessToForm_shipping_and_Payment = status
   }
 
   
   getPageAccess(): boolean{
-    return this.allowPageAccess
-  }
-
-
-  setPaymentPageAccess(status: boolean){
-    this.pagePayment = status
-  }
-
-  getPaymentPageAccess(): boolean{
-    return this.pagePayment
+    return this.accessToForm_shipping_and_Payment
   }
 
 
 
-
-
-
-   // NOT IN USE
-  emailValidator(email: string):Observable<string>{
-    return this.http.post<string>(`${this.api}/emailValidation`, {email})
-  }
   
 
 }

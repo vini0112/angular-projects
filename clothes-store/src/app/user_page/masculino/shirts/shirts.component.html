@@ -1,7 +1,7 @@
 <div class="container">
     <div class="struturePadraoCards">
 
-        @for(shirt of allShirts;track $index){
+        @for(shirt of allShirts$ | async;track $index){
             <div class="padraoCard">
                 <div class="boxImg" (click)="addProductToCart(shirt)">
                     <img [src]="shirt.image" [alt]="shirt.name">

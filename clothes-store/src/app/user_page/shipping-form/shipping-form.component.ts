@@ -31,11 +31,10 @@ export class ShippingFormComponent {
       zipCode: [null, [Validators.required]],
       state: [null, [Validators.required]],
       country: [null, [Validators.required]],
-    })
+  })
 
+  
   submited = false
-
-
   token = this.localStorageService.getItem('accessToken')
   
   
@@ -105,7 +104,7 @@ export class ShippingFormComponent {
   }
 
 
-
+  // FORM MESSAGE ERRORS
   messageErro(field: string): string | null{
     const control = this.shipForm.get(field)
     

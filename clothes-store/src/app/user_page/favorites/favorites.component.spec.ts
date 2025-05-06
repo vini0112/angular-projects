@@ -1,28 +1,38 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { FavoritesComponent } from './favorites.component';
 import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { ProductsService } from '../../../services/products.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { listCartServices } from '../../../services/listCart.service';
 
-fdescribe('FavoritesComponent', () => {
+describe('FavoritesComponent', () => {
   let component: FavoritesComponent;
   let fixture: ComponentFixture<FavoritesComponent>;
-  // let spyProductService: jasmine.SpyObj<ProductsService>
+  let spyProductService: jasmine.SpyObj<ProductsService>
+  let spyListCart: jasmine.SpyObj<listCartServices>
 
 
   beforeEach(async () => {
-    // spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts'])
+    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'])
+
+    spyListCart = jasmine.createSpyObj('listCartServices', ['addingToCart'])
+    
+    // RETURNS AN AMPTY OBSERVABLE
+    spyProductService.getProducts.and.returnValue(of([]))
+
 
     await TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
-        // {provide: ProductsService, useValue: spyProductService},
+        {provide: ProductsService, useValue: spyProductService},
+        {provide: listCartServices, useValue: spyListCart}
       ],
       imports: [FavoritesComponent]
     })
     .compileComponents();
+
 
     fixture = TestBed.createComponent(FavoritesComponent);
     component = fixture.componentInstance;
@@ -36,22 +46,126 @@ fdescribe('FavoritesComponent', () => {
   });
 
 
+  it("Should get the products", fakeAsync(() =>{
 
-  xit("Should get favorites products", () =>{
-    // const items = [
-    //   {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 4},
-    //   {id: 1, name: 'vii', price: 49, isFavorite: false, image: 'jkla', section: 'shirt', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 43}
-    // ]
+    // ARRANGE
+
+    const items = [
+      {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 4},
+      {id: 1, name: 'vii', price: 49, isFavorite: true, image: 'jkla', section: 'shirt', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 43}
+    ]
+
+    spyProductService.getProducts.and.returnValue(of(items))
+
+    // after the mock create the component again
+    fixture = TestBed.createComponent(FavoritesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePatten"]')).nativeElement
 
 
-    // spyProductService.getProducts.and.returnValue(of(items))
+    // ACT
+    tick()
+      
 
-    // fixture.detectChanges()
+    // ASSERT
 
-    // expect(spyProductService.getProducts).toHaveBeenCalled()
+    let result: any[] = []
+
+    component.favoriteProducts$.subscribe(product => {
+      result = product
+    })
+
+
+    expect(spyProductService.getProducts).toHaveBeenCalled()
+
+    tick()
+
+    expect(result).toEqual([
+      {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 4},
+      {id: 1, name: 'vii', price: 49, isFavorite: true, image: 'jkla', section: 'shirt', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 43}
+    ])
+    
+    // checking the modification of the for loop!
+    expect(baseStructureChild.childElementCount).toBe(2)
+
+
+  }))
+
+
+  it("Should handle error when fails getting the products", fakeAsync(() =>{
+
+    // ARRANGE
+
+    const resErro = new Error('Failed to get the products')
+    spyProductService.getProducts.and.returnValue(throwError(() => resErro))
+
+    // creating the component again
+    fixture = TestBed.createComponent(FavoritesComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+
+
+    spyOn(console, 'log')
+
+    // ACT
+    tick()
+
+
+
+    // ASSERT
+    let result: any[] = [];
+    component.favoriteProducts$!.subscribe(favorites => {
+      result = favorites;
+    });
+
+    tick()
+
+    expect(console.log).toHaveBeenCalledWith('ERROR getting favorites ', resErro)
+    expect(result).toEqual([])
+
+
+  }))
+
+
+  it("Should change to favorite/unfavorite", () =>{
+
+    // ARRANGE
+    const item = {id: 1, name: 'vina', price: 1, isFavorite: false, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'kl', isBestseller: true, quantity: 4}
+    
+    //                                                                     just change here
+    spyProductService.updateFavorite.and.returnValue(of({id: item.id, isFavorite: true}))
+
+    // ACT
+    component.clickInHeart(item)
+    
+
+    // ASSERT
+    expect(spyProductService.updateFavorite).toHaveBeenCalled()
+    expect(item.isFavorite).toBeTrue()
 
   })
 
+
+  it("Should add products to cart", () =>{
+
+    // ARRANGE
+    const item = {id: 1, name: 'vina', price: 1, image: 'jkla', quantity: 4, cart_quantity: 2}
+    
+    spyListCart.addingToCart.and.stub()
+
+    // ACT
+    component.addProductToCart(item)
+    fixture.detectChanges()
+
+    // ASSERT
+    expect(spyListCart.addingToCart).toHaveBeenCalled()
+
+  })
+
+
+  
   
 
 });

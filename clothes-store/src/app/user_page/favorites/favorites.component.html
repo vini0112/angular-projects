@@ -4,7 +4,7 @@
     
     <h2>Your Favorite Products</h2>
 
-    <div class="struturePadraoCards">
+    <div class="struturePadraoCards" data-testid="structurePatten">
         @for(favoriteItem of favoriteProducts$ | async;track $index){
             <div class="padraoCard" data-testid="card">
                 <div class="boxImg" (click)="addProductToCart(favoriteItem)">
@@ -28,7 +28,7 @@
 }
 @else{
     <div class="emptyFavorite">
-        <img src="./assets/banners/Empty_hanger.png" alt="">
+        <img src="./assets/banners/Empty_hanger.png" alt="empty hanger">
         <p>OOPS... You don't have favorite clothes!</p>
     </div>
 }

@@ -4,7 +4,7 @@ import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { listCartServices } from '../../../../services/listCart.service';
 import { cartList } from '../../../../modules/cart.list.module';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 
 @Component({
@@ -13,47 +13,37 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './coats.component.html',
   styleUrl: './coats.component.css'
 })
-export class CoatsComponent implements OnInit{
+export class CoatsComponent{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
   
-  allCoats$ = new Observable<productModule[]>()
+
+
+  allCoats$ = this.productService.getProducts().pipe(
+      map((products: productModule[]) => 
+        products
+                .filter(product => product.section == 'coats' && product.sexo == 'masc')
   
-  ngOnInit(): void {
-    this.gettingCoats()
-
-  }
-
-  // getting just shirts
-  gettingCoats(){
-
-    this.productService.getProducts().subscribe({
-      next: (res) =>{
-        this.allCoats$ = of(res).pipe(
-          map((products: any[]) => 
-            products
-                    .filter(product => product.section == 'coats' && product.sexo == 'masc')
-                    .map(product => {
-
-                      // displaying uploaded img
-                      if(product.image && product.image.includes('/upload')){
-                        if(!product.image.startsWith('http://localhost:3000')){
-                          product.image = `http://localhost:3000${product.image}`
-                        }
-                      }
-                      return product
-                    })
-          )
-        )
-      },
-      error: (err) =>{
-        console.log("ERROR getting coats ", err)
-      }
-    })
-
-  }
-
+                .map(product => {
+                  if(product.image && product.image.includes('/upload')){
+                    if(!product.image.startsWith('http://localhost:3000')){
+                      product.image = `http://localhost:3000${product.image}`
+                    }
+                  }
+  
+                  return product
+                })
+      ),
+  
+      catchError(err => {
+        console.log("ERROR getting coats: ", err)
+        return of([])
+      })
+      
+  )
+  
+  
   
   clickInHeart(item: productModule): void{
 

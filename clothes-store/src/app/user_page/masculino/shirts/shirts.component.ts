@@ -4,7 +4,7 @@ import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { listCartServices } from '../../../../services/listCart.service';
 import { cartList } from '../../../../modules/cart.list.module';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-shirts',
@@ -12,53 +12,36 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './shirts.component.html',
   styleUrl: './shirts.component.css'
 })
-export class ShirtsComponent implements OnInit{
+export class ShirtsComponent{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
 
-  allShirts$ = new Observable<productModule[]>()
 
-  ngOnInit(): void {
-    this.gettingShirts()
-  }
 
+  allShirts$ = this.productService.getProducts().pipe(
+      map((products: productModule[]) => 
+        products
+                .filter(product => product.section == 'shirts')
   
-  gettingShirts(){
-
-    this.productService.getProducts()
-      .subscribe({
-
-
-        next: (res: any) =>{
-          
-          this.allShirts$ = of(res).pipe(
-            map((product: any[]) => 
-              product
-                    .filter(product => product.section == 'shirts')
+                .map(product => {
+                  if(product.image && product.image.includes('/upload')){
+                    if(!product.image.startsWith('http://localhost:3000')){
+                      product.image = `http://localhost:3000${product.image}`
+                    }
+                  }
   
-                    .map(product => {
-                      if(product.image && product.image.includes('/upload')){
-                        if(!product.image.startsWith('http://localhost:3000')){
-                          product.image = `http://localhost:3000${product.image}`
-                        }
-                      }
-
-                      return product
-                    })
-            )
-          )
+                  return product
+                })
+      ),
   
-          
-        },
-
-        error: (err) =>{
-          console.log("ERROR getting the shirts: ", err)
-        }
-  
+      catchError(err => {
+        console.log("ERROR getting shirts: ", err)
+        return of([])
       })
+      
+  )
 
-  }
 
   clickInHeart(item: productModule): void{
     this.productService.updateFavorite(item.id!, item.isFavorite).subscribe({

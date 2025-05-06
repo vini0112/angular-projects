@@ -4,7 +4,7 @@ import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { cartList } from '../../../../modules/cart.list.module';
 import { listCartServices } from '../../../../services/listCart.service';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-shortsfemi',
@@ -12,50 +12,35 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './shortsfemi.component.html',
   styleUrl: './shortsfemi.component.css'
 })
-export class ShortsfemiComponent implements OnInit{
+export class ShortsfemiComponent{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
   
-  allShortsFemi$ = new Observable<productModule[]>()
   
-  ngOnInit(): void {
-    this.gettingShortsFemi()
-  }
-
-  gettingShortsFemi(){
-
-    this.productService.getProducts().subscribe({
-      next: (res) =>{
-
-        this.allShortsFemi$ = of(res).pipe(
-          map((products: any[]) => 
-            products 
-                    .filter(product => product.section == 'shorts' && product.sexo == 'femi')
-                    .map(product => {
-
-                      // displaying uploaded img
-                      if(product.image && product.image.includes('/upload')){
-                          if(!product.image.startsWith('http://localhost:3000')){
-                            product.image = `http://localhost:3000${product.image}`
-                          }
-                        }
-                        return product
-                    })
-                    
-          )
-        )
-        
-      },
-      error: (err) =>{
-        console.log('Error getting feminine shorts ', err)
-      }
-    })
-
-
-
-
-  }
+  allShortsFemi$ = this.productService.getProducts().pipe(
+      map((products: productModule[]) => 
+        products
+                .filter(product => product.section == 'shorts' && product.sexo == 'femi')
+  
+                .map(product => {
+                  if(product.image && product.image.includes('/upload')){
+                    if(!product.image.startsWith('http://localhost:3000')){
+                      product.image = `http://localhost:3000${product.image}`
+                    }
+                  }
+  
+                  return product
+                })
+      ),
+  
+      catchError(err => {
+        console.log("ERROR getting shorts-femi: ", err)
+        return of([])
+      })
+      
+  )
+  
 
   clickInHeart(item: any): void{
     this.productService.updateFavorite(item.id!, item.isFavorite).subscribe({

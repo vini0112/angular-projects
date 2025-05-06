@@ -4,7 +4,7 @@ import { productModule } from '../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import { BehaviorSubject, filter, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, filter, map, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-favorites',
@@ -12,41 +12,25 @@ import { BehaviorSubject, filter, map, Observable, of, tap } from 'rxjs';
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
 })
-export class FavoritesComponent implements OnInit{
+export class FavoritesComponent{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
 
-  favoriteProducts$ = new Observable<productModule[]>()  
 
 
+  // receiving the favorite products
+  favoriteProducts$ = this.productsService.getProducts().pipe(
+    map((products: productModule[]) => products.filter(product => product.isFavorite == true)),
 
-  ngOnInit(): void {
-    this.gettingFavoriteProducts()
-
-  }
-
-
-  gettingFavoriteProducts(){
-
-    this.productsService.getProducts().subscribe({
-      next: (res: any) =>{
-
-        this.favoriteProducts$ = of(res).pipe(
-          map((products: any[]) => 
-                products.filter(product => product.isFavorite == true)
-            
-          ),
-        )
-      },
-
-      error(err) {
-        console.log('ERROR getting favorites ', err)
-      },
-    })
-  }
+    catchError(err => {
+      console.log('ERROR getting favorites ', err)
+      return of([])
+    }) 
+  )
 
 
+  // mark favorite/unfavorite
   clickInHeart(item: productModule): void{
     this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe(product =>{
 
@@ -73,6 +57,7 @@ export class FavoritesComponent implements OnInit{
   }
 
 
+  
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
   }

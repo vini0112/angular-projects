@@ -4,7 +4,7 @@ import { ProductsService } from '../../../../services/products.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { cartList } from '../../../../modules/cart.list.module';
 import { listCartServices } from '../../../../services/listCart.service';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-shoes-femi',
@@ -12,46 +12,33 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './shoes-femi.component.html',
   styleUrl: './shoes-femi.component.css'
 })
-export class ShoesFemiComponent implements OnInit{
+export class ShoesFemiComponent{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
   
-  allShoesFemi$ = new Observable<productModule[]>()
+  allShoesFemi$ = this.productService.getProducts().pipe(
+    map((products: productModule[]) => 
+        products
+                .filter(product => product.section == 'shoes' && product.sexo == 'femi')
+
+                .map(product => {
+                  if(product.image && product.image.includes('/upload')){
+                    if(!product.image.startsWith('http://localhost:3000')){
+                      product.image = `http://localhost:3000${product.image}`
+                    }
+                  }
+
+                  return product
+                })
+      ),
   
-  ngOnInit(): void {
-    this.gettingShirtsFemi()
-  }
-
-  gettingShirtsFemi(){
-
-    this.productService.getProducts().subscribe({
-      next: (res: any) =>{
-
-        this.allShoesFemi$ = of(res).pipe(
-          map((products: any[]) => 
-            products
-                    .filter(product => product.section == 'shoes' && product.sexo == 'femi')
-                    
-                    .map(product => {
-                      if(product.image && product.image.includes('/upload')){
-                          if(!product.image.startsWith('http://localhost:3000')){
-                            product.image = `http://localhost:3000${product.image}`
-                          }
-                        }
-                        return product
-                    })
-          )
-                    
-        )
-
-      },
-      error: (err) =>{
-        console.log(err)
-      }
-    })
-
-  }
+      catchError(err => {
+        console.log('ERROR getting shoes ', err)
+        return of([])
+      }) 
+  )
+  
   
 
   clickInHeart(item: productModule): void{

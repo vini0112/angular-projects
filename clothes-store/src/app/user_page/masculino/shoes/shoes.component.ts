@@ -19,7 +19,7 @@ export class ShoesComponent{
   listCartServices = inject(listCartServices)
 
 
-  allShoes$ = this.productService.getProducts().pipe(
+  allShoes$ = this.productService.allProducts$.pipe(
       map((products: productModule[]) => 
         products
                 .filter(product => product.section == 'shoes' && product.sexo == 'masc')
@@ -41,6 +41,8 @@ export class ShoesComponent{
       })
       
   )
+
+
   
 
   

@@ -19,7 +19,7 @@ export class ShortsMascComponent{
 
 
 
-  allShorts$ = this.productService.getProducts().pipe(
+  allShorts$ = this.productService.allProducts$.pipe(
         map((products: productModule[]) => 
           products
                   .filter(product => product.section == 'shorts' && product.sexo == 'masc')
@@ -43,8 +43,6 @@ export class ShortsMascComponent{
   )
   
   
-
-
 
 
 

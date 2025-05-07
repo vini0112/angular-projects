@@ -17,7 +17,7 @@ export class ShoesFemiComponent{
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
   
-  allShoesFemi$ = this.productService.getProducts().pipe(
+  allShoesFemi$ = this.productService.allProducts$.pipe(
     map((products: productModule[]) => 
         products
                 .filter(product => product.section == 'shoes' && product.sexo == 'femi')
@@ -38,7 +38,6 @@ export class ShoesFemiComponent{
         return of([])
       }) 
   )
-  
   
 
   clickInHeart(item: productModule): void{

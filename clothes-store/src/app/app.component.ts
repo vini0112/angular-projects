@@ -16,7 +16,6 @@ export class AppComponent implements OnInit{
   
   title = 'clothes-store';
 
-  // dashboardService = inject(dashboardService)
   productService = inject(ProductsService)
 
   

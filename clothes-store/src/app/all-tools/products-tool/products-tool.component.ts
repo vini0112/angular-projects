@@ -22,7 +22,7 @@ export class ProductsToolComponent{
 
 
 
-  allProducts$ = this.productService.getProducts()
+  allProducts$ = this.productService.allProducts$
 
 
 
@@ -77,57 +77,36 @@ export class ProductsToolComponent{
 
   // edits here
   btnFormEditProduct(editForm: any){
-    // debugger
-    if(editForm.valid){
 
+    if(editForm.valid){
+      
       this.EditionSentPage = true
       this.loadingData = true
+      
 
-      // debugger
-      this.allProducts$.forEach(item => {
-        if(item[this.indexProductToEdit]){
+      this.allProducts$.forEach(item =>{
+        if(item[this.indexProductToEdit]){//checking if exist the product with the given index
 
-          this.productService.updateProduct(this.editItemData).pipe(
-            finalize(() => this.loadingData = false),
-
-          ).subscribe({
-
+          // service to update in the DB
+          this.productService.updateProduct(this.editItemData)
+          .pipe(
+            finalize(() => this.loadingData = false) // loading
+          )
+          .subscribe({
+            
             next: () => {
+              console.log('Product updated!')
               item[this.indexProductToEdit] = this.editItemData // updating locally first
               this.successMsgActivated = true
             },
-
-            error: () => {
+            error: (err) => {
+              console.log('Product not updated!', err)
               this.failedMsgActivated = true
             }
-
           })
         }
-      })
-
-
-      // this.allProducts$.forEach(item =>{
-      //   if(item[this.indexProductToEdit]){//checking if exist the product with the given index
-
-      //     // service to update in the DB
-      //     this.productService.updateProduct(this.editItemData)
-      //     .pipe(
-      //       finalize(() => this.loadingData = false) // loading
-      //     )
-      //     .subscribe({
-            
-      //       next: () => {
-      //         item[this.indexProductToEdit] = this.editItemData // updating locally first
-      //         this.successMsgActivated = true
-      //       },
-      //       error: () => {
-              
-      //         this.failedMsgActivated = true
-      //       }
-      //     })
-      //   }
         
-      // })
+      })
 
       return 
     }

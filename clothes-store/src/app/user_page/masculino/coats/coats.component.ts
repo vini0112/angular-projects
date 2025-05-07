@@ -20,7 +20,7 @@ export class CoatsComponent{
   
 
 
-  allCoats$ = this.productService.getProducts().pipe(
+  allCoats$ = this.productService.allProducts$.pipe(
       map((products: productModule[]) => 
         products
                 .filter(product => product.section == 'coats' && product.sexo == 'masc')
@@ -42,7 +42,7 @@ export class CoatsComponent{
       })
       
   )
-  
+
   
   
   clickInHeart(item: productModule): void{

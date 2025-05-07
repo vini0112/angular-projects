@@ -8,7 +8,9 @@ import { provideRouter } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { listCartServices } from '../../../services/listCart.service';
 import { ProductsService } from '../../../services/products.service';
-import { of, throwError } from 'rxjs';
+import { BehaviorSubject, of, throwError } from 'rxjs';
+import { productModule } from '../../../modules/products.module';
+
 
 
 const routes = [
@@ -21,17 +23,22 @@ fdescribe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let spyProductService: jasmine.SpyObj<ProductsService>
   let spyListCart: jasmine.SpyObj<listCartServices>
+  let allProductsSubject = new BehaviorSubject<productModule[]>([]);
 
 
   beforeEach(async () => {
 
-    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'])
-            
-      spyListCart = jasmine.createSpyObj('listCartServices', ['addingToCart'])
-          
-      // RETURNS AN AMPTY OBSERVABLE
-      spyProductService.getProducts.and.returnValue(of([]))
+    allProductsSubject = new BehaviorSubject<productModule[]>([]);
 
+    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'],
+      {
+        allProducts$: allProductsSubject.asObservable()
+      }
+    )
+    
+    spyListCart = jasmine.createSpyObj('listCartServices', ['addingToCart'])
+
+    
 
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
@@ -59,87 +66,61 @@ fdescribe('HomeComponent', () => {
   });
 
   
-  it("Should get the products", fakeAsync(() =>{
-        
-    // ARRANGE
 
+  it("Should get the products", () =>{
+
+    // ARRANGE
     const items = [
       {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 4},
       {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 43}
     ]
 
-    spyProductService.getProducts.and.returnValue(of(items))
-
-    // after the mock create the component again
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    allProductsSubject.next(items)
 
     const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePatten"]')).nativeElement
 
-
     // ACT
-    tick()
-      
+    fixture.detectChanges()
+
 
     // ASSERT
-
-    let result: any[] = []
-
-    component.clothesBestsellers$.subscribe(product => {
-      result = product
+    
+    spyProductService.allProducts$.subscribe(res =>{
+      expect(res).toEqual(items)
+    })
+    
+    component.clothesBestsellers$.subscribe(res =>{
+      expect(res).toEqual(items)
     })
 
-
-    expect(spyProductService.getProducts).toHaveBeenCalled()
-
-    tick()
-    console.log(result)
-
-    expect(result).toEqual([
-      {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 4},
-      {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 43}
-    ])
-    
-    // checking the modification of the for loop!
+    // checking the modification of the for loop in template!
     expect(baseStructureChild.childElementCount).toBe(2)
-        
-        
-  }))
+
+  })
       
-  it("Should handle error when fails getting the products", fakeAsync(() =>{
-  
-      // ARRANGE
-  
-      const resErro = new Error('Failed to get the products')
-      spyProductService.getProducts.and.returnValue(throwError(() => resErro))
-  
-      // creating the component again
-      fixture = TestBed.createComponent(HomeComponent)
-      component = fixture.componentInstance
-      fixture.detectChanges()
-  
-  
-      spyOn(console, 'log')
-  
+
+  it("Should handle error when fails getting the products", () =>{
+    // ARRANGE
+
+    const erroMSG = 'Error test'
+    allProductsSubject.error(erroMSG)
+      
+    spyOn(console, 'log')
+
       // ACT
-      tick()
-  
-  
-  
+    fixture.detectChanges()
+
+
       // ASSERT
-      let result: any[] = [];
-      component.clothesBestsellers$.subscribe(favorites => {
-        result = favorites;
-      });
-  
-      tick()
-  
-      expect(console.log).toHaveBeenCalledWith('ERROR getting products in home: ', resErro)
-      expect(result).toEqual([])
-  
-  
-  }))
+    let result: any[] = [];
+    component.clothesBestsellers$.subscribe(favorites => {
+      result = favorites;
+    });
+
+    
+    expect(console.log).toHaveBeenCalledWith('ERROR getting products in home: ', erroMSG)
+    expect(result).toEqual([])
+  })
 
   it("Should change to favorite/unfavorite", () =>{
 
@@ -176,6 +157,9 @@ fdescribe('HomeComponent', () => {
   })
 
 
+  afterEach(() =>{
+    
+  })
 
 
 });

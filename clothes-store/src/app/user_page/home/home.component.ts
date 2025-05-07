@@ -21,7 +21,8 @@ export class HomeComponent{
 
 
 
-  clothesBestsellers$ = this.productsService.getProducts().pipe(
+  clothesBestsellers$ = this.productsService.allProducts$.pipe(
+
           map((products: productModule[]) => 
             products
                     .filter(product => product.isBestseller)
@@ -41,11 +42,12 @@ export class HomeComponent{
             console.log("ERROR getting products in home: ", err)
             return of([])
           })
-          
   )
 
 
   // navigation below the main post
+  
+  
   navigateByTheme = [
     {
       image: '../assets/shoes-femi/red-high-heel-shoes.png',

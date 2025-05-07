@@ -20,7 +20,7 @@ export class FavoritesComponent{
 
 
   // receiving the favorite products
-  favoriteProducts$ = this.productsService.getProducts().pipe(
+  favoriteProducts$ = this.productsService.allProducts$.pipe(
     map((products: productModule[]) => products.filter(product => product.isFavorite == true)),
 
     catchError(err => {

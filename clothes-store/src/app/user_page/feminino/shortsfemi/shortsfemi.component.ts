@@ -18,7 +18,7 @@ export class ShortsfemiComponent{
   listCartServices = inject(listCartServices)
   
   
-  allShortsFemi$ = this.productService.getProducts().pipe(
+  allShortsFemi$ = this.productService.allProducts$.pipe(
       map((products: productModule[]) => 
         products
                 .filter(product => product.section == 'shorts' && product.sexo == 'femi')
@@ -40,6 +40,7 @@ export class ShortsfemiComponent{
       })
       
   )
+  
   
 
   clickInHeart(item: any): void{

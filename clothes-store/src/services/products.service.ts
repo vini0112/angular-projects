@@ -9,29 +9,44 @@ import { EditingProduct, productModule } from '../modules/products.module';
 })
 export class ProductsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+  }
 
   private apiUrl = environment.api
 
-  private allProducts = new BehaviorSubject<productModule[]>([])
-  allProducts$: Observable<productModule[]> = this.allProducts.asObservable()
+  private allProductsSubject = new BehaviorSubject<productModule[]>([])
+  allProducts$ = this.allProductsSubject.asObservable()
 
+  //: Observable<productModule[]> 
 
-  getProducts(): Observable<productModule[]>{
-    return this.http.get<productModule[]>(`${this.apiUrl}/clothes`)
+  
+
+  getProducts(): void{
+    
+    this.http.get<productModule[]>(`${this.apiUrl}/clothes`).subscribe({
+      next: (res) =>{
+        this.allProductsSubject.next(res)
+        console.log('Products received!')
+      },
+      error: (err) =>{
+        console.log('ERROR getting the products! ', err)
+      }
+    })
   }
 
 
   updateFavorite(id: number, isFavorite: boolean){
-    return this.http.patch(`${this.apiUrl}/clothesFavorite/${id}`, {isFavorite}) 
+    return this.http.patch(`${this.apiUrl}/clothesFavorite/${id}`, {isFavorite})
   }
+
 
 
   // CRUD
 
   createProduct(dados: any){
     return this.http.post(`${this.apiUrl}/clothes`, dados).pipe(
-      tap(() => this.getProducts()) // creating in the reactive way
+      tap(() => this.getProducts()) 
     )
   }
 
@@ -46,8 +61,8 @@ export class ProductsService {
     this.http.delete(`${this.apiUrl}/clothes/${id}`).subscribe({
 
       next: () =>{
-        const NewArray = this.allProducts.value.filter(item => item.id !== id)
-        this.allProducts.next(NewArray)
+        const NewArray = this.allProductsSubject.value.filter(item => item.id !== id)
+        this.allProductsSubject.next(NewArray)
         console.log('Product Deleted')
       },
       error: (err) => {

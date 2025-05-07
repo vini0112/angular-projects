@@ -18,7 +18,7 @@ export class JacketsComponent{
   listCartServices = inject(listCartServices)
   
   
-  JackectsFemi$ = this.productService.getProducts().pipe(
+  JackectsFemi$ = this.productService.allProducts$.pipe(
     map((products: productModule[]) => 
       products
               .filter(product => product.section == 'jackets' && product.sexo == 'femi')
@@ -40,6 +40,8 @@ export class JacketsComponent{
     })
     
   )
+
+
 
 
   // changing to favorite/unfavorite

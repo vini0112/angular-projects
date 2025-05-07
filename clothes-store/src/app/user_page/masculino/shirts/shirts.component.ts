@@ -19,7 +19,7 @@ export class ShirtsComponent{
 
 
 
-  allShirts$ = this.productService.getProducts().pipe(
+  allShirts$ = this.productService.allProducts$.pipe(
       map((products: productModule[]) => 
         products
                 .filter(product => product.section == 'shirts')
@@ -41,6 +41,7 @@ export class ShirtsComponent{
       })
       
   )
+
 
 
   clickInHeart(item: productModule): void{

@@ -4,7 +4,7 @@ import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { cartList } from '../../../../modules/cart.list.module';
 import { listCartServices } from '../../../../services/listCart.service';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-shorts-masc',
@@ -12,54 +12,39 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './shorts-masc.component.html',
   styleUrl: './shorts-masc.component.css'
 })
-export class ShortsMascComponent implements OnInit{
+export class ShortsMascComponent{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
 
-  allShorts$ = new Observable<productModule[]>()
-  
-  ngOnInit(): void {
-    this.gettingShorts()
-  }
 
-  
-  gettingShorts(){
 
-    this.productService.getProducts()
-    .subscribe({
-        
-      next: (res: any) =>{
-        
-        this.allShorts$ = of(res).pipe(
-          map((product: any[]) => 
-            product
+  allShorts$ = this.productService.getProducts().pipe(
+        map((products: productModule[]) => 
+          products
                   .filter(product => product.section == 'shorts' && product.sexo == 'masc')
-
+    
                   .map(product => {
-
-                    // displaying uploaded img
                     if(product.image && product.image.includes('/upload')){
                       if(!product.image.startsWith('http://localhost:3000')){
                         product.image = `http://localhost:3000${product.image}`
                       }
                     }
-
+    
                     return product
                   })
-          )
-        )
-
+        ),
+    
+        catchError(err => {
+          console.log("ERROR getting shorts-masc: ", err)
+          return of([])
+        })
         
-      },
+  )
+  
+  
 
-      error: (err) =>{
-        console.log("ERROR getting the shoes: ", err)
-      }
 
-    })
-
-  }
 
 
 

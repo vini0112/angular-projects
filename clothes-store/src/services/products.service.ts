@@ -36,8 +36,8 @@ export class ProductsService {
   }
 
 
-  updateProduct(dados: EditingProduct){
-    return this.http.put(`${this.apiUrl}/clothes/${dados.id}`, dados)
+  updateProduct(dados: EditingProduct): Observable<EditingProduct>{
+    return this.http.put<EditingProduct>(`${this.apiUrl}/clothes/${dados.id}`, dados)
   }
 
 

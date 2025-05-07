@@ -20,8 +20,6 @@ export class AllToolsComponent {
   }
 
 
-
-  
   isChildRouteActive(): boolean{
     return this.route.url !== '/developer_side'
   }

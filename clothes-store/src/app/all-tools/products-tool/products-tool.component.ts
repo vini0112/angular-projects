@@ -4,7 +4,7 @@ import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CreatingProductComponent } from './creating-product/creating-product.component';
-import { finalize, Observable } from 'rxjs';
+import { catchError, finalize, map, Observable, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../../services/message.service';
 
@@ -14,27 +14,16 @@ import { MessageService } from '../../../services/message.service';
   templateUrl: './products-tool.component.html', 
   styleUrl: './products-tool.component.css'
 })
-export class ProductsToolComponent implements OnInit{
+export class ProductsToolComponent{
 
   messageService = inject(MessageService)
   productService = inject(ProductsService)
   route = inject(Router)
 
 
-  allProducts$ = new Observable<productModule[]>()
 
-  
-  constructor(){}
-  
+  allProducts$ = this.productService.getProducts()
 
-  ngOnInit(): void {
-    this.fetchingAllProducts()
-  }
-
-
-  fetchingAllProducts(){
-    this.allProducts$ = this.productService.allProducts$
-  }
 
 
   // active and desactive page
@@ -85,36 +74,61 @@ export class ProductsToolComponent implements OnInit{
     this.EditionSentPage = false 
   }
 
+
   // edits here
   btnFormEditProduct(editForm: any){
-
+    // debugger
     if(editForm.valid){
 
       this.EditionSentPage = true
       this.loadingData = true
 
-      this.allProducts$.forEach(item =>{
-        if(item[this.indexProductToEdit]){//checking if exist the product with the given index
+      // debugger
+      this.allProducts$.forEach(item => {
+        if(item[this.indexProductToEdit]){
 
-          // service to update in the DB
-          this.productService.updateProduct(this.editItemData)
-          .pipe(
-            finalize(() => this.loadingData = false) // loading
-          )
-          .subscribe({
-            
+          this.productService.updateProduct(this.editItemData).pipe(
+            finalize(() => this.loadingData = false),
+
+          ).subscribe({
+
             next: () => {
               item[this.indexProductToEdit] = this.editItemData // updating locally first
               this.successMsgActivated = true
             },
+
             error: () => {
-              
               this.failedMsgActivated = true
             }
+
           })
         }
-        
       })
+
+
+      // this.allProducts$.forEach(item =>{
+      //   if(item[this.indexProductToEdit]){//checking if exist the product with the given index
+
+      //     // service to update in the DB
+      //     this.productService.updateProduct(this.editItemData)
+      //     .pipe(
+      //       finalize(() => this.loadingData = false) // loading
+      //     )
+      //     .subscribe({
+            
+      //       next: () => {
+      //         item[this.indexProductToEdit] = this.editItemData // updating locally first
+      //         this.successMsgActivated = true
+      //       },
+      //       error: () => {
+              
+      //         this.failedMsgActivated = true
+      //       }
+      //     })
+      //   }
+        
+      // })
+
       return 
     }
 
@@ -133,5 +147,7 @@ export class ProductsToolComponent implements OnInit{
     }
 
   }
+
+
 
 }

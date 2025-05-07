@@ -5,7 +5,7 @@ import { productModule } from '../../../modules/products.module';
 import { RouterLink } from '@angular/router';
 import { cartList } from '../../../modules/cart.list.module';
 import { listCartServices } from '../../../services/listCart.service';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
 
 @Component({
@@ -14,15 +14,38 @@ import { map, Observable, of } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
 
-  clothesBestsellers$ = new Observable<productModule[]>()
 
 
-  
+  clothesBestsellers$ = this.productsService.getProducts().pipe(
+          map((products: productModule[]) => 
+            products
+                    .filter(product => product.isBestseller)
+      
+                    .map(product => {
+                      if(product.image && product.image.includes('/upload')){
+                        if(!product.image.startsWith('http://localhost:3000')){
+                          product.image = `http://localhost:3000${product.image}`
+                        }
+                      }
+      
+                      return product
+                    })
+          ),
+      
+          catchError(err => {
+            console.log("ERROR getting products in home: ", err)
+            return of([])
+          })
+          
+  )
+
+
+  // navigation below the main post
   navigateByTheme = [
     {
       image: '../assets/shoes-femi/red-high-heel-shoes.png',
@@ -46,7 +69,6 @@ export class HomeComponent implements OnInit{
 
 
 
-
   clickInHeart(item: productModule){
     
     this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe({
@@ -63,49 +85,6 @@ export class HomeComponent implements OnInit{
       
     })
   }
-
-
-
-  ngOnInit(): void {
-    this.receivingProducts()
-    
-  }
-
-  
-  receivingProducts(){
-
-    this.productsService.getProducts()
-    .subscribe({
-      next: (res: any) =>{
-        
-        this.clothesBestsellers$ = of(res).pipe(
-          map((product: any[]) => 
-            product
-                  .filter(product => product.isBestseller)
-
-                  .map(product => {
-                    if(product.image && product.image.includes('/upload')){
-                      if(!product.image.startsWith('http://localhost:3000')){
-                        product.image = `http://localhost:3000${product.image}`
-                      }
-                    }
-
-                    return product
-                  })
-          )
-        )
-
-        
-      },
-      error: (err) =>{
-        console.log("ERROR getting the jackets: ", err)
-      }
-
-    })
-
-
-  }
-
 
 
   // cart

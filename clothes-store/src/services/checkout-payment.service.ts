@@ -1,45 +1,41 @@
 import { inject, Injectable } from '@angular/core';
-import { checkoutProduct, responseData, userInfo } from '../modules/checkout.module';
+import { checkoutProduct, userPurchaseDataModule, userInfo } from '../modules/checkout.module';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
-import {Stripe} from '@stripe/stripe-js'
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class CheckoutPaymentService{
 
-  stripe!: Stripe | null
   private api = environment.api
-
   private http = inject(HttpClient)
+  private paymentResponseData!: userPurchaseDataModule
 
-  private paymentResponseData!: responseData
-  private statusPaymentPage = false
 
-  setAllResData(data: responseData){
+  // used in shipping component
+  setUserPurchaseData(data: userPurchaseDataModule){
     this.paymentResponseData = data
   }
 
-  getAllResData(): responseData{
+  // used in checkout payment
+  getUserPurchaseData(): userPurchaseDataModule{
     return this.paymentResponseData
   }
 
 
 
-  // SENDING ID/QUANTITY FROM CARTLIST AND USER INFO
-  stripeCheckout(products: checkoutProduct[], userInfo: userInfo[]){
-    return this.http.post(`${this.api}/stripeCheckout`,{products, userInfo})
+  // trigged in shipping component
+  stripeCheckout(products: checkoutProduct[], userInfo: userInfo[]): Observable<userPurchaseDataModule>{
+    return this.http.post<userPurchaseDataModule>(`${this.api}/stripeCheckout`,{products, userInfo})
   }
 
 
   statusPayment(userInfo: userInfo[]): Observable<{status: boolean}>{
     return this.http.post<{status: boolean}>(`${this.api}/checkPaymentStatus`, {userInfo})
   }
-
-
-
-
 
 }

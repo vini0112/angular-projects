@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
 import { MessageService } from '../../../services/message.service';
-import { responseData } from '../../../modules/checkout.module';
+import { userPurchaseDataModule } from '../../../modules/checkout.module';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { Router } from '@angular/router';
 
@@ -24,13 +24,14 @@ export class CheckoutPaymentComponent implements OnInit{
   authServiceLogin = inject(AuthLoginService)
   router = inject(Router)
 
-  // response data from node
-  private dataRes: responseData = this.checkoutService.getAllResData() 
+  
+  userPurchaseData: userPurchaseDataModule = this.checkoutService.getUserPurchaseData()
+  
 
   stripe: Stripe | null = null;
-  clientSecret = this.dataRes.clientSecret
-  amount = this.dataRes.amount
-  quantity = this.dataRes.quantity
+  clientSecret = this.userPurchaseData.clientSecret
+  amount = this.userPurchaseData.amount
+  quantity = this.userPurchaseData.quantity
 
   elements: StripeElements | null = null;
   loading = false;
@@ -40,6 +41,7 @@ export class CheckoutPaymentComponent implements OnInit{
 
   // ACTIVATING PAYMENT FORM 
   async ngOnInit() {
+
     this.stripe = await loadStripe(environment.stripe_public_key, {locale: 'en'})
     
     if (!this.stripe || !this.clientSecret) {
@@ -54,12 +56,11 @@ export class CheckoutPaymentComponent implements OnInit{
     
   }
 
-  // CLICK OF PAYMENT!
-  async handleSubmit(){
+  
+  async submitOfPurchaseConclusion(){
     
     if(!this.stripe || !this.clientSecret || !this.elements) return 
 
-      
       const {error} = await this.stripe.confirmPayment({
       
       elements: this.elements,

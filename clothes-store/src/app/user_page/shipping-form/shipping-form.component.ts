@@ -34,12 +34,12 @@ export class ShippingFormComponent {
   })
 
   
-  submited = false
+  btnGoToPaymentFormSubmitted = false
   token = this.localStorageService.getItem('accessToken')
   
   
-  nextStep(){
-    this.submited = true
+  btnGoToPaymentForm(){
+    this.btnGoToPaymentFormSubmitted = true
 
     if(this.shipForm.invalid){ // CHANGED HERE !
 
@@ -66,7 +66,7 @@ export class ShippingFormComponent {
         
       })
 
-      // USER INFO 
+      // USER INFORMATION
 
       if(!this.token){
         return this.messageService.showMessage("Are you sure that you're logged?", "info")
@@ -83,15 +83,15 @@ export class ShippingFormComponent {
       )
       
 
-      // SENDING ID/QUANTITY TO NODE AND OUTPUTING THE RESPONSE
+      //SENDING ID/QUANTITY TO NODE AND OUTPUTING THE RESPONSE WITH USER PURCHASE INFORMATION
       
       this.checkoutService.stripeCheckout(productsInfo, userInfo).subscribe({
         next: (res: any) => {
-          this.checkoutService.setAllResData(res)
+          this.checkoutService.setUserPurchaseData(res.userPurchaseInformation)
           this.router.navigateByUrl('/checkout-payment')
           
         },
-        error: (err) => console.log(err)
+        error: (err) => console.log('ERRO in shipping form - data not set in the service!', err)
       })
 
     }
@@ -99,12 +99,12 @@ export class ShippingFormComponent {
   }
 
 
-  cancel(){
+  btnCancelFormShipping(){
     this.shipForm.reset()
   }
 
 
-  // FORM MESSAGE ERRORS
+
   messageErro(field: string): string | null{
     const control = this.shipForm.get(field)
     

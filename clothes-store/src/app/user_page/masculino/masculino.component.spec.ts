@@ -5,11 +5,10 @@ import { provideRouter} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing'
 import { provideHttpClient } from '@angular/common/http';
 import {routes} from '../../app.routes'
-import { FemininoComponent } from '../feminino/feminino.component';
 
 
 
-fdescribe('MasculinoComponent', () => {
+describe('MasculinoComponent', () => {
   let component: MasculinoComponent;
   let fixture: ComponentFixture<MasculinoComponent>;
 

@@ -6,7 +6,6 @@ import mailer from 'nodemailer'
 
 
 
-
 const endpointSecret = process.env.STRIPE_SECRET_ENDPOINT
 
 class stripeController{
@@ -62,7 +61,6 @@ class stripeController{
         
     
         try{
-    
             const paymentIntent = await stripe.paymentIntents.create({
                 amount,
                 currency: 'brl',
@@ -81,9 +79,11 @@ class stripeController{
             })
     
             return res.json({
+                userPurchaseInformation: {
                 clientSecret: paymentIntent.client_secret,
                 amount: totalAmount,
                 quantity: quantity
+                }
             }) 
     
         }catch(error){

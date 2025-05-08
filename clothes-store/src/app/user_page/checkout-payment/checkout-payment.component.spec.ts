@@ -4,7 +4,7 @@ import { CheckoutPaymentComponent } from './checkout-payment.component';
 import { provideHttpClient } from '@angular/common/http';
 import { AuthLoginService } from '../../../services/auth.login.service';
 
-describe('CheckoutPaymentComponent', () => {
+fdescribe('CheckoutPaymentComponent', () => {
   let component: CheckoutPaymentComponent;
   let fixture: ComponentFixture<CheckoutPaymentComponent>;
   let spyOnAuthLogin: jasmine.SpyObj<AuthLoginService>

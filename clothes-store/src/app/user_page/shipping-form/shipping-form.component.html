@@ -8,7 +8,7 @@
     <div class="boxInput">
         <label for="">Street</label>
         <input type="text" name="street" formControlName="street">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
         <span class="msgErro">{{messageErro('street')}}</span>
         }
     </div>
@@ -17,7 +17,7 @@
     <div class="boxInput">
         <label for="">House Number</label>
         <input type="number" name="houseNum" formControlName="houseNum">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
             <span class="msgErro">{{messageErro('houseNum')}}</span>
             }
     </div>
@@ -25,7 +25,7 @@
     <div class="boxInput">
         <label for="">Apartment, suite (optional)</label>
         <input type="text" name="aditionalInfo" formControlName="aditionalInfo">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
             <span class="msgErro">{{messageErro('aditionalInfo')}}</span>
             }
     </div>
@@ -33,7 +33,7 @@
     <div class="boxInput">
         <label for="">City</label>
         <input type="text" name="city" formControlName="city">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
             <span class="msgErro">{{messageErro('city')}}</span>
             }
     </div>
@@ -41,7 +41,7 @@
     <div class="boxInput">
         <label for="">ZIP code</label>
         <input type="number" name="zipCode" formControlName="zipCode">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
             <span class="msgErro">{{messageErro('zipCode')}}</span>
             }
     </div>
@@ -49,7 +49,7 @@
     <div class="boxInput">
         <label for="">State</label>
         <input type="text" name="state" formControlName="state">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
             <span class="msgErro">{{messageErro('state')}}</span>
         }
     </div>
@@ -57,15 +57,15 @@
     <div class="boxInput">
         <label for="">Country</label>
         <input type="text" name="country" formControlName="country">
-        @if(submited){
+        @if(btnGoToPaymentFormSubmitted){
             <span class="msgErro">{{messageErro('country')}}</span>
         }
     </div>
     
 
     <div class="btns">
-        <button (click)="cancel()">Cancel</button>
-        <button (click)="nextStep()">Next Step</button>
+        <button (click)="btnCancelFormShipping()">Cancel</button>
+        <button (click)="btnGoToPaymentForm()">Next Step</button>
     </div>
 
 </form>

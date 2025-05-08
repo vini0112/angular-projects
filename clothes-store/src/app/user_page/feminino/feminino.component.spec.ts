@@ -7,7 +7,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 
 
 
-fdescribe('FemininoComponent', () => {
+describe('FemininoComponent', () => {
   let component: FemininoComponent;
   let fixture: ComponentFixture<FemininoComponent>;
 

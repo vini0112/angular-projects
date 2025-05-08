@@ -12,7 +12,7 @@ export interface checkoutProduct{
 }
 
 
-export interface responseData{
+export interface userPurchaseDataModule{
     clientSecret: string
     amount: number 
     quantity: number

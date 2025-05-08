@@ -3,21 +3,29 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { ShortsMascComponent } from './shorts-masc.component';
 import { listCartServices } from '../../../../services/listCart.service';
 import { ProductsService } from '../../../../services/products.service';
-import { of, throwError } from 'rxjs';
+import { BehaviorSubject, of, throwError } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
+import { productModule } from '../../../../modules/products.module';
 
 describe('ShortsMascComponent', () => {
   let component: ShortsMascComponent;
   let fixture: ComponentFixture<ShortsMascComponent>;
   let spyProductService: jasmine.SpyObj<ProductsService>
   let spyListCart: jasmine.SpyObj<listCartServices>
+  let allProductsSubject = new BehaviorSubject<productModule[]>([]);
 
 
 
   beforeEach(async () => {
 
-    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'])
+    allProductsSubject = new BehaviorSubject<productModule[]>([]);
+
+    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'],
+      {
+        allProducts$: allProductsSubject.asObservable()
+      }
+    )
         
     spyListCart = jasmine.createSpyObj('listCartServices', ['addingToCart'])
         
@@ -48,87 +56,59 @@ describe('ShortsMascComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it("Should get the products", fakeAsync(() =>{
-      
-  //   // ARRANGE
+  it("Should get the products", () =>{
 
-  //   const items = [
-  //     {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 4},
-  //     {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 43}
-  //   ]
+    // ARRANGE
+    const items = [
+      {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 4},
+      {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 43}
+    ]
 
-  //   spyProductService.getProducts.and.returnValue()
+    allProductsSubject.next(items)
 
-  //   // after the mock create the component again
-  //   fixture = TestBed.createComponent(ShortsMascComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
+    // ACT 
+    fixture.detectChanges()
 
-  //   const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePatten"]')).nativeElement
+    const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePattern"]')).nativeElement
 
 
-  //   // ACT
-  //   tick()
-      
-
-  //   // ASSERT
-
-  //   let result: any[] = []
-
-  //   component.allShorts$.subscribe(product => {
-  //     result = product
-  //   })
-
-
-  //   expect(spyProductService.getProducts).toHaveBeenCalled()
-
-  //   tick()
-  //   console.log(result)
-
-  //   expect(result).toEqual([
-  //     {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 4},
-  //     {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shorts', info: 'jk', sexo: 'masc', isBestseller: true, quantity: 43}
-  //   ])
+    // ASSERT
     
-  //   // checking the modification of the for loop!
-  //   expect(baseStructureChild.childElementCount).toBe(2)
-      
-      
-  // }))
+    spyProductService.allProducts$.subscribe(res =>{
+      expect(res).toEqual(items)
+    })
     
-  // it("Should handle error when fails getting the products", fakeAsync(() =>{
-  
-  //     // ARRANGE
-  
-  //     const resErro = new Error('Failed to get the products')
-  //     spyProductService.getProducts.and.returnValue()
-  
-  //     // creating the component again
-  //     fixture = TestBed.createComponent(ShortsMascComponent)
-  //     component = fixture.componentInstance
-  //     fixture.detectChanges()
-  
-  
-  //     spyOn(console, 'log')
-  
-  //     // ACT
-  //     tick()
-  
-  
-  
-  //     // ASSERT
-  //     let result: any[] = [];
-  //     component.allShorts$.subscribe(favorites => {
-  //       result = favorites;
-  //     });
-  
-  //     tick()
-  
-  //     expect(console.log).toHaveBeenCalledWith('ERROR getting shorts-masc: ', resErro)
-  //     expect(result).toEqual([])
-  
-  
-  // }))
+    component.allShorts$.subscribe(res =>{
+      expect(res).toEqual(items)
+    })
+
+    // checking the modification of the for loop in template!
+    expect(baseStructureChild.childElementCount).toBe(2) 
+
+  })
+      
+  it("Should handle error when fails getting the products", () =>{
+    // ARRANGE
+
+    const erroMSG = 'Error test'
+    allProductsSubject.error(erroMSG)
+      
+    spyOn(console, 'log')
+
+      // ACT
+    fixture.detectChanges()
+
+
+      // ASSERT
+    let result: any[] = [];
+    component.allShorts$.subscribe(favorites => {
+      result = favorites;
+    });
+
+    
+    expect(console.log).toHaveBeenCalledWith('ERROR getting shorts-masc: ', erroMSG)
+    expect(result).toEqual([])
+  })
 
   it("Should change to favorite/unfavorite", () =>{
 

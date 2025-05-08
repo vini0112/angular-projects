@@ -44,7 +44,6 @@ export class ShoesComponent{
 
 
   
-
   
   clickInHeart(item: productModule): void{
     this.productService.updateFavorite(item.id!, item.isFavorite).subscribe({

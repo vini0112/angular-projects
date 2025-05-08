@@ -52,19 +52,19 @@ export class HomeComponent{
     {
       image: '../assets/shoes-femi/red-high-heel-shoes.png',
       title: 'HIGH HEALS',
-      linkNavegation: '/feminino/shoesfemi'
+      linkNavegation: '/feminine/shoesfemi'
 
     },
     {
       image: '../assets/homeImgs/camisa.png',
       title: 'T-SHIRTS',
-      linkNavegation: '/masculino/shirts'
+      linkNavegation: '/masculine/shirts'
 
     },
     {
       image: '../assets/homeImgs/tenis.png',
       title: 'TRAINERS',
-      linkNavegation: '/masculino/shoes'
+      linkNavegation: '/masculine/shoes'
 
     }
   ]

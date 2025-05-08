@@ -4,7 +4,7 @@
     
     <h2>Your Favorite Products</h2>
 
-    <div class="struturePadraoCards" data-testid="structurePatten">
+    <div class="struturePadraoCards" data-testid="structurePattern">
         @for(favoriteItem of favoriteProducts$ | async;track $index){
             <div class="padraoCard" data-testid="card">
                 <div class="boxImg" (click)="addProductToCart(favoriteItem)">

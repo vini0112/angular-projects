@@ -22,12 +22,12 @@ export const routes: Routes = [
         component: HomeComponent
     },
     {
-        path: 'masculino',
+        path: 'masculine',
         component: MasculinoComponent,
         loadChildren: () => import('../app/user_page/masculino/masculino.routes').then(m => m.mascRoutes)
     },
     {
-        path: 'feminino',
+        path: 'feminine',
         component: FemininoComponent,
         loadChildren: () => import('../app/user_page/feminino/feminino.routes').then(m => m.femiRoutes)
     },

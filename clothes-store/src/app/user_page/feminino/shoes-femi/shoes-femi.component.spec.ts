@@ -4,19 +4,28 @@ import { ShoesFemiComponent } from './shoes-femi.component';
 import { ProductsService } from '../../../../services/products.service';
 import { listCartServices } from '../../../../services/listCart.service';
 import { provideHttpClient } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
+import { BehaviorSubject, of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { productModule } from '../../../../modules/products.module';
 
 describe('ShoesFemiComponent', () => {
   let component: ShoesFemiComponent;
   let fixture: ComponentFixture<ShoesFemiComponent>;
   let spyProductService: jasmine.SpyObj<ProductsService>
   let spyListCart: jasmine.SpyObj<listCartServices>
+  let allProductsSubject = new BehaviorSubject<productModule[]>([]);
 
 
 
   beforeEach(async () => {
-    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'])
+
+    allProductsSubject = new BehaviorSubject<productModule[]>([]);
+
+    spyProductService = jasmine.createSpyObj('ProductsService', ['getProducts', 'updateFavorite'],
+      {
+        allProducts$: allProductsSubject.asObservable()
+      }
+    )
 
     spyListCart = jasmine.createSpyObj('listCartServices', ['addingToCart'])
 
@@ -46,88 +55,59 @@ describe('ShoesFemiComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it("Should get the products", () =>{
 
-//   it("Should get the products", fakeAsync(() =>{
-  
-//       // ARRANGE
-  
-//       const items = [
-//         {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shoes', info: 'jk', sexo: 'femi', isBestseller: true, quantity: 4},
-//         {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'femi', isBestseller: true, quantity: 43}
-//       ]
-  
-//       spyProductService.getProducts.and.returnValue(of(items))
-  
-//       // after the mock create the component again
-//       fixture = TestBed.createComponent(ShoesFemiComponent);
-//       component = fixture.componentInstance;
-//       fixture.detectChanges();
-  
-//       const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePatten"]')).nativeElement
-  
-  
-//       // ACT
-//       tick()
-        
-  
-//       // ASSERT
-  
-//       let result: any[] = []
-  
-//       component.allShoesFemi$.subscribe(product => {
-//         result = product
-//       })
-  
-  
-//       expect(spyProductService.getProducts).toHaveBeenCalled()
-  
-//       tick()
-  
-//       expect(result).toEqual([
-//         {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shoes', info: 'jk', sexo: 'femi', isBestseller: true, quantity: 4},
-//         {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'femi', isBestseller: true, quantity: 43}
-//       ])
+    // ARRANGE
+    const items = [
+      {id: 1, name: 'vina', price: 1, isFavorite: true, image: 'jklhjka', section: 'shoes', info: 'jk', sexo: 'femi', isBestseller: true, quantity: 4},
+      {id: 2, name: 'klkk', price: 49, isFavorite: true, image: 'jkla', section: 'shoes', info: 'jk', sexo: 'femi', isBestseller: true, quantity: 43}
+    ]
+
+    allProductsSubject.next(items)
+
+    // ACT 
+    fixture.detectChanges()
+
+    const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePattern"]')).nativeElement
+
+
+    // ASSERT
+    
+    spyProductService.allProducts$.subscribe(res =>{
+      expect(res).toEqual(items)
+    })
+    
+    component.allShoesFemi$.subscribe(res =>{
+      expect(res).toEqual(items)
+    })
+
+    // checking the modification of the for loop in template!
+    expect(baseStructureChild.childElementCount).toBe(2) 
+
+  })
       
-//       // checking the modification of the for loop!
-//       expect(baseStructureChild.childElementCount).toBe(2)
-  
-  
-//   }))
+  it("Should handle error when fails getting the products", () =>{
+    // ARRANGE
+
+    const erroMSG = 'Error test'
+    allProductsSubject.error(erroMSG)
+      
+    spyOn(console, 'log')
+
+      // ACT
+    fixture.detectChanges()
 
 
-//   it("Should handle error when fails getting the products", fakeAsync(() =>{
+      // ASSERT
+    let result: any[] = [];
+    component.allShoesFemi$.subscribe(favorites => {
+      result = favorites;
+    });
+
     
-//     // ARRANGE
-
-//     const resErro = new Error('Failed to get the products')
-//     spyProductService.getProducts.and.returnValue(throwError(() => resErro))
-
-//     // creating the component again
-//     fixture = TestBed.createComponent(ShoesFemiComponent)
-//     component = fixture.componentInstance
-//     fixture.detectChanges()
-
-
-//     spyOn(console, 'log')
-
-//     // ACT
-//     tick()
-
-
-
-//     // ASSERT
-//     let result: any[] = [];
-//     component.allShoesFemi$.subscribe(favorites => {
-//       result = favorites;
-//     });
-
-//     tick()
-
-//     expect(console.log).toHaveBeenCalledWith('ERROR getting shoes ', resErro)
-//     expect(result).toEqual([])
-    
-    
-//   }))
+    expect(console.log).toHaveBeenCalledWith('ERROR getting shoes ', erroMSG)
+    expect(result).toEqual([])
+  })
 
   it("Should change to favorite/unfavorite", () =>{
 

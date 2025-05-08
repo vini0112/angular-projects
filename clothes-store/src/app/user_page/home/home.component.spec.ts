@@ -18,7 +18,7 @@ const routes = [
 ]
 
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let spyProductService: jasmine.SpyObj<ProductsService>
@@ -65,7 +65,6 @@ fdescribe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  
 
   it("Should get the products", () =>{
 
@@ -77,7 +76,7 @@ fdescribe('HomeComponent', () => {
 
     allProductsSubject.next(items)
 
-    const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePatten"]')).nativeElement
+    const baseStructureChild = fixture.debugElement.query(By.css('[data-testid="structurePattern"]')).nativeElement
 
     // ACT
     fixture.detectChanges()

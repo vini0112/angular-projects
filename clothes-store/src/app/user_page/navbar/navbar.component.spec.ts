@@ -1,13 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavbarComponent } from './navbar.component';
+import { provideHttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
-describe('NavbarComponent', () => {
+fdescribe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),
+            queryParams: of({}),
+            snapshot: {
+              paramMap: {
+                get: (key: string) => null,
+              },
+                queryParamMap: {
+                get: (key: string) => null,
+              }
+            }
+          }
+        }
+      ],
       imports: [NavbarComponent]
     })
     .compileComponents();

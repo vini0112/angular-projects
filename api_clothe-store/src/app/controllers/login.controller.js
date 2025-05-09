@@ -23,7 +23,7 @@ class loginController{
         jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
             if(err) {
                 console.log('❌ Token inválido!')
-                return res.status(403).json({ message: "Token inválido!"})
+                return res.status(403).json({ erroMessage: "Token inválido!"})
             }
             
             

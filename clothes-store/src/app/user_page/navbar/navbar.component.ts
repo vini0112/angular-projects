@@ -17,8 +17,6 @@ import { MessageService } from '../../../services/message.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
-  // localStorageService = inject(LocalStorageService)
-  // checkoutService = inject(CheckoutPaymentService)
 
   messageService = inject(MessageService)
   listCartService = inject(listCartServices)
@@ -98,10 +96,7 @@ export class NavbarComponent implements OnInit{
     // PASSING THE PRODUCTS ITEMS TO THE CART LIST
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
-    })
-
-
-      
+    })   
   }
 
 

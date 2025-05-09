@@ -3,8 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './user_page/navbar/navbar.component';
 import { ProductsService } from '../services/products.service';
 import { MessageComponent } from './message/message.component';
-import { dashboardService } from '../services/dashboard.service';
-import { AuthLoginService } from '../services/auth.login.service';
+
 
 @Component({
   selector: 'app-root',
@@ -14,20 +13,16 @@ import { AuthLoginService } from '../services/auth.login.service';
 })
 export class AppComponent implements OnInit{
   
-  title = 'clothes-store';
 
   productService = inject(ProductsService)
 
   
-  constructor(){
-    
-  }
+  constructor(){}
 
   ngOnInit(): void {
     this.productService.getProducts()
   }
   
-  
-  
+
   
 }

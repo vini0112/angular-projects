@@ -1,14 +1,37 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ActivatedRoute, provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { of } from 'rxjs';
+
 
 describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [ provideHttpClient, provideHttpClientTesting()]
+      providers: [
+        provideHttpClient(), 
+        provideRouter(routes),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),
+            queryParams: of({}),
+            snapshot: {
+              paramMap: {
+                get: (key: string) => null,
+              },
+                queryParamMap: {
+                get: (key: string) => null,
+              }
+            }
+          }
+        }
+
+
+      ]
     }).compileComponents();
   });
 
@@ -21,18 +44,8 @@ describe('AppComponent', () => {
   });
 
 
-  xit(`should have the 'clothes-store' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('clothes-store');
-  });
+  
 
 
-  xit('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, clothes-store');
-  });
 
 });

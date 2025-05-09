@@ -13,10 +13,8 @@ import { NgClass } from '@angular/common';
 })
 export class ResetPasswordComponent{
 
-  blockLeavePasswordResetPage = false
   token = ''
   authLoginService = inject(AuthLoginService)
-  router = inject(Router)
   resetPassword: FormGroup
 
 
@@ -24,9 +22,10 @@ export class ResetPasswordComponent{
     this.resetPassword = fb.group({
       newPassword: [
         null,
-        [Validators.required, Validators.minLength(4), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/), noWhiteSpaceValidator()]],
+        [Validators.required, Validators.minLength(4), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/), noWhiteSpaceValidator()]
+      ],
       checkingPassword: [null]
-    })
+  })
 
     // taking token from url
     this.route.params.subscribe(params =>{
@@ -59,11 +58,11 @@ export class ResetPasswordComponent{
   }
 
 
-  // reseting password
+
   passwordWasSent = false
 
 
-  reseting(){
+  resetingPassword(){
     if(this.resetPassword.valid){
 
       if(this.newPassword?.value === this.confirmingPassword?.value){
@@ -73,6 +72,7 @@ export class ResetPasswordComponent{
 
           next: (res) => {
             this.passwordWasSent = true
+            
           },
 
           error: (err) => console.log(err)

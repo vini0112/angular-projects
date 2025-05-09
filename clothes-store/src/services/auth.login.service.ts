@@ -94,8 +94,8 @@ export class AuthLoginService{
           this.IsDeveloper.next(true)
           this.isAuth.next(true)
           console.log('DEV LOGGED')
-
         }
+
         else if(res.message === 'User_Logged'){
           this.isAuth.next(true)
           console.log('USER LOGGED')

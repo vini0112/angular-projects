@@ -27,7 +27,7 @@ describe('JacketsComponent', () => {
     )
 
     spyListCart = jasmine.createSpyObj('listCartServices', ['addingToCart'])
-        
+    
     // RETURNS AN AMPTY OBSERVABLE
     spyProductService.getProducts.and.returnValue()
 

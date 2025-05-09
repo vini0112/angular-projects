@@ -6,23 +6,23 @@
 
     </div>
 
-    <div class="subTotalBox" *ngIf="!message">
-        <span>SubTotal ({{quantity}} items)</span>
-        <span>${{amount}}</span>
+    <div class="subTotalBox" *ngIf="!paymentElements.message">
+        <span>SubTotal ({{paymentElements.quantity}} items)</span>
+        <span>${{paymentElements.amount}}</span>
     </div>
 
-    <div class="totalAmount" *ngIf="!message">
+    <div class="totalAmount" *ngIf="!paymentElements.message">
         <span>Total Amount</span>
-        <span>${{amount}}</span>
+        <span>${{paymentElements.amount}}</span>
     </div>
     
     <div class="boxBtn">
-        <button type="submit" [disabled]="loading" *ngIf="!message">
+        <button type="submit" [disabled]="loading" *ngIf="!paymentElements.message">
             {{ loading ? 'Loading...' : 'Buy' }}
         </button>
     </div>
 
-    <div *ngIf="message" class="messageERROR">{{ message }}</div>
+    <div *ngIf="paymentElements.message" class="messageERROR">{{ paymentElements.message }}</div>
 </form>
 
 

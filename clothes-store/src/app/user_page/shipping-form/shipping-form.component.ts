@@ -35,55 +35,26 @@ export class ShippingFormComponent {
 
   
   btnGoToPaymentFormSubmitted = false
-  token = this.localStorageService.getItem('accessToken')
   
   
   btnGoToPaymentForm(){
     this.btnGoToPaymentFormSubmitted = true
 
-    if(this.shipForm.invalid){ // CHANGED HERE !
+    if(this.shipForm.invalid){  // CHANGED HERE !
 
+      let productsInfo = this.getProductsInfo_FromLocalStorage()
 
-      let productsInfo: checkoutProduct[] = []
-      let userInfo: userInfo[] = []
-
-      // ACTIVATING PAYMENT FORM AND SENDING PRODUCTS INFO TO THE SERVER
-      
-      let itemsFromCart_list = JSON.parse(this.localStorageService.getItem('cartItem'))
-      
-      if(itemsFromCart_list.length <= 0){
+      if(productsInfo.length <= 0){
         return this.messageService.showMessage("Cart is empty!", "info")
       }
-      
-      itemsFromCart_list.forEach((product:any) => {
 
-        productsInfo.push(
-          {
-            id: product.id, 
-            quantity: product.cart_quantity
-          }
-        )
-        
-      })
 
-      // USER INFORMATION
+      let userInfo = this.getUserInfo_fromJWT()
 
-      if(!this.token){
+      if(userInfo.length <= 0){
         return this.messageService.showMessage("Are you sure that you're logged?", "info")
       }
-
-      const decoded: any = jwtDecode(this.token);
       
-      userInfo.push(
-        {
-          userId: decoded.id,
-          email: decoded.email,
-          username: decoded.username
-        }
-      )
-      
-
-      //SENDING ID/QUANTITY TO NODE AND OUTPUTING THE RESPONSE WITH USER PURCHASE INFORMATION
       
       this.checkoutService.stripeCheckout(productsInfo, userInfo).subscribe({
         next: (res: any) => {
@@ -91,12 +62,60 @@ export class ShippingFormComponent {
           this.router.navigateByUrl('/checkout-payment')
           
         },
-        error: (err) => console.log('ERRO in shipping form - data not set in the service!', err)
+        error: (err) => console.log('ERRO in shipping form!', err)
       })
 
     }
     
   }
+
+
+  getProductsInfo_FromLocalStorage(): checkoutProduct[]{
+
+    let productsInfo: checkoutProduct[] = []
+
+    let itemsFromCart_list = JSON.parse(this.localStorageService.getItem('cartItem'))
+
+    if(itemsFromCart_list.length <= 0) return []
+
+    itemsFromCart_list.forEach((product:any) => {
+
+      productsInfo.push(
+        {
+          id: product.id, 
+          quantity: product.cart_quantity
+        }
+      )
+    })
+
+    return productsInfo
+  }
+
+
+  getUserInfo_fromJWT(): userInfo[]{
+
+    let token = this.localStorageService.getItem('accessToken')
+
+    if(!token){
+      return []
+    }
+
+    let userInfo: userInfo[] = []
+    
+
+    const decoded: any = jwtDecode(token);
+    
+    userInfo.push(
+      {
+        userId: decoded.id,
+        email: decoded.email,
+        username: decoded.username
+      }
+    )
+
+    return userInfo
+  }
+
 
 
   btnCancelFormShipping(){

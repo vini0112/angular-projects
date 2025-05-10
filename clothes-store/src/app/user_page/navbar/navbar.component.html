@@ -2,7 +2,7 @@
     <div id="conteudo">
         <h2 routerLink="/home" class="titleNav">Shopping</h2>
 
-        <ul id="navLinks" >
+        <ul id="navLinks">
             <li><a routerLink="/">Home</a></li>
             <li id="dropdown">
                 <a class="shopBtn">Shop <i class="fa-solid fa-caret-down"></i></a>
@@ -19,24 +19,25 @@
 
         <!-- normal icons -->
         <nav id="icons">
-            <a routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+            <a data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
+            </a>
 
             <i class="fa-regular fa-heart" routerLink="/favorites"></i>
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
-                <span class="contCart">{{allQtd$ | async}}</span>
+                <span class="contCart">{{totalQuantityProducts_inCart$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
-            <a routerLink="/login" *ngIf="!(isAuthenticated$ | async)" class="loginPrincipal">Login</a>
+            <a routerLink="/login" *ngIf="!(isAuthenticated$ | async)" class="loginPrincipal" data-testid="loginBTN">Login</a>
             
-            <a routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
+            <a data-testid="logouIcon" routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
         </nav>
 
         <!-- mobile icons -->
         <nav class="iconsMobile">
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
-                <span class="contCart">{{allQtd$ | async}}</span>
+                <span class="contCart">{{totalQuantityProducts_inCart$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
         </nav>
@@ -102,7 +103,7 @@
         </div>
 
         <div class="btnCart">
-            <button class="btnBuy" (click)="buying()">{{totalPrice$ | async}}<span>Buy</span></button>
+            <button class="btnBuy" (click)="buying()">{{totalPriceCart$ | async}}<span>Buy</span></button>
             <button class="btnClose" (click)="btnCloseCart()">Close</button>
         </div>
         

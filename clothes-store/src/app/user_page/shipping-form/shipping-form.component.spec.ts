@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShippingFormComponent } from './shipping-form.component';
+import { provideHttpClient } from '@angular/common/http';
 
-describe('ShippingFormComponent', () => {
+fdescribe('ShippingFormComponent', () => {
   let component: ShippingFormComponent;
   let fixture: ComponentFixture<ShippingFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideHttpClient()],
       imports: [ShippingFormComponent]
     })
     .compileComponents();
@@ -20,4 +22,8 @@ describe('ShippingFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  
+
 });

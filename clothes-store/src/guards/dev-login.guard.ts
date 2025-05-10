@@ -21,7 +21,7 @@ export const devLoginGuard: CanActivateFn = (route, state) => {
 
 
     //  CHECKING IF IS_DEVELOPER IS TRUE TO ALLOW ACCESS TO THE DEV TOOLS!
-  return authLoginService.IsDeveloper$.pipe(
+  return authLoginService.IsDeveloper_authentication$.pipe(
     take(1),
     map(isLogged => {
 

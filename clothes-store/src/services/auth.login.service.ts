@@ -20,9 +20,7 @@ export class AuthLoginService{
   
   constructor() { 
     
-    this.checkIfIsLogged()
   }
-
   
 
   // STATUS OF AUTHENTICATION
@@ -31,7 +29,7 @@ export class AuthLoginService{
 
   // STATUS OF DEV AUTHENTICATION
   private IsDeveloper = new BehaviorSubject<boolean>(false)
-  IsDeveloper$ = this.IsDeveloper.asObservable()
+  IsDeveloper_authentication$ = this.IsDeveloper.asObservable()
 
 
 
@@ -83,7 +81,7 @@ export class AuthLoginService{
 
 
 
-   // checks if logged every time u load the components
+   // called in the app component
 
   checkIfIsLogged(){
     
@@ -100,10 +98,10 @@ export class AuthLoginService{
           this.isAuth.next(true)
           console.log('USER LOGGED')
         }
+
         else{
           console.log(res.message)
           this.isAuth.next(false)
-
         }
         
       },

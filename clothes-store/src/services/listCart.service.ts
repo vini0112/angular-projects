@@ -10,13 +10,14 @@ import { MessageService } from "./message.service";
 
 export class listCartServices{
 
+    messageService = inject(MessageService)
+
     private key_local_storage = 'cartItem'
 
     private cart = new BehaviorSubject<cartList[]>(this.getFromLocalStorage())
-    cart$ = this.cart.asObservable() // observar mudanças no carrinho
+    cart$ = this.cart.asObservable()
 
-    messageService = inject(MessageService)
-
+    
     private getFromLocalStorage(): cartList[]{
         if(typeof window !== 'undefined' && localStorage){
             const item = localStorage.getItem(this.key_local_storage)
@@ -108,12 +109,12 @@ export class listCartServices{
     
 
     // taking all price
-    allPrice$: Observable<number> = this.cart$.pipe(
+    getTotalPriceCart$: Observable<number> = this.cart$.pipe(
         map(items => items.reduce((acc, item) => acc + item.price * item.cart_quantity!, 0))
     )
 
     // taking all quantity
-    allQtd$: Observable<number> = this.cart$.pipe(
+    getTotalQuantityProducts_inCart$: Observable<number> = this.cart$.pipe(
         map(items => items.reduce((junt, product) => junt + product.cart_quantity!,0))
     )
 

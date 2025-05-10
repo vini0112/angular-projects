@@ -5,10 +5,8 @@ import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
 import { map, Observable, tap } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
-import { LocalStorageService } from '../../../services/localStorage.service';
-import { checkoutProduct } from '../../../modules/checkout.module';
-import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { MessageService } from '../../../services/message.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -26,8 +24,8 @@ export class NavbarComponent implements OnInit{
 
   // cart parameters 
   products: cartList[] = []
-  totalPrice$!: Observable<number>
-  allQtd$!: Observable<number>
+  totalPriceCart$!: Observable<number>
+  totalQuantityProducts_inCart$!: Observable<number>
 
   
   // parameters
@@ -81,19 +79,15 @@ export class NavbarComponent implements OnInit{
 
   constructor(){
     // RECEIVING QUANTITY AND AMOUNT  
-    this.totalPrice$ = this.listCartService.allPrice$
-    this.allQtd$ = this.listCartService.allQtd$
+    this.totalPriceCart$ = this.listCartService.getTotalPriceCart$
+    this.totalQuantityProducts_inCart$ = this.listCartService.getTotalQuantityProducts_inCart$
   }
 
-
-  // DEV ICON DISPLAYS ACCORDING TO THIS OBESERVABLE
-  DEV_logged$ = this.authLoginService.IsDeveloper$
-  
 
 
   ngOnInit(): void {
 
-    // PASSING THE PRODUCTS ITEMS TO THE CART LIST
+    // PASSING THE PRODUCTS ITEMS FROM THE CART LIST
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
     })   
@@ -114,6 +108,7 @@ export class NavbarComponent implements OnInit{
 
   // STATUS OF AUTHENTICATION
   isAuthenticated$ = this.authLoginService.isAuthenticated$
+  DEV_logged$ = this.authLoginService.IsDeveloper_authentication$
 
 
 

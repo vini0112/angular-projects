@@ -14,10 +14,11 @@ fdescribe('ShippingFormComponent', () => {
 
   beforeEach(async () => {
 
-    spyCheckoutPayment = jasmine.createSpyObj('CheckoutPaymentService', ['stripeCheckout'])
+    spyCheckoutPayment = jasmine.createSpyObj('CheckoutPaymentService', ['stripeCheckout', 'setUserPurchaseData'])
 
-    const fakeJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjE2MjM5MDIyfQ.fake-signature'
-    
+
+    const fakeJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ2aW5pIiwiZW1haWwiOiJ2aW5pY2l1c0BnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.Hn-kMVh7q2AVtQbFIkD2aEpMgE06UQqEoShzvHR3iwY"
+
     let item = [
       {
           id: 1,
@@ -30,11 +31,13 @@ fdescribe('ShippingFormComponent', () => {
     ]
 
     localStorage.setItem('cartItem', JSON.stringify(item))
-    localStorage.setItem('accessToken', fakeJWT)
+    localStorage.setItem('accessToken', fakeJwtToken)
 
 
     await TestBed.configureTestingModule({
-      providers: [provideHttpClient()],
+      providers: [provideHttpClient(), 
+        {provide: CheckoutPaymentService, useValue: spyCheckoutPayment}
+      ],
       imports: [ShippingFormComponent]
     })
     .compileComponents();
@@ -63,39 +66,34 @@ fdescribe('ShippingFormComponent', () => {
   it("Should get user information from JWT", () =>{
 
     const userInfo = component.getUserInfo_fromJWT()
-
     expect(userInfo.length).toBeGreaterThan(0)
     expect(userInfo).toBeTruthy()
 
   })
 
 
-  fit("Should validate behaviors after click of btnGoToPaymentForm", () =>{
+  it("Should check if stripeCheckout service is called", () =>{
 
     // ARRANGE
-    // expect(component.shipForm.invalid).toBeTrue()
-    let userPurchaseData = {clientSecret: 'jljghjkl', amount: 3, quantity: 3}
+    component.shipForm.controls['street'].setValue('ljv')
 
-    const items = component.getProductsInfo_FromLocalStorage()
-    const userInfo = component.getUserInfo_fromJWT()
-
-    spyCheckoutPayment.stripeCheckout.and.returnValue(of(userPurchaseData))
-
-
-    component.btnGoToPaymentForm()
-
+    expect(component.shipForm.valid).toBeTrue()
     
+    let userPurchaseInformation = {clientSecret: 'test_secret', amount: 123, quantity: 1}
+
+    spyCheckoutPayment.stripeCheckout.and.returnValue(of(userPurchaseInformation))
+
 
 
     // ACT
+    component.btnGoToPaymentForm()
     fixture.detectChanges()
+
+
 
     // ASSERT
     expect(component.btnGoToPaymentFormSubmitted).toBeTrue()
     expect(spyCheckoutPayment.stripeCheckout).toHaveBeenCalled()
-    // spyCheckoutPayment.stripeCheckout(items, userInfo).subscribe(res => console.log(res))
-
-
 
   })
   

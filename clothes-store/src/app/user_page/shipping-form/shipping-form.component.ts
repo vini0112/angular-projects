@@ -1,5 +1,5 @@
 import { Component, inject, output } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { checkoutProduct, userInfo } from '../../../modules/checkout.module';
 import { LocalStorageService } from '../../../services/localStorage.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
@@ -16,14 +16,17 @@ import { MessageService } from '../../../services/message.service';
 export class ShippingFormComponent {
 
 
-  private fb = inject(FormBuilder)
+  
   localStorageService = inject(LocalStorageService)
   checkoutService = inject(CheckoutPaymentService)
   router = inject(Router)
   messageService = inject(MessageService)
   
+  shipForm: FormGroup
 
-  shipForm = this.fb.group({
+  constructor(fb: FormBuilder){ 
+
+    this.shipForm = fb.group({
       street: [null, [Validators.required]],
       houseNum: [null, [Validators.required]],
       aditionalInfo: [null, [Validators.required]],
@@ -31,8 +34,10 @@ export class ShippingFormComponent {
       zipCode: [null, [Validators.required]],
       state: [null, [Validators.required]],
       country: [null, [Validators.required]],
-  })
-
+    })
+    
+  }
+  
   
   btnGoToPaymentFormSubmitted = false
   
@@ -54,14 +59,15 @@ export class ShippingFormComponent {
       if(userInfo.length <= 0){
         return this.messageService.showMessage("Are you sure that you're logged?", "info")
       }
-      
+
       
       this.checkoutService.stripeCheckout(productsInfo, userInfo).subscribe({
+        
         next: (res: any) => {
-          this.checkoutService.setUserPurchaseData(res.userPurchaseInformation)
+          this.checkoutService.setUserPurchaseData(res)
           this.router.navigateByUrl('/checkout-payment')
-          
         },
+
         error: (err) => console.log('ERRO in shipping form!', err)
       })
 

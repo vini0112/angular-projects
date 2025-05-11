@@ -11,7 +11,9 @@ describe('CheckoutPaymentService', () => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient()]
     });
+    
     service = TestBed.inject(CheckoutPaymentService);
+
   });
 
 

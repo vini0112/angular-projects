@@ -100,7 +100,6 @@ describe('LoginComponent', () => {
     // checking if register service was called
     spyService.register.and.returnValue(of(component.signUpForm.value))
     expect(spyService.register).toHaveBeenCalled()
-    
 
   })
 

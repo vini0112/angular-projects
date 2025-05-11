@@ -78,12 +78,12 @@ class stripeController{
     
             })
     
-            return res.json({
-                userPurchaseInformation: {
+            return res.json({ //userPurchaseInformation: {
+                
                 clientSecret: paymentIntent.client_secret,
                 amount: totalAmount,
                 quantity: quantity
-                }
+                
             }) 
     
         }catch(error){

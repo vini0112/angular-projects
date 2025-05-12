@@ -29,6 +29,7 @@ export class AuthServiceService {
     localStorage.removeItem('accessToken');
   }
 
+
   refreshToken(): Observable<any>{
 
     const accessToken = this.getAccessToken()
@@ -46,7 +47,6 @@ export class AuthServiceService {
         }
       })
     )
-
   }
 
   logout(): void {

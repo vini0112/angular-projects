@@ -18,16 +18,12 @@ export class AuthLoginService{
   localstorageService = inject(LocalStorageService)
 
   
-  constructor() { 
-    
-  }
   
 
-  // STATUS OF AUTHENTICATION
   private isAuth = new BehaviorSubject<boolean>(false)
   isAuthenticated$ = this.isAuth.asObservable()
 
-  // STATUS OF DEV AUTHENTICATION
+
   private IsDeveloper = new BehaviorSubject<boolean>(false)
   IsDeveloper_authentication$ = this.IsDeveloper.asObservable()
 
@@ -158,6 +154,7 @@ export class AuthLoginService{
     return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`) 
   }
 
+  
 
   // PAGE ACCESS TO SHIPPING FORM AND PAYMENT FORM TO BUY SOMETHING
 

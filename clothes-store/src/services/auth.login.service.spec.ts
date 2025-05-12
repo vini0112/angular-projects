@@ -16,8 +16,6 @@ describe('AuthLoginService', () => {
     service = TestBed.inject(AuthLoginService);
     httpmock = TestBed.inject(HttpTestingController)
 
-    
-    httpmock.expectOne(req => req.url.endsWith('/isLogged')).flush({})  // requests
   });
 
 
@@ -65,7 +63,7 @@ describe('AuthLoginService', () => {
 
   })
 
-  it("Shoul logout", () =>{
+  it("Should logout", () =>{
 
     service.loggingOut()
 

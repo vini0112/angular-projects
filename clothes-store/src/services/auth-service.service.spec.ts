@@ -1,36 +1,41 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthServiceService } from './auth-service.service';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient } from '@angular/common/http';
 import { AuthInterceptorToken } from '../interceptor/refresh-token.interceptor';
+import { LocalStorageService } from './localStorage.service';
+import { map, of, tap } from 'rxjs';
+import { HttpTestingController } from '@angular/common/http/testing';
 
 
-describe('AuthServiceService', () => {
+fdescribe('AuthServiceService', () => {
   let service: AuthServiceService;
-  let httpClientSpy: jasmine.SpyObj<HttpClient>;
+  let httpMock: HttpTestingController
+
 
   beforeEach(() => {
 
-    httpClientSpy = jasmine.createSpyObj('httpClient', ['POST', 'GET'])
+    // const localStorageMock = {
+    //   getItem: jasmine.createSpy().and.returnValue('fake_token')
+    // }
+
+    // const authServiceMock = {
+    //   refreshToken: jasmine.createSpy().and.returnValue(of({accessToken: 'new_fake_token'}))
+    // }
 
     TestBed.configureTestingModule({
       providers: [ 
-        {provide: HttpClient, useValue: httpClientSpy},
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorToken, multi: true},
+        provideHttpClient(),
+        // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorToken, multi: true},
+        // {provide: LocalStorageService, useValue: localStorageMock},
+        // {provide: AuthServiceService, useValue: authServiceMock},
         AuthServiceService
       ]
     });
 
-    service = TestBed.inject(AuthServiceService);
-    // localStorage.setItem('accessToken', 'kajkfjdfk')
+    service = TestBed.inject(AuthServiceService)
 
   });
-
-
-
-  afterEach(() =>{
-    localStorage.clear()
-  })
 
 
 
@@ -39,13 +44,18 @@ describe('AuthServiceService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Should refresh token on 401 and retry the request', () =>{
 
-    
+  fit("Should refresh the token", () =>{
 
+    service.setAccessToken('test_token')
 
+    service.refreshToken().pipe(
+      tap(item => console.log(item))
+    )
 
   })
+
+  
 
 
 

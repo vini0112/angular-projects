@@ -60,17 +60,20 @@ export class listCartServices{
     }
 
 
-    updatingQuantity(productId: number){
+    decreasingProductsQuantity(productId: number){
         const currentProduct = this.cart.getValue()
         const product = currentProduct.find(item => item.id === productId)
 
-        
-        product!.cart_quantity!--
-        this.updateLocalStorage(currentProduct)
-        
-        if(product!.cart_quantity! <= 0){
-            this.removingProduct(productId)
+        if(product){
+            
+            product.cart_quantity!--
+            this.updateLocalStorage(currentProduct)
+            
+            if(product.cart_quantity! <= 0){
+                this.removingProduct(productId)
+            }
         }
+        
         
     }
 

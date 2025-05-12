@@ -97,7 +97,7 @@ export class NavbarComponent implements OnInit{
   // METHODS FROM INSIDE CART LIST
 
   removeFromCart(id: number){
-    this.listCartService.updatingQuantity(id)
+    this.listCartService.decreasingProductsQuantity(id)
   }
 
   addMore(id: number){

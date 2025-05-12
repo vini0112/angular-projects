@@ -7,7 +7,7 @@ import { CheckoutPaymentService } from '../../../services/checkout-payment.servi
 import { of } from 'rxjs';
 
 
-fdescribe('ShippingFormComponent', () => {
+describe('ShippingFormComponent', () => {
   let component: ShippingFormComponent;
   let fixture: ComponentFixture<ShippingFormComponent>;
   let spyCheckoutPayment: jasmine.SpyObj<CheckoutPaymentService>
@@ -75,14 +75,20 @@ fdescribe('ShippingFormComponent', () => {
   it("Should check if stripeCheckout service is called", () =>{
 
     // ARRANGE
-    component.shipForm.controls['street'].setValue('ljv')
+    component.shipForm.controls['street'].setValue('any')
+    component.shipForm.controls['houseNum'].setValue(2)
+    component.shipForm.controls['aditionalInfo'].setValue('any')
+    component.shipForm.controls['city'].setValue('any')
+    component.shipForm.controls['zipCode'].setValue('any')
+    component.shipForm.controls['state'].setValue('any')
+    component.shipForm.controls['country'].setValue('any')
+
 
     expect(component.shipForm.valid).toBeTrue()
     
     let userPurchaseInformation = {clientSecret: 'test_secret', amount: 123, quantity: 1}
 
     spyCheckoutPayment.stripeCheckout.and.returnValue(of(userPurchaseInformation))
-
 
 
     // ACT

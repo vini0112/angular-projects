@@ -1,42 +1,36 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthServiceService } from './auth-service.service';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient } from '@angular/common/http';
-import { AuthInterceptorToken } from '../interceptor/refresh-token.interceptor';
-import { LocalStorageService } from './localStorage.service';
-import { map, of, tap } from 'rxjs';
-import { HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { MessageService } from './message.service';
 
 
-fdescribe('AuthServiceService', () => {
+describe('AuthServiceService', () => {
   let service: AuthServiceService;
   let httpMock: HttpTestingController
+  let spyMessageService: jasmine.SpyObj<MessageService>
 
 
   beforeEach(() => {
 
-    // const localStorageMock = {
-    //   getItem: jasmine.createSpy().and.returnValue('fake_token')
-    // }
+    spyMessageService = jasmine.createSpyObj('MessageService', ['showMessage'])
 
-    // const authServiceMock = {
-    //   refreshToken: jasmine.createSpy().and.returnValue(of({accessToken: 'new_fake_token'}))
-    // }
+    localStorage.setItem('accessToken', 'fake_token')
 
     TestBed.configureTestingModule({
       providers: [ 
         provideHttpClient(),
-        // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorToken, multi: true},
-        // {provide: LocalStorageService, useValue: localStorageMock},
-        // {provide: AuthServiceService, useValue: authServiceMock},
+        provideHttpClientTesting(),
+        {provide: MessageService, useValue: spyMessageService},
         AuthServiceService
       ]
     });
 
     service = TestBed.inject(AuthServiceService)
+    httpMock = TestBed.inject(HttpTestingController)
 
   });
-
 
 
 
@@ -45,19 +39,32 @@ fdescribe('AuthServiceService', () => {
   });
 
 
-  fit("Should refresh the token", () =>{
+  it("Should refresh the token", () =>{
 
-    service.setAccessToken('test_token')
+    const mockResponse = {accessToken: 'new_token'}
 
-    service.refreshToken().pipe(
-      tap(item => console.log(item))
-    )
+    service.refreshToken().subscribe(res =>{
+      expect(res).toEqual(mockResponse)
+      expect(spyMessageService.showMessage).toHaveBeenCalledWith("Token Refreshed! Try Again!", "info")
+    })
+
+    const req = httpMock.expectOne(req => req.url.endsWith('/refreshToken'))
+    expect(req.request.method).toBe("POST")
+    req.flush(mockResponse)
 
   })
 
+
+  it("Should throw an Erro", () =>{
+    localStorage.clear()
+
+    expect(() => service.refreshToken()).toThrowError('Refresh token not found!')
+  })
   
 
-
+  afterEach(() =>{
+    httpMock.verify();
+  })
 
 
 });

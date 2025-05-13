@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthLoginService } from '../services/auth.login.service';
-import { map, Observable, take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { LocalStorageService } from '../services/localStorage.service';
 
 export const devLoginGuard: CanActivateFn = (route, state) => {
@@ -12,7 +12,7 @@ export const devLoginGuard: CanActivateFn = (route, state) => {
 
   const acessToken = localStorageService.getItem('accessToken')
 
-  // NOT ALLOWING ACCESS WITHOUT ACCESS TOKEN IN LOCALSTORAGE
+  
   if(!acessToken){
     authLoginService.loggingOut()
     router.navigate(['/home'])
@@ -20,7 +20,6 @@ export const devLoginGuard: CanActivateFn = (route, state) => {
   }
 
 
-    //  CHECKING IF IS_DEVELOPER IS TRUE TO ALLOW ACCESS TO THE DEV TOOLS!
   return authLoginService.IsDeveloper_authentication$.pipe(
     take(1),
     map(isLogged => {

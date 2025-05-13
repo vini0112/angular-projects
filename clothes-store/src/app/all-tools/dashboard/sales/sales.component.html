@@ -19,7 +19,6 @@
             [labels]="allSalesDuringWeek.labels!"
             ></apx-chart> 
         }
-        
     </div>
 
     <div class="boxAllPrices">
@@ -27,7 +26,7 @@
         <div class="boxOfSales">
             <div>
                 <span>Revenue</span> <!--  -->
-                <span>${{this.revenue}}</span>
+                <span data-testid="revenue">${{this.revenue}}</span>
             </div>
             <p>
                 <i class="fa-solid fa-arrow-down"></i>

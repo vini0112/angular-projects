@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShippingFormComponent } from './shipping-form.component';
 import { provideHttpClient } from '@angular/common/http';
-import { By } from '@angular/platform-browser';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { of } from 'rxjs';
 

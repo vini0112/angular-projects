@@ -1,10 +1,13 @@
 
 export interface dashboardData{
-    id?: number
+    idDashboard?: number
     total_sales: number
     yearMonthsData: number[]
-    invoices: JSON | string[]
+    weekdays: number[]
+    invoices: string[]
     revenue: number
+    currentDay: number
+    currentMonth: number
 }
 
 export interface userPurchaseDetail{

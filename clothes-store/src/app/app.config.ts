@@ -22,7 +22,5 @@ export const appConfig: ApplicationConfig = {
     {provide: JWT_OPTIONS, useValue: {}}, 
     JwtHelperService,    
 
-    // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
-
   ]
 };

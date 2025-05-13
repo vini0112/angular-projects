@@ -12,17 +12,11 @@ import { dashboardData } from "../modules/dashboard.module";
 export class dashboardService{
 
     http = inject(HttpClient)
-
     private api = environment.api
-
 
     getDashboardData(): Observable<dashboardData[]>{
         return this.http.get<dashboardData[]>(`${this.api}/dashboard-data`)
     }
-
-    
-
-
 
 }
 

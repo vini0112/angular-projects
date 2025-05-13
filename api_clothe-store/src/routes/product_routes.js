@@ -12,7 +12,7 @@ const upload = multer({storage})
 
 
 // getting all 
-router.get('/clothes', verifyJWT,productControllers.show)
+router.get('/clothes',productControllers.show)
 
 // getting by id
 router.get('/clothes/:id', productControllers.getById)

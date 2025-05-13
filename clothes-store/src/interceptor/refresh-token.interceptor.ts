@@ -14,10 +14,6 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
   const authService = inject(AuthServiceService)
 
 
-  // if (req.url.includes('/auth/user') || req.url.includes('/auth/refresh') || req.url.includes('/login')) {
-  //   return next(req);
-  // }
-
   let token = localStorageService.getItem('accessToken')
 
 

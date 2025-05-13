@@ -14,9 +14,9 @@ export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandle
   const authService = inject(AuthServiceService)
 
 
-  if (req.url.includes('/auth/user') || req.url.includes('/auth/refresh') || req.url.includes('/login')) {
-    return next(req);
-  }
+  // if (req.url.includes('/auth/user') || req.url.includes('/auth/refresh') || req.url.includes('/login')) {
+  //   return next(req);
+  // }
 
   let token = localStorageService.getItem('accessToken')
 
@@ -62,7 +62,7 @@ function handle401Error(authService: AuthServiceService ,req: any, next: any): O
         
         isRefreshing.next(false)
         refreshTokenAccess.next(newToken.accessToken)
-        return next.handle(addToken(req, newToken.accessToken))
+        return next(addToken(req, newToken.accessToken))
       }),
       catchError(error =>{
         
@@ -77,7 +77,7 @@ function handle401Error(authService: AuthServiceService ,req: any, next: any): O
     return refreshTokenAccess.pipe(
       filter(token => token !== null),
       take(1),
-      switchMap(token => next.handle(addToken(req, token)))
+      switchMap(token => next(addToken(req, token)))
     )
   }
   

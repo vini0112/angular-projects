@@ -1,10 +1,10 @@
 
-import dashboardRepository from "../repositories/dashboard.repository.js"
+import dashboardService from "../services/dashboard.service.js"
 
 class dashBoardController{
 
     async show(req, res){
-        const row = await dashboardRepository.getAll()
+        const row = await dashboardService.getDashboardData()
         res.status(200).json(row)
     }
 

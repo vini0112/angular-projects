@@ -1,12 +1,13 @@
 
 import express from "express"
 import cors from 'cors'
-import productRouter from "./routes/product_routes.js"
-import loginRouter from "./routes/login.routes.js"
-import cookieParse from 'cookie-parser'
-import dashboardRouter from './routes/dashboard.routes.js'
 
-import stripeRoute from './routes/stripe.route.js'
+import productRouter from "./app/routes/product_routes.js"
+import loginRouter from "./app/routes/login.routes.js"
+import cookieParse from 'cookie-parser'
+import dashboardRouter from './app/routes/dashboard.routes.js'
+
+import stripeRoute from './app/routes/stripe.route.js'
 
 const app = express()
 

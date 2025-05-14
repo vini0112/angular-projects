@@ -44,16 +44,19 @@ export class SalesComponent implements OnInit{
     this.dashboardService.getDashboardData().subscribe({
       next: (res: any) =>{
         console.log(res)
-        const invoices_JsonFormat = res[0].invoices
-        const invoicesParsed = invoices_JsonFormat.map((invoice: string) => JSON.parse(invoice))
-        this.invoices$ = of(invoicesParsed)
-
+        
+        
 
         this.yearSales = res[0].total_sales
         this.revenue = res[0].revenue
 
+        const invoices_JsonFormat = res[0].invoices
+        const invoicesParsed = invoices_JsonFormat.map((invoice: any) => JSON.parse(invoice))
+        this.invoices$ = of(invoicesParsed)
+        
         this.chartSalesDuringWeek(res[0].weekdays)
         this.chartSalesDuringYear(res[0].yearMonthsData)
+
       },
 
       error: (err) => console.log('Error passing the dashboard data: ', err)

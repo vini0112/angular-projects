@@ -12,7 +12,6 @@ const connection = mysql.createConnection({
 
 
 
-// refatorando o processo de new Promise de repositories
 /**
  * 
  * @param {string} sql instrução sql a ser executada
@@ -25,10 +24,9 @@ export const consulta = (sql, valores='', mensagemReject) =>{
 
     return new Promise((resolve, reject) =>{
         connection.query(sql, valores, (error, result) =>{
-                    //    <>    <>
+                    
             if(error) return reject(mensagemReject)
-                                        //<>
-            // doing a parse in the result
+                                        
             const row = JSON.parse(JSON.stringify(result))
             return resolve(row)
         })

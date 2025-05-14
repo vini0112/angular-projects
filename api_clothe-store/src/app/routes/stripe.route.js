@@ -1,7 +1,7 @@
 
 import express from 'express'
 import Router from 'express'
-import stripeController from '../app/controllers/stripe.controller.js';
+import stripeController from '../controllers/stripe.controller.js';
 import verifyJWT from "../middleware/verifyJWT.js";
 
 

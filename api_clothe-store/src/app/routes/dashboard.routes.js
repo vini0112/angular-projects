@@ -1,6 +1,6 @@
 
 import Router from 'express'
-import dashBoardController from '../app/controllers/dashboard.controller.js';
+import dashBoardController from '../controllers/dashboard.controller.js';
 
 const router = Router()
 

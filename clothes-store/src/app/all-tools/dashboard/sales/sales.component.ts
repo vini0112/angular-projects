@@ -27,7 +27,6 @@ export class SalesComponent implements OnInit{
   public allSalesDuringWeek!: Partial<PieChart>;
 
 
-
   revenue!: number
   yearSales!: number
   invoices$ = new Observable<userPurchaseDetail[]>()
@@ -44,18 +43,12 @@ export class SalesComponent implements OnInit{
     this.dashboardService.getDashboardData().subscribe({
       next: (res: any) =>{
         console.log(res)
+        this.yearSales = res.total_sales
+        this.revenue = res.revenue
+        this.invoices$ = of(res.invoices)
         
-        
-
-        this.yearSales = res[0].total_sales
-        this.revenue = res[0].revenue
-
-        const invoices_JsonFormat = res[0].invoices
-        const invoicesParsed = invoices_JsonFormat.map((invoice: any) => JSON.parse(invoice))
-        this.invoices$ = of(invoicesParsed)
-        
-        this.chartSalesDuringWeek(res[0].weekdays)
-        this.chartSalesDuringYear(res[0].yearMonthsData)
+        this.chartSalesDuringWeek(res.weekdays)
+        this.chartSalesDuringYear(res.yearMonthsData)
 
       },
 

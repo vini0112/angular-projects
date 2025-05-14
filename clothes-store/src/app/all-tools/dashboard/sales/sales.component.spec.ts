@@ -6,20 +6,29 @@ import { dashboardService } from '../../../../services/dashboard.service';
 import { of } from 'rxjs';
 
 
-fdescribe('SalesComponent', () => {
+describe('SalesComponent', () => {
   let component: SalesComponent;
   let fixture: ComponentFixture<SalesComponent>;
   let spyDashboard: jasmine.SpyObj<dashboardService>
-  const data = [{
+  const data = {
       idDashboard: 1,
       total_sales: 10,
       yearMonthsData: [0, 0, 0, 1, 1],
-      invoices: ['{"date":"2025-04-26","status":"paid","email":"vini…"userId":"10","username":"vinicius","price":"80"}', '{"date":"2025-05-09","status":"paid","email":"vini…userId":"10","username":"vinicius","price":"120"}'],
+      invoices: [
+        {
+          date:"2025-05-09",
+          email:"vinilocsilva@gmail.com",
+          price:120,
+          status:"paid",
+          userId:10,
+          username:"vinicius"
+        }
+      ],
       weekdays: [0, 0, 0, 0, 0, 1, 1],
       revenue: 123,
       currentDay:5,
       currentMonth: 4
-    }]
+  }
 
 
   beforeEach(async () => {
@@ -52,9 +61,14 @@ fdescribe('SalesComponent', () => {
 
 
 
-  fit("Should receive the dashboard data", () =>{
+  it("Should receive the dashboard data", () =>{
     
     expect(component.revenue).toBe(123)
+    expect(component.yearSales).toBe(10)
+    component.invoices$.subscribe(res =>{
+      expect(res.length).toBeGreaterThan(0)
+      expect(res[0].username).toBe('vinicius')
+    })
   })
 
 

@@ -1,10 +1,10 @@
 
 export interface dashboardData{
-    idDashboard?: number
+    idDashboard: number
     total_sales: number
     yearMonthsData: number[]
     weekdays: number[]
-    invoices: string[]
+    invoices: object
     revenue: number
     currentDay: number
     currentMonth: number

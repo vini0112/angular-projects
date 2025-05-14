@@ -1,18 +1,18 @@
-import product_repositories from "../repositories/product_repositories.js";
+
+import productService from "../services/product.service.js";
 
 class productControllers{
     
     // all data
     async show(req, res){
-        const row = await product_repositories.findAll()
+        const row = await productService.findAll()
         res.json(row)
     }
-
 
     // getting by id
     async getById(req, res){
         const id = req.params.id
-        const row = await product_repositories.findById(id)
+        const row = await productService.findById(id)
         res.json(row)
 
     }
@@ -25,7 +25,7 @@ class productControllers{
         const imagePath = `/upload/${file.filename}`
         dados.image = imagePath
         
-        const row = await product_repositories.posting(dados)
+        const row = await productService.posting(dados)
         res.status(201).json(row)
     }
 
@@ -34,7 +34,7 @@ class productControllers{
         const dados = req.body
         const id = req.params.id 
         
-        const row = await product_repositories.editing(id, dados)
+        const row = await productService.editing(id, dados)
         res.json({message: 'Succesfull Updated!', row})
     }
 
@@ -47,7 +47,7 @@ class productControllers{
             valor = 1
         }
         
-        const row = await product_repositories.editingFavorite(id, valor)
+        const row = await productService.editingFavorite(id, valor)
         res.json(row)
 
     }  
@@ -56,7 +56,7 @@ class productControllers{
     async deletingClothe(req, res){
         const id = req.params.id
 
-        const row = await product_repositories.delete(id)
+        const row = await productService.delete(id)
         res.json(row)
     }
     

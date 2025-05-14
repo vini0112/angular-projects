@@ -1,7 +1,8 @@
-import {consulta} from '../database/connection.js'
-class productRepositories {
+import { consulta } from "../database/connection.js"
 
-    
+
+class productService{
+
     findAll(){
         const sql = "SELECT * FROM clothes"
         return consulta(sql, '' ,'Not Found!')
@@ -36,6 +37,4 @@ class productRepositories {
 
 }
 
-
-export default new productRepositories();
-
+export default new productService()

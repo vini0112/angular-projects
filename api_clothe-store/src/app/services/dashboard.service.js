@@ -4,7 +4,7 @@ import { consulta } from "../database/connection.js"
 
 class dashboardService{
 
-    async getDashboardData(){
+    async getDashboardData_service(){
         try{
 
             const sql = 'SELECT * FROM dashboard'

@@ -38,10 +38,10 @@ export class AuthServiceService {
       throw new Error('Access token not found!')
     }
 
-    return this.http.post<any>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
+    return this.http.post<{accessToken: string}>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
       tap((res) => {
         
-        this.messageService.showMessage("Token Refreshed! Try Again!", "info")
+        this.messageService.showMessage("Token Refreshed!", "info")
         if(res.accessToken){
           this.setAccessToken(res.accessToken)
         }

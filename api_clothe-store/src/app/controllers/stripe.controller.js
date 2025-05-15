@@ -1,6 +1,7 @@
 
-
+import stripe from "../config/stripe.config.js";
 import stripeService from "../services/stripe.service.js";
+
 const endpointSecret = process.env.STRIPE_SECRET_ENDPOINT
 
 
@@ -23,21 +24,21 @@ class stripeController{
 
     async webHook(req, res){
         try{
-            let event = body.req
-
-            if(endpointSecret){
-                const sig = req.headers['stripe-signature']
-                event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
-
-                const row = await stripeService.webHook_service(event)
-                res.json(row)
-            }
-            else{
-                return res.status(404).json({error: error.message, details: 'Error while validating webhook'});
-            }
+            let event = req.body
             
+            if(!event || !endpointSecret){
+                return res.status(400).json({error: error.message, details: 'Error while validating event/endpointSecret in webhook controller!'});
+            }
 
+            const sig = req.headers['stripe-signature']
+            event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
+
+
+            const row = await stripeService.webHook_service(event)
+            res.json(row)
+           
         }catch(err){
+            console.log('Webhook problem: ', err.message)
             res.status(404).json(err)
         }
     }

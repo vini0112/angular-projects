@@ -1,7 +1,7 @@
 
-import stripe from "../config/stripe.config.js";
 import connection from '../database/connection.js'
 import mailer from 'nodemailer'
+import stripe from "../config/stripe.config.js";
 
 
 
@@ -83,11 +83,11 @@ class stripeService{
     }
 
 
-    webHook_service(event){req
+    webHook_service(event){
 
         return new Promise(async (resolve, reject) =>{
             
-            switch(event.type){
+            switch(event.type){ 
 
                 case 'payment_intent.succeeded':
 

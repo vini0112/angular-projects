@@ -45,7 +45,7 @@ export class ShippingFormComponent {
   btnGoToPaymentForm(){
     this.btnGoToPaymentFormSubmitted = true
 
-    if(this.shipForm.valid){  // CHANGED HERE !
+    if(this.shipForm.valid){
 
       let productsInfo = this.getProductsInfo_FromLocalStorage()
 
@@ -125,6 +125,7 @@ export class ShippingFormComponent {
 
 
   btnCancelFormShipping(){
+    
     this.shipForm.reset()
   }
 

@@ -62,7 +62,7 @@ class loginService {
 
                     if(match){
                         
-                        const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                        const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '5s' });
 
                         const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
@@ -117,7 +117,7 @@ class loginService {
 
                     // IF ROLE DEVELOPER
                     if(user.role === process.env.ADM_ROLE){
-                        const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email, username: user.username  }, process.env.SECRET_KEY, { expiresIn: '30m' });
+                        const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email, username: user.username  }, process.env.SECRET_KEY, { expiresIn: '6s' });
                         
                         return resolve({accessToken: newAccessToken})
                     }

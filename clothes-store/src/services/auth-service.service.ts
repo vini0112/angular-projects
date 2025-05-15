@@ -30,15 +30,15 @@ export class AuthServiceService {
   }
 
 
-  refreshToken(): Observable<any>{
+  refreshToken(): Observable<{accessToken: string}>{
 
     const accessToken = this.getAccessToken()
 
     if(!accessToken){
-      throw new Error('Refresh token not found!')
+      throw new Error('Access token not found!')
     }
 
-    return this.http.post<any>(`${this.api}/refreshToken`, {accessToken}, {withCredentials: true}).pipe(
+    return this.http.post<any>(`${this.api}/refreshToken`, {}, {withCredentials: true}).pipe(
       tap((res) => {
         
         this.messageService.showMessage("Token Refreshed! Try Again!", "info")

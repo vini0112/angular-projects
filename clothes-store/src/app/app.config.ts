@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(
       withFetch(),
-      withInterceptors([loginInterceptor, AuthInterceptorToken]), //
+      withInterceptors([loginInterceptor, AuthInterceptorToken]), 
       withInterceptorsFromDi(),
     ),
     provideNgxStripe(environment.stripe_public_key),

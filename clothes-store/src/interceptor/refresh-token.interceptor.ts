@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
 
@@ -9,28 +9,45 @@ import { LocalStorageService } from '../services/localStorage.service';
 const isRefreshing = new BehaviorSubject<boolean>(false)
 const refreshTokenAccess = new BehaviorSubject<string | null>(null)
 
-export function AuthInterceptorToken(req: HttpRequest<unknown>, next: HttpHandlerFn){
+export function AuthInterceptorToken(req: HttpRequest<any>, next: HttpHandlerFn){
   const localStorageService = inject(LocalStorageService)
   const authService = inject(AuthServiceService)
 
 
   let token = localStorageService.getItem('accessToken')
-
+  let authReq = req
 
   if(token){
-    req = addToken(req, token)
+    authReq = req.clone({
+      setHeaders: { Authorization: `Bearer ${token}` }
+    })
   }
 
-  
-  return next(req).pipe(
-    catchError((error: HttpErrorResponse) => {
-      if(error.status === 401 && !req.url.includes('/refreshToken')){
-        return handle401Error(authService ,req, next)
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) =>{
+      if(error.status === 401 && !authReq.url.includes('/refreshToken')){
+        return handle401Error(authService, authReq, next)
       }
 
       return throwError(() => error)
     })
   )
+
+
+  // if(token){
+  //   req = addToken(req, token)
+  // }
+
+  
+  // return next(req).pipe(
+  //   catchError((error: HttpErrorResponse) => {
+  //     if(error.status === 401 && !req.url.includes('/refreshToken')){
+  //       return handle401Error(authService ,req, next)
+  //     }
+
+  //     return throwError(() => error)
+  //   })
+  // )
 
 };
 
@@ -44,7 +61,7 @@ function addToken(req: HttpRequest<unknown>, token: string){
 }
 
 
-function handle401Error(authService: AuthServiceService ,req: any, next: any): Observable<any>{
+function handle401Error(authService: AuthServiceService ,req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>>{
 
   if(!isRefreshing.value){
 
@@ -53,16 +70,13 @@ function handle401Error(authService: AuthServiceService ,req: any, next: any): O
 
     return authService.refreshToken().pipe(
 
-      switchMap((newToken: any) =>{
-        
-        isRefreshing.next(false)
-        refreshTokenAccess.next(newToken.accessToken)
-        return next.handle(addToken(req, newToken.accessToken))
+      switchMap(() =>{
+
       }),
+      
       catchError(error =>{
         
         isRefreshing.next(false)
-        
         return throwError(() => error)
 
       })
@@ -72,7 +86,7 @@ function handle401Error(authService: AuthServiceService ,req: any, next: any): O
     return refreshTokenAccess.pipe(
       filter(token => token !== null),
       take(1),
-      switchMap(token => next.handle(addToken(req, token)))
+      switchMap(token => next(addToken(req, token as string)))//.handle
     )
   }
   

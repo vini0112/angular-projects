@@ -15,6 +15,8 @@ export function AuthInterceptorToken(req: HttpRequest<any>, next: HttpHandlerFn)
 
 
   let token = localStorageService.getItem('accessToken')
+
+
   if(!token){
     return next(req)
   }
@@ -38,11 +40,9 @@ export function AuthInterceptorToken(req: HttpRequest<any>, next: HttpHandlerFn)
             })
 
             return next(newCloneReq)
-
           }),
 
           catchError(refreshError => {
-            
             loginAuthService.loggingOut()
             return throwError(() => refreshError);
           })

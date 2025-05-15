@@ -1,27 +1,33 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import {AuthInterceptorToken }from './refresh-token.interceptor';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthServiceService } from '../services/auth-service.service';
 import { of } from 'rxjs';
+import { LocalStorageService } from '../services/localStorage.service';
 
 
-fdescribe('refreshTokenInterceptor', () => {
+describe('refreshTokenInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) => 
     TestBed.runInInjectionContext(() => AuthInterceptorToken(req, next));
 
   let httpMock: HttpTestingController
   let http: HttpClient
   let spyAuthService: jasmine.SpyObj<AuthServiceService>
-  
+  let spyLocalSt: jasmine.SpyObj<LocalStorageService>
 
   beforeEach(() => {
-    spyAuthService = jasmine.createSpyObj('AuthServiceService', ['refreshToken'])
+    spyAuthService = jasmine.createSpyObj('AuthServiceService', ['refreshToken', 'setAccessToken', 'getAccessToken'])
+
+    spyLocalSt = jasmine.createSpyObj('LocalStorageService', ['setItem', 'getItem'])
+
 
     TestBed.configureTestingModule({
       providers: [
         {provide: AuthServiceService, useValue: spyAuthService},
+        {provide: LocalStorageService, useValue:spyLocalSt},
+        
         provideHttpClient(withInterceptors([AuthInterceptorToken])),
         provideHttpClientTesting()
       ]
@@ -29,7 +35,7 @@ fdescribe('refreshTokenInterceptor', () => {
 
 
     httpMock = TestBed.inject(HttpTestingController)
-    http = TestBed.inject(HttpClient)
+    http = TestBed.inject(HttpClient) 
 
   });
 
@@ -38,31 +44,33 @@ fdescribe('refreshTokenInterceptor', () => {
   });
 
 
-  it("Should handle 401 error refreshing the token", () =>{
-    localStorage.clear() // cleaning all the access_token from other tests
+  it("Should handle 401 error refreshing the token", () =>{    
+    
+    spyLocalSt.getItem.withArgs('accessToken').and.returnValue('fake_token')
 
     const mockData = {data: 'secure'}
 
     spyAuthService.refreshToken.and.returnValue(of({accessToken: 'new-access-token'}))
 
     
+
     http.get('/clothes/1').subscribe(res =>{
       console.log(res)
-      // expect(res).toEqual(mockData)
+      expect(res).toBe(mockData)
     })
 
-
     const req1 = httpMock.expectOne(req => req.url.endsWith('/clothes/1'))
-    expect(req1.request.headers.get('Authorization')).toBeNull()
     req1.flush(null, {status: 401, statusText: 'Unauthorized'})
 
+    
     expect(spyAuthService.refreshToken).toHaveBeenCalled()
 
 
-    // const retryReq = httpMock.expectOne(req => req.url.endsWith('/clothes/1'))
-    // expect(retryReq.request.headers.get('Authorization')).toBe('Bearer new-access-token')
-    // retryReq.flush(mockData)
+    const retryReq = httpMock.expectOne(req => req.url.endsWith('/clothes/1'))
+    expect(retryReq.request.headers.get('Authorization')).toBe('Bearer new-access-token')
+    retryReq.flush(mockData)
 
+  
   })
 
 

@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import connection from '../database/connection.js'
 import bcrypt from 'bcrypt'
 import mailer from 'nodemailer'
-import { reject } from 'bcrypt/promises.js'
 const saltRounds = 10;
 
 
@@ -62,7 +61,7 @@ class loginService {
 
                     if(match){
                         
-                        const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '5s' });
+                        const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '30m' });
 
                         const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
 
@@ -117,7 +116,7 @@ class loginService {
 
                     // IF ROLE DEVELOPER
                     if(user.role === process.env.ADM_ROLE){
-                        const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email, username: user.username  }, process.env.SECRET_KEY, { expiresIn: '6s' });
+                        const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email, username: user.username  }, process.env.SECRET_KEY, { expiresIn: '30m' });
                         
                         return resolve({accessToken: newAccessToken})
                     }

@@ -45,7 +45,7 @@ describe('AuthServiceService', () => {
 
     service.refreshToken().subscribe(res =>{
       expect(res).toEqual(mockResponse)
-      expect(spyMessageService.showMessage).toHaveBeenCalledWith("Token Refreshed! Try Again!", "info")
+      expect(spyMessageService.showMessage).toHaveBeenCalledWith("Token Refreshed!", "info")
     })
 
     const req = httpMock.expectOne(req => req.url.endsWith('/refreshToken'))
@@ -58,7 +58,7 @@ describe('AuthServiceService', () => {
   it("Should throw an Erro", () =>{
     localStorage.clear()
 
-    expect(() => service.refreshToken()).toThrowError('Refresh token not found!')
+    expect(() => service.refreshToken()).toThrowError('Access token not found!')
   })
   
 

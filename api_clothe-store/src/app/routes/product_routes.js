@@ -12,10 +12,10 @@ const upload = multer({storage})
 
 
 // getting all 
-router.get('/clothes',productControllers.show)
+router.get('/clothes', productControllers.show)
 
 // getting by id - using in unit test interceptor 
-router.get('/clothes/:id',verifyJWT, productControllers.getById)
+router.get('/clothes/:id', verifyJWT,productControllers.getById)
 
 // post
 router.post('/clothes', verifyJWT, upload.single('image'), productControllers.postingClothes)

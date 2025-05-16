@@ -43,7 +43,7 @@ export class ProductsToolComponent{
   // editing
   loadingData = false
 
-  EditionSentPage = false // trigged just when the edition button is clicked
+  openEditionPage = false // trigged just when the edition button is clicked
   successMsgActivated = false // if edition works fine
   failedMsgActivated = false // if edition fails
 
@@ -71,7 +71,7 @@ export class ProductsToolComponent{
     this.shadowEditDialog = false
     this.successMsgActivated = false
     this.failedMsgActivated = false
-    this.EditionSentPage = false 
+    this.openEditionPage = false 
   }
 
 
@@ -80,7 +80,7 @@ export class ProductsToolComponent{
 
     if(editForm.valid){
       
-      this.EditionSentPage = true
+      this.openEditionPage = true
       this.loadingData = true
       
 

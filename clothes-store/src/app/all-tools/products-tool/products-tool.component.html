@@ -6,7 +6,7 @@
 <div class="linksNavigation" *ngIf="createNewProductPage()">
     <i class="fa-solid fa-arrow-left-long btnGoBack" routerLink="../"></i>
 
-    <button (click)="isProductsTableActive()" class="btnCreateProduct">Add New Product</button>
+    <button (click)="isProductsTableActive()" class="btnCreateProduct" data-testid="buttonAddNewProduct">Add New Product</button>
 </div>
 
 <div class="boxTable"> <!-- used just to create a scroll-x in mobile screen-->
@@ -53,8 +53,9 @@
 
 <!-- EDITION PAGE -->
 
-<div class="boxEditModel" *ngIf="editDialogOpen" [ngClass]="{'EditionSentPage': EditionSentPage}">
-    <form #editForm="ngForm" [ngClass]="{'EditionSentPage': EditionSentPage}">
+<div class="boxEditModel" *ngIf="editDialogOpen" [ngClass]="{'EditionSentPage': openEditionPage}">
+    
+    <form #editForm="ngForm" [ngClass]="{'EditionSentPage': openEditionPage}" data-testid="editForm">
         <div class="boxInputsEdit">
 
             <input type="text" name="productName" [(ngModel)]="editItemData.name" #productName="ngModel" required>
@@ -92,13 +93,13 @@
             
         </div>
         <div class="boxBtnsEdit">
-            <button (click)="cancelEdit()">Cancel</button>
-            <button (click)="btnFormEditProduct(editForm)">Save Changes</button>
+            <button type="button" (click)="cancelEdit()">Cancel</button>
+            <button type="submit" (click)="btnFormEditProduct(editForm)">Save Changes</button>
         </div>
     </form>
 
     <!-- RESPONSE TO EDITION -->
-    <div class="responseOfEdition" [ngClass]="{'responseToEdition': EditionSentPage}">
+    <div class="responseOfEdition" [ngClass]="{'responseToEdition': openEditionPage}">
 
         @if(loadingData){
             <div class="spinner"></div> <!-- SPINNER -->
@@ -129,6 +130,6 @@
 
 
 <!-- CREATING NEW PRODUCT (POST METHOD) -->
-<app-creating-product *ngIf="!createNewProductPage()" (statusCreationPage)="handleResponse($event)"></app-creating-product>
+<app-creating-product data-testid="componentCreatingProduct" *ngIf="!createNewProductPage()" (statusCreationPage)="handleResponse($event)"></app-creating-product>
 
 

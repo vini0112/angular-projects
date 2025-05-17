@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { PaymentStatusComponent } from './payment-status.component';
 import { provideHttpClient } from '@angular/common/http';
@@ -7,7 +7,7 @@ import { MessageService } from '../../../services/message.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
 import { of } from 'rxjs';
 
-fdescribe('PaymentStatusComponent', () => {
+describe('PaymentStatusComponent', () => {
   let component: PaymentStatusComponent;
   let fixture: ComponentFixture<PaymentStatusComponent>;
   let spyLocalStorageService: jasmine.SpyObj<LocalStorageService>
@@ -29,7 +29,7 @@ fdescribe('PaymentStatusComponent', () => {
         provideHttpClient(),
         {provide: LocalStorageService, useValue: spyLocalStorageService},
         {provide: MessageService, useValue: spyMessageService},
-        // {provide: CheckoutPaymentService, useValue: spyCheckoutPaymentService}
+        {provide: CheckoutPaymentService, useValue: spyCheckoutPaymentService}
       ],
       imports: [PaymentStatusComponent]
     })
@@ -45,19 +45,29 @@ fdescribe('PaymentStatusComponent', () => {
   });
 
 
-  fit("Should checkPaymentPageStatus", () =>{
+  it("Should checkPaymentPageStatus", async() =>{
     
+    spyCheckoutPaymentService.statusPayment.and.returnValue(of({status: true}))
+
+    await component.userJWTInformation()
+
 
     expect(spyMessageService.showMessage).not.toHaveBeenCalledWith("Are you sure that you're logged?", "info")
-    
-    // spyCheckoutPaymentService.statusPayment.and.returnValue(of({status: true}))
-    // console.log(component.userInfo)
-    // expect(component.userInfo.length).toBeGreaterThan(0)
-
-
-    // expect(spyCheckoutPaymentService.statusPayment).toHaveBeenCalled()
+    expect(spyCheckoutPaymentService.statusPayment).toHaveBeenCalled()
+    expect(component.loading).toBeFalse()
+    expect(component.successPayment).toBeTrue()
 
   })
+
+
+  it("Should check userJWTInformation method", async() =>{
+
+    const res = await component.userJWTInformation()
+
+    expect(res).not.toBeNull()
+
+  })
+
 
 
 });

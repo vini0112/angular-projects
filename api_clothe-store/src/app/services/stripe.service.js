@@ -12,7 +12,7 @@ class stripeService{
 
             const {products, userInfo} = JSON.parse(body)
 
-            console.log(userInfo)
+            
             const dateNow = new Date().toLocaleDateString('en-CA')
 
             const productsID = products.map(product => product.id)

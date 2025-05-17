@@ -92,7 +92,6 @@ export class CreatingProductComponent implements AfterViewInit{
         },
         error: (err) => {
           console.log('product not created!', err)
-          
         }
       })
     }

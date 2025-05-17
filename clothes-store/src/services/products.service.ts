@@ -9,15 +9,12 @@ import { EditingProduct, productModule } from '../modules/products.module';
 })
 export class ProductsService {
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   private apiUrl = environment.api
 
   private allProductsSubject = new BehaviorSubject<productModule[]>([])
   allProducts$ = this.allProductsSubject.asObservable()
-
   
 
   getProducts(): void{
@@ -28,7 +25,7 @@ export class ProductsService {
         console.log('Products received!')
       },
       error: (err) =>{
-        console.log('ERROR getting the products! ', err)
+        console.log('ERROR getting the products! ', err.message)
       }
     })
   }
@@ -43,7 +40,7 @@ export class ProductsService {
   // CRUD
 
   createProduct(dados: any){
-    return this.http.post(`${this.apiUrl}/clothes`, dados).pipe(
+    return this.http.post(`${this.apiUrl}/create-clothes`, dados).pipe(
       tap(() => this.getProducts()) 
     )
   }

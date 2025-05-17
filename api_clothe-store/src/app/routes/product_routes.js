@@ -18,7 +18,7 @@ router.get('/clothes', productControllers.show)
 router.get('/clothes/:id', verifyJWT,productControllers.getById)
 
 // post
-router.post('/clothes', verifyJWT, upload.single('image'), productControllers.postingClothes)
+router.post('/create-clothes', verifyJWT, upload.single('image'), productControllers.postingClothes)
 
 // update
 router.put('/clothes/:id', verifyJWT, productControllers.updateClothe)

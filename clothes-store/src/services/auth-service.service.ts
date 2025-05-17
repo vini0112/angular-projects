@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
 import { MessageService } from './message.service';
-import { LocalStorageService } from './localStorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +11,9 @@ export class AuthServiceService {
 
   private http = inject(HttpClient)
   private messageService = inject(MessageService)
+
+  api = environment.api
   
-
-
-    api = environment.api
-  
-
   getAccessToken(): string | null{
     return localStorage.getItem('accessToken')
   }

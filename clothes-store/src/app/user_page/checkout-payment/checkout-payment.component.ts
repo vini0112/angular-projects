@@ -56,7 +56,7 @@ export class CheckoutPaymentComponent implements OnInit{
 
   
   private assigningStripFormVariables(){
-    return{
+    return {
       clientSecret: this.userPurchaseData?.clientSecret || '',
       amount: this.userPurchaseData?.amount || 0,
       quantity: this.userPurchaseData?.quantity || 0,

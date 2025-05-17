@@ -56,7 +56,7 @@ export class ShippingFormComponent {
 
       let userInfo = this.getUserInfo_fromJWT()
 
-      if(userInfo.length <= 0){
+      if(userInfo == null){
         return this.messageService.showMessage("Are you sure that you're logged?", "info")
       }
 
@@ -98,20 +98,18 @@ export class ShippingFormComponent {
   }
 
 
-  getUserInfo_fromJWT(): userInfo[]{
+  getUserInfo_fromJWT(): userInfo | null{
 
     let token = this.localStorageService.getItem('accessToken')
+    let userInfo: userInfo
 
     if(!token){
-      return []
+      return null
     }
-
-    let userInfo: userInfo[] = []
-    
 
     const decoded: any = jwtDecode(token);
     
-    userInfo.push(
+    userInfo = (
       {
         userId: decoded.id,
         email: decoded.email,

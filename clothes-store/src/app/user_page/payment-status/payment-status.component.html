@@ -1,9 +1,8 @@
 
-@if(loading){
+@if(loading && !successPayment){
     <div class="aligning">
         <span class="bigSpinner"></span>
     </div>
-
 }@else{
     <!-- SUCCESS PAYMENT -->
     @if(successPayment){

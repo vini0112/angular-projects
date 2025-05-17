@@ -12,12 +12,13 @@ class stripeService{
 
             const {products, userInfo} = JSON.parse(body)
 
+            console.log(userInfo)
             const dateNow = new Date().toLocaleDateString('en-CA')
 
             const productsID = products.map(product => product.id)
-            const userId = userInfo[0].userId
-            const email = userInfo[0].email
-            const username = userInfo[0].username
+            const userId = userInfo.userId
+            const email = userInfo.email
+            const username = userInfo.username
 
 
             // CHECK THE USER IN DB
@@ -217,8 +218,8 @@ class stripeService{
         return new Promise((resolve, reject) =>{
 
             const {userInfo} = JSON.parse(body)
-            const userId = userInfo[0].userId
-            const email = userInfo[0].email
+            const userId = userInfo.userId
+            const email = userInfo.email
 
             // SELECTING THE STATUS ACCORDIND TO THE IDUSER AND EMAIL   
             connection.query('SELECT status FROM users WHERE idusers = ? AND email = ?', [userId, email], (erro, response) =>{

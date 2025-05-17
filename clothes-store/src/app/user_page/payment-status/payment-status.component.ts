@@ -21,52 +21,69 @@ export class PaymentStatusComponent implements OnInit{
   
   loading = true
   successPayment = false
-  userInfo: userInfo[] = []
+  token!: string
 
-  token = this.localStorageService.getItem('accessToken')
+  constructor(){
+    this.token = this.localStorageService.getItem('accessToken')
+  }
+
   
   ngOnInit(){
     this.checkPaymentPageStatus()
   }
 
-  checkPaymentPageStatus(){
+  async checkPaymentPageStatus(){
     
-    // SENDING USER INFO
-    if(!this.token){
-      return this.messageService.showMessage("Are you sure that you're logged?", "info")
+    const userInfo = await this.userJWTInformation()
+    
+    
+    if(userInfo === null){
+      this.messageService.showMessage("Are you sure that you're logged?", "info")
+      this.loading = false
+      return
     }
-    const decoded: any = jwtDecode(this.token);
 
-    this.userInfo.push(
-      {
-        userId: decoded.id,
-        email: decoded.email,
-        username: decoded.username
-      }
-    )
-
-    // DISPLAYING PAYMENT PAGE STATUS
-    this.checkoutService.statusPayment(this.userInfo).subscribe({
+    
+    this.checkoutService.statusPayment(userInfo).subscribe({
+      
       next: (res) => {
 
-        this.loading = false
-
         if(res.status === true){
+          // this.loading = false
           this.successPayment = true
           
         }
         else{
+          this.loading = false
           this.successPayment = false
-
         }
 
       },
-      error: (erro) => console.log('error', erro)
+      error: (erro) => {
+        console.log('error:', erro.message)
+      }
     })
 
   }
-  
 
+
+  async userJWTInformation(): Promise<userInfo | null>{
+    
+    let userInfo: userInfo
+    
+    if(!this.token) return null
+
+    const decoded: any = await jwtDecode(this.token);
+    
+    userInfo = {
+        userId: decoded.id,
+        email: decoded.email,
+        username: decoded.username
+      }
+    
+    return userInfo
+  }
+  
 
 
   goToHome(){

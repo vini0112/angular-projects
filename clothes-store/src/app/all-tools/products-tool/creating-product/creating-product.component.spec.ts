@@ -6,7 +6,7 @@ import { ProductsService } from '../../../../services/products.service';
 import { of } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-fdescribe('CreatingProductComponent', () => {
+describe('CreatingProductComponent', () => {
   let component: CreatingProductComponent;
   let fixture: ComponentFixture<CreatingProductComponent>;
   let spyProductService: jasmine.SpyObj<ProductsService>

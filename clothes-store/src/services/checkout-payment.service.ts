@@ -29,12 +29,12 @@ export class CheckoutPaymentService{
 
 
   // trigged in shipping component
-  stripeCheckout(products: checkoutProduct[], userInfo: userInfo[]): Observable<userPurchaseDataModule>{
+  stripeCheckout(products: checkoutProduct[], userInfo: userInfo): Observable<userPurchaseDataModule>{
     return this.http.post<userPurchaseDataModule>(`${this.api}/stripeCheckout`,{products, userInfo})
   }
 
 
-  statusPayment(userInfo: userInfo[]): Observable<{status: boolean}>{
+  statusPayment(userInfo: userInfo): Observable<{status: boolean}>{
     return this.http.post<{status: boolean}>(`${this.api}/checkPaymentStatus`, {userInfo})
   }
 

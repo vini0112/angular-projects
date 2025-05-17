@@ -6,7 +6,7 @@
 <div class="linksNavigation" *ngIf="createNewProductPage()">
     <i class="fa-solid fa-arrow-left-long btnGoBack" routerLink="../"></i>
 
-    <button (click)="isProductsTableActive()" class="btnCreateProduct" data-testid="buttonAddNewProduct">Add New Product</button>
+    <button (click)="goToCreationProductPage()" class="btnCreateProduct" data-testid="buttonAddNewProduct">Add New Product</button>
 </div>
 
 <div class="boxTable"> <!-- used just to create a scroll-x in mobile screen-->
@@ -43,6 +43,7 @@
         </tbody> 
     
     </table>
+
 </div>
 
 
@@ -130,6 +131,6 @@
 
 
 <!-- CREATING NEW PRODUCT (POST METHOD) -->
-<app-creating-product data-testid="componentCreatingProduct" *ngIf="!createNewProductPage()" (statusCreationPage)="handleResponse($event)"></app-creating-product>
+<app-creating-product data-testid="componentCreatingProduct" *ngIf="!createNewProductPage()" (statusCreationPage)="handleResponse($event)"/>
 
 

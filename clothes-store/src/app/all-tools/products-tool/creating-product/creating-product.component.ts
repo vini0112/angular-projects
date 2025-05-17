@@ -25,7 +25,6 @@ export class CreatingProductComponent implements AfterViewInit{
 
   goBackToProductTools(){
     this.statusCreationPage.emit(true)
-    
   }
 
   
@@ -93,7 +92,7 @@ export class CreatingProductComponent implements AfterViewInit{
         },
         error: (err) => {
           console.log('product not created!', err)
-          // this.messageService.showMessage("Product Not Created!", "error")
+          
         }
       })
     }

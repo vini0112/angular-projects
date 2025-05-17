@@ -1,10 +1,10 @@
 
 <h5 style="text-align:center;">Create New Product</h5>
-<form [formGroup]="postForm">
+<form [formGroup]="postForm" data-testid="postForm">
     
     <div class="leftSideInputs">
         <input type="text" name="name" placeholder="product name" formControlName="name" #productName>
-        <!-- postForm.controls['name'].touched -->
+        
         <span class="erroMsg" *ngIf="submitted && postForm.controls['name'].invalid">Product name required</span>
 
         <select name="section" formControlName="section">
@@ -58,8 +58,8 @@
         
 
         <div class="btnsPostProduct">
-            <button (click)="clearForm()">Clear</button>
-            <button (click)="createProduct()">Create</button>
+            <button type="button" (click)="clearForm()">Clear</button>
+            <button type="submit" (click)="createProduct()">Create</button>
         </div>
     </div>
 

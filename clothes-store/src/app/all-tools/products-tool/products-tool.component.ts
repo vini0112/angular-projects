@@ -29,7 +29,7 @@ export class ProductsToolComponent{
   // active and desactive page
   createNewProductPage = signal(true) 
 
-  isProductsTableActive(){
+  goToCreationProductPage(){
     this.createNewProductPage.set(!this.createNewProductPage())
   }
 
@@ -116,6 +116,8 @@ export class ProductsToolComponent{
   }
 
 
+
+  
   // deleting product
   deleteProduct(id: number){
 

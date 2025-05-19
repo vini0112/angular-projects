@@ -5,12 +5,13 @@ import { jwtDecode } from 'jwt-decode';
 import { userInfo } from '../../../modules/checkout.module';
 import { MessageService } from '../../../services/message.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
   selector: 'app-payment-status',
-  imports: [RouterLink, NgIf],
+  imports: [RouterLink, NgIf],  
   templateUrl: './payment-status.component.html',
   styleUrl: './payment-status.component.css'
 })
@@ -22,7 +23,7 @@ export class PaymentStatusComponent implements OnInit{
   
   loading = true
   token!: string
-  successPayment: boolean | null = null
+  successPayment: null | boolean = null
 
   constructor(){
     this.token = this.localStorageService.getItem('accessToken')
@@ -42,7 +43,6 @@ export class PaymentStatusComponent implements OnInit{
     if(userInfo === null){
       this.messageService.showMessage("Are you sure that you're logged?", "info")
       this.loading = false
-      this.successPayment = false
       return
     }
 
@@ -50,11 +50,11 @@ export class PaymentStatusComponent implements OnInit{
       
       next: (res) => {
         this.loading = false
-        this.successPayment = res.status
+        this.successPayment = res.status === true
       },
       error: (erro) => {
         console.log('error:', erro.message)
-        this.loading = false 
+        this.loading = false
         this.successPayment = false
       }
     })

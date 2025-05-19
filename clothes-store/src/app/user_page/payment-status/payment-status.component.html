@@ -20,8 +20,8 @@
         <p>Your order keeps us happy and committed to improve each day!</p>
         <button (click)="goToHome()">Go to Home Page</button>
     </div>
-</div>  
-    
+</div>
+
 
 <!-- FAILED PAYMENT -->
 <div class="deniedStatus" *ngIf="!loading && successPayment === false">
@@ -30,6 +30,6 @@
     <p>Sorry, we weren't able to complete your payment at this time. Please, make sure that your account informations are correct and try again.</p>
     <a routerLink="/home">Initial Page</a>
 </div>
-    
+
 
 

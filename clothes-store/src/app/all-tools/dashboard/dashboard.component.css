@@ -26,7 +26,7 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+    margin-bottom: 3rem;
     gap: .5rem;
 }
 
@@ -43,7 +43,15 @@ main{
     font-weight: 600;
     letter-spacing: 1px;
 }
-
+.btnGoBack{
+    background-color: black;
+    padding: .2rem 3rem;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
 
 /* links */
 

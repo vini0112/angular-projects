@@ -45,7 +45,7 @@ export class ShippingFormComponent {
   btnGoToPaymentForm(){
     this.btnGoToPaymentFormSubmitted = true
 
-    if(this.shipForm.valid){
+    if(this.shipForm.invalid){
 
       let productsInfo = this.getProductsInfo_FromLocalStorage()
 
@@ -53,14 +53,12 @@ export class ShippingFormComponent {
         return this.messageService.showMessage("Cart is empty!", "info")
       }
 
-
       let userInfo = this.getUserInfo_fromJWT()
 
       if(userInfo == null){
         return this.messageService.showMessage("Are you sure that you're logged?", "info")
       }
 
-      
       this.checkoutService.stripeCheckout(productsInfo, userInfo).subscribe({
         
         next: (res: any) => {

@@ -1,50 +1,54 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {Socket, io} from 'socket.io-client'
+import { inject, Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  private socket!: Socket
-
-  constructor() { }
-
-
-  connect(userId: string): void{
-    console.log('⚡ Connecting with userId:', userId);
-
-    this.socket = io('http://localhost:3000', {
-      auth: {userId: userId},
-      transports: ['websocket']
-    })
-
-    this.socket.on('connect', () =>{
-      console.log('connect')
-    })
-
-    this.socket.on('desconnect', () =>{
-      console.log('desconnect')
-    })
-
-    this.socket.on('connect_error', (err) => {
-      console.error('🔥 Socket connection error:', err.message);
-    });
-
-  }
-
-
-
   
 
+  constructor(private socket: Socket) {}
 
-  // onOnlineUsers(): Observable<string[]>{
-  //   return new Observable(observer => {
-  //     this.socket.on('Online-users', (users: string[]) =>{
-  //       observer.next(users)
+
+
+  // sendMessage(message: string): void {
+  //   this.socket.emit('message', message);
+  // }
+
+  
+  // getMessage(): Observable<string> {
+  //   return this.socket.fromEvent<string, string>('message');
+  // }
+
+  getOnlineUsers(): Observable<string>{
+    return this.socket.fromEvent<string, string>('Online-users')
+  }
+
+  // getMessage(): Observable<any>{
+  //   return new Observable((observer) =>{
+  //     this.socket.on('message', (data: any) =>{
+  //       observer.next(data)
   //     })
   //   })
   // }
+
+  // Listen for incoming messages
+  // getMessage(): Observable<string> {
+  //   return this.socket.fromEvent('message');//<string>
+  // }
+
+  // Listen for connection events
+  // onConnect(): Observable<any> {
+  //   return this.socket.fromEvent('connect');
+  // }
+
+  // // Listen for disconnect events
+  // onDisconnect(): Observable<any> {
+  //   return this.socket.fromEvent('disconnect');
+  // }
+
 
 
 }

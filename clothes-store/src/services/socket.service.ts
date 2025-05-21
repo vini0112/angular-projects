@@ -1,38 +1,42 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
+import { LocalStorageService } from './localStorage.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class SocketService {
+export class SocketService extends Socket{
   
+  localStorageService = inject(LocalStorageService)
 
-  constructor(private socket: Socket) {}
-
-
-
-  // sendMessage(message: string): void {
-  //   this.socket.emit('message', message);
-  // }
-
-  
-  // getMessage(): Observable<string> {
-  //   return this.socket.fromEvent<string, string>('message');
-  // }
-
-  getOnlineUsers(): Observable<string>{
-    return this.socket.fromEvent<string, string>('Online-users')
+  constructor() {
+    super({
+      url: 'http://localhost:3000',
+      options: {
+        autoConnect: false
+      }
+    })
   }
 
-  // getMessage(): Observable<any>{
-  //   return new Observable((observer) =>{
-  //     this.socket.on('message', (data: any) =>{
-  //       observer.next(data)
-  //     })
-  //   })
+
+
+  onConnect(){
+    const token = this.localStorageService.getItem('accessToken')
+
+    if(token){
+      this.ioSocket.io.opts.query = {token}
+      this.ioSocket.connect()
+    }
+  }
+
+  
+  // getOnlineUsers(): Observable<string>{
+  //   // return this.socket.fromEvent<string, string>('Online-users')
   // }
+
+  
 
   // Listen for incoming messages
   // getMessage(): Observable<string> {

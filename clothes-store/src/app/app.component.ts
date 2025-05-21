@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{
 
   productService = inject(ProductsService)
   authLoginService = inject(AuthLoginService)
-  socketService = inject(SocketService)
+  socketService = inject(SocketService) 
   
   constructor() { 
     
@@ -30,15 +30,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.authLoginService.checkIfIsLogged()
     this.productService.getProducts()
-
-    // this.socketService.getOnlineUsers().pipe(
-    //   take(1),
-    //   catchError(() => of([])),
-    //   timeout(1000)
-    // )
-    // .subscribe(msg => {
-    //   console.log(msg)
-    // })
+    this.socketService.onConnect()
   }
   
 

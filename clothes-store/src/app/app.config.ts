@@ -12,7 +12,13 @@ import { environment } from '../environments/environment.development';
 import {SocketIoModule, SocketIoConfig, provideSocketIo} from 'ngx-socket-io'
 
 
-const config: SocketIoConfig = {url: 'http://localhost:3000', options: {transports: ['websocket']}}
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket'],
+    autoConnect: false
+  },
+} 
 
 
 export const appConfig: ApplicationConfig = {

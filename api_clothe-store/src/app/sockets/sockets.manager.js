@@ -1,20 +1,24 @@
 
+import sokectAuth from "../middleware/socketAuth.js"
+import userHandler from "./userHandler.js"
+
 let onlineUsers = new Set()
 
 
 export function setupSocket(io){
-
-    io.on('connection', (socket) =>{
-
-        onlineUsers.add(socket.id)
-        console.log('✅ user connected. Online users ', onlineUsers.size)
+    
+    io.use(sokectAuth) // AUTH middleware
+    
+    io.on('connect', (socket) =>{
         
-        io.emit('Online-users', onlineUsers.size)
+        console.log(`✅ ${socket.user.email} connected!`)
+
+        // io.emit('Online-users', onlineUsers.size)
         
+        userHandler(socket, io); 
 
         socket.on('disconnect', () =>{
-            console.log(socket.id, ' disconnect')
-            onlineUsers.delete(socket.id)
+            console.log('❌ ',socket.user.email, ' disconnect')
             io.emit("Online-users", onlineUsers.size)
         })
 

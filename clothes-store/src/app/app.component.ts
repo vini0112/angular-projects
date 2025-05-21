@@ -21,16 +21,14 @@ export class AppComponent implements OnInit{
 
   productService = inject(ProductsService)
   authLoginService = inject(AuthLoginService)
-  socketService = inject(SocketService) 
-  
-  constructor() { 
-    
-  }
+  // socketService = inject(SocketService)
+
+
+  constructor() { }
 
   ngOnInit(): void {
     this.authLoginService.checkIfIsLogged()
     this.productService.getProducts()
-    this.socketService.onConnect()
   }
   
 

@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ResetTokenResponseModule } from '../modules/resetPassword.module';
 import { login, registering } from '../modules/login.module';
 import { LocalStorageService } from './localStorage.service';
+import { SocketService } from './socket.service';
 
 
 
@@ -16,6 +17,7 @@ export class AuthLoginService{
   api = environment.api
   private http = inject(HttpClient)
   localstorageService = inject(LocalStorageService)
+  socketService = inject(SocketService) 
 
   
   
@@ -50,6 +52,8 @@ export class AuthLoginService{
 
         this.saveToken(response.accessToken)
         this.isAuth.next(true)
+        this.socketService.onConnect()
+
         
       })
     )
@@ -65,6 +69,7 @@ export class AuthLoginService{
       next: (res: any) => {
         console.log(res.message)
         this.logOut()
+        this.socketService.disconnectedUser()
       },
 
       error: (err) => {
@@ -88,11 +93,13 @@ export class AuthLoginService{
           this.IsDeveloper.next(true)
           this.isAuth.next(true)
           console.log('DEV LOGGED')
+          this.socketService.onConnect()
         }
 
         else if(res.message === 'User_Logged'){
           this.isAuth.next(true)
           console.log('USER LOGGED')
+          this.socketService.onConnect()
         }
 
         else{

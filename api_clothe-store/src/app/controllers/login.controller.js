@@ -64,10 +64,8 @@ class loginController{
         
         try{
             const refreshToken = req.cookies.refreshToken
-
             const row = await loginService.refreshingTokenService_service(refreshToken)
             return res.json(row)
-
         }
         catch(err){
             res.status(501).json(err)

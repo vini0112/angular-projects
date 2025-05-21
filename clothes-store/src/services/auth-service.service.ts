@@ -28,7 +28,6 @@ export class AuthServiceService {
 
 
   refreshToken(): Observable<{accessToken: string}>{
-
     const accessToken = this.getAccessToken()
 
     if(!accessToken){

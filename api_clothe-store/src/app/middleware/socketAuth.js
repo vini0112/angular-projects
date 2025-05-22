@@ -14,9 +14,8 @@ export default function sokectAuth(socket, next){
     }catch(err){
         
         if(err.name === 'TokenExpiredError'){
-            return next(new Error('EXPIRED_TOKEN'))
+            next(new Error('EXPIRED_TOKEN'))
         }
-
         return next(new Error('Error in Socket_Auth: ',err.message))
     }
 }

@@ -38,7 +38,6 @@ export function AuthInterceptorToken(req: HttpRequest<any>, next: HttpHandlerFn)
             const newCloneReq = req.clone({
               setHeaders: { Authorization: `Bearer ${newToken.accessToken}` }
             })
-
             return next(newCloneReq)
           }),
 

@@ -17,7 +17,7 @@ export function setupSocket(io){
         io.emit('Online-users', onlineUsers.size)
         
         
-        userHandler(socket, io);
+        // userHandler(socket, io);
 
         socket.on('disconnect', () =>{
             console.log('❌ ',socket.user.email, ' disconnect!')

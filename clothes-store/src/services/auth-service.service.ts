@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
 import { MessageService } from './message.service';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,17 @@ export class AuthServiceService {
   private messageService = inject(MessageService)
 
   api = environment.api
+
   
   getAccessToken(): string | null{
     return localStorage.getItem('accessToken')
   }
 
+
   setAccessToken(token: string): void {
     localStorage.setItem('accessToken', token);
   }
+
 
   clearTokens(): void {
     localStorage.removeItem('accessToken');
@@ -38,12 +42,15 @@ export class AuthServiceService {
       tap((res) => {
         
         this.messageService.showMessage("Token Refreshed!", "info")
+    
         if(res.accessToken){
           this.setAccessToken(res.accessToken)
         }
+
       })
     )
   }
+
 
   logout(): void {
     this.clearTokens();

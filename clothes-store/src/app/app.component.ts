@@ -21,7 +21,6 @@ export class AppComponent implements OnInit{
 
   productService = inject(ProductsService)
   authLoginService = inject(AuthLoginService)
-  // socketService = inject(SocketService)
 
 
   constructor() { }

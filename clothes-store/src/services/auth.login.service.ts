@@ -32,7 +32,7 @@ export class AuthLoginService{
 
 
 
-  // PAGE ACCESS // CHANGE THIS!!!!!!!!  
+  // PAGE ACCESS
   private accessToForm_shipping_and_Payment = false
 
   register(form: registering): Observable<string>{
@@ -61,8 +61,6 @@ export class AuthLoginService{
 
 
 
-
-
   loggingOut(){
     this.http.post<string>(`${this.api}/auth/logout`, {}, {withCredentials: true})
     .subscribe({
@@ -81,8 +79,7 @@ export class AuthLoginService{
   }
 
 
-
-   // called in the app component
+  // called in the app component
 
   checkIfIsLogged(){
     
@@ -113,7 +110,6 @@ export class AuthLoginService{
       }
     })
   }
-
 
 
 
@@ -156,9 +152,8 @@ export class AuthLoginService{
   }
   
 
-
   tokenResetPasswordValidator(token: string): Observable<ResetTokenResponseModule>{
-    return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`) 
+    return this.http.get<ResetTokenResponseModule>(`${this.api}/validatorTokenResetPassword/${token}`)
   }
 
   

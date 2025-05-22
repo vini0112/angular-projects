@@ -1,65 +1,72 @@
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { LocalStorageService } from './localStorage.service';
-import { AuthLoginService } from './auth.login.service';
 import { AuthServiceService } from './auth-service.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class SocketService extends Socket{
+
+
+export class SocketService{
   
+  private receivingOnlineUsers = new BehaviorSubject<number>(0)
+  onlineUsers = this.receivingOnlineUsers.asObservable()
+
   localStorageService = inject(LocalStorageService)
   authService = inject(AuthServiceService)
   socket = inject(Socket)
 
   constructor() {
-    super({
-      url: 'http://localhost:3000',
-      options: {
-        autoConnect: false
-      }
-    })
 
     this.expiredToken_toRefresh()
+    this.getAllOnlineUsers()
   }
 
-  expiredToken_toRefresh(){
-    this.ioSocket.on('connect_error', (error: any) =>{
-      console.log('Socket connect error -> token expired: ',error)
-      if(error.message === 'EXPIRED_TOKEN'){
-        this.authService.refreshToken().subscribe()
-      }
-    })
+  getAllOnlineUsers(){
+    this.socket.fromEvent<number, string>('Online-users').subscribe(numberOfUsers => this.receivingOnlineUsers.next(numberOfUsers))
   }
-
 
   onConnect(){
     const token = this.localStorageService.getItem('accessToken')
 
     if(token){
-      this.ioSocket.io.opts.query = {token}
-      this.ioSocket.connect()
+      this.socket.ioSocket.io.opts.query = {token}
+      this.socket.ioSocket.connect()
     }
   }
 
+
   disconnectedUser(){
-    this.ioSocket.disconnect()
+    this.socket.ioSocket.disconnect()
   }
 
-  getAllOnlineUsers(){
-    this.ioSocket.on('Online-users', (n) => console.log(n))
+
+
+  expiredToken_toRefresh(){
+    this.socket.ioSocket.on('connect_error', async(error: any) =>{
+
+      if(error.message === 'EXPIRED_TOKEN'){
+        this.authService.refreshToken().subscribe({
+          next: () =>{
+            this.onConnect()
+          },
+          error: (err) =>{
+            console.log('Token not refreshed at socket.service: ',err.message)
+          }
+        })
+      }
+    })
   }
 
-  
-  // getOnlineUsers(): Observable<string>{
-  //   return this.socket.fromEvent<string, string>('Online-users')
-  // } 
 
   
 
+ 
+
+  
   
 
 

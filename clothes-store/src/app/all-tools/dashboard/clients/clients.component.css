@@ -251,6 +251,30 @@ tbody{
 
 }
 
+@media (orientation: landscape) and (max-height: 768px){
+
+    :host{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 35% 1fr; 
+    }
+
+    .boxeWrapper{
+        display: flex;
+        flex-direction: row;
+        width: 430px;
+        align-items: center;
+        height: 200px;
+    }
+
+    .boxes{
+        max-width: 200px;
+        width: 100%;
+        height: 130px;
+    }
+
+}
+
 @media screen and (orientation: landscape) and (max-height: 480px){
     :host{
         display: grid;
@@ -268,20 +292,19 @@ tbody{
     .boxeWrapper{
         display: flex;
         flex-direction: row;
-        width: 350px;
+        width: 400px;
         align-items: center;
         height: 200px;
     }
 
     .boxes{
-        max-width: 200px;
+        max-width: 190px;
         width: 100%;
         height: 130px;
         
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: .7fr 1fr;
-
     }
 
     .boxes div span:first-child{
@@ -306,8 +329,6 @@ tbody{
     }
 
 
-
-
     .boxTableCustomers{
         max-width: 300px;
         width: 100%;
@@ -319,3 +340,35 @@ tbody{
     
     }
 }
+
+@media screen and (orientation: landscape) and (max-height: 380px){
+
+    :host{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 50% 1fr; 
+    }
+    
+    .boxeWrapper{
+        display: flex;
+        flex-direction: column;
+        width: 210px;
+        align-items: center;
+        height: 215px;
+    }
+
+    .boxes{
+        max-width: 200px;
+        width: 100%;
+        height: 100px;
+    }
+
+    .boxTableCustomers{
+        max-width: 250px;
+        width: 100%;
+        height: 200px;
+    
+    }
+
+}
+

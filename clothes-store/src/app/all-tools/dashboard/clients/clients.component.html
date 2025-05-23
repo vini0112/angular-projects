@@ -2,22 +2,32 @@
 
 <div class="firstBlock">
     <!-- total users -->
-    <div class="boxes">
-        <div>
-            <span>Users registered</span>
-            <span>1</span>
+    <div class="boxeWrapper">
+        <div class="boxes">
+            <div>
+                <span>Users registered</span>
+                <span>1</span>
+            </div>
+            <p>
+                <i class="fa-solid fa-arrow-up"></i>
+                <span class="increased">+5%</span>
+                <span>Since last month</span>
+            </p>
         </div>
-        <p>
-            <i class="fa-solid fa-arrow-up"></i>
-            <span class="increased">+11.5%</span>
-            <span>Since last month</span>
-        </p>
+        <div class="boxes">
+            <div>
+                <span>Online Users</span>
+                <span>{{onlineUsers}}</span>
+            </div>
+            <p>
+                <span class="increased">10%</span>
+                <span>of online users</span>
+            </p>
+        </div>
     </div>
 
-    <div class="boxes">users online {{onlineUsers}}</div>
-
     <div class="boxTableCustomers">
-        <span>High-Value Customers</span>
+        <span class="titleTable">High-Value Customers</span>
 
         <table>
             <thead>

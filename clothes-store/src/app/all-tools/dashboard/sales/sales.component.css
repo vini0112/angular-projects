@@ -329,14 +329,12 @@ table tbody tr td{
     /* columns THEAD size */
     table tbody{
         margin-top: .3rem;
-        /* border: 2px solid black; */
         height: 200px; 
         overflow-y: auto;
     }
     .sizeP{
         width: 60px;
         text-align: center;
-        /* border: 2px solid black; */
     }
 
 
@@ -378,7 +376,7 @@ table tbody tr td{
 
     .boxOfSales{
         max-width: 190px;
-        width: 100%;        
+        width: 100%;    
     }
 
 

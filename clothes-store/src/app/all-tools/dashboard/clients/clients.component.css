@@ -7,7 +7,6 @@
 }
 
 .firstBlock{
-    border: 2px solid blue;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -20,7 +19,6 @@
 }
 
 .boxes{
-    border: 2px solid black;
     max-width: 300px;
     width: 100%;
     height: 180px;
@@ -134,9 +132,65 @@ tbody{
 
 /* second block */
 .secondBlock{
-    border: 2px solid red;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+
+.titleSecondBlock{
+    width: 85%;
+}
+.titleSecondBlock span{
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
+.boxTableAllUsers{
+    margin-top: .5rem;
+    max-width: 1000px;
+    width: 100%;
+    height: 100%;
+}
+
+.tableUsersP{
+    text-align: center;
+    width: 60px;
+    height: 30px;
+}
+
+.tableUsersM{
+    text-align: center;
+    width: 150px;
+    height: 30px;
+
+}
+
+.tableUsersG{
+    text-align: center;
+    width: 200px;
+    height: 30px;
+}
+
+.btnDeleteUser{
+    border: none;
+    background-color: red;
+    font-weight: 600;
+    font-size: .9rem;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+
+.boxTableAllUsers table tbody{
+    margin-top: .3rem;
+    height: 300px;
+    overflow-y: auto;
+}
 
 
 
@@ -202,7 +256,16 @@ tbody{
     
     }
 
+    /* second table */
+    .boxTableAllUsers{
+        margin-top: .5rem;
+        max-width: 550px;
+        width: 100%;
+        height: 100%;
+    }
+
 }
+
 
 
 @media screen and (max-width: 490px){
@@ -249,9 +312,36 @@ tbody{
     
     }
 
+    /* second table */
+    .secondBlock{
+        overflow-x: hidden;
+    }
+
+    .boxTableAllUsers{
+        margin-top: .5rem;
+        height: 80%;
+        overflow-x: auto;
+    } 
+
+    .boxTableAllUsers table{
+        width: 530px;
+    }
+    
+    
+    .tableUsersG{
+        width: 125px;
+    }
+    .tableUsersM{
+        width: 100px;
+    }
+
+    .tableUsersP{
+        width: 40px;
+    }
+
 }
 
-@media (orientation: landscape) and (max-height: 768px){
+@media (orientation: landscape) and (max-height: 768px) and (max-width: 1024px){
 
     :host{
         display: grid;

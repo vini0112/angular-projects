@@ -16,6 +16,7 @@ export class dashboardService{
     messageService = inject(MessageService)
 
     private api = environment.api
+    
 
     private GetUsersData = new BehaviorSubject<dashboardUsersData[]>([])
     usersData$ = this.GetUsersData.asObservable()
@@ -24,8 +25,6 @@ export class dashboardService{
     getDashboardData(): Observable<dashboardData>{
         return this.http.get<dashboardData>(`${this.api}/dashboard-data`)
     }
-
-    constructor(){}
 
 
     getDashBoardUsersData(){
@@ -58,10 +57,9 @@ export class dashboardService{
 
 
     highValueClientsInfo$: Observable<dashboardHighValueClient[]> = this.usersData$.pipe(
-        map(itens => itens.filter(item => item.purchases > 0))
+        map(itens => itens.filter(item => item.purchases > 2))
     )
 
-    // highValueClientsInfo$: Observable<dashboardHighValueClient[]> = this.GetUsersData.value.filter(item => item.purchases < 0)
 }
 
 

@@ -14,7 +14,6 @@ aside{
 }
 
 main{
-    border: 2px solid black;
     grid-area: main;
 }
 

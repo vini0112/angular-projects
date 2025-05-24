@@ -40,11 +40,11 @@
             </thead>
 
             <tbody>
-                @for(user of highValueClients$| async; track $index){
+                @for(user of highValueClients$ | async; track $index){
                     <tr>
-                        <td class="sizeP">{{user}}</td>
-                        <td class="sizeM">Vinicius</td>
-                        <td class="sizeM">10</td>
+                        <td class="sizeP">{{user.idUsers}}</td>
+                        <td class="sizeM">{{user.username}}</td>
+                        <td class="sizeM">{{user.purchases}}</td>
                     </tr>
                 }
             </tbody> 

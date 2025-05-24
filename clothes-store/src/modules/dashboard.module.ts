@@ -19,7 +19,9 @@ export interface dashboardUsersData{
 }
 
 export interface dashboardHighValueClient{
-
+    idUsers: number 
+    username: string 
+    purchases: number
 }
 
 export interface userPurchaseDetail{

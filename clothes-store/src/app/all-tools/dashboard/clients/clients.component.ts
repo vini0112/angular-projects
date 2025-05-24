@@ -22,20 +22,16 @@ export class ClientsComponent implements OnInit, OnDestroy{
   private onlineUserSubscription!: Subscription
 
   usersData$ = this.dashboardService.usersData$
-
-  highValueClients$ = new Observable<dashboardHighValueClient[]>()
+  highValueClients$ = this.dashboardService.highValueClientsInfo$
   
 
   constructor(){
     this.dashboardService.getDashBoardUsersData()
-    this.highValueClients$ = this.dashboardService.highValueClientsInfo$
-
   }
 
 
   ngOnInit(): void {
     this.onlineUserSubscription = this.socketService.onlineUsers.subscribe(users => this.onlineUsers = users)
-
   }
   
 

@@ -6,7 +6,7 @@
         <div class="boxes">
             <div>
                 <span>Users registered</span>
-                <span>1</span>
+                <span>{{(usersData$ | async)?.length}}</span>
             </div>
             <p>
                 <i class="fa-solid fa-arrow-up"></i>
@@ -36,15 +36,17 @@
                     <th class="sizeM">Customer</th>
                     <th class="sizeM">Purchases</th>
                 </tr>
+                
             </thead>
 
             <tbody>
-                <tr>
-                    <td class="sizeP">1</td>
-                    <td class="sizeM">Vinicius</td>
-                    <td class="sizeM">10</td>
-                </tr>
-
+                @for(user of highValueClients$| async; track $index){
+                    <tr>
+                        <td class="sizeP">{{user}}</td>
+                        <td class="sizeM">Vinicius</td>
+                        <td class="sizeM">10</td>
+                    </tr>
+                }
             </tbody> 
 
         </table>
@@ -69,15 +71,18 @@
             </thead>
 
             <tbody>
+                @for(user of usersData$ | async; track $index){ 
                 <tr>
-                    <td class="tableUsersP">1</td>
-                    <td class="tableUsersG">Vinicius</td>
-                    <td class="tableUsersG">vinicisu!gmail.com</td>
-                    <td class="tableUsersM">$948</td>
-                    <td class="tableUsersM">10</td>
-                    <td class="tableUsersP"><button class="btnDeleteUser" type="button">Delete</button></td>
+                    <td class="tableUsersP">{{user.idUsers}}</td>
+                    <td class="tableUsersG">{{user.username}}</td>
+                    <td class="tableUsersG">{{user.email}}</td>
+                    <td class="tableUsersM">${{user.ammount}}</td>
+                    <td class="tableUsersM">{{user.purchases}}</td>
+                    <td class="tableUsersP">
+                        <button class="btnDeleteUser" (click)="btnDeleteUser(user.idUsers)" type="button">Delete</button>
+                    </td>
                 </tr>
-                
+                }
                 
             </tbody>
 

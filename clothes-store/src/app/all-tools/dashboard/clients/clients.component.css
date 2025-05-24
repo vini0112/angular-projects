@@ -6,6 +6,12 @@
     height: 100%;
 }
 
+/* table zebra style */
+table tbody tr:nth-child(even){
+    background-color: rgba(213, 213, 213, 0.37);
+}
+
+
 .firstBlock{
     display: flex;
     align-items: center;
@@ -191,6 +197,8 @@ tbody{
     height: 300px;
     overflow-y: auto;
 }
+
+
 
 
 

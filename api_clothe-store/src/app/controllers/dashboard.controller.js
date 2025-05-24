@@ -25,6 +25,18 @@ class dashBoardController{
         }
     }
 
+
+    async deleteUserById(req, res){
+        try{
+            const row = await dashboardService.deleteingUser_service(req.params.id)
+            return res.json(row)
+            
+        }catch(err){
+            console.log('ERROR while deleting the user by id: ', err.message)
+            return res.status(404).json(err)
+        }
+    }
+
 }
 
 export default new dashBoardController()

@@ -115,6 +115,7 @@ export class listCartServices{
     getTotalPriceCart$: Observable<number> = this.cart$.pipe(
         map(items => items.reduce((acc, item) => acc + item.price * item.cart_quantity!, 0))
     )
+    
 
     // taking all quantity
     getTotalQuantityProducts_inCart$: Observable<number> = this.cart$.pipe(

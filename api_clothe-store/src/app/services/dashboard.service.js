@@ -33,18 +33,26 @@ class dashboardService{
     async getDashboardUsersData_service(){
 
         try{
+            const sql = "SELECT idUsers, username, email, ammount, purchases from users WHERE roles = 'user'"
 
-            const sql = 'SELECT idUsers, username, email, ammount, purchases from users'
-
-            const [data] = await consulta(sql, '', 'Error selecting users data!')
-
-            return data
+            return await consulta(sql, '', 'Error selecting users data!')
 
         }catch(err){
-            console.log('ERROR getting the dashboard users', err.message)
+            console.log('ERROR getting the dashboard users: ', err)
             return err.message
         }
 
+    }
+    
+
+    async deleteingUser_service(id){
+        try{
+            return await consulta('DELETE FROM users WHERE idUsers = ?', id, 'Error in DB while deleting user!')
+
+        }catch(err){
+            console.log('Error in deletion user service: ', err.message)
+            return err.message
+        }
     }
 
 }

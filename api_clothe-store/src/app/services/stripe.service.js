@@ -49,7 +49,7 @@ class stripeService{
                 }
             })
 
-            // TAKING AMOUNT       
+            
             const amount = rows.reduce((total, pro) => total + pro.price,0)
             const quantity = products.reduce((quant, pro) => quant + pro.quantity,0)
             
@@ -84,6 +84,7 @@ class stripeService{
     }
 
 
+
     webHook_service(event){
 
         return new Promise(async (resolve, reject) =>{
@@ -104,7 +105,7 @@ class stripeService{
 
                     
                     // Mark as paid to sinalize the frontend
-                    connection.query('UPDATE users SET status = ? WHERE email = ?', ['paid', email], (err, res) =>{
+                    connection.query('UPDATE users SET status = ?, purchases = purchases + 1, ammount = ammount + ? WHERE email = ?', ['paid', amount,email], (err, res) =>{
                         if(err) return reject({error: 'webhook did not set the value in DB correctly!'})
                         
                         if(res.length == 0){
@@ -213,6 +214,7 @@ class stripeService{
     }
 
 
+
     checkPaymentStatus_service(body){
 
         return new Promise((resolve, reject) =>{
@@ -221,7 +223,7 @@ class stripeService{
             const userId = userInfo.userId
             const email = userInfo.email
 
-            // SELECTING THE STATUS ACCORDIND TO THE IDUSER AND EMAIL   
+
             connection.query('SELECT status FROM users WHERE idusers = ? AND email = ?', [userId, email], (erro, response) =>{
 
                 if(erro){
@@ -243,7 +245,7 @@ class stripeService{
                         return resolve({status: true}) 
                     })
 
-                }else{ // IF NO FLAG IN DB
+                }else{
                     console.log('Not paid flag found in status!')
                     return reject({status: false, details: 'Not paid flag found in status!'})
                 }
@@ -253,6 +255,7 @@ class stripeService{
         })
         
     }
+    
 
 }
 

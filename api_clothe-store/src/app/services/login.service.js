@@ -162,8 +162,8 @@ class loginService {
                     const hashedPassword = await bcrypt.hash(password, saltRounds)
                     
                     connection.execute(
-                        'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-                        [username, email, hashedPassword] 
+                        'INSERT INTO users (username, email, password, purchases, ammount, roles) VALUES (?, ?, ?, ?, ?, ?)',
+                        [username, email, hashedPassword, 0, 0, 'user'] 
                     );
                     return resolve({ message: 'Usuário registrado com sucesso!' });
         

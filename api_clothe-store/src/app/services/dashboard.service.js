@@ -6,7 +6,6 @@ class dashboardService{
 
     async getDashboardData_service(){
         try{
-
             const sql = 'SELECT * FROM dashboard'
             const [data] = await consulta(sql, '', 'Database connection erro while getting dashboard data!')
             
@@ -24,10 +23,28 @@ class dashboardService{
             return data
 
         }catch(err){
-            console.log('ERROR getting the dashboard data')
-            return err
+            console.log('ERROR getting the dashboard data', err.message)
+            return err.message
         }
         
+    }
+
+
+    async getDashboardUsersData_service(){
+
+        try{
+
+            const sql = 'SELECT idUsers, username, email, ammount, purchases from users'
+
+            const [data] = await consulta(sql, '', 'Error selecting users data!')
+
+            return data
+
+        }catch(err){
+            console.log('ERROR getting the dashboard users', err.message)
+            return err.message
+        }
+
     }
 
 }

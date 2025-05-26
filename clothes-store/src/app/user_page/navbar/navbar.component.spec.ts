@@ -8,7 +8,16 @@ import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { By } from '@angular/platform-browser';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { importProvidersFrom } from '@angular/core';
 
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket'],
+    autoConnect: false
+  },
+} 
 
 
 describe('NavbarComponent', () => {
@@ -45,7 +54,9 @@ describe('NavbarComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
+        importProvidersFrom(SocketIoModule.forRoot(config)),
         {
+          
           provide: ActivatedRoute,
           useValue: {
             params: of({}),

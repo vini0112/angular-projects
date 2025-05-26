@@ -3,7 +3,16 @@ import { ResetPasswordComponent } from './reset-password.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket'],
+    autoConnect: false
+  },
+} 
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -13,6 +22,8 @@ describe('ResetPasswordComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
+        importProvidersFrom(SocketIoModule.forRoot(config)),
+
         {
           provide: ActivatedRoute,
           useValue: {

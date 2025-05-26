@@ -31,7 +31,7 @@ export class ClientsComponent implements OnInit, OnDestroy{
 
 
   ngOnInit(): void {
-    this.onlineUserSubscription = this.socketService.onlineUsers.subscribe(users => this.onlineUsers = users)
+    this.onlineUserSubscription = this.socketService.onlineUsers$.subscribe(users => this.onlineUsers = users)
   }
   
 

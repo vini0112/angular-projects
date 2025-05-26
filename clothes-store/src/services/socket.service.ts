@@ -13,7 +13,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class SocketService{
   
   private receivingOnlineUsers = new BehaviorSubject<number>(0)
-  onlineUsers = this.receivingOnlineUsers.asObservable()
+  onlineUsers$ = this.receivingOnlineUsers.asObservable()
 
   localStorageService = inject(LocalStorageService)
   authService = inject(AuthServiceService)
@@ -26,8 +26,11 @@ export class SocketService{
   }
 
   getAllOnlineUsers(){
-    this.socket.fromEvent<number, string>('Online-users').subscribe(numberOfUsers => this.receivingOnlineUsers.next(numberOfUsers))
+    this.socket.fromEvent<number, string>('Online-users').subscribe(numberOfUsers => {
+      this.receivingOnlineUsers.next(numberOfUsers)
+    })
   }
+
 
   onConnect(){
     const token = this.localStorageService.getItem('accessToken')
@@ -46,6 +49,7 @@ export class SocketService{
 
 
   expiredToken_toRefresh(){
+    
     this.socket.ioSocket.on('connect_error', async(error: any) =>{
 
       if(error.message === 'EXPIRED_TOKEN'){

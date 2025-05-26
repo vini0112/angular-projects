@@ -6,7 +6,17 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { AuthServiceService } from '../services/auth-service.service';
 import { of } from 'rxjs';
 import { LocalStorageService } from '../services/localStorage.service';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { importProvidersFrom } from '@angular/core';
 
+
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket'],
+    autoConnect: false
+  },
+} 
 
 describe('refreshTokenInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) => 
@@ -27,6 +37,7 @@ describe('refreshTokenInterceptor', () => {
       providers: [
         {provide: AuthServiceService, useValue: spyAuthService},
         {provide: LocalStorageService, useValue:spyLocalSt},
+        importProvidersFrom(SocketIoModule.forRoot(config)),
         
         provideHttpClient(withInterceptors([AuthInterceptorToken])),
         provideHttpClientTesting()

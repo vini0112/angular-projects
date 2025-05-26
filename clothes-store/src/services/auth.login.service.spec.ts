@@ -3,6 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { AuthLoginService } from './auth.login.service';
 import { HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { importProvidersFrom } from '@angular/core';
+
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket'],
+    autoConnect: false
+  },
+} 
 
 describe('AuthLoginService', () => {
   let service: AuthLoginService;
@@ -10,7 +20,8 @@ describe('AuthLoginService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthLoginService, provideHttpClient() ,provideHttpClientTesting()]
+      providers: [AuthLoginService, provideHttpClient() ,provideHttpClientTesting(),         importProvidersFrom(SocketIoModule.forRoot(config)),
+      ]
     });
 
     service = TestBed.inject(AuthLoginService);

@@ -1,23 +1,36 @@
 
-import { Subject } from "rxjs";
+import { Socket } from "ngx-socket-io";
+import { Observable, Subject } from "rxjs";
 
 // for real-time events without real connections
 
-export class MockService{
+export class MockService extends Socket{
 
-    private events = new Map<string, Subject<any>>();
+    private eventSubject = new Map<string, Subject<any>>()
 
-    on(event: string, callback: (data: any) => void) {
-        if (!this.events.has(event)) {
-        this.events.set(event, new Subject<any>());
+    constructor() {
+        super(
+            {url: '', options: {}}  as any
+        ),
+
+        (this as any).ioSocket = {
+            on: (eventName: string, callback: (value: any) => void) => {
+                if (!this.eventSubject.has(eventName)) {
+                    this.eventSubject.set(eventName, new Subject<any>());
+                }
+
+                this.eventSubject.get(eventName)!.subscribe(callback);
+            },
+            emit: (eventName: string, value: any) => {
+                this.eventSubject.get(eventName)?.next(value);
+            }
         }
-        this.events.get(event)!.subscribe(callback);
     }
 
-    emit(event: string, data: any) {
-        if (!this.events.has(event)) {
-        this.events.set(event, new Subject<any>());
-        }
-        this.events.get(event)!.next(data);
+
+    emitEvent<T>(eventName: string, value: T){
+        this.eventSubject.get(eventName)?.next(value)
     }
+
+
 }

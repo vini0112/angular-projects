@@ -2,6 +2,17 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 
 import { CheckoutPaymentComponent } from './checkout-payment.component';
 import { provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket'],
+    autoConnect: false
+  },
+} 
 
 
 describe('CheckoutPaymentComponent', () => {
@@ -17,6 +28,8 @@ describe('CheckoutPaymentComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
+        importProvidersFrom(SocketIoModule.forRoot(config)),
+        
       ],
       imports: [CheckoutPaymentComponent]
     })

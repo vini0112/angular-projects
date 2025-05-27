@@ -14,6 +14,7 @@
     border: 2px solid rgb(239, 5, 5);
     width: 100%;
     height: 85vh;
+    margin-bottom: 1rem;
 }
 
 .boxBanner{
@@ -57,12 +58,10 @@
 }
 
 
-/* secund */
 
 #navigationProducts{
     max-width: 1100px;
     width: 100%;
-    /* border: 2px solid blue; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
@@ -74,21 +73,18 @@
 }
 
 .boxCategory{
-    /* border: 2px solid black; */
     height: 200px;
     max-width: 350px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    
     background-color: rgba(0, 0, 0, 0.234);
-
 }
+
 .boxCategory img{
     width: 50%;
     height: 90%;
-
 }
 .boxCategory div{
     display: flex;
@@ -106,37 +102,81 @@
     text-decoration: none;
 }
 
+/* END OF FIRST SLIDE */
 
 
+/* SECOND SLIDE */
+.secondSlide{
+    border: 2px solid blue;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
 
+.boxSecondSlide{
+    display: flex;
+    padding: 20px;
+}
 
+.boxSecondSlide p{
+    padding: 5px;
+    max-width: 600px;
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+}
 
-/* secund part BESTSELLERS */
-.bestSellers{
+.boxSecondSlide img{
+    max-width: 1000px;
+    width: 100%;
+    height: 500px;
+}
+
+/* THIRD SLIDE */
+
+.thirdSlide{
+    border: 2px solid green;
+    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    margin-top: 2rem;
-    /* h3{
-        text-align: center;
-        letter-spacing: 4px;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        font-weight: bold;
-    } */
 }
 
 .homeCards{
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    border: 2px solid black;
+    justify-content: space-evenly;
 }
+
+
+
+/* ANIMATIONS */
+.autoShow{
+    animation: autoShowAnimation both;
+    animation-timeline: view(70% 5%);
+}
+
+
+@keyframes autoShowAnimation{
+    from{
+        opacity: 0;
+        transform: translateY(-160px) scale(0.5);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+    }
+}
+
+
 
 
 @media (max-width: 1024px){
 
     .slideOne{
-        height: 55vh;
+        height: 50vh;
     }
 
     #navigationProducts{
@@ -144,15 +184,11 @@
         bottom: 2%;
         right: 0;
     }
-    .boxCategory{
-        height: 150px;
-        max-width: 250px;
-        width: 100%;
-    }
 
-    .boxCategory img{
-        width: 50%;
-        height: 90%;
+    .boxCategory{
+        height: 180px;
+        max-width: 300px;
+        width: 100%;
     }
 
     .boxCategory div a{
@@ -163,28 +199,103 @@
     .titleProductsNavigation{
         font-family: 1.1rem;
     }
-        
+
+    /* SECOND SLIDE */
+
+    .secondSlide{
+        height: 60vh;
+    }
+    
+    .boxSecondSlide p{
+        padding: 5px;
+        max-width: 600px;
+        width: 100%;
+        font-size: 1.5rem;
+        text-align: center;
+        animation: none;
+    }
+
+    .boxSecondSlide img{
+        max-width: 1000px;
+        width: 100%;
+        height: 500px;
+        animation: none;
+    }
+
+}
+
+@media (max-width: 820px){
+    .slideOne{
+        height: 55vh;
+    }
+
+    .boxCategory{
+        height: 150px;
+        max-width: 250px;
+        width: 100%;
+    }
+
+    /* SECOND SLIDE */
+    
+    .boxSecondSlide p{
+        padding: 5px;
+        max-width: 600px;
+        width: 100%;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .boxSecondSlide img{
+        max-width: 1000px;
+        width: 100%;
+        height: 450px;
+    }
 
 }
 
 @media (max-width: 768px){
+    .slideOne{
+        height: 65vh;
+    }
+
+    .boxCategory{
+        height: 140px;
+        max-width: 230px;
+        width: 100%;
+    }
+
+    .boxCategory div a{
+        padding: .1rem .1rem;
+        width: 90px;
+    }
+
+    /* SECOND SLIDE */
+    .boxSecondSlide img{
+        max-width: 1000px;
+        width: 100%;
+        height: 400px;
+    }
     
 }
 
-@media(max-width: 440px){
+@media screen and (max-width: 480px){
     .slideOne{
-        width: 100%;
+        position: static;
         height: 100%;
-        margin: 1.5rem auto 1.5rem auto;
-        display: grid;
-        grid-template-columns: 1fr;
-        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .boxBanner{
+        height: 360px;
     }
 
     .boxBanner img{
         width: 100%;
         height: 350px;
     }
+
     .advertasing{
         position: absolute;
         left: 45%;
@@ -203,11 +314,13 @@
         letter-spacing: 2px;
         color: black;
     }
+
     .advertasing span{
         color: black;
         font-size: .7rem;
         font-weight: 500;
     }
+
     .advertasing button{
         font-size: .8rem;
         border: none;
@@ -219,12 +332,75 @@
 
 
     #navigationProducts{
+        max-width: 1100px;
+        width: 100%;
+        height: 440px;
         display: grid;
         grid-template-columns: 1fr;
-        padding: 10px;
-        justify-items: center;
-        gap: 10px;
-        
+
+        position: static;
+        bottom: none;
+        right: none;
+    }
+
+    .boxCategory{
+        height: 140px;
+        max-width: 300px;
+        width: 100%;
+    }
+
+    /* SECOND SLIDE */
+
+    .secondSlide{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .boxSecondSlide p{
+        padding: 5px;
+        max-width: 600px;
+        width: 100%;
+        font-size: 1.5rem;
+        text-align: center;
+        animation: none;
+    }
+
+    .boxSecondSlide img{
+        height: 400px;
+        animation: none;
     }
     
 }
+
+
+@media screen and (orientation: landscape) and (max-height: 480px){
+    .slideOne{
+        height: 100%;
+    }
+
+    .advertasing h2{
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+    .advertasing span{
+        color: black;
+        font-size: .9rem;
+        font-weight: 500;
+    }
+
+    /*  */
+
+    .secondSlide{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+}
+
+

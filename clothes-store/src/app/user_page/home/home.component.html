@@ -1,30 +1,6 @@
 
-<!-- 
-<div class="boxBanner">
-    <img src="../assets/banners/banner-grandient.png" alt="Woman model">
-    <div class="advertasing">
-        <h2>Fashion Jackets</h2>
-        <span>UP TO 50% OFF ON TOP BRANDS</span>
-        <a routerLink="/feminine/jackets">SHOP NOW</a>
-    </div>
-</div>
 
-
-<div id="navigationProducts">
-    @for (item of navigateByTheme; track $index) {
-        <div class="boxCategory">
-            <img [src]="item.image" alt="">
-            
-            <div>
-                <h3>{{item.title}}</h3>
-                <a [routerLink]="item.linkNavegation">Check Now</a>
-            </div>
-        </div>
-    }                
-</div> -->
-
-
-<div class="slideOne col-12 col-md-6">
+<div class="slideOne">
     
     <div class="boxBanner">
         <img src="../assets/banners/banner-grandient.png" alt="Woman model">
@@ -54,36 +30,47 @@
 </div>
 
 
+
 <div class="secondSlide">
-    <div class="bestSellers">
-        <h3>Our BestSellers</h3>
-        <div class="homeCards" data-testid="structurePattern">
-        
-            @for(item of clothesBestsellers$ | async; track $index){
-                <div class="padraoCard">
-                    <div class="boxImg" (click)="addProductToCart(item)">
-                        <img [src]="item.image" [alt]="item.name" >
-                    </div>
-                    <div class="boxInfoProduct">
-                        <span>$ {{item.price.toFixed(2)}}</span>
-                        <span>{{item.info}}</span>
-                    </div>
-                    <div class="btnsProduct">
-                        <button><i class="fa-solid fa-shirt"></i></button>
-                        <button (click)="clickInHeart(item)">
-                            <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
-                            <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
-                        </button>
-                        <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(item)"></i></button>
-                    </div>
-                </div>
-            }
-        </div>
+    <div class="boxSecondSlide">
+        <p class="autoShow">"Every great day starts with a great outfit. Our apparel is designed to elevate your everyday—blending comfort, quality, and style for those who mean business. Dress like your future depends on it—because it does."</p>
+    </div>
+
+    <div class="boxSecondSlide ">
+        <img src="assets/homeImgs/camarera.png" class="autoShow" alt="">
     </div>
 </div>
 
 
 
+<div class="thirdSlide">
+    
+    <h3>Our BestSellers</h3>
+
+    <div class="homeCards" data-testid="structurePattern">
+    
+        @for(item of clothesBestsellers$ | async; track $index){
+            <div class="padraoCard">
+                <div class="boxImg" (click)="addProductToCart(item)">
+                    <img [src]="item.image" [alt]="item.name" >
+                </div>
+                <div class="boxInfoProduct">
+                    <span>$ {{item.price.toFixed(2)}}</span>
+                    <span>{{item.info}}</span>
+                </div>
+                <div class="btnsProduct">
+                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="clickInHeart(item)">
+                        <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
+                        <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
+                    </button>
+                    <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(item)"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
 
 
 

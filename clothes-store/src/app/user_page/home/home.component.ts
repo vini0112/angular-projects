@@ -43,9 +43,6 @@ export class HomeComponent{
             return of([])
           })
   )
-
-
-  // navigation below the main post
   
   
   navigateByTheme = [
@@ -70,7 +67,6 @@ export class HomeComponent{
   ]
 
 
-
   clickInHeart(item: productModule){
     
     this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe({
@@ -89,8 +85,10 @@ export class HomeComponent{
   }
 
 
-  // cart
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
   }
+
+
+
 }

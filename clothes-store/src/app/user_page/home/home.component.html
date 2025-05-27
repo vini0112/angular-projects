@@ -44,30 +44,53 @@
 
 
 <div class="thirdSlide">
-    
-    <h3>Our BestSellers</h3>
 
-    <div class="homeCards" data-testid="structurePattern">
-    
-        @for(item of clothesBestsellers$ | async; track $index){
-            <div class="padraoCard">
-                <div class="boxImg" (click)="addProductToCart(item)">
-                    <img [src]="item.image" [alt]="item.name" >
-                </div>
-                <div class="boxInfoProduct">
-                    <span>$ {{item.price.toFixed(2)}}</span>
-                    <span>{{item.info}}</span>
-                </div>
-                <div class="btnsProduct">
-                    <button><i class="fa-solid fa-shirt"></i></button>
-                    <button (click)="clickInHeart(item)">
-                        <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
-                        <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
-                    </button>
-                    <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(item)"></i></button>
-                </div>
+    <div class="slideExplores">
+
+        <div class="explore1">
+            <div>
+                <p>Elegance is Always in Style.</p>
+                <h5>Spring Collection</h5>
+                <button>Explore more</button>
             </div>
-        }
+        </div>
+
+        <div class="explore2">
+            <p>Dress Well, Feel Powerful.</p>
+            <h5>-25% Off Items</h5>
+            <button>Explore more</button>
+        </div>
+
+    </div>
+    
+    <div class="bestSellersBox">
+
+    
+        <h3>Our BestSellers</h3>
+
+        <div class="homeCards" data-testid="structurePattern">
+        
+            @for(item of clothesBestsellers$ | async; track $index){
+                <div class="padraoCard">
+                    <div class="boxImg" (click)="addProductToCart(item)">
+                        <img [src]="item.image" [alt]="item.name" >
+                    </div>
+                    <div class="boxInfoProduct">
+                        <span>$ {{item.price.toFixed(2)}}</span>
+                        <span>{{item.info}}</span>
+                    </div>
+                    <div class="btnsProduct">
+                        <button><i class="fa-solid fa-shirt"></i></button>
+                        <button (click)="clickInHeart(item)">
+                            <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
+                            <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
+                        </button>
+                        <button><i class="fa-solid fa-cart-shopping" (click)="addProductToCart(item)"></i></button>
+                    </div>
+                </div>
+            }
+        </div>
+
     </div>
 
 </div>

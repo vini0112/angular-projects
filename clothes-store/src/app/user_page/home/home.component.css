@@ -140,9 +140,69 @@
     border: 2px solid green;
     width: 100%;
     height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50% 50%;
+    
+}
+
+.slideExplores{
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.slideExplores div{
+    border: 2px solid blueviolet;
+    width: 550px;
+    height: 350px;
+}
+
+.slideExplores .explore1:hover{
+    opacity: .4;
+}
+
+.slideExplores div p{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.explore1{
+    background-image: url('/assets/homeImgs/explore_small.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+.explore1 div{
+    border: 2px solid white;
+    width: 150px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    
+}
+
+
+.explore2{
+    background-image: url('/assets/homeImgs/explore2_small.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .homeCards{
     display: flex;

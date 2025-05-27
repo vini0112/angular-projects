@@ -1,6 +1,27 @@
 
+<!-- 
+<div class="boxBanner">
+    <img src="../assets/banners/banner-grandient.png" alt="Woman model">
+    <div class="advertasing">
+        <h2>Fashion Jackets</h2>
+        <span>UP TO 50% OFF ON TOP BRANDS</span>
+        <a routerLink="/feminine/jackets">SHOP NOW</a>
+    </div>
+</div>
 
 
+<div id="navigationProducts">
+    @for (item of navigateByTheme; track $index) {
+        <div class="boxCategory">
+            <img [src]="item.image" alt="">
+            
+            <div>
+                <h3>{{item.title}}</h3>
+                <a [routerLink]="item.linkNavegation">Check Now</a>
+            </div>
+        </div>
+    }                
+</div> -->
 
 
 <div class="slideOne col-12 col-md-6">
@@ -21,14 +42,19 @@
                 <img [src]="item.image" alt="">
                 
                 <div>
-                    <h3>{{item.title}}</h3>
+                    <span class="titleProductsNavigation">{{item.title}}</span>
                     <a [routerLink]="item.linkNavegation">Check Now</a>
                 </div>
             </div>
         }                
     </div>
 
+    
 
+</div>
+
+
+<div class="secondSlide">
     <div class="bestSellers">
         <h3>Our BestSellers</h3>
         <div class="homeCards" data-testid="structurePattern">
@@ -54,9 +80,8 @@
             }
         </div>
     </div>
-
-
 </div>
+
 
 
 

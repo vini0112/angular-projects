@@ -10,7 +10,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, RouterLink, AsyncPipe],
+  imports: [RouterLink, NgIf, AsyncPipe ],//
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

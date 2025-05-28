@@ -39,12 +39,14 @@
 
 .advertasing h2{
     font-weight: bolder;
-    font-size: 2rem;
+    font-size: 2.2rem;
     letter-spacing: 2px;
+    font-family: var(--PrimaryFont)
 }
 .advertasing span{
     font-size: 1rem;
     font-weight: 500;
+    font-family: var(--PrimaryFont)
 }
 
 .advertasing a{
@@ -55,6 +57,7 @@
     background-color: black;
     font-weight: 500;
     padding: .3rem .7rem;
+    font-family: var(--PrimaryFont)
 }
 
 
@@ -90,6 +93,11 @@
     display: flex;
     flex-direction: column;
 }
+.titleProductsNavigation{
+    font-family: var(--PrimaryFont);
+    font-size: 1.3rem;
+    
+}
 
 .boxCategory div a{
     border: none;
@@ -100,6 +108,9 @@
     width: 150px;
     text-align: center;
     text-decoration: none;
+    font-family: var(--PrimaryFont);
+    font-size: 1.1rem;
+
 }
 
 /* END OF FIRST SLIDE */
@@ -124,8 +135,10 @@
     padding: 5px;
     max-width: 600px;
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     text-align: center;
+    font-family: var(--SecundaryFont);
+
 }
 
 .boxSecondSlide img{
@@ -159,13 +172,29 @@
     height: 350px;
 }
 
-.slideExplores .explore1:hover{
-    opacity: .4;
+
+.slideExplores .explore1:hover div, .explore2:hover div{
+    opacity: .9;
+    background-color: white;
+    transition: .2s ease-in-out;
 }
 
+
 .slideExplores div p{
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     font-weight: 600;
+    font-family: var(--PrimaryFont);
+    letter-spacing: 1px;
+}
+.slideExplores div h5{
+    font-family: var(--PrimaryFont);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+.slideExplores div button{
+    font-family: var(--PrimaryFont);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
 }
 
 .explore1{
@@ -178,16 +207,16 @@
     justify-content: center;
     align-items: center;
 }
+
 .explore1 div{
     border: 2px solid white;
-    width: 150px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 3;
-    
+    opacity: 0;
 }
 
 
@@ -197,18 +226,87 @@
     background-position: center bottom;
     background-repeat: no-repeat;
 
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+}
+
+.explore2 div{
+    border: 2px solid white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+
+
+.slideExplores div div button{
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    padding: .4rem 1rem;
+    border-radius: 5px;
+}
+
+
+/* best sellers */
+.bestSellersBox{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* border: 2px solid red; */
+}
+
+.bestSellersBox h3{
+    font-family: var(--PrimaryFont);
+    letter-spacing: 2px;
 }
 
 
 .homeCards{
     display: flex;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     justify-content: space-evenly;
+    height: 315px;
 }
+
+.bestSellersCard{
+    position: relative;
+    height: 300px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: .5s;
+    margin-bottom: 2rem;
+}
+.bestSellersCard:hover{
+    transform: scale(1.1);
+    z-index: 5;
+}
+
+.bestSellerImg{
+    width: 100%;
+    height: 240px;
+    background-color: rgba(234, 234, 234, 0.234);
+    cursor: pointer;
+}
+.bestSellerImg img{
+    width: 100%;
+    height: 100%;
+}
+
 
 
 
@@ -216,6 +314,22 @@
 .autoShow{
     animation: autoShowAnimation both;
     animation-timeline: view(70% 5%);
+}
+
+.autoShowToThirdBlock{
+    animation: autoShowAnimationToThird both;
+    animation-timeline: view(70% 5%);
+}
+
+@keyframes autoShowAnimationToThird{
+    from{
+        opacity: 0;
+        transform: translateY(-50px) scale(0.5);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+    }
 }
 
 

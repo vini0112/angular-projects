@@ -47,7 +47,7 @@
 
     <div class="slideExplores">
 
-        <div class="explore1">
+        <div class="explore1 autoShowToThirdBlock">
             <div>
                 <p>Elegance is Always in Style.</p>
                 <h5>Spring Collection</h5>
@@ -55,25 +55,26 @@
             </div>
         </div>
 
-        <div class="explore2">
-            <p>Dress Well, Feel Powerful.</p>
-            <h5>-25% Off Items</h5>
-            <button>Explore more</button>
+        <div class="explore2 autoShowToThirdBlock">
+            <div>
+                <p>Dress Well, Feel Powerful.</p>
+                <h5>-25% Off Items</h5>
+                <button>Explore more</button>
+            </div>
         </div>
 
     </div>
     
     <div class="bestSellersBox">
 
-    
         <h3>Our BestSellers</h3>
 
         <div class="homeCards" data-testid="structurePattern">
         
             @for(item of clothesBestsellers$ | async; track $index){
-                <div class="padraoCard">
-                    <div class="boxImg" (click)="addProductToCart(item)">
-                        <img [src]="item.image" [alt]="item.name" >
+                <div class="bestSellersCard">
+                    <div class="bestSellerImg" (click)="addProductToCart(item)">
+                        <img [src]="item.image" [alt]="item.name">
                     </div>
                     <div class="boxInfoProduct">
                         <span>$ {{item.price.toFixed(2)}}</span>
@@ -94,6 +95,7 @@
     </div>
 
 </div>
+
 
 
 

@@ -6,6 +6,11 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+:root{
+    --PrimaryFont:'Irish Grover', sans-serif;
+    --SecundaryFont: 'Roboto', sans-serif;
+}
+
 
 .errorMsg{
     color: red;

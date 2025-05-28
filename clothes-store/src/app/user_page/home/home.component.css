@@ -150,52 +150,29 @@
 /* THIRD SLIDE */
 
 .thirdSlide{
-    border: 2px solid green;
-    width: 100%;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 50% 50%;
-    
+    display: flex;
+    flex-direction: column;
 }
 
 .slideExplores{
-    border: 2px solid black;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
 }
 
 .slideExplores div{
-    border: 2px solid blueviolet;
     width: 550px;
     height: 350px;
 }
 
 
 .slideExplores .explore1:hover div, .explore2:hover div{
-    opacity: .9;
+    opacity: .8;
     background-color: white;
     transition: .2s ease-in-out;
 }
 
 
-.slideExplores div p{
-    font-size: 1.7rem;
-    font-weight: 600;
-    font-family: var(--PrimaryFont);
-    letter-spacing: 1px;
-}
-.slideExplores div h5{
-    font-family: var(--PrimaryFont);
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-}
-.slideExplores div button{
-    font-family: var(--PrimaryFont);
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-}
+
 
 .explore1{
     background-image: url('/assets/homeImgs/explore_small.jpg');
@@ -209,7 +186,6 @@
 }
 
 .explore1 div{
-    border: 2px solid white;
     width: 100%;
     height: 100%;
     display: flex;
@@ -218,7 +194,6 @@
     align-items: center;
     opacity: 0;
 }
-
 
 .explore2{
     background-image: url('/assets/homeImgs/explore2_small.jpg');
@@ -236,7 +211,6 @@
 }
 
 .explore2 div{
-    border: 2px solid white;
     width: 100%;
     height: 100%;
     display: flex;
@@ -246,9 +220,23 @@
     opacity: 0;
 }
 
+.slideExplores div p{
+    font-size: 1.7rem;
+    font-weight: 600;
+    font-family: var(--PrimaryFont);
+    letter-spacing: 1px;
+}
 
+.slideExplores div h5{
+    font-family: var(--PrimaryFont);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
 
 .slideExplores div div button{
+    font-family: var(--PrimaryFont);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
     border: none;
     background-color: black;
     color: white;
@@ -258,12 +246,12 @@
 }
 
 
+
 /* best sellers */
 .bestSellersBox{
     display: flex;
     flex-direction: column;
-    height: 100%;
-    /* border: 2px solid red; */
+    margin-top: 2rem;
 }
 
 .bestSellersBox h3{
@@ -274,9 +262,7 @@
 
 .homeCards{
     display: flex;
-    /* border: 2px solid black; */
     justify-content: space-evenly;
-    height: 315px;
 }
 
 .bestSellersCard{
@@ -289,8 +275,8 @@
     overflow: hidden;
     transform-style: preserve-3d;
     transition: .5s;
-    margin-bottom: 2rem;
 }
+
 .bestSellersCard:hover{
     transform: scale(1.1);
     z-index: 5;
@@ -302,6 +288,7 @@
     background-color: rgba(234, 234, 234, 0.234);
     cursor: pointer;
 }
+
 .bestSellerImg img{
     width: 100%;
     height: 100%;
@@ -316,10 +303,12 @@
     animation-timeline: view(70% 5%);
 }
 
+
 .autoShowToThirdBlock{
     animation: autoShowAnimationToThird both;
     animation-timeline: view(70% 5%);
 }
+
 
 @keyframes autoShowAnimationToThird{
     from{
@@ -396,7 +385,46 @@
         animation: none;
     }
 
+    /* THIRD SLIDE */
+
+    .slideExplores div{
+        width: 440px;
+        height: 350px;
+    }
+
+    .explore1, .explore2{
+        animation: none;
+    }
+
+    .explore1 div{
+        opacity: .8;
+        background-color: white;
+    }
+    .explore2 div{
+        opacity: .8;
+        background-color: white;
+    }
+
+    /* best sellers */
+    .homeCards{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .bestSellersCard{
+        position: relative;
+        height: 300px;
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        transition: .5s;
+    }
+
 }
+
 
 @media (max-width: 820px){
     .slideOne{
@@ -425,7 +453,42 @@
         height: 450px;
     }
 
+    /* THIRD SLIDE */
+
+    .slideExplores div{
+        width: 350px;
+        height: 250px;
+    }
+
+    .slideExplores div p{
+        font-size: 1.3rem;
+        font-weight: 600;
+        font-family: var(--PrimaryFont);
+        letter-spacing: 1px;
+    }
+
+    .slideExplores div h5{
+        font-family: var(--PrimaryFont);
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+
+    /* best sellers */
+
+    .bestSellersCard{
+        position: relative;
+        height: 250px;
+        width: 180px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        transition: .5s;
+    }
+
 }
+
 
 @media (max-width: 768px){
     .slideOne{
@@ -444,6 +507,9 @@
     }
 
     /* SECOND SLIDE */
+    .secondSlide{
+        height: 50vh;
+    }
     .boxSecondSlide img{
         max-width: 1000px;
         width: 100%;
@@ -451,6 +517,7 @@
     }
     
 }
+
 
 @media screen and (max-width: 480px){
     .slideOne{
@@ -546,7 +613,36 @@
         height: 400px;
         animation: none;
     }
+
+    /* THIRD SLIDE */
     
+    .slideExplores{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .homeCards{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .bestSellersCard{
+        position: relative;
+        height: 300px;
+        width: 280px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        transition: .5s;
+    }
 }
 
 
@@ -575,6 +671,43 @@
         justify-content: space-between;
     }
 
+
+    /* third slide */
+    .slideExplores div{
+        width: 300px;
+        height: 250px;
+    }
+
+    .slideExplores div p{
+        font-size: 1.3rem;
+        font-weight: 600;
+        font-family: var(--PrimaryFont);
+        letter-spacing: 1px;
+    }
+
+    .slideExplores div h5{
+        font-family: var(--PrimaryFont);
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+
+    .homeCards{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
 }
 
 
+@media screen and (orientation: landscape) and (min-height: 768px) and (min-width: 1024px){
+
+    .slideOne{
+        height: 90vh;
+    }
+
+    .secondSlide{
+        height: 70vh;
+    }
+
+}

@@ -6,19 +6,25 @@ import { RouterLink } from '@angular/router';
 import { cartList } from '../../../modules/cart.list.module';
 import { listCartServices } from '../../../services/listCart.service';
 import { catchError, map, Observable, of } from 'rxjs';
+import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, NgIf, AsyncPipe  ],//
+  imports: [RouterLink, NgIf, AsyncPipe, TranslateModule, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
+  translate = inject(TranslateService)
 
+  ngOnInit(): void {
+    
+  }
+  
 
 
   clothesBestsellers$ = this.productsService.allProducts$.pipe(

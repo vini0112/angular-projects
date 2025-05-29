@@ -1,19 +1,24 @@
 <div class="boxFooterHeader">
     <h2>Clothe Store</h2>
     <div>
-        <i class="fa-brands fa-whatsapp"></i>
-        <i class="fa-brands fa-linkedin"></i>
-        <i class="fa-brands fa-github"></i>
+        <a href="https://wa.me/5584999933800" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i></a>
+        
+        <a href="https://www.linkedin.com/in/vinícius-silva-26b715321" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+
+        <a href="https://github.com/vini0112" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
+        
     </div>
     
 </div>
 
-<div class="boxFooterBody">
+<div class="boxFooterBody" id="navbarLinkContactUs">
 
     <div class="boxBody1">
         <h5>Stay connected to our news!</h5>
-        <p>Sign-in to receive news</p>
-        <a href="#">Sign-in</a>
+        <p *ngIf="!(isAuth$ | async)">Sign-in to receive news</p>
+        <a *ngIf="!(isAuth$ | async)" href="/login">Sign-in</a>
+
+        <p *ngIf="isAuth$ | async">We're dayly sharing news here!</p> 
     </div>
 
     <div class="boxBody2">
@@ -24,16 +29,16 @@
 
     <div class="boxBody3">
         <h5>You might be looking for: </h5>
-        <div>
+        <div class="boxLinkAtBody3">  
             <div>
-                <p>Shoes</p>
-                <p>Shirts</p>
-                <p>Jackets</p>
+                <a routerLink="/masculine/coats">Coats</a>
+                <a routerLink="/masculine/shirts">Shirts</a>
+                <a routerLink="/feminine/jackets">Jackets</a>
             </div>
             <div>
-                <p>Shorts</p>
-                <p>Trainers</p>
-                <p>High-Heels</p>
+                <a routerLink="/masculine/shorts">Shorts</a>
+                <a routerLink="/masculine/shoes">Trainers</a>
+                <a routerLink="/feminine/shoesfemi">High-Heels</a>
             </div>
 
         </div>
@@ -45,3 +50,5 @@
     <span>Clothe Store &copy; 2025</span>
     <p>We can get your day better!</p>
 </div>
+
+

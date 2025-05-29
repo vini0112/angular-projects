@@ -54,15 +54,12 @@
     text-decoration: none;
 
 }
-
-#navLinks li .shopBtn:hover{
-    text-decoration: none;
-}
 #dropdown{
     position: relative;
 }
 
-#submenu{
+/* #submenu{
+
     display: none;
     position: absolute;
     width: 250px;
@@ -76,16 +73,17 @@
     align-content: space-around;
     align-items: center;
     z-index: 10;
-}
-#submenu li a{
+} */
+
+/* #submenu li a{
     color: white;
     text-decoration: none;
     
-}
+} */
 
-#dropdown:hover #submenu{
+/* #dropdown:hover #submenu{
     display: grid;
-}
+} */
 
 
 #icons{

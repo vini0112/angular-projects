@@ -1,18 +1,19 @@
 
 :host{
+    margin-top: 4rem;
     border: 2px solid black;
     display: flex;
     flex-direction: column;
     background-color: black;
 }
 
+/* FOOTER HEAD */
 
 .boxFooterHeader{
-    border: 2px solid red;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 100px;
 }
 
 .boxFooterHeader h2{
@@ -29,36 +30,40 @@
 .boxFooterHeader div i{
     font-size: 2.2rem;
     color: white;
+    cursor: pointer;
 }
 
-/* box body */
+.boxFooterHeader div i:hover{
+    scale: calc(1.2);
+}
+
+
+/* FOOTER BODY */
 
 .boxFooterBody{
     color: white;
     display: flex;
     justify-content: space-between;
-    border: 2px solid white;
+    height: 300px;
+    align-items: center;
 }
 
-.boxFooterBody div{
+.boxFooterBody .boxBody1, .boxBody2, .boxBody3{
     padding: 10px;
-    height: 100%;
-    border: 2px solid red;
-}
-
-/* .boxFooterBody div h5{
-    
-}
-
-.boxFooterBody div p{
-
-} */
-
-.boxBody1{
-    margin-left: 15px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+
+.boxFooterBody div a, p{
+    color: #d9d3d3;
+} 
+
+.boxBody1{
+    margin-left: 15px;
 }
 
 
@@ -70,4 +75,102 @@
     font-weight: bold;
     border-radius: 5px;
 }
+
+
+.boxBody3{
+    margin-right: 15px;
+}
+
+.boxLinkAtBody3{
+    display: flex;
+    gap: 1.2rem;
+}
+
+.boxLinkAtBody3 div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.boxLinkAtBody3 div a{
+    text-decoration: none;
+}
+
+.boxLinkAtBody3 div a:hover{
+    color: white;
+}
+
+
+/* FOOTER FOOTER */
+
+.boxFooterFooter{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boxFooterFooter span{
+    color: white;
+    font-size: 1.2rem;
+    font-family: var(--PrimaryFont);
+    margin-left: 15px;
+}
+.boxFooterFooter p{
+    color: white;
+    font-size: 1.1rem;
+    font-family: var(--PrimaryFont);
+    margin-right: 15px;
+    margin-bottom: 0;
+}
+
+
+
+
+
+@media screen and (max-width: 480px) {
+    /* FOOTER HEADER */
+    .boxFooterHeader div i{
+        font-size: 2rem;
+    }
+
+    /* FOOTER BODY */
+    .boxFooterBody{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 500px;
+        align-items: center;
+    }
+
+    /* FOOTER FOOTER */
+    .boxFooterFooter span{
+        font-size: 1rem;
+        
+    }
+
+    .boxFooterFooter p{
+        font-size: .9rem;
+    }
+}
+
+
+@media screen and (max-width: 380px){
+    /* FOOTER FOOTER */
+    .boxFooterFooter{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: .5rem;
+    }
+    
+    .boxFooterFooter span{
+        margin: 0;
+    }
+
+    .boxFooterFooter p{
+        margin: 0;
+    }
+}
+
 

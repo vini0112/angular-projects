@@ -4,14 +4,13 @@ import { NavbarComponent } from './user_page/navbar/navbar.component';
 import { ProductsService } from '../services/products.service';
 import { MessageComponent } from './message/message.component';
 import { AuthLoginService } from '../services/auth.login.service';
-import { SocketService } from '../services/socket.service';
-import { catchError, of, take, timeout } from 'rxjs';
+import { FooterComponent } from './user_page/footer/footer.component';
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, MessageComponent],
+  imports: [RouterOutlet, NavbarComponent, MessageComponent, FooterComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

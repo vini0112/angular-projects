@@ -11,7 +11,7 @@ import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, NgIf, AsyncPipe, TranslateModule, TranslatePipe],
+  imports: [RouterLink, NgIf, AsyncPipe, TranslateModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

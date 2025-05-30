@@ -58,33 +58,6 @@
     position: relative;
 }
 
-/* #submenu{
-
-    display: none;
-    position: absolute;
-    width: 250px;
-    height: 80px;
-    top: 100%;
-    left: -160%;
-    list-style-type: none;
-    margin: 0;
-    background-color: gray;
-    grid-template-columns: repeat(2, 50%);
-    align-content: space-around;
-    align-items: center;
-    z-index: 10;
-} */
-
-/* #submenu li a{
-    color: white;
-    text-decoration: none;
-    
-} */
-
-/* #dropdown:hover #submenu{
-    display: grid;
-} */
-
 
 #icons{
     display: flex;

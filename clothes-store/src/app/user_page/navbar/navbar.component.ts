@@ -6,11 +6,13 @@ import { cartList } from '../../../modules/cart.list.module';
 import { map, Observable, tap } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { MessageService } from '../../../services/message.service';
+import { LocalStorageService } from '../../../services/localStorage.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, NgClass, AsyncPipe, NgIf], 
+  imports: [RouterLink, NgClass, AsyncPipe, NgIf, TranslateModule], 
   templateUrl: './navbar.component.html', 
   styleUrl: './navbar.component.css'
 })
@@ -20,6 +22,8 @@ export class NavbarComponent implements OnInit{
   listCartService = inject(listCartServices)
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
+  localstorageService = inject(LocalStorageService)
+  translate = inject(TranslateService)
 
 
   // cart parameters 
@@ -35,7 +39,6 @@ export class NavbarComponent implements OnInit{
   sexoChosen = false
 
   
-  // ASIDE CART OPEN/CLOSE
   openCart(){
     this.isAsideCartOpen = !this.isAsideCartOpen
     this.shadowActive = true
@@ -53,7 +56,6 @@ export class NavbarComponent implements OnInit{
   }
 
 
-  // mobile
 
   openMobileAsideBar(){
     this.mobileSideActive = !this.mobileSideActive
@@ -69,7 +71,7 @@ export class NavbarComponent implements OnInit{
     }
   }
 
-  //MOBILE -> shows two options feminine/masculine this gonna show U clothes according to the sexo
+  //MOBILE -> shows two options feminine/masculine 
   showSubLinksMobile(){
     this.sexoChosen = !this.sexoChosen
   }
@@ -78,19 +80,25 @@ export class NavbarComponent implements OnInit{
 
 
   constructor(){
-    // RECEIVING QUANTITY AND AMOUNT  
+      
     this.totalPriceCart$ = this.listCartService.getTotalPriceCart$
     this.totalQuantityProducts_inCart$ = this.listCartService.getTotalQuantityProducts_inCart$
+
+    const getSavedLangua = this.localstorageService.getItem('language') || 'en'
+    this.currentLanguage = getSavedLangua
   }
 
 
 
   ngOnInit(): void {
 
-    // PASSING THE PRODUCTS ITEMS FROM THE CART LIST
     this.listCartService.cart$.subscribe(items =>{
       this.products = items
     })   
+
+    
+    this.translate.use(this.currentLanguage)
+
   }
 
 
@@ -127,7 +135,7 @@ export class NavbarComponent implements OnInit{
         return
       }
       
-      else if(this.products.length <= 0){ // if no product in the cart
+      else if(this.products.length <= 0){
         return this.messageService.showMessage("Cart is empty!", "info")
       }
 
@@ -143,8 +151,30 @@ export class NavbarComponent implements OnInit{
   }
 
 
-  
-  
+
+
+  currentLanguage: 'pt' | 'en' = 'en'
+
+  // supportedLanguages = [
+  //   {code: 'en', key: 'EN'},
+  //   {code: 'pt', key: 'PT'}
+  // ]
+
+  get AvaliableLangues(){
+    return this.currentLanguage === 'en' ?
+    [{ code: 'en', label: 'EN' }, { code: 'pt', label: 'PT' }]
+    : [{ code: 'pt', label: 'PT' }, { code: 'en', label: 'EN' }];
+  }
+
+
+
+  swicthLanguage(languages: HTMLSelectElement){
+    const selectedLangua = languages.value
+    // this.currentLanguage = selectedLangua
+    this.localstorageService.setItem('language', selectedLangua)
+   
+    this.translate.use(selectedLangua)
+  }
 
   
   

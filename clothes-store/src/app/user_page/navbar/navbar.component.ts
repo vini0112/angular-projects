@@ -1,18 +1,20 @@
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import { map, Observable, tap } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { MessageService } from '../../../services/message.service';
-import { LocalStorageService } from '../../../services/localStorage.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ThemeService } from '../../../services/theme.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+
 
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, NgClass, AsyncPipe, NgIf, TranslateModule], 
+  imports: [RouterLink, NgClass, AsyncPipe, NgIf, MatSlideToggleModule, FormsModule], 
   templateUrl: './navbar.component.html', 
   styleUrl: './navbar.component.css'
 })
@@ -22,9 +24,11 @@ export class NavbarComponent implements OnInit{
   listCartService = inject(listCartServices)
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
-  localstorageService = inject(LocalStorageService)
-  translate = inject(TranslateService)
+  // localstorageService = inject(LocalStorageService)
+  themeService = inject(ThemeService)
 
+
+  isDarkMode = false
 
   // cart parameters 
   products: cartList[] = []
@@ -71,24 +75,24 @@ export class NavbarComponent implements OnInit{
     }
   }
 
+
   //MOBILE -> shows two options feminine/masculine 
   showSubLinksMobile(){
     this.sexoChosen = !this.sexoChosen
   }
 
+  plataformId: object = inject(PLATFORM_ID)
+  
 
-
+  
 
   constructor(){
       
     this.totalPriceCart$ = this.listCartService.getTotalPriceCart$
     this.totalQuantityProducts_inCart$ = this.listCartService.getTotalQuantityProducts_inCart$
-
-    const getSavedLangua = this.localstorageService.getItem('language') || 'en'
-    this.currentLanguage = getSavedLangua
+    
   }
-
-
+  
 
   ngOnInit(): void {
 
@@ -96,10 +100,10 @@ export class NavbarComponent implements OnInit{
       this.products = items
     })   
 
-    
-    this.translate.use(this.currentLanguage)
 
-  }
+  } 
+
+
 
 
   // METHODS FROM INSIDE CART LIST
@@ -152,30 +156,13 @@ export class NavbarComponent implements OnInit{
 
 
 
-
-  currentLanguage: 'pt' | 'en' = 'en'
-
-  // supportedLanguages = [
-  //   {code: 'en', key: 'EN'},
-  //   {code: 'pt', key: 'PT'}
-  // ]
-
-  get AvaliableLangues(){
-    return this.currentLanguage === 'en' ?
-    [{ code: 'en', label: 'EN' }, { code: 'pt', label: 'PT' }]
-    : [{ code: 'pt', label: 'PT' }, { code: 'en', label: 'EN' }];
+  toggleTheme(isDarkMode: boolean){
+    // const isDark = document.body.classList.contains('dark-theme')
+    console.log(isDarkMode)
+    this.themeService.toggleDarkMode(isDarkMode)
   }
 
-
-
-  swicthLanguage(languages: HTMLSelectElement){
-    const selectedLangua = languages.value
-    // this.currentLanguage = selectedLangua
-    this.localstorageService.setItem('language', selectedLangua)
-   
-    this.translate.use(selectedLangua)
-  }
-
+  
   
   
   

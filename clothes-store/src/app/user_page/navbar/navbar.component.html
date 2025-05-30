@@ -11,11 +11,8 @@
 
         <!-- normal icons -->
         <nav id="icons">
-            <select #languages (change)="swicthLanguage(languages)" >
-                <option [value]="currentLanguage">{{currentLanguage === 'en' ? 'PT' : 'EN'}}</option>
-                <option [value]="currentLanguage">{{currentLanguage === 'pt' ? 'EN' : 'PT'}}</option>
-            </select>
-
+            <mat-slide-toggle [(ngModel)]="isDarkMode" (change)="toggleTheme(isDarkMode)">Dark Mode</mat-slide-toggle>
+            
             <a data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
             </a>
 

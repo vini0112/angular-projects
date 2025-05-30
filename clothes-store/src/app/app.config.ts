@@ -9,9 +9,8 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { AuthInterceptorToken } from '../interceptor/refresh-token.interceptor';
 import {provideNgxStripe} from 'ngx-stripe'
 import { environment } from '../environments/environment.development';
-import {SocketIoModule, SocketIoConfig, provideSocketIo} from 'ngx-socket-io'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io'
+
 
 const config: SocketIoConfig = {
   url: 'http://localhost:3000',
@@ -20,10 +19,6 @@ const config: SocketIoConfig = {
     autoConnect: false
   },
 } 
-
-export function HttpLoaderFactory(http: HttpClient){
-  return new TranslateHttpLoader(http, './assets/i18n/','.json')
-}
 
 
 export const appConfig: ApplicationConfig = {
@@ -40,19 +35,7 @@ export const appConfig: ApplicationConfig = {
     JwtHelperService,    
 
     importProvidersFrom(
-      SocketIoModule.forRoot(config), // socket_IO
-      
-      [
-        TranslateModule.forRoot({       // Translation
-          loader: {
-            provide: TranslateLoader,
-            useFactory: (HttpLoaderFactory),
-            deps: [HttpClient]
-          },
-          defaultLanguage: 'en',
-        })
-    ]
-      
+      SocketIoModule.forRoot(config), 
     ),
 
     

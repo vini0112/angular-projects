@@ -26,8 +26,6 @@
     "@auth0/angular-jwt": "^5.2.0",
     "@fortawesome/fontawesome-free": "^6.7.1",
     "@mercadopago/sdk-react": "^1.0.2",
-    "@ngx-translate/core": "^16.0.4",
-    "@ngx-translate/http-loader": "^16.0.1",
     "@stripe-elements/stripe-elements": "^2.0.2",
     "@stripe/stripe-js": "^5.10.0",
     "apexcharts": "^4.5.0",

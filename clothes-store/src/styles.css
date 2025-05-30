@@ -9,6 +9,8 @@
 :root{
     --PrimaryFont:'Irish Grover', sans-serif;
     --SecundaryFont: 'Roboto', sans-serif;
+    --bg-color: #ffffff;
+    --text-color: #000000;
 }
 
 
@@ -16,6 +18,32 @@
     color: red;
     font-size: .9rem;
 }
+
+/* THEME */
+
+.dark-theme{
+    --bg-color: #121212;
+    --text-color: #ffffff;
+}
+
+/* SPECETIAL CASES OF DARK THEME */
+.dark-theme #navigationProducts .boxCategory{
+    background-color: rgb(186 186 186) !important;
+}
+
+.dark-theme .boxBanner .advertasing h2, .dark-theme .boxBanner .advertasing span{
+    text-shadow: 1px 1px 5px black;
+}
+
+body{
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+
+
+
+
 
 /* spinner */
 

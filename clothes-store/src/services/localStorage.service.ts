@@ -8,7 +8,10 @@ import { Injectable } from "@angular/core";
 export class LocalStorageService{
 
     setItem(key: string, value: any){
-        localStorage.setItem(key, JSON.stringify(value))
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
+            localStorage.setItem(key, JSON.stringify(value))
+        }
+        
     }
 
     getItem(key: string): any{

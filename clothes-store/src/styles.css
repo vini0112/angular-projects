@@ -27,21 +27,46 @@
 }
 
 /* SPECETIAL CASES OF DARK THEME */
-.dark-theme #navigationProducts .boxCategory{
-    background-color: rgb(186 186 186) !important;
-}
-
-.dark-theme .boxBanner .advertasing h2, .dark-theme .boxBanner .advertasing span{
-    text-shadow: 1px 1px 5px black;
-}
 
 body{
     background-color: var(--bg-color) !important;
     color: var(--text-color) !important;
 }
 
+/* HOME */
+.dark-theme #navigationProducts .boxCategory{
+    background-color: rgb(186 186 186) !important;
+}
 
 
+.dark-theme .boxBanner .advertasing h2, .dark-theme .boxBanner .advertasing span{
+    text-shadow: 1px 1px 5px black;
+}
+
+.dark-theme .slideExplores .explore1:hover div,.dark-theme .explore2:hover div{
+    background-color: black !important;
+}
+
+.dark-theme .slideExplores div div button{
+    background-color: white !important;
+    color: black !important;
+}
+
+/* feminine/masculine */
+
+.dark-theme .active{
+    color: #7e7d7d !important;
+}
+
+.dark-theme .linksNav li a:hover{
+    color: white !important;
+}
+
+/* shipping form */
+
+.dark-theme form {
+    background-color: #201d1d !important;
+}
 
 
 

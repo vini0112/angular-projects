@@ -130,7 +130,7 @@
     top: 0%;
     left: 100%;
     height: 100vh;
-    background-color: rgba(255, 255, 255, 0.91);
+    background-color: var(--bg-color);
     box-shadow: 5px 5px 5px 5px black;
     width: 300px;
     z-index: 5;
@@ -139,6 +139,8 @@
     justify-content: space-between;
     transition: .5s ease-in-out;
 }
+
+
 #aside.active{
     left: calc(100% - 300px);
 }

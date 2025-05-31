@@ -27,14 +27,14 @@
     font-weight: 500;
     letter-spacing: 1px;
     cursor: pointer;
-    color: rgba(128, 128, 128, 0.699);
+    color: var(--text-color);
     
     transition: .3s;
     text-decoration: none;
 }
 
 .linksNav li a:hover{
-    color: black;
+    color: #847e7e;
 }
 
 
@@ -50,6 +50,5 @@
 }
 
 .active{
-    color: black !important;
     font-weight: 600 !important;
 }

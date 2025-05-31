@@ -45,8 +45,9 @@ form{
     justify-content: center;
     gap: 1rem;
     padding: 10px;
-
 }
+
+
 
 form .boxInput{
     display: flex;

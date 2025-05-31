@@ -65,8 +65,12 @@ body{
 /* shipping form */
 
 .dark-theme form {
-    background-color: #201d1d !important;
+    background-color: #c9cfd0 !important;
+    padding: 20px;
+    border-radius: 20px;
 }
+
+
 
 
 

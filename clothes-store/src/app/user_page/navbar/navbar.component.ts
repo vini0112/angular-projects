@@ -9,6 +9,7 @@ import { MessageService } from '../../../services/message.service';
 import { ThemeService } from '../../../services/theme.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { LocalStorageService } from '../../../services/localStorage.service';
 
 
 
@@ -24,11 +25,12 @@ export class NavbarComponent implements OnInit{
   listCartService = inject(listCartServices)
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
-  // localstorageService = inject(LocalStorageService)
   themeService = inject(ThemeService)
+  localstorageService = inject(LocalStorageService)
 
 
-  isDarkMode = false
+
+  isDarkMode = this.localstorageService.getItem('dark_theme') === 'true' ? true : false
 
   // cart parameters 
   products: cartList[] = []
@@ -90,7 +92,7 @@ export class NavbarComponent implements OnInit{
       
     this.totalPriceCart$ = this.listCartService.getTotalPriceCart$
     this.totalQuantityProducts_inCart$ = this.listCartService.getTotalQuantityProducts_inCart$
-    
+
   }
   
 
@@ -100,8 +102,11 @@ export class NavbarComponent implements OnInit{
       this.products = items
     })   
 
+    this.themeService.toggleDarkMode(this.isDarkMode)
 
   } 
+
+  
 
 
 
@@ -157,8 +162,7 @@ export class NavbarComponent implements OnInit{
 
 
   toggleTheme(isDarkMode: boolean){
-    // const isDark = document.body.classList.contains('dark-theme')
-    console.log(isDarkMode)
+    this.localstorageService.setItem('dark_theme', isDarkMode)
     this.themeService.toggleDarkMode(isDarkMode)
   }
 

@@ -27,12 +27,12 @@
 }
 
 .btnGoBack{
-    background-color: black;
+    background-color: var(--text-color);
     padding: .2rem 1.5rem;
     border-radius: 5px;
     font-weight: 600;
     font-size: 1.5rem;
-    color: white;
+    color: var(--bg-color);
     margin-top: 1rem;
     cursor: pointer;
 }
@@ -41,8 +41,8 @@
     border: none;
     text-decoration: none;
     padding: .3rem 1.8rem;
-    background-color: black;
-    color: white;
+    background-color: var(--text-color);
+    color: var(--bg-color);
     border-radius: 5px;
     font-weight: 600;
     cursor: pointer;
@@ -58,7 +58,7 @@ table{
 }
 
 thead tr th{
-    border: 2px solid black;
+    border: 2px solid var(--text-color);
     text-align: center;
 }
 

@@ -32,14 +32,12 @@
 /* first */
 .firstBlock{
     height: 45%;
-    /* border: 2px solid #011290; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
 .boxAllPrices{
-    /* border: 2px solid green; */
     max-width: 800px;
     width: 100%;
     display: flex;
@@ -53,7 +51,7 @@
     max-width: 250px;
     width: 100%;
     height: 150px;
-    box-shadow: 1px 1px 5px black;
+    box-shadow: 1px 1px 5px var(--text-color);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -97,7 +95,6 @@
 /* week sales */
 
 .weekSales{
-    /* border: 2px solid purple; */
     height: 280px;
     width: 300px;
 
@@ -148,16 +145,20 @@
     display: flex;
     align-items: end;
     justify-content: center;
+    
 }
 .dataYear{
     width: 100%;
+    border-radius: 10px;
 }
+
+
+
 
 
 .boxInvoices{
     width: 50%;
     height: 100%;
-    /* border: 2px solid red; */
     padding: 5px;
     overflow-y: hidden;
 }
@@ -168,7 +169,6 @@
     align-items: center;
     height: 40px;
     background-color: #0000000c;
-    
 }
 
 .nav span, i{
@@ -176,7 +176,6 @@
 }
 
 table{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;

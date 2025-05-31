@@ -65,22 +65,33 @@ export class SalesComponent implements OnInit{
       series: [
         {
           name: "Sales",
-          data: annuallySales
-        }
+          data: annuallySales,
+        },
       ],
+      
       chart: {
         height: 300,
         type: "area",
         zoom: {
           enabled: false
+        }, 
+      },
+      
+      title: {
+        text: "Year Sales",
+        style: {
+          color: 'var(--text-color)',
         }
       },
-      title: {
-        text: "Year Sales"
-      },
       xaxis: {
-        categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"]
+        categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep", "Oct", 'Nov', "Dec"],
+        labels:{
+          style: {
+            colors: 'var(--text-color)',
+          }
+        }
       } 
+
     }
   }
 

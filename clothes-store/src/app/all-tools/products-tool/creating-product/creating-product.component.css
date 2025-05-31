@@ -105,12 +105,12 @@ form{
 
 /* link */
 .btnGoBack{
-    background-color: black;
+    background-color: var(--text-color);
     padding: .4rem 1.8rem;
     border-radius: 5px;
     font-weight: 600;
     font-size: 1.5rem;
-    color: white;
+    color: var(--bg-color);
     margin-top: 1rem;
     cursor: pointer;
 }

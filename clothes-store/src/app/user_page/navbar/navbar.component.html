@@ -6,12 +6,14 @@
             <li><a routerLink="/">Home</a></li>
             <li><a routerLink="/feminine">Feminine</a></li>
             <li><a routerLink="/masculine">Masculine</a></li>
-            <li><a href="#navbarLinkContactUs">Contact us</a></li>
         </ul>
 
         <!-- normal icons -->
         <nav id="icons">
-            <mat-slide-toggle [(ngModel)]="isDarkMode" (change)="toggleTheme(isDarkMode)">Dark Mode</mat-slide-toggle>
+            <mat-slide-toggle color="warn" [(ngModel)]="isDarkMode" (change)="toggleTheme(isDarkMode)">
+                <span [ngClass]="{'activatedDark': isDarkMode}" class="darkModeText">Dark Mode</span>
+                
+            </mat-slide-toggle>
             
             <a data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
             </a>
@@ -63,7 +65,6 @@
 
         </div>
         
-
     </div>
     
     <!-- shadow -->

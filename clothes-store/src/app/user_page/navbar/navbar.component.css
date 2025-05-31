@@ -23,7 +23,10 @@
     letter-spacing: 2px;
     font-family: 'Times New Roman', Times, serif;
     cursor: pointer;
+    font-family: var(--PrimaryFont);
 }
+
+
 
 #navLinks{
     padding: 0%;
@@ -39,11 +42,13 @@
 
 #navLinks li a{
     color: var(--text-color);
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
     text-decoration: none;
     display: flex;
     align-items: center;
+    font-family: var(--PrimaryFont);
+
 }
 
 #navLinks li a:hover{
@@ -70,6 +75,16 @@
     font-family: var(--PrimaryFont);
     font-size: 1.2rem;
     outline: none;
+}
+
+.darkModeText{
+    font-weight: bold;
+    font-family: var(--PrimaryFont);
+    font-size: 1rem;
+}
+
+.darkModeText.activatedDark{
+    color: white;
 }
 
 

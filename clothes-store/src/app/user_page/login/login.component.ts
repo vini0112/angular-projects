@@ -6,6 +6,7 @@ import { AuthLoginService } from '../../../services/auth.login.service';
 import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
 import { finalize } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,8 @@ export class LoginComponent {
   message = inject(MessageService)
   loginService = inject(AuthLoginService)
   router = inject(Router)
+  auth0 = inject(AuthService)
+
 
 
   // LOGIN PAGE MOTION
@@ -66,7 +69,7 @@ export class LoginComponent {
     return this.signUpForm.get('username')
   }
   get SignUp_email(){
-    return this.signUpForm.get('email')
+    return this.signUpForm.get('email') 
   }
   get SignUp_password(){
     return this.signUpForm.get('password')
@@ -108,8 +111,6 @@ export class LoginComponent {
   }
 
 
-
-  // STARTING IN SIGN-IN FORM
   
   onSubmitSignIn(){  
     this.submittedSignInForm = true
@@ -141,7 +142,6 @@ export class LoginComponent {
 
 
 
-  // ERRORS MESSAGE OF THE FORM INPUTS
   messageErro(field: string): string | null{
 
     const control = this.signUpForm.get(field)
@@ -166,7 +166,6 @@ export class LoginComponent {
   }
 
 
-// SEE PASSWORD
 
   passwordVisible = false
 
@@ -179,12 +178,11 @@ export class LoginComponent {
   }
 
 
-  // popup
 
   popActive = false
   shadowPopupActive = false
 
-  retrievePassword(){ // called in sign-in form
+  retrievePassword(){
     this.popActive = true
     this.shadowPopupActive = true
   }
@@ -230,6 +228,19 @@ export class LoginComponent {
       })
     }
   }
+
+
+  loggingWithGoogle(){
+    // this.auth0.loginWithPopup({
+    //   authorizationParams: {
+    //     // redirect_uri: window.location.origin,
+    //     audience: 'clothe_store_api'
+    //   }
+    // }).subscribe(token => {
+    //   console.log('Access token after login:', token);
+    // });
+  } 
+
 
 
 

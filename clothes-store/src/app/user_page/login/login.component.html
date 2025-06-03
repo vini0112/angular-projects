@@ -8,6 +8,9 @@
         <!-- SIGN UP FORM -->
         @if(signUpPage == true){
             <h4>Sign Up</h4>
+            <div class="auth0IconsBox">
+                <i class="fa-brands fa-google" (click)="loggingWithGoogle()"></i>
+            </div>
             <form [formGroup]="signUpForm" (submit)="submitSignUpForm()" data-testid="signupSubmit">
                 <input type="text" placeholder="Username" name="username" formControlName="username">
                 @if(SignUp_username?.touched || submittedSignUpForm){ 

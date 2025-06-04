@@ -10,6 +10,7 @@ import { ThemeService } from '../../../services/theme.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../../services/localStorage.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 
 
@@ -27,7 +28,7 @@ export class NavbarComponent implements OnInit{
   router = inject(Router)
   themeService = inject(ThemeService)
   localstorageService = inject(LocalStorageService)
-
+  // auth0 = inject(AuthService)
 
 
   isDarkMode = this.localstorageService.getItem('dark_theme') === 'true' ? true : false

@@ -54,7 +54,7 @@ class loginController{
             return res.json({ userMsg: 'Login realizado com sucesso!', accessToken: row.accessToken})
 
         }catch(err){
-            res.status(401).json({err})
+            res.status(404).json({err})
         }
         
     }
@@ -76,11 +76,24 @@ class loginController{
 
     async login_auth0(req, res){
 
-        res.json({
-            message: 'Token verified successfully!',
-            auth0TokenPayload: req.user,
-            clientUserData: req.body.user
-        });
+        try{
+
+            const row = await loginService.loginAuth0_service(req)
+
+            res.cookie('refreshToken', row.refreshToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                maxAge: 7 * 24 * 60 * 60 * 1000 
+            }) 
+
+            res.json(row.userMsg)
+
+        }catch(err){
+            console.log('Error in login_auth0 constructor: ',err.message)
+            return res.status(404).json(err.message)
+        }
+
         
     }
 

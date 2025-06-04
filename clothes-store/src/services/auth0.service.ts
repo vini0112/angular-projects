@@ -15,9 +15,8 @@ export class Auth0Service {
   constructor() { }
 
 
-  sendAuth0Token(idToken: any, user: any): Observable<any>{
-    return this.http.post(`${this.api}/auth0/token`, {token: idToken,
-    user: user})
+  sendAuth0Token(idToken: any): Observable<any>{
+    return this.http.post(`${this.api}/auth0/token`, {token: idToken})
   }
 
 }

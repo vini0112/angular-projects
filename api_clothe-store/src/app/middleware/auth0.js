@@ -1,13 +1,15 @@
 
-import {expressjwt} from 'express-jwt'
+// import {expressjwt} from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
 import jwt from 'jsonwebtoken'
 
-
+// retrieve signing keys from a JWKS (JSON Web Key Set) endpoint.
 const client = jwksRsa({
+    // points to the Auth0 JWKS endpoint where the public keys used to sign tokens are published.
     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
 })
 
+// we pass this getKey in the JWT_verify to retrieve the publick key for sicnature verification
 function getKey(header, callback) {
     client.getSigningKey(header.kid, function (err, key) {
         if (err) {
@@ -20,7 +22,7 @@ function getKey(header, callback) {
 
 
 export async function verifyTokenFromBody(req, res, next) {
-    const {token, user} = req.body
+    const {token} = req.body
 
     if (!token) {
         return res.status(400).json({ message: 'tokenId missing' });

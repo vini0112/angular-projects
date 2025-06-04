@@ -98,6 +98,72 @@ class loginService {
 
     }
 
+    loginAuth0_service(body){
+
+        return new Promise((resolve, reject) =>{
+            const {nickname, email, sub} = body.user 
+
+            if(!nickname || !email || !sub){
+                return reject({ message: 'Nickname/Email/Sub is messing!'});
+            } 
+
+            const sql = 'SELECT * FROM users'
+
+            connection.query(sql, async(err, result) =>{
+                if(err){
+                    return reject({error: 'Error while trying to create a new user through auth0!',
+                    details: err.message});
+                }
+
+
+                let ifExisteEmail = result.some(user => user.email === email && user.auth0_sub === sub)
+
+                
+                if(ifExisteEmail){
+
+                    let account
+                    result.forEach(user =>{
+                        if(user.email === email && user.auth0_sub === sub) account = user
+                    })
+                    
+                    const accessToken = jwt.sign({ id: account.idusers, username: account.username ,email: account.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+
+                    const refreshToken = jwt.sign({ id: account.idusers, email: account.email, username: account.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                
+
+                    await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ? and idusers = ?', [refreshToken, account.email, account.idusers])
+
+                    return resolve({ userMsg: 'Login successfuly completed with auth0!', accessToken: accessToken, refreshToken: refreshToken});
+                }
+
+
+                const [res_newRegister] = await connection.promise().execute(
+                    'INSERT INTO users (username, password ,email, purchases, ammount, roles, auth0_sub) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    [nickname, null,email, 0, 0, 'user', sub] 
+                );
+
+                const insertId = res_newRegister.insertId
+
+                const accessToken = jwt.sign({ id: insertId, username: nickname ,email: email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+
+                const refreshToken = jwt.sign({ id: insertId, email: email, username: nickname }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                
+                await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ? and idusers = ?', [refreshToken, email, insertId])
+
+
+                return resolve({ userMsg: 'User successfully registered via auth0!', accessToken: accessToken, refreshToken: refreshToken});
+
+            })
+
+                
+
+
+
+        })
+        
+
+    }
+
 
     refreshingTokenService_service(refreshToken){
 
@@ -165,11 +231,11 @@ class loginService {
                         'INSERT INTO users (username, email, password, purchases, ammount, roles) VALUES (?, ?, ?, ?, ?, ?)',
                         [username, email, hashedPassword, 0, 0, 'user'] 
                     );
-                    return resolve({ message: 'Usuário registrado com sucesso!' });
+                    return resolve({ message: 'User successfully registered!' });
         
                 } catch (error) {
 
-                    return reject({ message: 'Erro no servidor.', error });
+                    return reject({ message: 'Server error in login!', error });
                 }
                 
             }) 
@@ -274,6 +340,8 @@ class loginService {
         })
     }
 
+
+   
 
 
 

@@ -47,7 +47,6 @@ export const appConfig: ApplicationConfig = {
       domain: 'dev-mqk5g6s65qigreb3.us.auth0.com',
       clientId: 'xhYGNIDKx5rgmkcE4oslXSOE2aK6Ohmb',
       useRefreshTokens: true,
-      cacheLocation: 'localstorage', // optional
       useRefreshTokensFallback: true ,
       authorizationParams: {
         audience: 'clothe_store_api',

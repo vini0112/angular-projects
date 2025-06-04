@@ -9,8 +9,7 @@
         @if(signUpPage == true){
             <h4>Sign Up</h4>
             <div class="auth0IconsBox">
-                <button (click)="auth0Logout()">dislog</button>
-                <!-- <span>{{auth0.isAuthenticated$ | async}}</span> -->
+                <button (click)="auth0Logout()">{{auth0.isAuthenticated$ | async}}</button>
                 <i class="fa-brands fa-google" (click)="popUpAuth0Login()"></i>
             </div>
             <form [formGroup]="signUpForm" (submit)="submitSignUpForm()" data-testid="signupSubmit">

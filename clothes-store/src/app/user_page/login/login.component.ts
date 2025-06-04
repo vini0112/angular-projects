@@ -11,7 +11,7 @@ import { Auth0Service } from '../../../services/auth0.service';
 
 @Component({
   selector: 'app-login',
-  imports: [NgClass, ReactiveFormsModule, FormsModule],   
+  imports: [NgClass, ReactiveFormsModule, FormsModule, AsyncPipe],   
   templateUrl: './login.component.html', 
   styleUrl: './login.component.css'
 })
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
   router = inject(Router)
   auth0 = inject(AuthService) 
   auth0Service = inject(Auth0Service)
-
+  messageService = inject(MessageService)
 
 
   // LOGIN PAGE MOTION
@@ -235,20 +235,6 @@ export class LoginComponent implements OnInit{
   }
 
 
-  // popUpAuth0Login(){
-    // this.auth0.loginWithPopup().subscribe({
-    //   next: async () =>{
-    //     console.log('Success login with auth0!')
-    //     this.auth0.user$.subscribe(res => console.log(res))
-
-    //     this.router.navigateByUrl('home')
-    //   },
-    //   error: (err) =>{
-    //     console.log('Error in logging with Auth0: ',err)
-    //   }
-    // })
-    
-  // } 
 
   async popUpAuth0Login(){
     await firstValueFrom(this.auth0.loginWithPopup())
@@ -256,15 +242,15 @@ export class LoginComponent implements OnInit{
     const idTokenClaims = await firstValueFrom(this.auth0.idTokenClaims$);
     const idToken = idTokenClaims?.__raw;
 
-    const user = await firstValueFrom(this.auth0.user$); // maybe out  
-
-    
-    this.auth0Service.sendAuth0Token(idToken, user).subscribe({
+    this.auth0Service.sendAuth0Token(idToken).subscribe({
       next: (res) =>{
         console.log(res)
+        this.messageService.showMessage('Successful login with Auth0!', 'success')
+        this.router.navigateByUrl('/home')
       },
       error: (err) =>{
         console.log('Error in auth0 validation idToken: ',err.message)
+
       }
     })
 

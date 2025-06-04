@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{
 
   productService = inject(ProductsService)
   authLoginService = inject(AuthLoginService)
-  plataformId: object = inject(PLATFORM_ID)
+  plataformId: object = inject(PLATFORM_ID) 
 
 
   constructor(private router: Router) {

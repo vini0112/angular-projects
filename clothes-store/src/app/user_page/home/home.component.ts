@@ -14,15 +14,10 @@ import { catchError, map, of } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
-
-  ngOnInit(): void {
-    
-  }
-  
 
 
   clothesBestsellers$ = this.productsService.allProducts$.pipe(

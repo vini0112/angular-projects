@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, inject, PLATFORM_ID, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -9,8 +9,8 @@ import { AuthInterceptorToken } from '../interceptor/refresh-token.interceptor';
 import {provideNgxStripe} from 'ngx-stripe'
 import { environment } from '../environments/environment.development';
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io'
-import {AuthModule, provideAuth0} from '@auth0/auth0-angular'
-import { isPlatformBrowser } from '@angular/common';
+import { provideAuth0 } from '@auth0/auth0-angular'
+
 
 const config: SocketIoConfig = {
   url: 'http://localhost:3000',
@@ -20,8 +20,7 @@ const config: SocketIoConfig = {
   },
 } 
 
-// const platformId = inject(PLATFORM_ID);
-
+const isBrowser = typeof window !== 'undefined';
 
 
 export const appConfig: ApplicationConfig = {
@@ -38,28 +37,23 @@ export const appConfig: ApplicationConfig = {
     provideNgxStripe(environment.stripe_public_key),
 
     {provide: JWT_OPTIONS, useValue: {}},
-    JwtHelperService,    
+    JwtHelperService,
 
     importProvidersFrom(
-      SocketIoModule.forRoot(config), 
+      SocketIoModule.forRoot(config),
     ),
 
-    (typeof window !== 'undefined' ? [
-        provideAuth0({
-          domain: 'dev-mqk5g6s65qigreb3.us.auth0.com',
-          clientId: 'xhYGNIDKx5rgmkcE4oslXSOE2aK6Ohmb',
-          authorizationParams: { 
-            redirect_uri: window.location.origin,
-            audience: 'clothe-store-api', 
-          }
-        }) 
-
-    ] : []) 
-  
-
-    
-    
-    //isPlatformBrowser(platformId) ? window.location.origin : ''typeof window !== 'undefined' ? window.location.origin : ''
+    provideAuth0({
+      domain: 'dev-mqk5g6s65qigreb3.us.auth0.com',
+      clientId: 'xhYGNIDKx5rgmkcE4oslXSOE2aK6Ohmb',
+      useRefreshTokens: true,
+      cacheLocation: 'localstorage', // optional
+      useRefreshTokensFallback: true ,
+      authorizationParams: {
+        audience: 'clothe_store_api',
+        redirect_uri: isBrowser ? window.location.origin : 'http://localhost:4200'
+      }
+    })
     
   ]
 };

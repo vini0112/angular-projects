@@ -73,6 +73,17 @@ class loginController{
         
     }
 
+
+    async login_auth0(req, res){
+
+        res.json({
+            message: 'Token verified successfully!',
+            auth0TokenPayload: req.user,
+            clientUserData: req.body.user
+        });
+        
+    }
+
     
 
     // criando usuario

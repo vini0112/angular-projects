@@ -1,25 +1,27 @@
-import { NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
-import { finalize } from 'rxjs';
+import { finalize, firstValueFrom } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { Auth0Service } from '../../../services/auth0.service';
 
 @Component({
   selector: 'app-login',
-  imports: [NgClass, ReactiveFormsModule, FormsModule, ],   
+  imports: [NgClass, ReactiveFormsModule, FormsModule],   
   templateUrl: './login.component.html', 
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   message = inject(MessageService)
   loginService = inject(AuthLoginService)
   router = inject(Router)
-  auth0 = inject(AuthService)
+  auth0 = inject(AuthService) 
+  auth0Service = inject(Auth0Service)
 
 
 
@@ -62,6 +64,9 @@ export class LoginComponent {
       })
 
   } 
+
+
+  ngOnInit(): void {}
 
   // STARTING IN SIGN-UP FORM
 
@@ -230,18 +235,45 @@ export class LoginComponent {
   }
 
 
-  loggingWithGoogle(){
-    // this.auth0.loginWithPopup({
-    //   authorizationParams: {
-    //     // redirect_uri: window.location.origin,
-    //     audience: 'clothe_store_api'
+  // popUpAuth0Login(){
+    // this.auth0.loginWithPopup().subscribe({
+    //   next: async () =>{
+    //     console.log('Success login with auth0!')
+    //     this.auth0.user$.subscribe(res => console.log(res))
+
+    //     this.router.navigateByUrl('home')
+    //   },
+    //   error: (err) =>{
+    //     console.log('Error in logging with Auth0: ',err)
     //   }
-    // }).subscribe(token => {
-    //   console.log('Access token after login:', token);
-    // });
-  } 
+    // })
+    
+  // } 
+
+  async popUpAuth0Login(){
+    await firstValueFrom(this.auth0.loginWithPopup())
+
+    const idTokenClaims = await firstValueFrom(this.auth0.idTokenClaims$);
+    const idToken = idTokenClaims?.__raw;
+
+    const user = await firstValueFrom(this.auth0.user$); // maybe out  
+
+    
+    this.auth0Service.sendAuth0Token(idToken, user).subscribe({
+      next: (res) =>{
+        console.log(res)
+      },
+      error: (err) =>{
+        console.log('Error in auth0 validation idToken: ',err.message)
+      }
+    })
+
+  }
 
 
+  auth0Logout(){
+    this.auth0.logout({ logoutParams: { returnTo: window.location.origin } });
+  }
 
 
 }

@@ -2,6 +2,7 @@
 import { Router } from "express";
 import loginController from "../controllers/login.controller.js";
 import protectedRoute from "../middleware/protected.route.js";
+import {verifyTokenFromBody} from "../middleware/auth0.js";
 
 const router = Router()
 
@@ -16,6 +17,8 @@ router.get('/isLogged', loginController.isLogged)
 // SIGN IN  
 router.post('/entrando', loginController.entrando)
 
+// AUTH0 LOGIN
+router.post('/auth0/token',verifyTokenFromBody ,loginController.login_auth0)
 
 
 router.post('/addingUser', loginController.adding)

@@ -1,3 +1,34 @@
-<div>
-    {{product$ | async}}
+
+
+
+<div class="leftSide" *ngIf="product$ | async as item">
+    <div>
+        <img [src]="item.image" [alt]="item.name">
+    </div>
+
+    <p>{{item.info}}</p>
+</div>
+
+
+
+<div class="rightSide" *ngIf="product$ | async as item">
+    <div class="firstDiv">
+        <span>Mark as favorite</span>
+        <button (click)="clickInHeart(item)">
+            <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
+            <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
+        </button>
+    </div>
+    <div class="secondDiv">
+        <span>{{item.name.toUpperCase()}}</span>
+        <span>$ {{item.price.toFixed(2)}}</span>
+    </div>
+    <div class="thirdDiv">
+        <span>10</span>
+        <span>10</span>
+        <span>10</span>
+        <span>10</span>
+    </div>
+    <button class="addToCart">Add to cart</button>
+
 </div>

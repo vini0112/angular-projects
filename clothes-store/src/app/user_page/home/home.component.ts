@@ -86,9 +86,11 @@ export class HomeComponent{
 
   addProductToCart(item: cartList){
     
-    // this.listCartServices.addingToCart(item)
-    this.router.navigate(['product/', item.id])
+    this.listCartServices.addingToCart(item)
+  }
 
+  productDetails(id: number){
+    this.router.navigate(['product/',id])
   }
 
 

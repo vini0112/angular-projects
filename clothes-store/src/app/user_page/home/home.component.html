@@ -73,7 +73,7 @@
         
             @for(item of clothesBestsellers$ | async; track $index){
                 <div class="bestSellersCard">
-                    <div class="bestSellerImg" (click)="addProductToCart(item)">
+                    <div class="bestSellerImg" (click)="productDetails(item.id!)">
                         <img [src]="item.image" [alt]="item.name">
                     </div>
                     <div class="boxInfoProduct">

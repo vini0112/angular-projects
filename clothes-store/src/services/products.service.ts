@@ -46,10 +46,10 @@ export class ProductsService {
   }
 
 
-
-  getProductById(id: string): Observable<productModule> {
-    return this.http.get<productModule>(`/api/products/${id}`);
+  getProductById(id: number): Observable<productModule> {
+    return this.http.get<productModule>(`${this.apiUrl}/product/${id}`);
   }
+
 
 
   updateProduct(dados: EditingProduct): Observable<EditingProduct>{

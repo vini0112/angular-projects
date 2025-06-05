@@ -53,12 +53,25 @@ export class AuthLoginService{
         this.saveToken(response.accessToken)
         this.isAuth.next(true)
         this.socketService.onConnect()
-
         
       })
     )
   }
 
+
+  sendAuth0Token(idToken: any): Observable<any>{
+    return this.http.post(`${this.api}/auth0/token`, {token: idToken}).pipe(
+      tap((response: any) =>{
+        
+        if(response.userMsg){
+          this.isAuth.next(true)
+          this.saveToken(response.accessToken)
+          this.socketService.onConnect()
+        }
+      })
+    )
+
+  }
 
 
   loggingOut(){

@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit{
   router = inject(Router)
   themeService = inject(ThemeService)
   localstorageService = inject(LocalStorageService)
-  // auth0 = inject(AuthService)
+  auth0 = inject(AuthService)
 
 
   isDarkMode = this.localstorageService.getItem('dark_theme') === 'true' ? true : false
@@ -132,6 +132,8 @@ export class NavbarComponent implements OnInit{
 
   logout(){
     this.authLoginService.loggingOut()
+    this.auth0.logout({ logoutParams: { returnTo: window.location.origin } });
+
   }
 
 

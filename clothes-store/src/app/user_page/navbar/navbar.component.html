@@ -24,9 +24,10 @@
                 <span class="contCart">{{totalQuantityProducts_inCart$ | async}}</span>
             </div>
             <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
-            <a routerLink="/login" *ngIf="!(isAuthenticated$ | async)" class="loginPrincipal" data-testid="loginBTN">Login</a>
+
+            <a routerLink="/login" *ngIf="!(isAuthenticated$ | async) && !(auth0.isAuthenticated$ | async)" class="loginPrincipal" data-testid="loginBTN">Login</a>
             
-            <a data-testid="logouIcon" routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
+            <a data-testid="logouIcon" routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async) || (auth0.isAuthenticated$ |async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
         </nav>
 
         <!-- mobile icons -->
@@ -58,7 +59,7 @@
                 
                 <li ><a routerLink="/developer_side"><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
 
-                <li *ngIf="!(isAuthenticated$ | async)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
+                <li *ngIf="!(isAuthenticated$ | async) || !(auth0.isAuthenticated$)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
                 <li *ngIf="(isAuthenticated$ | async)"><a routerLink="/home"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a></li>
 
             </ul>

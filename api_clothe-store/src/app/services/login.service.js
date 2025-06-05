@@ -97,6 +97,7 @@ class loginService {
         })
 
     }
+    
 
     loginAuth0_service(body){
 
@@ -149,7 +150,6 @@ class loginService {
                 const refreshToken = jwt.sign({ id: insertId, email: email, username: nickname }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
                 
                 await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ? and idusers = ?', [refreshToken, email, insertId])
-
 
                 return resolve({ userMsg: 'User successfully registered via auth0!', accessToken: accessToken, refreshToken: refreshToken});
 

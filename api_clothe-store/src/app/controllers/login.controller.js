@@ -9,6 +9,7 @@ class loginController{
     async isLogged(req, res){
         try{
             const token = req.cookies['refreshToken']
+            
 
             if(!token){
                 console.log('ℹ️  PREFLIGHT tested or No token found!') 
@@ -19,7 +20,7 @@ class loginController{
 
 
             const row = await loginService.checkIf_isLogged_service(token)
-            res.json(row)  
+            res.json(row)
         }
         catch(err){
             res.status(404).json(err)
@@ -86,8 +87,9 @@ class loginController{
                 sameSite: 'none',
                 maxAge: 7 * 24 * 60 * 60 * 1000 
             }) 
+            
 
-            res.json(row.userMsg)
+            return res.json({userMsg: 'Login realizado com sucesso!', accessToken: row.accessToken})
 
         }catch(err){
             console.log('Error in login_auth0 constructor: ',err.message)

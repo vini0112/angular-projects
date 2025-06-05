@@ -421,6 +421,49 @@
     flex-direction: column;
 }
 
+@media screen and (orientation: landscape) and (max-height: 480px){
+    
+    :host{
+        height: 110vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .boxLogin{
+        position: relative;
+        max-width: 800px;
+        width: 100%;
+        height: 400px;
+        box-shadow: 1px 1px 10px black;
+        border-radius: 25px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+    }
+
+    .signInBox{
+        height: 400px;
+        width: 100%;
+
+    }
+
+    .greetings{
+        height: 400px;
+        width: 100%;
+    }
+
+    .signInBox h4{
+        margin: 0;
+    }
+    .signInBox form{
+        margin-bottom: 0;
+    }
+    .auth0IconsBox{
+        margin-bottom: 10px;
+    }
+
+}
 
 @media (max-width: 440px) {
     .greetings{

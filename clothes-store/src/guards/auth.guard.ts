@@ -12,22 +12,21 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authLoginService = inject(AuthLoginService)
 
 
-  // return combineLatest([auth0Service.isAuthenticated$, authLoginService.isAuthenticated$])
-  // .pipe(
-  //   map(([auth0Auth, customAuth]) =>{
-  //     const isAuthenticate = auth0Auth || customAuth
+  return combineLatest([auth0Service.isAuthenticated$, authLoginService.isAuthenticated$])
+  .pipe(
+    map(([auth0Auth, customAuth]) =>{
+      const isAuthenticate = auth0Auth || customAuth
 
-  //     if(isAuthenticate){
-  //       router.navigate(['/home'])
-  //       return false
-  //     }
+      if(isAuthenticate){
+        router.navigate(['/home'])
+        return false
+      }
 
-  //     return true
+      return true
 
-  //   })
-  // )
+    })
+  )
 
-  return true
 
   
 };

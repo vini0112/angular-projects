@@ -7,11 +7,10 @@ import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
 import { finalize, firstValueFrom } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '@auth0/auth0-angular';
-import { Auth0Service } from '../../../services/auth0.service';
 
 @Component({
   selector: 'app-login',
-  imports: [NgClass, ReactiveFormsModule, FormsModule, AsyncPipe],   
+  imports: [NgClass, ReactiveFormsModule, FormsModule],   
   templateUrl: './login.component.html', 
   styleUrl: './login.component.css'
 })
@@ -21,7 +20,6 @@ export class LoginComponent implements OnInit{
   loginService = inject(AuthLoginService)
   router = inject(Router)
   auth0 = inject(AuthService) 
-  auth0Service = inject(Auth0Service)
   messageService = inject(MessageService)
 
 
@@ -91,6 +89,9 @@ export class LoginComponent implements OnInit{
       this.signUpForm.controls[key].markAsUntouched()
     })
   }
+
+
+
 
   submitSignUpForm(){
     this.submittedSignUpForm = true
@@ -242,9 +243,8 @@ export class LoginComponent implements OnInit{
     const idTokenClaims = await firstValueFrom(this.auth0.idTokenClaims$);
     const idToken = idTokenClaims?.__raw;
 
-    this.auth0Service.sendAuth0Token(idToken).subscribe({
-      next: (res) =>{
-        console.log(res)
+    this.loginService.sendAuth0Token(idToken).subscribe({
+      next: () =>{
         this.messageService.showMessage('Successful login with Auth0!', 'success')
         this.router.navigateByUrl('/home')
       },
@@ -257,9 +257,7 @@ export class LoginComponent implements OnInit{
   }
 
 
-  auth0Logout(){
-    this.auth0.logout({ logoutParams: { returnTo: window.location.origin } });
-  }
+
 
 
 }

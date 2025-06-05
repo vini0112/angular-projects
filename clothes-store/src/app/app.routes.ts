@@ -69,6 +69,11 @@ export const routes: Routes = [
         path: 'payment-status',
         loadComponent: () => import('./user_page/payment-status/payment-status.component').then(m => m.PaymentStatusComponent),
     },
+
+    {
+        path: 'product/:id',
+        loadComponent: () => import('./user_page/product-detail/product-detail.component').then(m => m.ProductDetailComponent)
+    },
     
     { 
         path: '**', redirectTo: 'home'

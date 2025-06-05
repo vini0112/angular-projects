@@ -2,10 +2,10 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { cartList } from '../../../modules/cart.list.module';
 import { listCartServices } from '../../../services/listCart.service';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class HomeComponent{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
-
+  private router = inject(Router)
 
   clothesBestsellers$ = this.productsService.allProducts$.pipe(
 
@@ -85,7 +85,10 @@ export class HomeComponent{
 
 
   addProductToCart(item: cartList){
-    this.listCartServices.addingToCart(item)
+    
+    // this.listCartServices.addingToCart(item)
+    this.router.navigate(['product/', item.id])
+
   }
 
 

@@ -60,7 +60,7 @@ export class AuthLoginService{
 
 
   sendAuth0Token(idToken: any): Observable<any>{
-    return this.http.post(`${this.api}/auth0/token`, {token: idToken}).pipe(
+    return this.http.post(`${this.api}/auth0/token`, {token: idToken}, {withCredentials: true}).pipe(
       tap((response: any) =>{
         
         if(response.userMsg){

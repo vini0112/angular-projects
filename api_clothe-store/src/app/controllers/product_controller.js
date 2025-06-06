@@ -28,6 +28,18 @@ class productControllers{
         
     }
 
+    async productSize(req, res){
+        try{
+            const id = req.params.id
+            const row = await productService.productSize_service(id)
+            res.json(row)
+
+        }catch(err){
+            console.log('Error in product size controller: ', err.message)
+            return res.status(404).json(err.message)
+        }
+    }
+
     // post product
     async postingClothes(req, res){
         try{

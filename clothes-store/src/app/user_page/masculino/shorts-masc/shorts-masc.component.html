@@ -5,7 +5,7 @@
         @for(short of allShorts$ | async; track $index){
             <div class="padraoCard">
 
-                <div class="boxImg" (click)="addProductToCart(short)">
+                <div class="boxImg" (click)="productDetails(short.id!)">
                     <img [src]="short.image" [alt]="short.name">
                 </div>
 
@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="btnsProduct">
-                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="productDetails(short.id!)"><i class="fa-solid fa-shirt"></i></button>
                     <button (click)="clickInHeart(short)">
                         <i class="fa-regular fa-heart" *ngIf="short.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="short.isFavorite == true"></i>

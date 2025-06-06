@@ -5,6 +5,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { cartList } from '../../../../modules/cart.list.module';
 import { listCartServices } from '../../../../services/listCart.service';
 import { catchError, map, Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shortsfemi',
@@ -16,6 +17,8 @@ export class ShortsfemiComponent{
 
   productService = inject(ProductsService)
   listCartServices = inject(listCartServices)
+  private router = inject(Router)
+
   
   
   allShortsFemi$ = this.productService.allProducts$.pipe(
@@ -59,6 +62,11 @@ export class ShortsfemiComponent{
 
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
+  }
+
+
+  productDetails(id: number){
+    this.router.navigate(['product/',id])
   }
 
 }

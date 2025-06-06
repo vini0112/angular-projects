@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { productModule } from '../../../modules/products.module';
+import { cartList } from '../../../modules/cart.list.module';
+import { listCartServices } from '../../../services/listCart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,8 +17,8 @@ export class ProductDetailComponent implements OnInit{
 
   productsService = inject(ProductsService)
   private route = inject(ActivatedRoute)
-
-
+  listCartServices = inject(listCartServices)
+  
   product$ = this.route.paramMap.pipe(
     switchMap(params => {
       const id = params.get('id');
@@ -46,6 +48,11 @@ export class ProductDetailComponent implements OnInit{
       
       
     })
+  }
+
+  addProductToCart(item: cartList){
+      
+    this.listCartServices.addingToCart(item)
   }
 
 

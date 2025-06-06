@@ -14,7 +14,7 @@
 <div class="rightSide" *ngIf="product$ | async as item">
     <div class="firstDiv">
         <span>Mark as favorite</span>
-        <button (click)="clickInHeart(item)">
+        <button (click)="clickInHeart(item)" class="btnHeart">
             <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
             <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
         </button>
@@ -23,12 +23,12 @@
         <span>{{item.name.toUpperCase()}}</span>
         <span>$ {{item.price.toFixed(2)}}</span>
     </div>
-    <div class="thirdDiv">
+    <!-- <div class="thirdDiv">
         <span>10</span>
         <span>10</span>
         <span>10</span>
         <span>10</span>
-    </div>
-    <button class="addToCart">Add to cart</button>
+    </div> -->
+    <button class="addToCart" (click)="addProductToCart(item)">Add to cart</button>
 
 </div>

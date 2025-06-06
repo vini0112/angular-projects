@@ -81,7 +81,7 @@
                         <span>{{item.info}}</span>
                     </div>
                     <div class="btnsProduct">
-                        <button><i class="fa-solid fa-shirt"></i></button>
+                        <button (click)="productDetails(item.id!)"><i class="fa-solid fa-shirt"></i></button>
                         <button (click)="clickInHeart(item)">
                             <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
                             <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>

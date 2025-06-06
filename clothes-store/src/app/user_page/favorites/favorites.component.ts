@@ -1,10 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import { BehaviorSubject, catchError, filter, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-favorites',
@@ -16,7 +18,8 @@ export class FavoritesComponent{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
-
+  private router = inject(Router)
+  
 
 
   // receiving the favorite products
@@ -60,6 +63,10 @@ export class FavoritesComponent{
   
   addProductToCart(item: cartList){
     this.listCartServices.addingToCart(item)
+  }
+
+  productDetails(id: number){
+    this.router.navigate(['product/',id])
   }
 
 

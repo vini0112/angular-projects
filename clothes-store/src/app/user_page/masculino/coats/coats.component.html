@@ -3,7 +3,7 @@
 
         @for(coat of allCoats$ | async;track $index){
             <div class="padraoCard">
-                <div class="boxImg" (click)="addProductToCart(coat)">
+                <div class="boxImg" (click)="productDetails(coat.id!)">
                     <img [src]="coat.image" [alt]="coat.name">
                 </div>
 
@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="btnsProduct">
-                    <button><i class="fa-solid fa-shirt"></i></button>
+                    <button (click)="productDetails(coat.id!)"><i class="fa-solid fa-shirt" ></i></button>
                     <button (click)="clickInHeart(coat)">
                         <i class="fa-regular fa-heart" *ngIf="coat.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="coat.isFavorite == true"></i>

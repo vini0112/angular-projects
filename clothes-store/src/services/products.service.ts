@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { EditingProduct, productModule } from '../modules/products.module';
+import { EditingProduct, productModule, productSize } from '../modules/products.module';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +50,10 @@ export class ProductsService {
     return this.http.get<productModule>(`${this.apiUrl}/product/${id}`);
   }
 
+  
+  getProductSize(id: number): Observable<productSize[]>{
+    return this.http.get<productSize[]>(`${this.apiUrl}/product-size/${id}`)
+  }
 
 
   updateProduct(dados: EditingProduct): Observable<EditingProduct>{

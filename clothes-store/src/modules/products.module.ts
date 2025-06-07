@@ -22,3 +22,8 @@ export interface EditingProduct{
     price: number
     sexo: string
 }
+
+export interface productSize{
+    product_id: number
+    label: string
+}

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { productModule } from '../../../modules/products.module';
 import { cartList } from '../../../modules/cart.list.module';
 import { listCartServices } from '../../../services/listCart.service';
@@ -19,6 +19,7 @@ export class ProductDetailComponent implements OnInit{
   private route = inject(ActivatedRoute)
   listCartServices = inject(listCartServices)
   
+  
   product$ = this.route.paramMap.pipe(
     switchMap(params => {
       const id = params.get('id');
@@ -26,9 +27,16 @@ export class ProductDetailComponent implements OnInit{
     })
   );
 
+  productSize$ = this.route.paramMap.pipe(
+    switchMap(params =>{
+      const id = params.get('id');
+      return this.productsService.getProductSize(parseInt(id!))
+    })
+  )
+
 
   ngOnInit(): void {
-    // this.product$.subscribe(res => console.log(res))
+    // this.productSize$.subscribe(res => console.log(res))
   
   }
 

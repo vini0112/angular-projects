@@ -23,12 +23,14 @@
         <span>{{item.name.toUpperCase()}}</span>
         <span>$ {{item.price.toFixed(2)}}</span>
     </div>
-    <!-- <div class="thirdDiv">
-        <span>10</span>
-        <span>10</span>
-        <span>10</span>
-        <span>10</span>
-    </div> -->
+    
+    <div class="thirdDiv" >
+        @for(size of productSize$ |async;track $index){
+        <span>{{size.label}}</span>
+        }
+    </div>
+    
+
     <button class="addToCart" (click)="addProductToCart(item)">Add to cart</button>
 
 </div>

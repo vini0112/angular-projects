@@ -152,7 +152,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 100px;
+    height: 80px;
     background-color: rgb(0, 0, 0);
     border-radius: 5px;
     

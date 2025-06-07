@@ -80,24 +80,41 @@
 }
 
 .thirdDiv{
-    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+.thirdDiv span{
+    font-family: var(--PrimaryFont);
+    font-size: 1.3rem;
+}
+.thirdDiv div{
     display: flex;
     gap: 1rem;
 }
 
-.thirdDiv span{
+.thirdDiv button{
+    border: none;
     border-radius: 50%;
     height: 35px;
     width: 35px;
+    font-family: var(--PrimaryFont);
 
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #D9D9D9;
-    color: black;
+    background-color: var(--text-color);
+    color: var(--bg-color);
     font-weight: bold;
     cursor: pointer;
 }
+
+.thirdDiv button.active{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
+}
+
 
 .addToCart{
     border: none;

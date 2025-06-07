@@ -25,9 +25,13 @@
     </div>
     
     <div class="thirdDiv" >
-        @for(size of productSize$ |async;track $index){
-        <span>{{size.label}}</span>
-        }
+        <span>Size</span>
+        <div>
+            @for(size of productSize$ |async;track $index){
+                <button [ngClass]="{'active': size.label === sizePicked}" (click)="pickSizeClothe(size.label)">{{size.label}}</button>
+            }
+        </div>
+        
     </div>
     
 

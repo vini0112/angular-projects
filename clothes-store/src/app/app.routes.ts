@@ -69,6 +69,10 @@ export const routes: Routes = [
         path: 'payment-status',
         loadComponent: () => import('./user_page/payment-status/payment-status.component').then(m => m.PaymentStatusComponent),
     },
+    {
+        path: 'user-detail',
+        loadComponent: () => import('./user_page/user-detail/user-detail.component').then(m => m.UserDetailComponent)
+    },
 
     {
         path: 'product/:id',

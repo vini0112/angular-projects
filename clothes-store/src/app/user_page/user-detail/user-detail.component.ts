@@ -1,14 +1,20 @@
-import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, AsyncPipe],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.css'
 })
-export class UserDetailComponent {
+export class UserDetailComponent implements OnInit{
+
+  userService = inject(UserService)
+  private route = inject(ActivatedRoute)
 
   userForm: FormGroup
 
@@ -26,7 +32,25 @@ export class UserDetailComponent {
       apartment: [null, [Validators.required]],
     })
 
+
   }
+
+  userDetails$ = this.userService.userDetail$
+  loading = true
+  // userDetails$ = this.route.paramMap.pipe(
+  //   switchMap(params => {
+  //     const id = params.get('id')
+  //     return this.userService.getUserDetails(parseInt(id!))
+  //   })
+  // )
+
+
+  ngOnInit(): void {
+    // const id = this.route.snapshot.paramMap.get('id')
+    // this.userService.getUserDetails(parseInt(id!))
+  }
+
+
 
 
 

@@ -70,7 +70,7 @@ export const routes: Routes = [
         loadComponent: () => import('./user_page/payment-status/payment-status.component').then(m => m.PaymentStatusComponent),
     },
     {
-        path: 'user-detail',
+        path: 'user-detail/:id',
         loadComponent: () => import('./user_page/user-detail/user-detail.component').then(m => m.UserDetailComponent)
     },
 

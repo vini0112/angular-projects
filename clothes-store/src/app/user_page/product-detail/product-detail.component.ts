@@ -13,7 +13,7 @@ import { listCartServices } from '../../../services/listCart.service';
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
-export class ProductDetailComponent implements OnInit{
+export class ProductDetailComponent{
 
   productsService = inject(ProductsService)
   private route = inject(ActivatedRoute)
@@ -35,11 +35,6 @@ export class ProductDetailComponent implements OnInit{
   )
 
 
-  ngOnInit(): void {
-    // this.productSize$.subscribe(res => console.log(res))
-  
-  }
-
 
   clickInHeart(item: productModule){
       
@@ -59,7 +54,7 @@ export class ProductDetailComponent implements OnInit{
   }
 
   addProductToCart(item: cartList){
-    // console.log(item)
+    
     this.listCartServices.addingToCart(item)
   }
 

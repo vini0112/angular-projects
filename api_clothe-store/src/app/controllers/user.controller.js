@@ -3,17 +3,19 @@ import userService from "../services/user.service.js"
 
 class UserController{
 
+
     async getUserInfo(req, res){
         try{
             const id = req.params.id
             const row = await userService.getUserInfo_service(id)
-            res.json(row)
+            res.json(row[0])
 
         }catch(err){
             console.log('Error in user controller: ', err.message)
             return res.status(404).json(err.message)
         }
     }
+
 
     async updateUserInfo(req, res){
         try{
@@ -28,6 +30,7 @@ class UserController{
         }
     }
 
+    
 }
 
 

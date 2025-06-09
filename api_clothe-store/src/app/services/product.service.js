@@ -40,6 +40,7 @@ class productService{
         return consulta(sql, [dados, id], 'Erro in Edit Product!')
     }
 
+    
     editingFavorite(id, valor){
 
         let sql = "UPDATE clothes SET isFavorite = ? WHERE id=?"

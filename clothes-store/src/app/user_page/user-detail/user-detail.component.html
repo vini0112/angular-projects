@@ -11,53 +11,55 @@
 
         <span class="title">User Information</span>
 
-        <button>Edit</button>
+        <button (click)="editUserInfoButton()">Edit</button>
     </div>  
 
     <div class="body">
 
         <h5 class="title">Eddress</h5>
 
-        <form action="">
+        <form [formGroup]="userForm">
 
             <div>
                 <label for="">Username</label>
-                <input type="text">
+                <input type="text" name="username" formControlName="username" [readOnly]="readOnlyInputs">
 
                 <label for="">Email</label>
-                <input type="text">
+                <input type="text" name="email" formControlName="email" [readOnly]="readOnlyInputs">
 
                 <label for="">Country</label>
-                <input type="text">
+                <input type="text" name="country" formControlName="country" [readOnly]="readOnlyInputs">
 
             </div>
 
             <div>
                 <label for="">Street</label>
-                <input type="text">
+                <input type="text" name="street" formControlName="street" [readOnly]="readOnlyInputs">
 
                 <label for="">House Number</label>
-                <input type="number">
+                <input type="number" name="houseNumber" formControlName="houseNumber" [readOnly]="readOnlyInputs">
 
                 <label for="">City</label>
-                <input type="text">
+                <input type="text" name="city" formControlName="city" [readOnly]="readOnlyInputs">
 
             </div>
 
             <div>
                 <label for="">Zip Code</label>
-                <input type="number">
+                <input type="number" name="zipCode" formControlName="zipCode" [readOnly]="readOnlyInputs">
 
                 <label for="">State</label>
-                <input type="text">
+                <input type="text" name="state" formControlName="state" [readOnly]="readOnlyInputs">
 
                 <label for="">Apartment (Optional)</label>
-                <input type="text">
+                <input type="text" name="apartment" formControlName="apartment" [readOnly]="readOnlyInputs">
 
             </div>
-
+ 
             
         </form>
+
+        <button class="btnSaveEdition" (click)="saveEditionButton()" *ngIf="editionMode">Save</button>
 
 
     </div>
@@ -93,9 +95,5 @@
         </div>
     </div>
 
-    <!-- <label for="">Total Purchase</label>
-                <input type="number"> -->
-            <!-- <label for="">Ammount</label>
-                <input type="number"> -->
 
 </div>

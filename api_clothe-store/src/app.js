@@ -6,8 +6,7 @@ import loginRouter from "./app/routes/login.routes.js"
 import cookieParse from 'cookie-parser'
 import dashboardRouter from './app/routes/dashboard.routes.js'
 import stripeRoute from './app/routes/stripe.route.js'
-import http from 'http'
-import { Server } from 'socket.io'
+import userRouter from './app/routes/user.routes.js'
 
 const app = express()
 
@@ -29,6 +28,7 @@ app.use(cookieParse())
 app.use(loginRouter)
 app.use(productRouter)
 app.use(dashboardRouter)
+app.use(userRouter)
 app.use('/upload', express.static('upload')) 
 
 

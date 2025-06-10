@@ -1,9 +1,9 @@
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import {  Observable } from 'rxjs';
+import {  Observable, switchMap } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { MessageService } from '../../../services/message.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit{
   listCartService = inject(listCartServices)
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
+  route = inject(ActivatedRoute)
   themeService = inject(ThemeService)
   localstorageService = inject(LocalStorageService)
   auth0 = inject(AuthService)
@@ -133,7 +134,6 @@ export class NavbarComponent implements OnInit{
   logout(){
     this.authLoginService.loggingOut()
     this.auth0.logout({ logoutParams: { returnTo: window.location.origin } });
-
   }
 
 
@@ -170,6 +170,10 @@ export class NavbarComponent implements OnInit{
   }
 
   
+  btnUserDetail(){
+    const id = this.route.snapshot.paramMap.get('id')
+    console.log(id)
+  }
   
   
   

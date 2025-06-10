@@ -1,14 +1,22 @@
 import { consulta } from "../database/connection.js"
+import jwt from 'jsonwebtoken'
 
 
 class UserService {
 
     // "{\"country\":\"\",\"street\":\"\",\"houseNumber\":\"\",\"city\":\"\",\"zipCode\":\"\",\"state\":\"\",\"apartment\":\"\"}"
 
-    getUserInfo_service(id){
+    getUserInfo_service(token){
+
+        const userData = jwt.decode(token)
+
+        if(!userData){
+            throw new Error('userData not found/not decode properly!')
+        }
+
         let sql = 'SELECT idusers, username, email, ammount, purchases, address FROM users WHERE idusers = ?'
         
-        return consulta(sql, id, 'Error fetching the User Information!')
+        return consulta(sql, userData.id, 'Error fetching the User Information!')
     }
 
 

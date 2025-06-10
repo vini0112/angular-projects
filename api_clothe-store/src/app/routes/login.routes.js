@@ -1,7 +1,6 @@
 
 import { Router } from "express";
 import loginController from "../controllers/login.controller.js";
-import protectedRoute from "../middleware/protected.route.js";
 import {verifyTokenFromBody} from "../middleware/auth0.js";
 
 const router = Router()

@@ -19,6 +19,7 @@ export const loginActiveGuard: CanActivateFn = (route, state) => {
         return false
 
       }else if(!accessPage){
+
         router.navigateByUrl('/home')
         return false
       }

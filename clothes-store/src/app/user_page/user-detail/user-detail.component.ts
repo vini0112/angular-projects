@@ -2,8 +2,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+
 
 @Component({
   selector: 'app-user-detail',
@@ -14,7 +13,6 @@ import { map, switchMap } from 'rxjs';
 export class UserDetailComponent implements OnInit{
 
   userService = inject(UserService)
-  private route = inject(ActivatedRoute)
 
   userForm: FormGroup
 
@@ -37,17 +35,12 @@ export class UserDetailComponent implements OnInit{
 
   userDetails$ = this.userService.userDetail$
   loading = true
-  // userDetails$ = this.route.paramMap.pipe(
-  //   switchMap(params => {
-  //     const id = params.get('id')
-  //     return this.userService.getUserDetails(parseInt(id!))
-  //   })
-  // )
+  
+
 
 
   ngOnInit(): void {
-    // const id = this.route.snapshot.paramMap.get('id')
-    // this.userService.getUserDetails(parseInt(id!))
+    this.userService.getUserDetails()
   }
 
 

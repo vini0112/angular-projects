@@ -18,11 +18,11 @@ export class UserService {
 
   // /user-update/:id
   
-  getUserDetails(id: number){
-    this.http.get<userDetails>(`${this.apiUrl}/user-info/${id}`).subscribe({
+  getUserDetails(){
+    this.http.get<userDetails>(`${this.apiUrl}/user-info`).subscribe({
       next: (res) =>{
-        console.log(res)
-
+        console.log('User data received!')
+        this.userdetail.next(res)
       },
       error: (err) =>{
         console.log('Error detail: ',err)

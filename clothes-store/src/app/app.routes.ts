@@ -8,6 +8,7 @@ import { blockLeavePasswordResetGuard } from '../guards/block-leave-password-res
 import { devLoginGuard } from '../guards/dev-login.guard';
 import { loginActiveGuard } from '../guards/login-active.guard';
 import { AllToolsComponent } from './all-tools/all-tools.component';
+import { userDetailGuard } from '../guards/user-detail.guard';
 
 
 
@@ -70,8 +71,10 @@ export const routes: Routes = [
         loadComponent: () => import('./user_page/payment-status/payment-status.component').then(m => m.PaymentStatusComponent),
     },
     {
-        path: 'user-detail/:id',
-        loadComponent: () => import('./user_page/user-detail/user-detail.component').then(m => m.UserDetailComponent)
+        path: 'user-detail',
+        loadComponent: () => import('./user_page/user-detail/user-detail.component').then(m => m.UserDetailComponent),
+        canActivate: [userDetailGuard]
+
     },
 
     {

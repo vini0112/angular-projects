@@ -20,14 +20,37 @@ class UserService {
     }
 
 
-    updateUserInfo_service(id, data){
+    updateUserInfo_service(token, data){
 
-        if(data.address){
-            data.address = JSON.stringify(data.address)
+        const userData = jwt.decode(token)
+
+        if(!userData){
+            throw new Error('userData not found/not decode properly!')
         }
 
+        const formatedData = {
+            username: data.username,
+            email: data.email,
+            address: {
+                country: data.country,
+                street: data.street,
+                houseNumber: data.houseNumber,
+                city: data.city,
+                zipCode: data.zipCode,
+                state: data.state,
+                apartment: data.apartment
+            }
+        }
+        
+        if(formatedData.address){
+            formatedData.address = JSON.stringify(formatedData.address)
+        }
+
+
+        
+
         const sql = "UPDATE users SET ? WHERE idusers = ?"
-        return consulta(sql, [data, id], "UserInformation not updated!")
+        return consulta(sql, [formatedData, userData.id], "UserInformation not updated!")
     }
 
 

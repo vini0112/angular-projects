@@ -2,6 +2,8 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
+import { finalize, shareReplay, tap } from 'rxjs';
+import { MessageService } from '../../../services/message.service';
 
 
 @Component({
@@ -13,8 +15,33 @@ import { UserService } from '../../../services/user.service';
 export class UserDetailComponent implements OnInit{
 
   userService = inject(UserService)
+  messageService = inject(MessageService)
 
   userForm: FormGroup
+  loading = true
+  
+
+  
+
+  userDetails$ = this.userService.userDetail$.pipe(
+    tap(user =>{
+      this.userForm.patchValue({
+        username: user?.username,
+        email: user?.email,
+        country: user?.address.country,
+        street: user?.address.street,
+        houseNumber: user?.address.houseNumber === 0 ? null : user?.address.houseNumber,
+        city: user?.address.city,
+        zipCode: user?.address.zipCode === 0 ? null : user?.address.zipCode,
+        state: user?.address.state,
+        apartment: user?.address.apartment
+      })
+    }),
+
+    shareReplay(1)
+  )
+  
+
 
   constructor(private fb: FormBuilder){
 
@@ -33,17 +60,40 @@ export class UserDetailComponent implements OnInit{
 
   }
 
-  userDetails$ = this.userService.userDetail$
-  loading = true
-  
-
-
 
   ngOnInit(): void {
     this.userService.getUserDetails()
   }
 
-
+  
+  get username(){
+    return this.userForm.controls['username']
+  }
+  get email(){
+    return this.userForm.controls['email']
+  }
+  get country(){
+    return this.userForm.controls['country']
+  }
+  get street(){
+    return this.userForm.controls['street']
+  }
+  get houseNumber(){
+    return this.userForm.controls['houseNumber']
+  }
+  get city(){
+    return this.userForm.controls['city']
+  }
+  get zipCode(){
+    return this.userForm.controls['zipCode']
+  }
+  get state(){
+    return this.userForm.controls['state']
+  }
+  get apartment(){
+    return this.userForm.controls['apartment']
+  }
+  
 
 
 
@@ -57,10 +107,16 @@ export class UserDetailComponent implements OnInit{
     this.readOnlyInputs = false
   }
 
+
   saveEditionButton(){
+
+    if(this.userForm.invalid){
+      this.messageService.showMessage('Fill all the fields!', "error")
+      return
+    }
+    this.userService.updateUserDetails(this.userForm.value)
     this.editionMode = false
     this.readOnlyInputs = true
-
   }
 
 }

@@ -6,6 +6,14 @@
     align-items: center;
 }
 
+.exclamation{
+    font-size: 1.2rem;
+    color: #ffff3a;
+    background-color: black;
+    border-radius: 100%;
+    
+}
+
 .title{
     font-family: var(--PrimaryFont);
     font-size: 1.4rem;

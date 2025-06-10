@@ -4,7 +4,7 @@ const protectedRoute = (req, res, next) => {
     let authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(403).send('Token not set!')
+        return res.status(403).send('No credentials sent!')
     }
     
     let token = authHeader.split(' ')[1];

@@ -1,6 +1,6 @@
 
 export interface userDetails{
-    idusers: number
+    idusers?: number
     username: string 
     email: string 
     ammount: number 
@@ -8,9 +8,8 @@ export interface userDetails{
     address: Address
 }
 
+
 interface Address{
-    username: string
-    email: string
     country: string 
     street: string 
     houseNumber: number 
@@ -19,4 +18,26 @@ interface Address{
     state: string 
     apartment: string
 }
+
+
+export interface userDetailFromForm{
+    username: string 
+    email: string 
+    country: string 
+    street: string 
+    houseNumber: number 
+    city: string 
+    zipCode: number 
+    state: string 
+    apartment: string
+}
+
+export interface formatedDataToReactivety{
+    idusers?: number
+    username: string 
+    email: string 
+    
+    address: Address
+}
+
 

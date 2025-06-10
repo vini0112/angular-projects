@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/user-info', protectedRoute, userController.getUserInfo)
 
-router.put('/user-update/:id', userController.updateUserInfo)
+router.put('/user-update',protectedRoute ,userController.updateUserInfo)
 
 
 export default router;

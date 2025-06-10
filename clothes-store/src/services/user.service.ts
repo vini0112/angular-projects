@@ -1,28 +1,31 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { userDetails } from '../modules/user.module';
+import { formatedDataToReactivety, userDetailFromForm, userDetails } from '../modules/user.module';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  messageService = inject(MessageService)
+  
   constructor(private http: HttpClient) {}
   
   private apiUrl = environment.api
 
-  private userdetail = new BehaviorSubject<userDetails | null>(null)
-  userDetail$ = this.userdetail.asObservable()
+  private userDetailBehaviorSubj = new BehaviorSubject<userDetails | null>(null)
+  userDetail$ = this.userDetailBehaviorSubj.asObservable()
 
-  // /user-update/:id
+
   
   getUserDetails(){
     this.http.get<userDetails>(`${this.apiUrl}/user-info`).subscribe({
       next: (res) =>{
         console.log('User data received!')
-        this.userdetail.next(res)
+        this.userDetailBehaviorSubj.next(res)
       },
       error: (err) =>{
         console.log('Error detail: ',err)
@@ -32,6 +35,30 @@ export class UserService {
 
   }
 
+  updateUserDetails(userDetail: userDetailFromForm){
+    
+    this.http.put(`${this.apiUrl}/user-update`, {userDetail: userDetail}).subscribe({
+      next: () =>{
+        this.messageService.showMessage('User Address updated!', 'success')
+
+        const currentUserAddress = this.userDetailBehaviorSubj.value
+
+        // this.userDetailBehaviorSubj.next({
+        //   ...currentUserAddress
+        //     // username: userDetail.username,
+        //     // email: userDetail.email
+        // })
+        
+        
+
+        
+      },
+      error: (err) =>{
+        this.messageService.showMessage('Error edeting the user address!', 'error')
+        console.log('Error: ', err)
+      }
+    })
+  }
 
 
 }

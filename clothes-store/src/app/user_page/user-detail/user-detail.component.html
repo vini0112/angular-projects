@@ -1,4 +1,6 @@
-
+<div *ngIf="!(userDetails$ | async)">
+    <div class="bigSpinner"></div>
+</div>
 
 <div class="mainDiv" *ngIf="userDetails$ | async as user">
     <div class="header">
@@ -22,37 +24,67 @@
         <form [formGroup]="userForm">
 
             <div>
-                <label for="">Username</label>
-                <input type="text" name="username" formControlName="username" [readOnly]="readOnlyInputs">
+                
+                <label for="">
+                    Username 
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="username.invalid"></i>
+                </label>
 
-                <label for="">Email</label>
+                <input type="text" name="username" formControlName="username" [readOnly]="readOnlyInputs">
+                
+
+                <label for="">
+                    Email
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="email.invalid"></i>
+                </label>
                 <input type="text" name="email" formControlName="email" [readOnly]="readOnlyInputs">
 
-                <label for="">Country</label>
+                <label for="">
+                    Country
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="country.invalid"></i>
+                </label>
                 <input type="text" name="country" formControlName="country" [readOnly]="readOnlyInputs">
 
             </div>
 
             <div>
-                <label for="">Street</label>
+                <label for="">
+                    Street
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="street.invalid"></i>
+                </label>
                 <input type="text" name="street" formControlName="street" [readOnly]="readOnlyInputs">
 
-                <label for="">House Number</label>
+                <label for="">
+                    House Number
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="houseNumber.invalid"></i>
+                </label>
                 <input type="number" name="houseNumber" formControlName="houseNumber" [readOnly]="readOnlyInputs">
 
-                <label for="">City</label>
+                <label for="">
+                    City
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="city.invalid"></i>
+                </label>
                 <input type="text" name="city" formControlName="city" [readOnly]="readOnlyInputs">
 
             </div>
 
             <div>
-                <label for="">Zip Code</label>
+                <label for="">
+                    Zip Code
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="zipCode.invalid"></i>
+                </label>
                 <input type="number" name="zipCode" formControlName="zipCode" [readOnly]="readOnlyInputs">
 
-                <label for="">State</label>
+                <label for="">
+                    State
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="state.invalid"></i>
+                </label>
                 <input type="text" name="state" formControlName="state" [readOnly]="readOnlyInputs">
 
-                <label for="">Apartment (Optional)</label>
+                <label for="">
+                    Apartment (Optional)
+                    <i class="fa-solid fa-circle-exclamation exclamation" *ngIf="apartment.invalid"></i>
+                </label>
                 <input type="text" name="apartment" formControlName="apartment" [readOnly]="readOnlyInputs">
 
             </div>
@@ -61,7 +93,6 @@
         </form>
 
         <button class="btnSaveEdition" (click)="saveEditionButton()" *ngIf="editionMode">Save</button>
-
 
     </div>
 
@@ -72,7 +103,7 @@
             <div class="boxesInfo">
                 <div>
                     <span>Total Purchases</span>
-                    <span>10</span>
+                    <span>{{user.purchases}}</span>
                 </div>
 
                 <p>
@@ -85,7 +116,7 @@
             <div class="boxesInfo">
                 <div>
                     <span>Ammount</span>
-                    <span>$ 1.000</span>
+                    <span>$ {{user.ammount}}</span>
                 </div>
                 <p>
                     <i class="fa-solid fa-arrow-up"></i>

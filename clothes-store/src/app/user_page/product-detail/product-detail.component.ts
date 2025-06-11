@@ -6,6 +6,7 @@ import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { productModule } from '../../../modules/products.module';
 import { cartList } from '../../../modules/cart.list.module';
 import { listCartServices } from '../../../services/listCart.service';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,7 +19,8 @@ export class ProductDetailComponent{
   productsService = inject(ProductsService)
   private route = inject(ActivatedRoute)
   listCartServices = inject(listCartServices)
-  
+  messageService = inject(MessageService)
+
   
   product$ = this.route.paramMap.pipe(
     switchMap(params => {
@@ -32,7 +34,7 @@ export class ProductDetailComponent{
       const id = params.get('id');
       return this.productsService.getProductSize(parseInt(id!))
     })
-  )
+  );
 
 
 
@@ -54,16 +56,26 @@ export class ProductDetailComponent{
   }
 
   addProductToCart(item: cartList){
+
+    if(this.sizePicked === null){
+      this.messageService.showMessage('Pick a size of the product!', 'info')
+      return
+    }
+
+    const newItem = {
+      ...item,
+      size: this.sizePicked
+    }
     
-    this.listCartServices.addingToCart(item)
+    this.listCartServices.addingToCart(newItem)
   }
 
 
   sizePicked: string | null = null
 
   pickSizeClothe(size: string){
-    this.sizePicked = size
-    console.log(size)
+    this.sizePicked = size 
   }
+
 
 }

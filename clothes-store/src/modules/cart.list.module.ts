@@ -6,4 +6,5 @@ export interface cartList{
     image: string,
     quantity: number
     cart_quantity?: number
+    size?: string
 }

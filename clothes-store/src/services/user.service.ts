@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { formatedDataToReactivety, userDetailFromForm, userDetails } from '../modules/user.module';
+import { userDetailFromForm, userDetails } from '../modules/user.module';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -35,6 +35,8 @@ export class UserService {
 
   }
 
+
+
   updateUserDetails(userDetail: userDetailFromForm){
     
     this.http.put(`${this.apiUrl}/user-update`, {userDetail: userDetail}).subscribe({
@@ -43,14 +45,12 @@ export class UserService {
 
         const currentUserAddress = this.userDetailBehaviorSubj.value
 
-        // this.userDetailBehaviorSubj.next({
-        //   ...currentUserAddress
-        //     // username: userDetail.username,
-        //     // email: userDetail.email
-        // })
+        this.userDetailBehaviorSubj.next({
+          ...currentUserAddress!,
+          email: userDetail.email,
+          username: userDetail.username
+        })
         
-        
-
         
       },
       error: (err) =>{

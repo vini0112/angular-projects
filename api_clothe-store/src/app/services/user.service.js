@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 class UserService {
 
-    // "{\"country\":\"\",\"street\":\"\",\"houseNumber\":\"\",\"city\":\"\",\"zipCode\":\"\",\"state\":\"\",\"apartment\":\"\"}"
+    // {"city": "", "state": "", "street": "", "country": "", "zipCode": 0, "apartment": "", "houseNumber": 0}
 
     getUserInfo_service(token){
 

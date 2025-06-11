@@ -15,7 +15,7 @@
                 
             </mat-slide-toggle>
 
-            <a routerLink="/user-detail"><i class="fa-solid fa-user"></i></a>
+            <a routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a>
             
             <a data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
             </a>
@@ -34,6 +34,10 @@
 
         <!-- mobile icons -->
         <nav class="iconsMobile">
+            <mat-slide-toggle color="warn" [(ngModel)]="isDarkMode" (change)="toggleTheme(isDarkMode)">
+                <span [ngClass]="{'activatedDark': isDarkMode}" class="darkModeTextMobile">Dark Mode</span>
+            </mat-slide-toggle>
+
             <div class="boxCartIcon">
                 <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
                 <span class="contCart">{{totalQuantityProducts_inCart$ | async}}</span>
@@ -61,7 +65,10 @@
                 
                 <li ><a routerLink="/developer_side"><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
 
+                 <li><a routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a></li>
+
                 <li *ngIf="!(isAuthenticated$ | async) || !(auth0.isAuthenticated$)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
+
                 <li *ngIf="(isAuthenticated$ | async)"><a routerLink="/home"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a></li>
 
             </ul>

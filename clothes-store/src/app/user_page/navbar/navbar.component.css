@@ -82,10 +82,19 @@
     font-family: var(--PrimaryFont);
     font-size: 1rem;
 }
+.darkModeTextMobile{
+    font-weight: bold;
+    font-family: var(--PrimaryFont);
+    font-size: .9rem;
+}
 
 .darkModeText.activatedDark{
     color: white;
 }
+.darkModeTextMobile.activatedDark{
+    color: white;
+}
+
 
 
 
@@ -380,7 +389,7 @@
 }
 
 
-@media (max-width: 440px){
+@media (max-width: 480px){
      /* aside cart */
     #aside{
         position: fixed;
@@ -391,5 +400,17 @@
     }
     #aside.active{
         left: calc(100% - 100%);
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .titleNav{
+        font-size: 1.4rem;
+    }  
+    
+    .darkModeTextMobile{
+        font-weight: bold;
+        font-family: var(--PrimaryFont);
+        font-size: .8em;
     }
 }

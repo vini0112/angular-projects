@@ -20,7 +20,6 @@ export class UserDetailComponent implements OnInit{
   userForm: FormGroup
   loading = true
   
-
   
 
   userDetails$ = this.userService.userDetail$.pipe(
@@ -64,6 +63,7 @@ export class UserDetailComponent implements OnInit{
   ngOnInit(): void {
     this.userService.getUserDetails()
   }
+
 
   
   get username(){

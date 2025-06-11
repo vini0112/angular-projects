@@ -231,7 +231,7 @@
     letter-spacing: 1px;
 }
 
-.slideExplores div div button{
+.slideExplores div div a{
     font-family: var(--PrimaryFont);
     font-size: 1.1rem;
     letter-spacing: 2px;
@@ -241,6 +241,7 @@
     font-weight: 600;
     padding: .4rem 1rem;
     border-radius: 5px;
+    text-decoration: none;
 }
 
 
@@ -395,11 +396,11 @@
 
     .explore1 div{
         opacity: .8;
-        background-color: white;
+        background-color: var(--bg-color);
     }
     .explore2 div{
         opacity: .8;
-        background-color: white;
+        background-color: var(--bg-color);
     }
 
     /* best sellers */

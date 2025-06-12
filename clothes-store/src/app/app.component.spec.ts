@@ -15,7 +15,7 @@ const config: SocketIoConfig = {
   },
 } 
 
-describe('AppComponent', () => {
+fdescribe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

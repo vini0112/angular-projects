@@ -19,7 +19,6 @@ export class UserService {
   private userDetailBehaviorSubj = new BehaviorSubject<userDetails | null>(null)
   userDetail$ = this.userDetailBehaviorSubj.asObservable()
 
-
   
   getUserDetails(){
     this.http.get<userDetails>(`${this.apiUrl}/user-info`).subscribe({

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './user_page/navbar/navbar.component';
 import { ProductsService } from '../services/products.service';
@@ -6,6 +6,8 @@ import { MessageComponent } from './message/message.component';
 import { AuthLoginService } from '../services/auth.login.service';
 import { FooterComponent } from './user_page/footer/footer.component';
 import { isPlatformBrowser } from '@angular/common';
+import { UserService } from '../services/user.service';
+import { debounceTime, filter, take } from 'rxjs';
 
 
 
@@ -22,7 +24,8 @@ export class AppComponent implements OnInit{
   productService = inject(ProductsService)
   authLoginService = inject(AuthLoginService)
   plataformId: object = inject(PLATFORM_ID) 
-
+  userService = inject(UserService)
+  
 
   constructor(private router: Router) {
 
@@ -31,16 +34,27 @@ export class AppComponent implements OnInit{
         window.scrollTo(0, 0)
       }
     })
-
   }
 
 
   ngOnInit(): void {
     this.authLoginService.checkIfIsLogged()
     this.productService.getProducts()
+
+
+    this.authLoginService.isAuthenticated$
+    .pipe(
+      debounceTime(50),
+      take(1),
+      filter(isAuth => isAuth)
+    )
+    .subscribe(() =>{
+        this.userService.getUserDetails()
+    })
+
   }
 
-
+ 
 
   
 }

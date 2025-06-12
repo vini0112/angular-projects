@@ -9,6 +9,7 @@ import { devLoginGuard } from '../guards/dev-login.guard';
 import { loginActiveGuard } from '../guards/login-active.guard';
 import { AllToolsComponent } from './all-tools/all-tools.component';
 import { userDetailGuard } from '../guards/user-detail.guard';
+import { UserDetailComponent } from './user_page/user-detail/user-detail.component';
 
 
 

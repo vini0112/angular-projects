@@ -13,6 +13,8 @@ class productService{
         return consulta(sql, id, 'Product Not Found!')
     }
 
+    
+
     productSize_service(id){
 
         const sql = `

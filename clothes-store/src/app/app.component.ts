@@ -7,7 +7,7 @@ import { AuthLoginService } from '../services/auth.login.service';
 import { FooterComponent } from './user_page/footer/footer.component';
 import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../services/user.service';
-import { debounceTime, filter, take } from 'rxjs';
+import { debounceTime, filter, take, tap } from 'rxjs';
 
 
 
@@ -41,11 +41,9 @@ export class AppComponent implements OnInit{
     this.authLoginService.checkIfIsLogged()
     this.productService.getProducts()
 
-
     this.authLoginService.isAuthenticated$
     .pipe(
-      debounceTime(50),
-      take(1),
+      take(2),
       filter(isAuth => isAuth)
     )
     .subscribe(() =>{

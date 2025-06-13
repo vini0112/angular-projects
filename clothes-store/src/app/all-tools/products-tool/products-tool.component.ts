@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { productModule } from '../../../modules/products.module';
 import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
@@ -12,7 +12,7 @@ import { MessageService } from '../../../services/message.service';
   selector: 'app-products-tool',
   imports: [NgIf, CreatingProductComponent, AsyncPipe, FormsModule, NgClass, RouterLink],
   templateUrl: './products-tool.component.html', 
-  styleUrl: './products-tool.component.css'
+  styleUrl: './products-tool.component.css',
 })
 export class ProductsToolComponent{
 
@@ -35,6 +35,7 @@ export class ProductsToolComponent{
 
   // response coming from child
   handleResponse(value: boolean){
+    console.log('Received!')
     this.createNewProductPage.set(value)
   }
 

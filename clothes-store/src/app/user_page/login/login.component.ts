@@ -7,6 +7,7 @@ import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
 import { finalize, firstValueFrom } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit{
   router = inject(Router)
   auth0 = inject(AuthService) 
   messageService = inject(MessageService)
-
+  userService = inject(UserService)
+  
 
   // LOGIN PAGE MOTION
   loginPage = false
@@ -127,6 +129,8 @@ export class LoginComponent implements OnInit{
             console.log('success login')
             this.message.showMessage('Successful Login!', "success")
             this.router.navigateByUrl('/home')
+            this.userService.getUserDetails()
+
           },
           error: (error) =>{
             console.log('error sign in')

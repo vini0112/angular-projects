@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, EventEmitter, Output, inject, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import { Component, EventEmitter, Output, inject, ViewChild, ElementRef, AfterViewInit, ChangeDetectionStrategy} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductsService } from '../../../../services/products.service';
 import { MessageService } from '../../../../services/message.service';
@@ -8,7 +8,9 @@ import { MessageService } from '../../../../services/message.service';
   selector: 'app-creating-product',
   imports: [ReactiveFormsModule, NgIf, NgClass], 
   templateUrl: './creating-product.component.html',
-  styleUrl: './creating-product.component.css'
+  styleUrl: './creating-product.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class CreatingProductComponent implements AfterViewInit{
 
@@ -25,6 +27,7 @@ export class CreatingProductComponent implements AfterViewInit{
 
   goBackToProductTools(){
     this.statusCreationPage.emit(true)
+    console.log('EMITTED')
   }
 
   

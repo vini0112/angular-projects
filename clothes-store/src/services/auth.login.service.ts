@@ -6,6 +6,7 @@ import { ResetTokenResponseModule } from '../modules/resetPassword.module';
 import { login, registering } from '../modules/login.module';
 import { LocalStorageService } from './localStorage.service';
 import { SocketService } from './socket.service';
+import { UserService } from './user.service';
 
 
 
@@ -18,10 +19,9 @@ export class AuthLoginService{
   private http = inject(HttpClient)
   localstorageService = inject(LocalStorageService)
   socketService = inject(SocketService) 
-
+  userService = inject(UserService)
   
   
-
   private isAuth = new BehaviorSubject<boolean>(false)
   isAuthenticated$ = this.isAuth.asObservable()
 
@@ -66,6 +66,7 @@ export class AuthLoginService{
         if(response.userMsg){
           this.isAuth.next(true)
           this.saveToken(response.accessToken)
+          this.userService.getUserDetails()
           this.socketService.onConnect()
         }
       })
@@ -171,14 +172,14 @@ export class AuthLoginService{
 
   
 
-  // PAGE ACCESS TO SHIPPING FORM AND PAYMENT FORM TO BUY SOMETHING
+  // PAGE ACCESS TO SHIPPING FORM AND PAYMENT FORM TO BUY A PRODUCT
 
-  setPageAccess(status: boolean){
+  setAccessToShipingAndPaymentForm_page(status: boolean){
     this.accessToForm_shipping_and_Payment = status
   }
 
   
-  getPageAccess(): boolean{
+  getAccessToShipingAndPaymentForm_page(): boolean{
     return this.accessToForm_shipping_and_Payment
   }
 

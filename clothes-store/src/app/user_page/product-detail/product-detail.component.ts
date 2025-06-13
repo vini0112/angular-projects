@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, of, shareReplay, switchMap } from 'rxjs';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { productModule } from '../../../modules/products.module';
 import { cartList } from '../../../modules/cart.list.module';
@@ -10,7 +10,7 @@ import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [AsyncPipe, NgIf, NgClass],//  
+  imports: [AsyncPipe, NgIf, NgClass],//   
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
@@ -26,7 +26,8 @@ export class ProductDetailComponent{
     switchMap(params => {
       const id = params.get('id');
       return this.productsService.getProductById(parseInt(id!))
-    })
+    }),
+    shareReplay(1)
   );
 
   productSize$ = this.route.paramMap.pipe(

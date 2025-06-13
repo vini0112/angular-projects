@@ -16,18 +16,15 @@
 
     <div class="boxInput">
         <label for="">House Number</label>
-        <input type="number" name="houseNum" formControlName="houseNum">
+        <input type="number" name="houseNumber" formControlName="houseNumber">
         @if(btnGoToPaymentFormSubmitted){
-            <span class="msgErro">{{messageErro('houseNum')}}</span>
+            <span class="msgErro">{{messageErro('houseNumber')}}</span>
             }
     </div>
         
     <div class="boxInput">
         <label for="">Apartment, suite (optional)</label>
-        <input type="text" name="aditionalInfo" formControlName="aditionalInfo">
-        @if(btnGoToPaymentFormSubmitted){
-            <span class="msgErro">{{messageErro('aditionalInfo')}}</span>
-            }
+        <input type="text" name="apartment" formControlName="apartment">
     </div>
 
     <div class="boxInput">

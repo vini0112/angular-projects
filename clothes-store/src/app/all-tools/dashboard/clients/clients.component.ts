@@ -26,11 +26,13 @@ export class ClientsComponent implements OnInit, OnDestroy{
   
 
   constructor(){
-    this.dashboardService.getDashBoardUsersData()
+    
   }
 
 
   ngOnInit(): void {
+    
+    this.dashboardService.getDashBoardUsersData()
     this.onlineUserSubscription = this.socketService.onlineUsers$.subscribe(users => this.onlineUsers = users)
   }
   

@@ -16,21 +16,21 @@ interface Address{
     city: string 
     zipCode: number 
     state: string 
-    apartment: string
+    apartment?: string
 }
 
 
 export interface userDetailFromForm{
     
-    username: string 
-    email: string 
+    username?: string 
+    email?: string 
     country: string 
     street: string 
     houseNumber: number 
     city: string 
     zipCode: number 
     state: string 
-    apartment: string
+    apartment?: string
 
 }
 

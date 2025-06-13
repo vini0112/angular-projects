@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken'
 
 class UserService {
 
-    // {"city": "", "state": "", "street": "", "country": "", "zipCode": 0, "apartment": "", "houseNumber": 0}
 
     getUserInfo_service(token){
 
@@ -27,10 +26,11 @@ class UserService {
         if(!userData){
             throw new Error('userData not found/not decode properly!')
         }
+        console.log(data)
 
         const formatedData = {
-            username: data.username,
-            email: data.email,
+            username: userData.username,
+            email: userData.email,
             address: {
                 country: data.country,
                 street: data.street,
@@ -52,7 +52,6 @@ class UserService {
         const sql = "UPDATE users SET ? WHERE idusers = ?"
         return consulta(sql, [formatedData, userData.id], "UserInformation not updated!")
     }
-
 
 
 }

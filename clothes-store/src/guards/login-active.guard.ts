@@ -8,7 +8,7 @@ export const loginActiveGuard: CanActivateFn = (route, state) => {
   const authLoginService = inject(AuthLoginService)
   const router = inject(Router)
   
-  const accessPage = authLoginService.getPageAccess()
+  const accessPage = authLoginService.getAccessToShipingAndPaymentForm_page()
   
 
   return authLoginService.isAuthenticated$.pipe(

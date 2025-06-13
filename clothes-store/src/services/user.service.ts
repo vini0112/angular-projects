@@ -46,10 +46,9 @@ export class UserService {
 
         this.userDetailBehaviorSubj.next({
           ...currentUserAddress!,
-          email: userDetail.email,
-          username: userDetail.username
+          email: userDetail.email!,
+          username: userDetail.username!
         })
-        
         
       },
       error: (err) =>{
@@ -57,7 +56,27 @@ export class UserService {
         console.log('Error: ', err)
       }
     })
+
   }
 
 
+// apartment:"ajdf"
+// city:"viaj"
+// country:"brail"
+// email:"vinilocsilva@gmail.com" ?
+// houseNumber:9
+// state:"ajd"
+// street:"waker"
+// username:"vinicius" ?
+// zipCode:23
+
+
+// SHIP
+// apartment:null
+// city:null
+// country:null
+// houseNumber:null
+// state:null
+// street:null
+// zipCode:null
 }

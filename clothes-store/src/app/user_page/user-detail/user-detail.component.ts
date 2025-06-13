@@ -53,7 +53,7 @@ export class UserDetailComponent implements OnInit{
       city: [null, [Validators.required]],
       zipCode: [null, [Validators.required]],
       state: [null, [Validators.required]],
-      apartment: [null, [Validators.required]],
+      apartment: [null],
     })
 
 

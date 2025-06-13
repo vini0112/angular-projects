@@ -3,7 +3,7 @@ import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import {  combineLatest, filter, Observable, Subject, switchMap, tap, withLatestFrom } from 'rxjs';
+import {  combineLatest, filter, Observable, Subject, switchMap, take, tap, withLatestFrom } from 'rxjs';
 import { AuthLoginService } from '../../../services/auth.login.service';
 import { MessageService } from '../../../services/message.service';
 import { ThemeService } from '../../../services/theme.service';
@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../../services/localStorage.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { UserService } from '../../../services/user.service';
+import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
+import { ValidateUserDetailsService } from '../../../services/validate-user-details.service';
 
 
 
@@ -32,6 +34,9 @@ export class NavbarComponent implements OnInit{
   localstorageService = inject(LocalStorageService)
   auth0 = inject(AuthService)
   userService = inject(UserService)
+  checkoutService = inject(CheckoutPaymentService)
+  validateUserDetailsService = inject(ValidateUserDetailsService)
+
 
 
   isDarkMode = this.localstorageService.getItem('dark_theme') === 'true' ? true : false
@@ -137,55 +142,50 @@ export class NavbarComponent implements OnInit{
     this.auth0.logout({ logoutParams: { returnTo: window.location.origin } });
   }
 
+  
+
   buyClick$ = new Subject<void>();
 
-
   buying(){
-    
-    // this.isAuthenticated$.subscribe(res =>{
-    //   if(!res){
-    //     this.router.navigateByUrl('/login')
-    //     this.messageService.showMessage("You can't buy without being logged!", "info")
-    //     return
-    //   }
-      
-    //   else if(this.products.length <= 0){
-    //     return this.messageService.showMessage("Cart is empty!", "info")
-    //   }
-
-    //   // closing cart
-    //   this.isAsideCartOpen = false
-    //   this.shadowActive = false
-
-    //   this.authLoginService.setPageAccess(true) //allowing access to address page
-    //   this.router.navigateByUrl('/ship-address')
-    // })
 
     this.buyClick$.pipe(
 
-    withLatestFrom(
-      combineLatest([this.isAuthenticated$, this.userService.userDetail$]).pipe(
-        tap(([userAuth, userDetail]) => {
-          console.log('[STATUS]: ', userAuth, userDetail)
+      withLatestFrom(
+        combineLatest([this.isAuthenticated$, this.userService.userDetail$]).pipe(
+          take(1),
+          tap(([userAuth, userDetail]) => {
 
-
-          if(!userAuth){
-            this.router.navigateByUrl('/login')
-            this.messageService.showMessage("You can't buy without being logged!", "info")
-            return
-          }
-        
-          else if(this.products.length <= 0){
-            return this.messageService.showMessage("Cart is empty!", "info")
-          }
-
+            if(!userAuth){
+              this.router.navigateByUrl('/login')
+              this.messageService.showMessage("You can't buy without being logged!", "info")
+              return
+            }
           
+            else if(this.products.length <= 0){
+              return this.messageService.showMessage("Cart is empty!", "info")
+            }
 
-        }),
 
+            // closing cart
+            this.isAsideCartOpen = false 
+            this.shadowActive = false
+
+
+            if(userDetail?.address.houseNumber !== 0){
+              this.validateUserDetailsService.check_ProductsAndUserInfo_SendsToCheckoutPayment()
+              return 
+            } 
+
+
+            this.authLoginService.setAccessToShipingAndPaymentForm_page(true)
+            this.router.navigateByUrl('/ship-address')
+            
+          }),
+
+        )
       )
-    )
-  ).subscribe()
+
+    ).subscribe()
     
   }
 
@@ -196,9 +196,6 @@ export class NavbarComponent implements OnInit{
     this.themeService.toggleDarkMode(isDarkMode)
   }
 
-  
-  
-  
   
   
 

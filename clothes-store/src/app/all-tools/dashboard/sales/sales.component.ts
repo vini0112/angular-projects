@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 
 import {NgApexchartsModule, ChartComponent} from 'ng-apexcharts'
 import { PieChart, yearSalesChart } from '../../../../modules/dashboardGraphs.module';
-import { Observable, of } from 'rxjs';
+import { Observable, of, shareReplay } from 'rxjs';
 import { userPurchaseDetail } from '../../../../modules/dashboard.module';
 import { dashboardService } from '../../../../services/dashboard.service';
 import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
@@ -40,7 +40,8 @@ export class SalesComponent implements OnInit{
 
 
   dashboardData(){
-    this.dashboardService.getDashboardData().subscribe({
+    this.dashboardService.getDashboardData()
+    .subscribe({
       next: (res: any) =>{
         
         this.yearSales = res.total_sales

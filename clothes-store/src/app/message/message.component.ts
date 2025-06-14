@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { NgClass } from '@angular/common';
 
@@ -6,7 +6,8 @@ import { NgClass } from '@angular/common';
   selector: 'app-message',
   imports: [NgClass], 
   templateUrl: './message.component.html',
-  styleUrl: './message.component.css'
+  styleUrl: './message.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageComponent {
 

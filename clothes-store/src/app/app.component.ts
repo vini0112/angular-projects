@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './user_page/navbar/navbar.component';
 import { ProductsService } from '../services/products.service';
@@ -15,7 +15,8 @@ import { debounceTime, filter, take, tap } from 'rxjs';
   selector: 'app-root',
   imports: [RouterOutlet, NavbarComponent, MessageComponent, FooterComponent ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit{
   message: string = ''

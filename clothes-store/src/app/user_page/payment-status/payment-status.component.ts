@@ -1,19 +1,19 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LocalStorageService } from '../../../services/localStorage.service';
 import { jwtDecode } from 'jwt-decode';
 import { userInfo } from '../../../modules/checkout.module';
 import { MessageService } from '../../../services/message.service';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-payment-status',
   imports: [RouterLink, NgIf],  
   templateUrl: './payment-status.component.html',
-  styleUrl: './payment-status.component.css'
+  styleUrl: './payment-status.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentStatusComponent implements OnInit{
   router = inject(Router)
@@ -25,7 +25,7 @@ export class PaymentStatusComponent implements OnInit{
   token!: string
   successPayment: null | boolean = null
 
-  constructor(){
+  constructor(private cdf: ChangeDetectorRef){
     this.token = this.localStorageService.getItem('accessToken')
   }
 
@@ -51,11 +51,14 @@ export class PaymentStatusComponent implements OnInit{
       next: (res) => {
         this.loading = false
         this.successPayment = res.status === true
+        this.cdf.markForCheck()
       },
       error: (erro) => {
         console.log('error:', erro.message)
         this.loading = false
         this.successPayment = false
+        this.cdf.markForCheck()
+
       }
     })
 

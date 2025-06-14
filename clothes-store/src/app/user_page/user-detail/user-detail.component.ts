@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { finalize, shareReplay, tap } from 'rxjs';
@@ -10,8 +10,10 @@ import { MessageService } from '../../../services/message.service';
   selector: 'app-user-detail',
   imports: [ReactiveFormsModule, NgIf, AsyncPipe],
   templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.css'
+  styleUrl: './user-detail.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class UserDetailComponent implements OnInit{
 
   userService = inject(UserService)
@@ -37,12 +39,11 @@ export class UserDetailComponent implements OnInit{
       })
     }),
 
-    shareReplay(1)
   )
   
 
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private cdf: ChangeDetectorRef){
 
     this.userForm = fb.group({
       username: [null, [Validators.required]],

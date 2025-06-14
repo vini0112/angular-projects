@@ -37,7 +37,6 @@ export class UserService {
 
 
   updateUserDetails(userDetail: userDetailFromForm){
-    
     this.http.put(`${this.apiUrl}/user-update`, {userDetail: userDetail}).subscribe({
       next: () =>{
         this.messageService.showMessage('User Address updated!', 'success')
@@ -47,7 +46,16 @@ export class UserService {
         this.userDetailBehaviorSubj.next({
           ...currentUserAddress!,
           email: userDetail.email!,
-          username: userDetail.username!
+          username: userDetail.username!,
+          address: {
+              country: userDetail.country,
+              street: userDetail.street,
+              houseNumber: userDetail.houseNumber,
+              city: userDetail.city,
+              zipCode: userDetail.zipCode,
+              state: userDetail.state,
+              apartment: userDetail.apartment
+          }
         })
         
       },
@@ -60,23 +68,4 @@ export class UserService {
   }
 
 
-// apartment:"ajdf"
-// city:"viaj"
-// country:"brail"
-// email:"vinilocsilva@gmail.com" ?
-// houseNumber:9
-// state:"ajd"
-// street:"waker"
-// username:"vinicius" ?
-// zipCode:23
-
-
-// SHIP
-// apartment:null
-// city:null
-// country:null
-// houseNumber:null
-// state:null
-// street:null
-// zipCode:null
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { noWhiteSpaceValidator } from '../../../validators/formTrim.validator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,8 +9,10 @@ import { NgClass } from '@angular/common';
   selector: 'app-reset-password',
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  styleUrl: './reset-password.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class ResetPasswordComponent{
 
   token = ''

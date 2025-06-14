@@ -20,10 +20,11 @@ export const resetPasswordGuard: CanActivateFn = (route, state) => {
     map(res =>{
       if(res.valid){
         return true
-      }else{
-        router.navigateByUrl('/home')
-        return false
       }
+
+      router.navigateByUrl('/home')
+      return false
+      
     }),
     catchError(() =>{
       router.navigate(['/login']);

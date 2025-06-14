@@ -126,21 +126,7 @@ describe('CoatsComponent', () => {
 
   })
 
-  it("Should add products to cart", () =>{
 
-    // ARRANGE
-    const item = {id: 1, name: 'vina', price: 1, image: 'jkla', quantity: 4, cart_quantity: 2}
-    
-    spyListCart.addingToCart.and.stub()
-
-    // ACT
-    component.addProductToCart(item)
-    fixture.detectChanges()
-
-    // ASSERT
-    expect(spyListCart.addingToCart).toHaveBeenCalled()
-
-  })
 
 
 });

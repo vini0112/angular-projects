@@ -26,7 +26,6 @@ class UserService {
         if(!userData){
             throw new Error('userData not found/not decode properly!')
         }
-        console.log(data)
 
         const formatedData = {
             username: userData.username,

@@ -75,8 +75,13 @@ describe('ClientsComponent', () => {
   });
 
   it("Should receive online user number", () =>{ 
-    expect(component.onlineUsers).toBe(2)
+
+    component.onlineUsers$.subscribe(res =>{
+      expect(res).toBe(2)
+    })
+
   })
+
 
   it("Should trigger the delete user service action after a click in the button", () =>{
 

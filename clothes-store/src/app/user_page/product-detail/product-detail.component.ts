@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, shareReplay, switchMap } from 'rxjs';
@@ -12,7 +12,8 @@ import { MessageService } from '../../../services/message.service';
   selector: 'app-product-detail',
   imports: [AsyncPipe, NgIf, NgClass],//   
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css'
+  styleUrl: './product-detail.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailComponent{
 
@@ -20,6 +21,9 @@ export class ProductDetailComponent{
   private route = inject(ActivatedRoute)
   listCartServices = inject(listCartServices)
   messageService = inject(MessageService)
+
+
+  constructor(private cdf: ChangeDetectorRef){}
 
   
   product$ = this.route.paramMap.pipe(
@@ -46,10 +50,12 @@ export class ProductDetailComponent{
       next: () =>{
         console.log('Heart in home changed')
         item.isFavorite = !item.isFavorite
-        
+        this.cdf.markForCheck()
       },
       error: (err) =>{
         console.log('ERROR changing isFavorite in home: ', err)
+        this.cdf.markForCheck()
+
       }
       
       

@@ -75,7 +75,6 @@ export const routes: Routes = [
         path: 'user-detail',
         loadComponent: () => import('./user_page/user-detail/user-detail.component').then(m => m.UserDetailComponent),
         canActivate: [userDetailGuard]
-
     },
 
     {

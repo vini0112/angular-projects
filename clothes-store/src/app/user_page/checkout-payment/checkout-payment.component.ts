@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Stripe, StripeElements, loadStripe } from '@stripe/stripe-js';
 import { NgxStripeModule } from 'ngx-stripe';
 import { CheckoutPaymentService } from '../../../services/checkout-payment.service';
@@ -14,7 +14,8 @@ import { AuthLoginService } from '../../../services/auth.login.service';
   selector: 'app-checkout-payment',
   imports: [NgxStripeModule, NgIf, FormsModule], 
   templateUrl: './checkout-payment.component.html',
-  styleUrl: './checkout-payment.component.css'
+  styleUrl: './checkout-payment.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckoutPaymentComponent implements OnInit{ 
 
@@ -71,7 +72,7 @@ export class CheckoutPaymentComponent implements OnInit{
     
     if (!this.stripe || !this.paymentElements.clientSecret) {
       this.paymentElements.message = 'Error: Payment not initialized!';
-      return 
+      return
     }
 
     // ADDING THE ELEMENTS IN THE FORM

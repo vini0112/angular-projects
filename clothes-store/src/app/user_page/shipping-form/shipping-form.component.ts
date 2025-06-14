@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidateUserDetailsService } from '../../../services/validate-user-details.service';
 import { UserService } from '../../../services/user.service';
@@ -8,8 +8,10 @@ import { UserService } from '../../../services/user.service';
   selector: 'app-shipping-form',
   imports: [ReactiveFormsModule],
   templateUrl: './shipping-form.component.html',
-  styleUrl: './shipping-form.component.css'
+  styleUrl: './shipping-form.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class ShippingFormComponent {
 
   validateUserDetails = inject(ValidateUserDetailsService)

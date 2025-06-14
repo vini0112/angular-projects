@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 
 import {NgApexchartsModule, ChartComponent} from 'ng-apexcharts'
 import { PieChart, yearSalesChart } from '../../../../modules/dashboardGraphs.module';
@@ -13,7 +13,8 @@ import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
   selector: 'app-sales',
   imports: [NgApexchartsModule, AsyncPipe, NgIf, DatePipe],  
   templateUrl: './sales.component.html',
-  styleUrl: './sales.component.css'
+  styleUrl: './sales.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 

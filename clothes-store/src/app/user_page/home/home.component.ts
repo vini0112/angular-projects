@@ -1,24 +1,28 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { cartList } from '../../../modules/cart.list.module';
+import { Router, RouterLink } from '@angular/router';
 import { listCartServices } from '../../../services/listCart.service';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 
 
 @Component({
   selector: 'app-home',
   imports: [RouterLink, NgIf, AsyncPipe],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent{
 
   productsService = inject(ProductsService)
   listCartServices = inject(listCartServices)
   private router = inject(Router)
+
+
+  constructor(private cdr: ChangeDetectorRef){}
+
 
   clothesBestsellers$ = this.productsService.allProducts$.pipe(
 
@@ -73,21 +77,16 @@ export class HomeComponent{
       next: () =>{
         console.log('Heart in home changed')
         item.isFavorite = !item.isFavorite
-        
+        this.cdr.markForCheck()
       },
       error: (err) =>{
         console.log('ERROR changing isFavorite in home: ', err)
+        this.cdr.markForCheck()
       }
-      
       
     })
   }
 
-
-  addProductToCart(item: cartList){
-    
-    this.listCartServices.addingToCart(item)
-  }
 
   productDetails(id: number){
     this.router.navigate(['product/',id])

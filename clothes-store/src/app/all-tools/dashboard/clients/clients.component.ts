@@ -1,16 +1,15 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { SocketService } from '../../../../services/socket.service';
 import { Observable, of, Subscription } from 'rxjs';
 import { dashboardService } from '../../../../services/dashboard.service';
 import { AsyncPipe } from '@angular/common';
-import { dashboardHighValueClient, dashboardUsersData } from '../../../../modules/dashboard.module';
-import { MessageService } from '../../../../services/message.service';
 
 @Component({
   selector: 'app-clients',
   imports: [AsyncPipe],  
   templateUrl: './clients.component.html',
-  styleUrl: './clients.component.css'
+  styleUrl: './clients.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsComponent implements OnInit, OnDestroy{
 
@@ -18,22 +17,23 @@ export class ClientsComponent implements OnInit, OnDestroy{
   dashboardService = inject(dashboardService)
 
 
-  onlineUsers: number = 0
+  onlineUsers$ = new Observable<number>()
   private onlineUserSubscription!: Subscription
 
   usersData$ = this.dashboardService.usersData$
   highValueClients$ = this.dashboardService.highValueClientsInfo$
   
 
-  constructor(){
-    
-  }
+  constructor(){}
 
 
   ngOnInit(): void {
     
     this.dashboardService.getDashBoardUsersData()
-    this.onlineUserSubscription = this.socketService.onlineUsers$.subscribe(users => this.onlineUsers = users)
+    this.onlineUserSubscription = this.socketService.onlineUsers$.subscribe(users => {
+      this.onlineUsers$ = of(users)
+      
+    })
   }
   
 

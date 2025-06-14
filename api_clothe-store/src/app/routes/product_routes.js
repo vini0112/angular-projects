@@ -19,7 +19,7 @@ router.get('/product-size/:id', productControllers.productSize)
 
 
 // post
-router.post('/create-clothes', verifyJWT, upload.single('image'), productControllers.postingClothes)
+router.post('/create-clothes', verifyJWT, upload.single('image'),  productControllers.postingClothes)
 
 // update
 router.put('/clothes/:id', verifyJWT, productControllers.updateClothe)

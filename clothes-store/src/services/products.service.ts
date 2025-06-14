@@ -39,7 +39,7 @@ export class ProductsService {
 
   // CRUD
 
-  createProduct(dados: any){
+  createProduct(dados: FormData){
     return this.http.post(`${this.apiUrl}/create-clothes`, dados).pipe(
       tap(() => this.getProducts()) 
     )

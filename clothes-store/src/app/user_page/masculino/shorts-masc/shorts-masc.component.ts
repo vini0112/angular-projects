@@ -1,8 +1,7 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { ProductsService } from '../../../../services/products.service';
 import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { cartList } from '../../../../modules/cart.list.module';
 import { listCartServices } from '../../../../services/listCart.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -11,7 +10,8 @@ import { Router } from '@angular/router';
   selector: 'app-shorts-masc',
   imports: [NgIf, AsyncPipe],
   templateUrl: './shorts-masc.component.html',
-  styleUrl: './shorts-masc.component.css'
+  styleUrl: './shorts-masc.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShortsMascComponent{
 
@@ -20,6 +20,7 @@ export class ShortsMascComponent{
   private router = inject(Router)
 
 
+  constructor(private cdf: ChangeDetectorRef){}
 
   allShorts$ = this.productService.allProducts$.pipe(
         map((products: productModule[]) => 
@@ -53,7 +54,7 @@ export class ShortsMascComponent{
       next: () =>{
         console.log('Heart in shorts changed')
         item.isFavorite = !item.isFavorite
-        
+        this.cdf.markForCheck()
       },
       error: (err) =>{
         console.log('ERROR changing isFavorite in home: ', err)
@@ -61,9 +62,7 @@ export class ShortsMascComponent{
     })
   }
 
-  addProductToCart(item: cartList){
-    this.listCartServices.addingToCart(item)
-  }
+
 
   productDetails(id: number){
     this.router.navigate(['product/',id])

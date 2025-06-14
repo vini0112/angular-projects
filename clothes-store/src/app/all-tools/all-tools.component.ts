@@ -1,15 +1,17 @@
 import { NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-all-tools',
   imports: [RouterOutlet, NgIf],  //
   templateUrl: './all-tools.component.html', 
-  styleUrl: './all-tools.component.css'
+  styleUrl: './all-tools.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllToolsComponent {
   route = inject(Router)
+
 
   warehouse(){
     this.route.navigate(['developer_side/productmanagement'])

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../../services/products.service';
 import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
   selector: 'app-shortsfemi',
   imports: [NgIf, AsyncPipe],
   templateUrl: './shortsfemi.component.html',
-  styleUrl: './shortsfemi.component.css'
+  styleUrl: './shortsfemi.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShortsfemiComponent{
 
@@ -19,7 +20,7 @@ export class ShortsfemiComponent{
   listCartServices = inject(listCartServices)
   private router = inject(Router)
 
-  
+  constructor(private cdf: ChangeDetectorRef){}
   
   allShortsFemi$ = this.productService.allProducts$.pipe(
       map((products: productModule[]) => 
@@ -45,13 +46,12 @@ export class ShortsfemiComponent{
   )
   
   
-
   clickInHeart(item: any): void{
     this.productService.updateFavorite(item.id!, item.isFavorite).subscribe({
       next: () =>{
         console.log('Heart in shorts-femi changed')
         item.isFavorite = !item.isFavorite
-        
+        this.cdf.markForCheck()
       },
       error: (err) =>{
         console.log('ERROR changing isFavorite in home: ', err)
@@ -60,13 +60,10 @@ export class ShortsfemiComponent{
     })
   }
 
-  addProductToCart(item: cartList){
-    this.listCartServices.addingToCart(item)
-  }
-
 
   productDetails(id: number){
     this.router.navigate(['product/',id])
   }
+
 
 }

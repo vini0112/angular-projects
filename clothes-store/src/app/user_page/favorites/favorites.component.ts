@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { listCartServices } from '../../../services/listCart.service';
 import { cartList } from '../../../modules/cart.list.module';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, take } from 'rxjs';
 import { Router } from '@angular/router';
 
 
@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
   selector: 'app-favorites',
   imports: [NgIf, AsyncPipe], 
   templateUrl: './favorites.component.html',
-  styleUrl: './favorites.component.css'
+  styleUrl: './favorites.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavoritesComponent{
 
@@ -21,8 +22,8 @@ export class FavoritesComponent{
   private router = inject(Router)
   
 
+  constructor(private cdf: ChangeDetectorRef){}
 
-  // receiving the favorite products
   favoriteProducts$ = this.productsService.allProducts$.pipe(
     map((products: productModule[]) => products.filter(product => product.isFavorite == true)),
 
@@ -37,9 +38,9 @@ export class FavoritesComponent{
   clickInHeart(item: productModule): void{
     this.productsService.updateFavorite(item.id!, item.isFavorite).subscribe(product =>{
 
-      // toggling the heart status
       if(product){
         item.isFavorite = !item.isFavorite
+        this.cdf.markForCheck()
       }
       
       // removing the products when clicked
@@ -47,6 +48,7 @@ export class FavoritesComponent{
 
         this.favoriteProducts$
         .pipe(
+          take(1),
           map(products => products.filter(product => product.id !== item.id))
         )
         
@@ -59,11 +61,6 @@ export class FavoritesComponent{
     })
   }
 
-
-  
-  addProductToCart(item: cartList){
-    this.listCartServices.addingToCart(item)
-  }
 
   productDetails(id: number){
     this.router.navigate(['product/',id])

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../../services/products.service';
 import { productModule } from '../../../../modules/products.module';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
   selector: 'app-jackets',
   imports: [NgIf, AsyncPipe], 
   templateUrl: './jackets.component.html',
-  styleUrl: './jackets.component.css'
+  styleUrl: './jackets.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
+  
 })
 export class JacketsComponent{
 
@@ -19,7 +21,7 @@ export class JacketsComponent{
   listCartServices = inject(listCartServices)
   private router = inject(Router)
   
-  
+  constructor(private cdf: ChangeDetectorRef){}
   
   JackectsFemi$ = this.productService.allProducts$.pipe(
     map((products: productModule[]) => 
@@ -46,13 +48,13 @@ export class JacketsComponent{
 
 
 
-
   // changing to favorite/unfavorite
   clickInHeart(item: productModule): void{
     this.productService.updateFavorite(item.id!, item.isFavorite).subscribe({
       next: () =>{
         console.log('Heart in jackets changed')
         item.isFavorite = !item.isFavorite
+        this.cdf.markForCheck()
         
       },
       error: (err) =>{
@@ -61,10 +63,6 @@ export class JacketsComponent{
     })
   }
   
-
-  addProductToCart(item: cartList){
-    this.listCartServices.addingToCart(item)
-  }
 
   productDetails(id: number){
     this.router.navigate(['product/',id])

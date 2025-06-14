@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { productModule } from '../../../modules/products.module';
 import { ProductsService } from '../../../services/products.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
@@ -13,6 +13,7 @@ import { MessageService } from '../../../services/message.service';
   imports: [NgIf, CreatingProductComponent, AsyncPipe, FormsModule, NgClass, RouterLink],
   templateUrl: './products-tool.component.html', 
   styleUrl: './products-tool.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsToolComponent{
 
@@ -25,6 +26,8 @@ export class ProductsToolComponent{
   allProducts$ = this.productService.allProducts$
 
 
+  constructor(private cdr: ChangeDetectorRef){}
+
 
   // active and desactive page
   createNewProductPage = signal(true) 
@@ -35,7 +38,7 @@ export class ProductsToolComponent{
 
   // response coming from child
   handleResponse(value: boolean){
-    console.log('Received!')
+    console.log('Emition received!')
     this.createNewProductPage.set(value)
   }
 
@@ -86,23 +89,25 @@ export class ProductsToolComponent{
       
 
       this.allProducts$.forEach(item =>{
-        if(item[this.indexProductToEdit]){//checking if exist the product with the given index
+        if(item[this.indexProductToEdit]){
 
-          // service to update in the DB
           this.productService.updateProduct(this.editItemData)
           .pipe(
-            finalize(() => this.loadingData = false) // loading
+            finalize(() => {this.loadingData = false, this.cdr.markForCheck()})
+
           )
           .subscribe({
             
             next: () => {
               console.log('Product updated!')
-              item[this.indexProductToEdit] = this.editItemData // updating locally first
+              item[this.indexProductToEdit] = {...this.editItemData}
               this.successMsgActivated = true
+              this.cdr.markForCheck()
             },
             error: (err) => {
               console.log('Product not updated!', err)
               this.failedMsgActivated = true
+              this.cdr.markForCheck()
             }
           })
         }

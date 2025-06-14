@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
 import { AuthLoginService } from '../../../services/auth.login.service';
@@ -13,8 +13,11 @@ import { UserService } from '../../../services/user.service';
   selector: 'app-login',
   imports: [NgClass, ReactiveFormsModule, FormsModule],   
   templateUrl: './login.component.html', 
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+
 export class LoginComponent implements OnInit{
 
   message = inject(MessageService)
@@ -49,7 +52,7 @@ export class LoginComponent implements OnInit{
   submittedSignInForm = false
 
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private cdf: ChangeDetectorRef){
 
       this.signUpForm = this.fb.group({
         username: [null, [Validators.required, Validators.minLength(4)]],
@@ -221,24 +224,24 @@ export class LoginComponent implements OnInit{
       this.loadingData = true
 
       this.loginService.sendEmailToReset(this.user.sendingEmail)
-      .pipe(finalize(() => this.loadingData = false)) // finalize the spinner
+      .pipe(finalize(() => this.loadingData = false))
       .subscribe({
         next: (res) => {
+          this.cdf.markForCheck()
           console.log(res),
           this.EmailWasSent = true, 
           this.user.sendingEmail = ''
-        },
 
+        },
 
         error: (err) => {
           console.log(err), 
           this.message.showMessage('Email not found!', "error")
-
+          this.cdf.markForCheck()
         }
       })
     }
   }
-
 
 
   async popUpAuth0Login(){

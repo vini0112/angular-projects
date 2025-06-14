@@ -10,6 +10,7 @@ import { DebugElement } from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import { provideRouter } from '@angular/router';
 import { MessageService } from '../../../services/message.service';
+import { provideAuth0 } from '@auth0/auth0-angular';
 
 const routes = [
   {path: 'home', component: HomeComponent}
@@ -33,7 +34,17 @@ describe('LoginComponent', () => {
         provideHttpClient(), 
         {provide: AuthLoginService, useValue: spyService}, 
         {provide: MessageService, useValue: spyServiceMsg},
-        provideRouter(routes)
+        provideRouter(routes),
+        provideAuth0({
+          domain: 'dev-mqk5g6s65qigreb3.us.auth0.com',
+          clientId: 'xhYGNIDKx5rgmkcE4oslXSOE2aK6Ohmb',
+          useRefreshTokens: true,
+          useRefreshTokensFallback: true ,
+          authorizationParams: {
+            audience: 'clothe_store_api',
+            redirect_uri: 'http://localhost:4200'
+          }
+        })
       ],
 
 

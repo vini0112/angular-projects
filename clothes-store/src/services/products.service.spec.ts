@@ -73,16 +73,24 @@ describe('ProductsService', () => {
 
     const mockFile = new File(['dummy'], 'product.jpg', { type: 'image/jpeg' });
 
-    let product = {name: 'vini', price: 123, image: mockFile, section: 'short', info: 'lkfja', sexo: 'masc', quantity: 4}
+    const formdata = new FormData()
 
-    // service.createProduct(product).subscribe(res =>{
-    //   console.log(res)
-    //   expect(res).toEqual(product)
-    // })
+    formdata.append('name', 'vini')
+    formdata.append('price', '123')
+    formdata.append('image', mockFile)
+    formdata.append('section', 'short')
+    formdata.append('info', 'lkfja')
+    formdata.append('sexo', 'masc')
+    formdata.append('quantity', '4')
+
+    service.createProduct(formdata).subscribe(res =>{
+      expect(res).toBeTruthy()
+      expect(res).toBe(formdata)
+    })
 
     const req = httpMock.expectOne(req => req.url.endsWith('/create-clothes'))
     expect(req.request.method).toBe('POST')
-    req.flush(product)
+    req.flush(formdata)
 
 
     const getReq = httpMock.expectOne(req => req.url.endsWith('/clothes'));

@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
-fdescribe('UserService', () => {
+describe('UserService', () => {
   let service: UserService;
   let mockHttp: HttpTestingController
 
@@ -16,6 +16,7 @@ fdescribe('UserService', () => {
     service = TestBed.inject(UserService);
     mockHttp = TestBed.inject(HttpTestingController)
   });
+  
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -55,9 +56,48 @@ fdescribe('UserService', () => {
 
   })
 
-  fit("Should update the user details", () =>{
 
-    
+  it("Should update the user details", () =>{
+
+    const user = {
+      idusers: 1,
+      username: 'vini' ,
+      email: 'string' ,
+      ammount: 1 ,
+      purchases: 1 ,
+      address: {
+        country: 'string' ,
+        street: 'string' ,
+        houseNumber: 2 ,
+        city: 'string' ,
+        zipCode: 2 ,
+        state: 'string' ,
+        apartment: 'string'
+      }
+    }
+
+    const updateUser = {
+      username: 'vini' ,
+      email: 'string' ,
+      country: 'string' ,
+      street: 'string' ,
+      houseNumber: 2 ,
+      city: 'string' ,
+      zipCode: 2 ,
+      state: 'string' ,
+      apartment: 'string'
+    }
+
+    service.updateUserDetails(updateUser)
+
+    const req = mockHttp.expectOne(req => req.url.endsWith('/user-update'))
+    expect(req.request.method).toBe('PUT')
+    req.flush(user)
+
+
+    service.userDetail$.subscribe(res =>{
+      expect(res?.address).toEqual(user.address)
+    })
 
   })
 

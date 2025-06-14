@@ -62,6 +62,7 @@ export class ProductDetailComponent{
     })
   }
 
+  
   addProductToCart(item: cartList){
 
     if(this.sizePicked === null){

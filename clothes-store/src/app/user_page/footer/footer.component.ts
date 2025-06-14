@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, inject, PLATFORM_ID } from '@angular/core';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthLoginService } from '../../../services/auth.login.service';
-import { AsyncPipe, isPlatformBrowser, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -10,6 +10,7 @@ import { AsyncPipe, isPlatformBrowser, NgIf } from '@angular/common';
   styleUrl: './footer.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class FooterComponent {
 
   authLoginService = inject(AuthLoginService)

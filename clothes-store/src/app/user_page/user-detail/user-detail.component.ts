@@ -14,7 +14,7 @@ import { MessageService } from '../../../services/message.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class UserDetailComponent implements OnInit{
+export class UserDetailComponent{
 
   userService = inject(UserService)
   messageService = inject(MessageService)
@@ -57,11 +57,6 @@ export class UserDetailComponent implements OnInit{
       apartment: [null],
     })
 
-
-  }
-
-
-  ngOnInit(): void {
 
   }
 
@@ -115,6 +110,7 @@ export class UserDetailComponent implements OnInit{
       this.messageService.showMessage('Fill all the fields!', "error")
       return
     }
+    
     this.userService.updateUserDetails(this.userForm.value)
     this.editionMode = false
     this.readOnlyInputs = true

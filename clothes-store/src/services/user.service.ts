@@ -35,7 +35,6 @@ export class UserService {
   }
 
 
-
   updateUserDetails(userDetail: userDetailFromForm){
     this.http.put(`${this.apiUrl}/user-update`, {userDetail: userDetail}).subscribe({
       next: () =>{

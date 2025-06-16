@@ -58,3 +58,16 @@
  ```
  npm run dev
  ```
+## 📌 Important Points 📌
+- Stripe listener needs to be running in the prompt:
+ ```
+ stripe listen --forward-to localhost:3000/webhook
+ ```
+So now you can see a real simulation of stripe payment! I'm explaining more about stripe webhook in this video on LinkedIn 🔗 [WEBHOOK VIDEO](https://www.linkedin.com/posts/vin%C3%ADcius-silva-26b715321_fullstack-ecommerce-stripe-activity-7318990406040383488-RbxE?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFFxGDMBbncfBKgY8dvI-a1LRXErWJQw7w8)
+
+
+
+
+
+
+

@@ -42,7 +42,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 ## 📌 Important Points 📌
 - The whole app is running with OnPush Strategy
 - Registering/Login system + Auth0 authentication 
-- Payment system with Stripe -> You need to run the webhook in your prompt and use the fake card number that stripe gives for tests, so then you can see the success payment page, without the webhook running in your prompt you'll only see the failer payment page! I'm covering more about the payment system in the backend README. Go there to check ------
+- Payment system with Stripe -> You need to run the webhook in your prompt and use the fake card number that stripe gives for tests, so then you can see the success payment page, without the webhook running in your prompt you'll only see the failer payment page! I'm covering more about the payment system in the backend README. Go there to check 🔗 [Backend (Node.js)](./api_clothe-store/README.md)
 - Using ng-apexcharts to display the graphs in the dashboard
 - ngx-socket.io to real-time responses, but i'm just using it to get the online users in real time. So i'm displaying the online users in the dashboard only for the ADM.
 - Angular-Material only used to get the toggle button of dark-theme

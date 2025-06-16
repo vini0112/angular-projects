@@ -25,5 +25,7 @@ A full stack ecommerce application, the frontend with Angular and the backend wi
   ```
   git clone https://github.com/vini0112/angular-projects.git
   ```
+### ⚠️ After you clone the repository, click in the README links on the top. You need to see the configuration of both to be able to run this project in your machine!
+
     
   

@@ -35,7 +35,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
    ```
   ng test
   ```
-### If you wanna see the code coverage of the project:
+### ℹ️ If you wanna see the code coverage of the project:
   - In clothes-store folder access the package -> coverage/index.html
   - Then run it using live server
 
@@ -46,15 +46,6 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 - Using ng-apexcharts to display the graphs in the dashboard
 - ngx-socket.io to real-time responses, but i'm just using it to get the online users in real time. So i'm displaying the online users in the dashboard only for the ADM.
 - Angular-Material only used to get the toggle button of dark-theme
-
-
-
-
-
-
-
-
-
 
 
 

@@ -3,6 +3,12 @@
 A full stack ecommerce application, the frontend with Angular and the backend with (Node JS/Express)
 
 # 📁 Folder Structure
+- /angular-projects
+- /clothes-store → Angular app
+- /api_clothe-store → Node.js/Express API
+
+### ✅ Prerequisites
+- Angular CLI (`npm install -g @angular/cli`) — for frontend
 
 ## Tecnologies
 - Angular
@@ -10,7 +16,7 @@ A full stack ecommerce application, the frontend with Angular and the backend wi
 - Express
 - MySQL
   
-## Dependecies -> All dependecies are available in package.json file!
+## Frontend Dependecies -> All dependecies are available in package.json file!
 - Angular 19
 - Angular-Material ^19.2.10
 - fortawesome/fontawesome-free ^6.7.1

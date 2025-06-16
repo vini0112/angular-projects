@@ -1,6 +1,8 @@
 # Clothes Store
  
-An ecommerce application
+A full stack ecommerce application, the frontend with Angular and the backend with (Node JS/Express)
+
+# 📁 Folder Structure
 
 ## Tecnologies
 - Angular
@@ -25,4 +27,24 @@ An ecommerce application
 - auth0/auth0-angular ^2.2.3
 
   ## 🚀 Getting Started
-  ### 1. 📥 Clone the Repository
+  ### 1. 📥 Clone the Repository 
+  ```
+  git clone https://github.com/vini0112/angular-projects.git
+  ```
+  ### 2. Install the dependecies
+   ```
+  npm install
+  ```
+  ### 2. Run the Project
+   ```
+  ng start
+  ```
+  ### 3. Run Unit Tests (Optional)
+   ```
+  ng test
+  ```
+   ### If you wanna see the code coverage of the project:
+  - In clothes-store folder access the package -> coverage/index.html
+  - Then run it using live server
+    
+  

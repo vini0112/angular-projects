@@ -1,5 +1,6 @@
+# API_CLOTHE-STORE
 
-## 🚀 Getting Started 
+### 🚀 Getting Started 
 - ℹ️ Make sure to have cloned the repository in the first README! If you don't  -> 🔗 [MAIN README](../README.md)
   
 ### 1. get into the frontend folder

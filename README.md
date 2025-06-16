@@ -9,6 +9,8 @@ A full stack ecommerce application, the frontend with Angular and the backend wi
 
 ### ✅ Prerequisites
 - Angular CLI (`npm install -g @angular/cli`) — for frontend
+- 🔗 [Frontend (Angular)](./clothes-store/README.md)
+- 🔗 [Backend (Node.js)](./api_clothe-store/README.md)
 
 ## Tecnologies
 - Angular

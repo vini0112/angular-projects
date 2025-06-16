@@ -20,6 +20,10 @@ A full stack ecommerce application, the frontend with Angular and the backend wi
 - Express
 - MySQL
   
-
+## 🚀 Getting Started
+### 1. 📥 Clone the Repository 
+  ```
+  git clone https://github.com/vini0112/angular-projects.git
+  ```
     
   

@@ -18,11 +18,9 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 - auth0/angular-jwt ^5.2.0
 - auth0/auth0-angular ^2.2.3
 
-## 🚀 Getting Started
-### 1. 📥 Clone the Repository 
-  ```
-  git clone https://github.com/vini0112/angular-projects.git
-  ```
+## 🚀 Getting Started 
+- ℹ️ Make sure to have cloned the repository in the first README! If you don't  -> 🔗 [MAIN README](../README.md)
+
 ### 2. Install the dependecies
    ```
   npm install
@@ -35,9 +33,6 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
    ```
   ng test
   ```
-### ℹ️ If you wanna see the code coverage of the project:
-  - In clothes-store folder access the package -> coverage/index.html
-  - Then run it using live server
 
 ## 📌 Important Points 📌
 - The whole app is running with OnPush Strategy

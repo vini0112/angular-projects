@@ -37,6 +37,26 @@
 
     
     <div class="rightSideInputs"> 
+
+        <div class="boxClotheSize">
+            <h5 style="font-family: var(--PrimaryFont);">Clothe size</h5>
+
+            <div class="boxRadios" formArrayName="checkboxes">
+                @for(size of sizeOptions;track $index){
+                <div >
+                    <label for="">{{size.label}}</label>
+                    <input type="checkbox" [name]="size.label" [value]="size.value" [formControlName]="$index">
+                </div>
+                }
+                <!-- errors?.requireOneChecked -->
+                 
+            </div>
+
+            <span class="erroMsg" *ngIf="submitted && postForm.controls['checkboxes'].invalid">Please select at least one option</span>
+
+        </div>
+
+
         <input type="file" name="image" (change)="onFileSelect($event)" #inputImage>
         <span class="erroMsg specialMargin" *ngIf="submitted && postForm.controls['image'].invalid">Image required</span>
 

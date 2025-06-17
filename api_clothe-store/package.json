@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node --env-file .env src/server.js",
     "dev": "nodemon --env-file .env src/server.js"
   },
@@ -35,6 +35,9 @@
     "stripe": "^18.0.0"
   },
   "devDependencies": {
-    "dotenv-cli": "^8.0.0"
+    "@types/supertest": "^6.0.3",
+    "dotenv-cli": "^8.0.0",
+    "jest": "^30.0.0",
+    "supertest": "^7.1.1"
   }
 }

@@ -34,10 +34,7 @@ form{
     border-radius: 5px;
     border: 1px solid black;
 }
-/* .leftSideInputs select{
-    height: 50px;
-    width: 80%;
-} */
+
 
 
 .rightSideInputs{
@@ -49,6 +46,23 @@ form{
 }
 .rightSideInputs input{
     width: 80%;
+}
+.boxClotheSize{
+    border: 2px solid black;
+    max-width: 300px;
+    height: 80px;
+    width: 100%;
+}
+
+.boxRadios{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.boxRadios div{
+    display: flex;
+
 }
 
 .boxTextArea{

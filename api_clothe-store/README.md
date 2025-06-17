@@ -1,5 +1,19 @@
 # API_CLOTHE-STORE
 
+### Dependecies -> All dependecies are available in package.json file!
+- mysql2 ^3.12.0
+- nodemailer ^6.10.0
+- passport ^0.7.0
+- passport-auth0 ^1.4.4
+- socket.io ^4.8.1
+- stripe ^18.0.0
+- sequelize ^6.37.5
+- multer ^1.4.5-lts.1
+- jsonwebtoken ^9.0.2
+- jwks-rsa ^3.2.0
+- express ^4.21.2
+- dotenv ^16.4.7
+
 ### 🚀 Getting Started 
 - ℹ️ Make sure to have cloned the repository in the first README! If you don't  -> 🔗 [MAIN README](../README.md)
   

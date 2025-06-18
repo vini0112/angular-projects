@@ -7,7 +7,7 @@
         
         <span class="erroMsg" *ngIf="submitted && postForm.controls['name'].invalid">Product name required</span>
 
-        <select name="section" formControlName="section">
+        <select name="section" formControlName="section" (change)="resetCheckBoxAfterChanges()">
             <option value="" disabled selected>Clothe section</option>
             <option value="shirts">Shirts</option>
             <option value="shoes">Shoes</option>
@@ -15,16 +15,16 @@
             <option value="jackets">Jackets</option>
             <option value="coats">Coats</option>
         </select>
-        <span class="erroMsg" *ngIf="submitted && postForm.controls['section'].invalid">Section required</span>
+        <span class="erroMsg" *ngIf="submitted && sectionSelect.invalid">Section required</span>
 
 
-        <select name="sexo" formControlName="sexo">
+        <select name="sexo" formControlName="sexo" (change)="resetCheckBoxAfterChanges()">
             <option value="" disabled selected>Choose your sexo</option>
-            <option value="masc" *ngIf="postForm.controls['section'].value !== 'jackets'">Masculine</option>
-            <option value="femi" *ngIf="postForm.controls['section'].value !== 'coats'">Feminine</option>
+            <option value="masc" *ngIf="sectionSelect.value !== 'jackets'">Masculine</option>
+            <option value="femi" *ngIf="sectionSelect.value !== 'coats'">Feminine</option>
         </select>
         
-        <span class="erroMsg" *ngIf="submitted && postForm.controls['sexo'].invalid">Sexo required</span>
+        <span class="erroMsg" *ngIf="submitted && sexoSelect.invalid">Sexo required</span>
         
     
         <input type="number" name="price" placeholder="price" formControlName="price">
@@ -38,18 +38,27 @@
     
     <div class="rightSideInputs"> 
 
-        <div class="boxClotheSize">
-            <h5 style="font-family: var(--PrimaryFont);">Clothe size</h5>
+        <div class="boxClotheSize" *ngIf="sectionSelect.value && sexoSelect.value">
+            <h5 style="font-family: var(--PrimaryFont);">Size</h5>
 
             <div class="boxRadios" formArrayName="checkboxes">
+
                 @for(size of sizeOptions;track $index){
-                <div >
+                <div *ngIf="size.sexo === sexoSelect.value && sectionSelect.value === 'shoes';else normalClotheSizes">
                     <label for="">{{size.label}}</label>
                     <input type="checkbox" [name]="size.label" [value]="size.value" [formControlName]="$index">
                 </div>
+
+                <ng-template #normalClotheSizes>
+                    <div *ngIf="size.sexo === 'both' && sectionSelect.value !== 'shoes'">
+                        <label for="">{{size.label}}</label>
+                        <input type="checkbox" [name]="size.label" [value]="size.value" [formControlName]="$index">
+                    </div>
+                </ng-template>
+
                 }
                 <!-- errors?.requireOneChecked -->
-                 
+            
             </div>
 
             <span class="erroMsg" *ngIf="submitted && postForm.controls['checkboxes'].invalid">Please select at least one option</span>

@@ -45,7 +45,7 @@ class productControllers{
         try{
             const dados = req.body
             const file = req.file
-            
+
             const imagePath = `/upload/${file.filename}`
             dados.image = imagePath
             

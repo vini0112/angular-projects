@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, shareReplay, switchMap } from 'rxjs';
+import { map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { productModule } from '../../../modules/products.module';
 import { cartList } from '../../../modules/cart.list.module';
@@ -30,6 +30,16 @@ export class ProductDetailComponent{
     switchMap(params => {
       const id = params.get('id');
       return this.productsService.getProductById(parseInt(id!))
+      .pipe(
+        map(product => {
+          if(product.image && product.image.includes('/upload')){
+            if(!product.image.startsWith('http://localhost:3000')){
+              product.image = `http://localhost:3000${product.image}`
+            }
+          }
+          return product
+        })
+      )
     }),
     shareReplay(1)
   );

@@ -78,48 +78,66 @@ export class CreatingProductComponent implements AfterViewInit{
 
   createProduct(){
     this.submitted = true
-
-    // console.log(this.checkboxes.value)
+    
     const selectedSize = this.checkboxes.value
     .map((checked: boolean, i: number) => checked ? this.sizeOptions[i].value : null)
     .filter((v: any) => v !== null)
 
-    console.log(selectedSize)
-    // if(this.postForm.valid){
+    if(this.postForm.valid){
 
-    //   const formdata = new FormData()
-    //   formdata.append('name', this.postForm.value.name)
-    //   formdata.append('info', this.postForm.value.info)
-    //   formdata.append('section', this.postForm.value.section)
-    //   formdata.append('sexo', this.postForm.value.sexo)
-    //   formdata.append('price', this.postForm.value.price)
-    //   formdata.append('quantity', this.postForm.value.quantity)
-    //   formdata.append('image', this.selectedFile!)
-    //   formdata.append('isFavorite', this.postForm.value.isFavorite)
-    //   formdata.append('isBestseller', this.postForm.value.isBestseller)
+      const formdata = new FormData()
+      formdata.append('name', this.postForm.value.name)
+      formdata.append('info', this.postForm.value.info)
+      formdata.append('section', this.postForm.value.section)
+      formdata.append('sexo', this.postForm.value.sexo)
+      formdata.append('price', this.postForm.value.price)
+      formdata.append('quantity', this.postForm.value.quantity)
+      formdata.append('image', this.selectedFile!)
+      formdata.append('isFavorite', this.postForm.value.isFavorite)
+      formdata.append('isBestseller', this.postForm.value.isBestseller)
+      formdata.append('sizes', selectedSize)
 
       
-    //   this.productService.createProduct(formdata).subscribe({
-    //     next: () => {
-    //       this.messageService.showMessage('Product Created!', "success")
-    //       this.clearForm()
-    //     },
-    //     error: (err) => {
-    //       console.log('product not created!', err)
-    //     }
-    //   })
-    // }
+      this.productService.createProduct(formdata).subscribe({
+        next: () => {
+          this.messageService.showMessage('Product Created!', "success")
+          this.clearForm()
+        },
+        error: (err) => {
+          console.log('product not created!', err)
+        }
+      })
+    }
 
   }
+
+
+
 
   get checkboxes(): FormArray {
     return this.postForm.get('checkboxes') as FormArray;
   }
 
+  get sectionSelect(){
+    return this.postForm.controls['section']
+  }
+  get sexoSelect(){
+    return this.postForm.controls['sexo']
+  }
+
+
+
   sizeOptions = [
-    {label: 12, value: 12},
-    {label: 13, value: 13},
-    {label: 14, value: 14},
+    {sexo: 'both', section: 'clothes',label: 'S', value: 1},
+    {sexo: 'both', section: 'clothes',label: 'M', value: 2},
+    {sexo: 'both', section: 'clothes',label: 'L', value: 3},
+    {sexo: 'both', section: 'clothes',label: 'XL', value: 4},
+    {sexo: 'femi', section: 'shoes', label: 5, value: 5},
+    {sexo: 'femi', section: 'shoes', label: 5.5, value: 6},
+    {sexo: 'femi', section: 'shoes', label: 6, value: 7},
+    {sexo: 'masc', section: 'shoes',label: 9, value: 8},
+    {sexo: 'masc', section: 'shoes',label: 9.5, value: 9},
+    {sexo: 'masc', section: 'shoes',label: 10, value: 10},
   ]
 
 
@@ -132,6 +150,13 @@ export class CreatingProductComponent implements AfterViewInit{
   }
 
 
+  resetCheckBoxAfterChanges(){
+    if(this.sexoSelect.value && this.sectionSelect.value){
+      this.checkboxes.reset()
+      console.log('Check Boxe Reseted!')
+    }
+    
+  }
 
 
   clearForm(){

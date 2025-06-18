@@ -155,13 +155,8 @@ class loginService {
 
             })
 
-                
-
-
-
         })
         
-
     }
 
 

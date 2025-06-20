@@ -1,6 +1,6 @@
 # API_CLOTHE-STORE
 
-### Dependecies -> All dependecies are available in package.json file!
+### 🧾 Dependecies -> All dependecies are available in package.json file!
 - mysql2 ^3.12.0
 - nodemailer ^6.10.0
 - passport ^0.7.0
@@ -25,7 +25,7 @@
    ```
   npm install
   ```
-### 3. Environment Variables
+### 3. ⚙️ Environment Variables
 - Create a .env file at the root of the backend folder:
   - In api_clothe-store folder -> right click > New File
   - name it .env
@@ -65,7 +65,7 @@
 - API_AUTH0_ID=yourID
 - API_AUTH0_AUDIENCE=yourAUDIENCE
 
-### 3. Run the Project
+### 3. ▶️ Run the Project
    ```
   npm start
   ```

@@ -1,6 +1,6 @@
 # Clothes Store
  
-A full stack ecommerce application, the frontend with Angular and the backend with (Node JS/Express)
+A full stack ecommerce application, the frontend (Angular), backend (Node JS/Express) and database (MySQL)
 
 ### README of the frontend, backend and database structure available below!
 - 🔗 [Frontend (Angular)](./clothes-store/README.md)
@@ -15,7 +15,7 @@ A full stack ecommerce application, the frontend with Angular and the backend wi
 ### ✅ Prerequisites
 - Angular CLI (`npm install -g @angular/cli`) — for frontend
 
-## Tecnologies
+## 🧩 Tecnologies
 - Angular
 - TypeScript
 - Express

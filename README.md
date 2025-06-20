@@ -5,7 +5,7 @@ A full stack ecommerce application, the frontend with Angular and the backend wi
 ### README of the frontend, backend and database structure available below!
 - 🔗 [Frontend (Angular)](./clothes-store/README.md)
 - 🔗 [Backend (Node.js)](./api_clothe-store/README.md)
-- 🔗 [Database Structure (MySQL)](./api_clothe-store//src/app/database)
+- 🔗 [Database Structure (MySQL)](./api_clothe-store//src/app/database/README.md)
 
 # 📁 Folder Structure
 - /angular-projects

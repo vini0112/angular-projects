@@ -13,8 +13,8 @@
                 </div>
 
                 <div class="btnsProduct">
-                    <button (click)="productDetails(shoes.id!)"><i class="fa-solid fa-shirt"></i></button>
-                    <button (click)="clickInHeart(shoes)">
+                    <button (click)="productDetails(shoes.id!)"><i aria-label="shirt icon" class="fa-solid fa-shirt"></i></button>
+                    <button aria-label="heart icon" (click)="clickInHeart(shoes)">
                         <i class="fa-regular fa-heart" *ngIf="shoes.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="shoes.isFavorite == true"></i>
                     </button>

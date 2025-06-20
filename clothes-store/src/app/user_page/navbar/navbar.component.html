@@ -15,21 +15,27 @@
                 
             </mat-slide-toggle>
 
-            <a routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a>
+            <a aria-label="user-detail" routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a>
             
-            <a data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
+            <a aria-label="developer_side" data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
             </a>
 
-            <i class="fa-regular fa-heart" routerLink="/favorites"></i>
+            <a aria-label="favorites" routerLink="/favorites"><i  class="fa-regular fa-heart" ></i></a>
+
             <div class="boxCartIcon">
-                <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
+                <button (click)="openCart()" aria-label="open Cart" >
+                    <i aria-label="storeIcon" class="fa-solid fa-store"></i>
+                </button>
                 <span class="contCart">{{totalQuantityProducts_inCart$ | async}}</span>
             </div>
-            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
+
+
 
             <a routerLink="/login" *ngIf="!(isAuthenticated$ | async) && !(auth0.isAuthenticated$ | async)" class="loginPrincipal" data-testid="loginBTN">Login</a>
             
-            <a data-testid="logouIcon" routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async) || (auth0.isAuthenticated$ |async)"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a>
+            <a aria-label="logout icon" data-testid="logouIcon" routerLink="/home" class="logoutPrincipal" *ngIf="(isAuthenticated$ | async) || (auth0.isAuthenticated$ |async)" (click)="logout()">
+                <i class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i>
+            </a>
         </nav>
 
         <!-- mobile icons -->
@@ -39,21 +45,27 @@
             </mat-slide-toggle>
 
             <div class="boxCartIcon">
-                <i class="fa-solid fa-store openCartIcon" (click)="openCart()"></i>
+                <button (click)="openCart()" aria-label="open Cart" >
+                    <i aria-label="storeIcon" class="fa-solid fa-store"></i>
+                </button>
                 <span class="contCart">{{totalQuantityProducts_inCart$ | async}}</span>
             </div>
-            <i class="fa-solid fa-bars" id="barIcon" (click)="openMobileAsideBar()"></i>
+
+            <button (click)="openMobileAsideBar()" id="barIcon" aria-label="open mobile side">
+                <i class="fa-solid fa-bars" ></i> 
+            </button>
+            
         </nav>
 
         <!-- mobile side -->
         <div id="mobileSide" [ngClass]="{'activeMobile': mobileSideActive}">
 
             <ul id="mobileLinks">
-                <li><a routerLink="/"><i class="fa-solid fa-house"></i></a></li>
+                <li><a routerLink="/" aria-label="linkHome"><i class="fa-solid fa-house"></i></a></li>
                 <li id="dropdown">
                     <a class="shopBtn" (click)="showSubLinksMobile()">
-                        <i class="fa-solid fa-caret-down caretDown" [ngClass]="{'goingLeft': sexoChosen}"></i> 
-                        <i class="fa-solid fa-shirt"></i> 
+                        <i aria-label="setterIcon" class="fa-solid fa-caret-down caretDown" [ngClass]="{'goingLeft': sexoChosen}"></i> 
+                        <i aria-label="shirtIcon" class="fa-solid fa-shirt"></i> 
                     </a>
                     <ul id="submenuMobile" [ngClass]="{'activeSexoSection': sexoChosen}">
                         <li><a routerLink="/feminine">Feminine</a></li>
@@ -61,15 +73,19 @@
                     </ul>
                 </li>
 
-                <li><a routerLink="/favorites"><i class="fa-regular fa-heart"></i></a></li>
+                <li><a aria-label="favorites" routerLink="/favorites"><i class="fa-regular fa-heart"></i></a></li>
                 
-                <li ><a routerLink="/developer_side"><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
+                <li ><a aria-label="developer_side" routerLink="/developer_side"><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
 
-                 <li><a routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a></li>
+                 <li><a aria-label="user-detail" routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a></li>
 
-                <li *ngIf="!(isAuthenticated$ | async) || !(auth0.isAuthenticated$)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
+                <li aria-label="login" *ngIf="!(isAuthenticated$ | async) || !(auth0.isAuthenticated$)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
 
-                <li *ngIf="(isAuthenticated$ | async)"><a routerLink="/home"><i  (click)="logout()" class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i></a></li>
+                <li *ngIf="(isAuthenticated$ | async)">
+                    <a aria-label="logout icon" routerLink="/home" (click)="logout()">
+                        <i class="fa-solid fa-arrow-right-from-bracket logOutIcon"></i>
+                    </a>
+                </li>
 
             </ul>
 
@@ -84,7 +100,9 @@
     <aside id="aside" [ngClass]="{'active': isAsideCartOpen}">
 
         <div class="closeAside">
-            <i class="fa-solid fa-xmark" (click)="btnXcloseCart()"></i>
+            <button (click)="btnXcloseCart()" aria-label="close cart"> 
+                <i aria-label="xmark" class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <div class="asideContent">
@@ -94,10 +112,16 @@
                         <img [src]="product.image" [alt]="product.name">
                         <span>{{product.name}}</span>
                         <div class="boxQtd">
-                            <i class="fa-solid fa-plus" (click)="addMore(product.id!)"></i>
+                            <button (click)="addMore(product.id!)" aria-label="add more to cart">
+                                <i aria-label="plus signal" class="fa-solid fa-plus" ></i>
+                            </button>
+                            
                             
                             <span>{{product.cart_quantity}}</span>
-                            <i class="fa-solid fa-minus" (click)="removeFromCart(product.id!) "></i>
+                            <button (click)="removeFromCart(product.id!)" aria-label="remove from cart">
+                                <i aria-label="minus signal" class="fa-solid fa-minus"></i>
+                            </button>
+                            
                         </div>
                         
                     </li>

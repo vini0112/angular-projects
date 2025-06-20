@@ -50,7 +50,7 @@
         <div class="explore1 autoShowToThirdBlock">
             <div>
                 <p>Elegance is Always in Style.</p>
-                <h5>Spring Collection</h5>
+                <p>Spring Collection</p>
                 <a routerLink="/feminine/shortsfemi">Explore more</a>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="explore2 autoShowToThirdBlock">
             <div>
                 <p>Dress Well, Feel Powerful.</p>
-                <h5>-25% Off Items</h5>
+                <p>-25% Off Items</p>
                 <a routerLink="/feminine/shoesfemi">Explore more</a>
             </div>
         </div>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="btnsProduct">
                         <button (click)="productDetails(item.id!)"><i class="fa-solid fa-shirt"></i></button>
-                        <button (click)="clickInHeart(item)">
+                        <button aria-label="heart icon" (click)="clickInHeart(item)">
                             <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
                             <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
                         </button>

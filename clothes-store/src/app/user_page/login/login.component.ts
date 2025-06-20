@@ -182,13 +182,11 @@ export class LoginComponent implements OnInit{
 
   passwordVisible = false
 
-  openEye(){
-    this.passwordVisible = true
+  togglePasswordVisibility(){
+    this.passwordVisible = !this.passwordVisible
   }
 
-  closeEye(){
-    this.passwordVisible = false
-  }
+  
 
 
 

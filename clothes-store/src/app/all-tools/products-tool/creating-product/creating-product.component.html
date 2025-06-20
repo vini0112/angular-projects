@@ -1,5 +1,5 @@
 
-<h5 style="text-align:center;">Create New Product</h5>
+<h3 style="text-align:center;">Create New Product</h3>
 <form [formGroup]="postForm" data-testid="postForm">
     
     <div class="leftSideInputs">
@@ -39,7 +39,7 @@
     <div class="rightSideInputs"> 
 
         <div class="boxClotheSize" *ngIf="sectionSelect.value && sexoSelect.value">
-            <h5 style="font-family: var(--PrimaryFont);">Size</h5>
+            <h3 style="font-family: var(--PrimaryFont);">Size</h3>
 
             <div class="boxRadios" formArrayName="checkboxes">
 
@@ -57,7 +57,7 @@
                 </ng-template>
 
                 }
-                <!-- errors?.requireOneChecked -->
+                
             
             </div>
 

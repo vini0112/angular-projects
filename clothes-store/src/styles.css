@@ -72,8 +72,6 @@ body{
 
 
 
-
-
 /* spinner */
 
 .spinner{
@@ -107,6 +105,8 @@ body{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    width: 90%;
+    margin: auto;
 }
 
 .padraoCard{
@@ -158,6 +158,8 @@ body{
     
 }
 
+
+
 .btnsProduct button{
     border: none;
     background-color: black;
@@ -165,6 +167,9 @@ body{
     padding: .3rem .5rem;
     border-radius: 5px;
     font-size: 1.2rem;
+}
+.btnsProduct button i{
+    cursor: pointer;
 }
 
 

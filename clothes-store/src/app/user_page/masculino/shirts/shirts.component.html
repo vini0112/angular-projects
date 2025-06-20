@@ -14,8 +14,8 @@
             
 
             <div class="btnsProduct">
-                <button (click)="productDetails(shirt.id!)"><i class="fa-solid fa-shirt"></i></button>
-                <button (click)="clickInHeart(shirt)">
+                <button (click)="productDetails(shirt.id!)"><i aria-label="shirt icon" class="fa-solid fa-shirt"></i></button>
+                <button aria-label="heart icon" (click)="clickInHeart(shirt)">
                     <i class="fa-regular fa-heart" *ngIf="shirt.isFavorite == false"></i>
                     <i class="fa-solid fa-heart" *ngIf="shirt.isFavorite == true"></i>
                 </button>

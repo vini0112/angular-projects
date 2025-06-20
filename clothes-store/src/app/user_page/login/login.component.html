@@ -7,10 +7,11 @@
         
         <!-- SIGN UP FORM -->
         @if(signUpPage == true){
-            <h4>Sign Up</h4>
+            <h2>Sign Up</h2>
             <div class="auth0IconsBox">
-                <i class="fa-brands fa-google" (click)="popUpAuth0Login()"></i>
+                <a aria-label="pop auth0" (click)="popUpAuth0Login()"><i class="fa-brands fa-google" ></i></a>
             </div>
+
             <form [formGroup]="signUpForm" (submit)="submitSignUpForm()" data-testid="signupSubmit">
                 <input type="text" placeholder="Username" name="username" formControlName="username">
                 @if(SignUp_username?.touched || submittedSignUpForm){ 
@@ -25,26 +26,29 @@
                 <div class="passwordBox">
                     <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" name="password" formControlName="password">
                     
-                    <!-- icon see password -->
-                    @if(passwordVisible == true){
-                        <i class="fa-solid fa-eye openEye" (click)="closeEye()"></i>
-                    }@else{
-                        <i class="fa-solid fa-eye-slash closeEye" (click)="openEye()"></i>
-                    }
+                    <button type="button" (click)="togglePasswordVisibility()" class="openEye">
+                        <i class="fa-solid" [ngClass]="passwordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    </button>
                     
                 </div>
                 @if(SignUp_password?.touched || SignUp_password?.dirty ||submittedSignUpForm){
                     <span class="errorMsg">{{messageErro('password')}}</span>
                 }
 
-                <p>Already has an account? <i class="fa-solid fa-arrow-right-long arrowRight" (click)="movingToLogin()"></i></p>
-                <button type="submit">Sign Up</button>
+                <p>
+                    Already has an account? 
+                    <a (click)="movingToLogin()" class="arrowRight" aria-label="moving to sign in page">
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                </p>
+                <button type="submit" class="btnSignup">Sign Up</button>
             </form> 
             
         }@else{
-            <h4>Sign In</h4>
+            <h2>Sign In</h2>
             <div class="auth0IconsBox">
-                <i class="fa-brands fa-google" (click)="popUpAuth0Login()"></i>
+                <a (click)="popUpAuth0Login()"><i class="fa-brands fa-google" ></i></a>
+                
             </div>
             <form [formGroup]="signInForm" (submit)="onSubmitSignIn()" data-testid="SingInForm">
                 
@@ -53,19 +57,19 @@
                 <div class="passwordBox">
                     <input [type]="passwordVisible? 'text' : 'password'" placeholder="Password" formControlName="password" name="password">
                 
-                    <!-- icon see password -->
-                    @if(passwordVisible == true){
-                        <i class="fa-solid fa-eye openEye" (click)="closeEye()"></i>
-                    }@else{
-                        <i class="fa-solid fa-eye-slash closeEye" (click)="openEye()"></i>
-                    }
+                    <button type="button" (click)="togglePasswordVisibility()" class="openEye">
+                        <i class="fa-solid" [ngClass]="passwordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    </button>
                 </div>
 
                 <p>Forgot your <a (click)="retrievePassword()" class="forgotPassword">password?</a></p>
                 <div class="submitMobileAndReplacePage">
-                    <button type="submit">Sign In</button>
-                    <i class="fa-solid fa-arrow-left-long arrowLeft" (click)="movingToSignup()"></i>
-                    
+                    <button type="submit" class="btnSignin">Sign In</button>
+
+                    <a (click)="movingToSignup()" aria-label="moving to sign up page">
+                        <i class="fa-solid fa-arrow-left-long arrowLeft"></i>
+                    </a>
+                                        
                 </div>
             </form> 
             

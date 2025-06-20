@@ -15,8 +15,9 @@
                     <span>{{favoriteItem.info}}</span>
                 </div>
                 <div class="btnsProduct">
-                    <button (click)="productDetails(favoriteItem.id!)"><i class="fa-solid fa-shirt"></i></button>
-                    <button (click)="clickInHeart(favoriteItem)">
+                    <button (click)="productDetails(favoriteItem.id!)">
+                        <i aria-label="shirt icon" class="fa-solid fa-shirt"></i></button>
+                    <button aria-label="heart icon" (click)="clickInHeart(favoriteItem)">
                         <i class="fa-regular fa-heart" *ngIf="favoriteItem.isFavorite == false"></i>
                         <i class="fa-solid fa-heart" *ngIf="favoriteItem.isFavorite == true"></i>
                     </button>

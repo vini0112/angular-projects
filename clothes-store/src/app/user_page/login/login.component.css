@@ -18,6 +18,9 @@
 .passwordBox input{
     width: 100%;
 }
+.passwordBox button{
+    border: none;
+}
 
 .openEye{
     font-size: 1.3rem;
@@ -44,6 +47,7 @@
 .forgotPassword{
     padding-left: 5px;
     cursor: pointer;
+    color: rgb(0, 64, 255);
 }
 
 
@@ -115,7 +119,7 @@
     text-decoration: underline;
 }
 
-.signInBox button{
+.signInBox .btnSignup, .btnSignin{
     border: none;
     padding: .5rem 1rem;
     color: white;
@@ -125,6 +129,7 @@
     border-radius: 5px;
     width: 120px;
     margin: auto;
+    cursor: pointer;
 }
 
 .auth0IconsBox{
@@ -165,6 +170,7 @@
     justify-content: center;
     
 }
+
 
 .greetings.scrollToLeftBar{
     transition: 0.5s;
@@ -231,6 +237,7 @@
     font-weight: 500;
     font-size: 1.1rem;
     text-shadow: 1px 1px 1px black;
+    cursor: pointer;
 }
 
 .greetingSignUp h3{
@@ -256,6 +263,7 @@
     font-weight: 500;
     font-size: 1.1rem;
     text-shadow: 1px 1px 1px black;
+    cursor: pointer;
 }
 
 

@@ -14,7 +14,7 @@
 <div class="rightSide" *ngIf="product$ | async as item">
     <div class="firstDiv">
         <span>Mark as favorite</span>
-        <button (click)="clickInHeart(item)" class="btnHeart">
+        <button aria-label="heart icon" (click)="clickInHeart(item)" class="btnHeart">
             <i class="fa-regular fa-heart" *ngIf="item.isFavorite == false"></i>
             <i class="fa-solid fa-heart" *ngIf="item.isFavorite == true"></i>
         </button>

@@ -2,7 +2,7 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
 
-## Dependecies -> All dependecies are available in package.json file!
+## 🧾 Dependecies -> All dependecies are available in package.json file!
 - Angular 19
 - Angular-Material ^19.2.10
 - fortawesome/fontawesome-free ^6.7.1
@@ -48,14 +48,5 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 

@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { productModule } from '../../../modules/products.module';
@@ -9,8 +9,8 @@ import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, NgIf, AsyncPipe],
-  templateUrl: './home.component.html',
+  imports: [RouterLink, NgIf, AsyncPipe, NgOptimizedImage],
+  templateUrl: './home.component.html', 
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

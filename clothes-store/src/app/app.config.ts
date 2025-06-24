@@ -52,7 +52,9 @@ export const appConfig: ApplicationConfig = {
         audience: 'clothe_store_api',
         redirect_uri: isBrowser ? window.location.origin : 'http://localhost:4200'
       }
-    })
+    }),
+
+    
     
   ]
 };

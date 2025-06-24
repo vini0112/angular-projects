@@ -2,8 +2,8 @@
 
 <div class="slideOne">
     
-    <div class="boxBanner">
-        <img src="../assets/banners/banner-grandient.png" alt="Woman model">
+    <div class="boxBanner"> <!-- src="" -->
+        <img ngSrc="../assets/banners/banner-grandient.png" height="550" width="1920" priority alt="Woman model">
         <div class="advertasing">
             <h2>Fashion Jackets</h2>
             <span>UP TO 50% OFF ON TOP BRANDS</span>
@@ -15,7 +15,7 @@
     <div id="navigationProducts">
         @for (item of navigateByTheme; track $index) {
             <div class="boxCategory">
-                <img [src]="item.image" alt="">
+                <img [ngSrc]="item.image" width="175" height="180" [alt]="item.title" priority>
                 
                 <div>
                     <span class="titleProductsNavigation">{{item.title}}</span>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="boxSecondSlide ">
-        <img src="assets/homeImgs/camarera.png" class="autoShow" alt="">
+        <img ngSrc="assets/homeImgs/camarera.png" width="800" height="500" class="autoShow" alt="camarera img" priority>
     </div>
 </div>
 

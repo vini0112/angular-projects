@@ -3,11 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "ng serve", 
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:clothes-store": "node dist/clothes-store/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -27,7 +26,6 @@
     "@stripe-elements/stripe-elements": "^2.0.2",
     "@stripe/stripe-js": "^5.10.0",
     "apexcharts": "^4.5.0",
-    "express": "^4.18.2",
     "jwt-decode": "^4.0.0",
     "ng-apexcharts": "^1.15.0",
     "ngx-socket-io": "^4.8.5",

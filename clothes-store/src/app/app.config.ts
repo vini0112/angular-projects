@@ -11,9 +11,8 @@ import { environment } from '../environments/environment.development';
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io'
 import { provideAuth0 } from '@auth0/auth0-angular'
 
-
 const config: SocketIoConfig = {
-  url: 'http://localhost:3000',
+  url: environment.api,
   options: {
     transports: ['websocket'],
     autoConnect: false

@@ -3,6 +3,8 @@ import connection from '../database/connection.js'
 import bcrypt from 'bcrypt'
 import mailer from 'nodemailer'
 const saltRounds = 10;
+import config from '../config/env.js';
+
 
 
 class loginService {
@@ -11,14 +13,14 @@ class loginService {
 
         return new Promise((resolve, reject) =>{
 
-            jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) =>{
+            jwt.verify(token, config.JWT.REFRESH_TOKEN, (err, user) =>{
                 if(err) {
                     console.log('❌ Token inválido! ', err.message)
                     return reject({erroMessage: "Token inválido!"})
                 }
                 
                 
-                if(user.role === process.env.ADM_ROLE){
+                if(user.role === config.JWT.ADM_ROLE){
                     console.log('✅ DEV')
                     return resolve({message: "Developer_Logged"})
                 }
@@ -56,14 +58,14 @@ class loginService {
                 const user = result[0]
 
                 // DEVELOPER LOGIN 
-                if(email === process.env.EMAIL_OF_DEVELOPER && user.roles === process.env.ADM_ROLE){
+                if(email === config.JWT.EMAIL_OF_DEVELOPER && user.roles === config.JWT.ADM_ROLE){
                     const match = await bcrypt.compare(password, user.password)
 
                     if(match){
                         
-                        const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                        const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, config.JWT.SECRET_KEY, { expiresIn: '1h' });
 
-                        const refreshToken = jwt.sign({ id: user.idusers, role: process.env.ADM_ROLE, email: user.email, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d'});
+                        const refreshToken = jwt.sign({ id: user.idusers, role: config.JWT.ADM_ROLE, email: user.email, username: user.username }, config.JWT.REFRESH_TOKEN, { expiresIn: '7d'});
 
                         await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken,  user.email])
                         
@@ -82,9 +84,9 @@ class loginService {
                     return reject({erro: 'Wrong password'})
                 } 
                 
-                const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                const accessToken = jwt.sign({ id: user.idusers, username: user.username ,email: user.email }, config.JWT.SECRET_KEY, { expiresIn: '15m' });
 
-                const refreshToken = jwt.sign({ id: user.idusers, email: user.email, username: user.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                const refreshToken = jwt.sign({ id: user.idusers, email: user.email, username: user.username }, config.JWT.REFRESH_TOKEN, { expiresIn: '7d' });
 
 
                 await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ?', [refreshToken, user.email])
@@ -127,9 +129,9 @@ class loginService {
                         if(user.email === email && user.auth0_sub === sub) account = user
                     })
                     
-                    const accessToken = jwt.sign({ id: account.idusers, username: account.username ,email: account.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                    const accessToken = jwt.sign({ id: account.idusers, username: account.username ,email: account.email }, config.JWT.SECRET_KEY, { expiresIn: '15m' });
 
-                    const refreshToken = jwt.sign({ id: account.idusers, email: account.email, username: account.username }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                    const refreshToken = jwt.sign({ id: account.idusers, email: account.email, username: account.username }, config.JWT.REFRESH_TOKEN, { expiresIn: '7d' });
                 
 
                     await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ? and idusers = ?', [refreshToken, account.email, account.idusers])
@@ -145,9 +147,9 @@ class loginService {
 
                 const insertId = res_newRegister.insertId
 
-                const accessToken = jwt.sign({ id: insertId, username: nickname ,email: email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                const accessToken = jwt.sign({ id: insertId, username: nickname ,email: email }, config.JWT.SECRET_KEY, { expiresIn: '15m' });
 
-                const refreshToken = jwt.sign({ id: insertId, email: email, username: nickname }, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
+                const refreshToken = jwt.sign({ id: insertId, email: email, username: nickname }, config.JWT.REFRESH_TOKEN, { expiresIn: '7d' });
                 
                 await connection.promise().execute('UPDATE users SET token_reset = ? WHERE email = ? and idusers = ?', [refreshToken, email, insertId])
 
@@ -171,19 +173,19 @@ class loginService {
             
                 if(err || result.length === 0) return reject({ message: "Token inválido" });
 
-                jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, user) =>{
+                jwt.verify(refreshToken, config.JWT.REFRESH_TOKEN, (err, user) =>{
                     if (err) return reject({ message: "Token inválido", refreshToken});
                     
 
                     // IF ROLE DEVELOPER
-                    if(user.role === process.env.ADM_ROLE){
-                        const newAccessToken = jwt.sign({ id: user.id, role: process.env.ADM_ROLE, email: user.email, username: user.username  }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                    if(user.role === config.JWT.ADM_ROLE){
+                        const newAccessToken = jwt.sign({ id: user.id, role: config.JWT.ADM_ROLE, email: user.email, username: user.username  }, config.JWT.SECRET_KEY, { expiresIn: '1h' });
                         
                         return resolve({accessToken: newAccessToken})
                     }
 
 
-                    const newAccessToken = jwt.sign({ id: user.id, username: user.username ,email: user.email }, process.env.SECRET_KEY, { expiresIn: '15m' });
+                    const newAccessToken = jwt.sign({ id: user.id, username: user.username ,email: user.email }, config.JWT.SECRET_KEY, { expiresIn: '15m' });
                     
                     return resolve({accessToken: newAccessToken})
 
@@ -256,7 +258,7 @@ class loginService {
             }
 
 
-            const tokenReset = jwt.sign({email}, process.env.SECRET_RESET_PASSWORD, {expiresIn: '15min'})
+            const tokenReset = jwt.sign({email}, config.RESET_PASSWORD.SECRET_RESET_PASSWORD, {expiresIn: '15min'})
 
 
             await connection.promise().execute("UPDATE users SET token_reset = ?, token_expires = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE email = ?", [tokenReset, email])
@@ -266,12 +268,12 @@ class loginService {
                 host: "smtp.gmail.com",                
                 secure: true,
                 auth:{
-                    user: process.env.MY_EMAIL,
-                    pass: process.env.MY_PASSWORD 
+                    user: config.RESET_PASSWORD.MY_EMAIL,
+                    pass: config.RESET_PASSWORD.MY_PASSWORD 
                 }
             })
             
-            const resetUrl = `${process.env.CLIENT_URL}/${tokenReset}`
+            const resetUrl = `${config.RESET_PASSWORD.CLIENT_URL}/${tokenReset}`
 
             const receiver = {
                 from: 'vinilocsilva@gmail.com',

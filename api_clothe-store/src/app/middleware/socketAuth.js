@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken'
-
+import config from '../config/env.js';
 
 export default function sokectAuth(socket, next){
     const token = socket.handshake.query.token;
@@ -8,7 +8,7 @@ export default function sokectAuth(socket, next){
     if(!token) return next(new Error('No token!'))
 
     try{
-        const user = jwt.verify(token, process.env.SECRET_KEY)
+        const user = jwt.verify(token, config.JWT.SECRET_KEY)
         socket.user = user
         next()
     }catch(err){

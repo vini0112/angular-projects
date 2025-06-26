@@ -2,7 +2,7 @@
 import connection from '../database/connection.js'
 import mailer from 'nodemailer'
 import stripe from "../config/stripe.config.js";
-
+import config from '../config/env.js';
 
 
 class stripeService{
@@ -179,8 +179,8 @@ class stripeService{
                         host: "smtp.gmail.com",                
                         secure: true,
                         auth:{
-                            user: process.env.MY_EMAIL,
-                            pass: process.env.MY_PASSWORD 
+                            user: config.RESET_PASSWORD.MY_EMAIL,
+                            pass: config.RESET_PASSWORD.MY_PASSWORD 
                         }
                     })
 

@@ -3,7 +3,7 @@ import userService from "../services/user.service.js"
 
 class UserController{
 
-
+    
     async getUserInfo(req, res){
         try{
 

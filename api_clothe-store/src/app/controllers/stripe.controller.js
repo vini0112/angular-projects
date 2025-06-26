@@ -1,14 +1,15 @@
 
 import stripe from "../config/stripe.config.js";
 import stripeService from "../services/stripe.service.js";
+import config from "../config/env.js";
 
-const endpointSecret = process.env.STRIPE_SECRET_ENDPOINT
+const endpointSecret = config.STRIPE.STRIPE_SECRET_ENDPOINT
 
 
 class stripeController{
 
     
-
+    
     async checkout(req, res){ 
 
         try{

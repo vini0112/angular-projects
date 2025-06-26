@@ -12,7 +12,7 @@ const port = config.DB.port || 3000
 
 const io = new Server(server,{
     cors: {
-        origin: ['http://localhost:4200'], 
+        origin: ['https://backend-production-9982.up.railway.app'], 
         methods: ['GET', 'POST'],
     }
 })

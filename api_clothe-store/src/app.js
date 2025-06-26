@@ -12,7 +12,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'http://localhost:4200', // url front
+    origin: 'https://backend-production-9982.up.railway.app', // url front
     credentials: true ,// allowing cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH' ,'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

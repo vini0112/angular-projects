@@ -7,5 +7,4 @@ export const environment = {
         clientId: 'GBPB42qhMWCtvrwGmYxvm5cbHXU68nzG',
         redirectUri: 'http://localhost:4200/profile',
     }
-    
 };

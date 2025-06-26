@@ -8,7 +8,10 @@ const config = {
     port: env.get('DB_PORT').required().asInt(),
     user: env.get('DB_USER').required().asString(),  
     password: env.get('DB_PASSWORD').required().asString(),
-    database: env.get('NAME').required().asString()
+    database: env.get('DB_NAME').required().asString()
 }
+
+// console.log(config.port)
+  // --env-file .env
 
 export default config

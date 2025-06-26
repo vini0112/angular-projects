@@ -11,7 +11,5 @@ const config = {
     database: env.get('DB_NAME').required().asString()
 }
 
-// console.log(config.port)
-  // --env-file .env
 
 export default config

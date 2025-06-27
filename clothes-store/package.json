@@ -5,8 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build--prod": "ng build --configuration production --base-href 'https://vini0112.github.io/angular-projects/'",
     "copy404": "copy dist\\clothes-store\\index.html dist\\clothes-store\\404.html",
-    "deploy": "npm run copy404 && npx angular-cli-ghpages --dir=dist/clothes-store",
+    "deploy": "npm run build--prod && npm run copy404 && npx angular-cli-ghpages --dir=dist/clothes-store",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

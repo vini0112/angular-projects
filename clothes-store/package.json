@@ -4,10 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href 'https://vini0112.github.io/angular-projects/'",
-    "postbuild": "cpx \"dist/clothes-store/index.html\" dist/clothes-store/404.html",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "deploy": "npm run build && npx angular-cli-ghpages --dir=dist/clothes-store",
     "test": "ng test"
   },
   "private": true,

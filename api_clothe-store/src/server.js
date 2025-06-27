@@ -12,7 +12,7 @@ const port = config.DB.port || 3000
 
 const io = new Server(server,{
     cors: {
-        origin: ['https://vini0112.github.io/angular-projects'], 
+        origin: ['https://vini0112.github.io'], 
         methods: ['GET', 'POST'],
     }
 })

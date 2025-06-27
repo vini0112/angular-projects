@@ -7,13 +7,12 @@ import cookieParse from 'cookie-parser'
 import dashboardRouter from './app/routes/dashboard.routes.js'
 import stripeRoute from './app/routes/stripe.route.js'
 import userRouter from './app/routes/user.routes.js'
-import config from './app/config/env.js'
 
 const app = express()
 
 
 app.use(cors({
-    origin: `${config.BACKEND_URL}` || 'http://localhost:4200', //
+    origin: `https://vini0112.github.io/angular-projects`, //
     credentials: true ,// allowing cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH' ,'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

@@ -11,7 +11,6 @@ const config = {
         password: env.get('DB_PASSWORD').required().asString(),
         database: env.get('DB_NAME').required().asString()  
     },
-    BACKEND_URL: env.get('BACKEND_URL').required().asString(),
 
     RESET_PASSWORD: {
         SECRET_RESET_PASSWORD: env.get('SECRET_RESET_PASSWORD').required().asString(),

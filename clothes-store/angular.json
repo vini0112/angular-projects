@@ -33,10 +33,7 @@
                 "glob": "**/*",
                 "input": "public"
               }
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              
             ],
             "styles": [
               "src/styles.css",

@@ -8,15 +8,15 @@ import config from './app/config/env.js'
 
 
 const server = http.createServer(app)
-const port = config.DB.port || 3000
-
+const port = 3000
+//config.DB.port || 
 const io = new Server(server,{
     cors: {
-        origin: ['https://vini0112.github.io'], 
+        origin: ['http://localhost:4200'], 
         methods: ['GET', 'POST'],
     }
 })
-
+// 'https://vini0112.github.io' || 
 
 
 setupSocket(io)
@@ -30,7 +30,6 @@ connection.connect((error) => {
         server.listen(port , () => console.log(`Running in port ${port}`))
     }
 })
-
 
 
 

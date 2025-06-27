@@ -50,19 +50,19 @@ export class HomeComponent{
   
   navigateByTheme = [
     {
-      image: 'clothes-store/src/assets/shoes-femi/red-high-heel-shoes.png',
+      image: 'assets/shoes-femi/red-high-heel-shoes.png',
       title: 'HIGH HEALS',
       linkNavegation: '/feminine/shoesfemi'
 
     },
     {
-      image: '/clothes-store/src/assets/homeImgs/camisa.png',
+      image: 'assets/homeImgs/camisa.png',
       title: 'T-SHIRTS',
       linkNavegation: '/masculine/shirts'
 
     },
     {
-      image: 'clothes-store/src/assets/homeImgs/tenis.png',
+      image: 'assets/homeImgs/tenis.png',
       title: 'TRAINERS',
       linkNavegation: '/masculine/shoes'
 

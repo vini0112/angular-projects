@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production --base-href 'https://vini0112.github.io/angular-projects/'",
-    "postbuild": "cp dist/clothes-store/index.html dist/clothes-store/404.html",
+    "postbuild": "Copy-Item -Path dist/clothes-store/index.html -Destination dist/clothes-store/404.html",
     "watch": "ng build --watch --configuration development",
     "deploy": "npm run build && npx angular-cli-ghpages --dir=dist/clothes-store",
     "test": "ng test"

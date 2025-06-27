@@ -9,7 +9,7 @@ import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, NgIf, AsyncPipe, NgOptimizedImage, NgStyle],
+  imports: [RouterLink, NgIf, AsyncPipe, NgOptimizedImage],
   templateUrl: './home.component.html', 
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

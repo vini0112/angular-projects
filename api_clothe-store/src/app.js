@@ -12,7 +12,7 @@ const app = express()
 
 //  'http://localhost:4200'|| 
 app.use(cors({
-    origin: `https://vini0112.github.io`, 
+    origin: 'https://vini0112.github.io', 
     credentials: true ,// allowing cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH' ,'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

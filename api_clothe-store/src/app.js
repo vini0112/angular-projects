@@ -7,12 +7,13 @@ import cookieParse from 'cookie-parser'
 import dashboardRouter from './app/routes/dashboard.routes.js'
 import stripeRoute from './app/routes/stripe.route.js'
 import userRouter from './app/routes/user.routes.js'
+import config from './app/config/env.js'
 
 const app = express()
 
 
 app.use(cors({
-    origin: 'https://backend-production-9982.up.railway.app', // url front
+    origin: `${config.BACKEND_URL}` || 'http://localhost:4200', //
     credentials: true ,// allowing cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH' ,'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

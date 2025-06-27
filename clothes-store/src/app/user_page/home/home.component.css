@@ -173,7 +173,7 @@
 
 
 .explore1{
-    background-image: url('/assets/homeImgs/exploreOne.png');
+    /* background-image: url('/assets/homeImgs/exploreOne.png'); */
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -194,7 +194,7 @@
 }
 
 .explore2{
-    background-image: url(/clothes-store/assets/homeImgs/exploreTwo.png);
+    /* background-image: url(/clothes-store/assets/homeImgs/exploreTwo.png); */
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;

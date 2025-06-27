@@ -3,7 +3,6 @@ import { Server } from 'socket.io'
 import app from './app.js'
 import connection from './app/database/connection.js';
 import {setupSocket} from './app/sockets/sockets.manager.js';
-import config from './app/config/env.js'
 
 
 
@@ -12,11 +11,11 @@ const port = 3000
 //config.DB.port || 
 const io = new Server(server,{
     cors: {
-        origin: ['http://localhost:4200'], 
+        origin: [`https://vini0112.github.io`], 
         methods: ['GET', 'POST'],
     }
 })
-// 'https://vini0112.github.io' || 
+//  'http://localhost:4200'
 
 
 setupSocket(io)

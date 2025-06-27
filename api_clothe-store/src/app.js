@@ -10,9 +10,9 @@ import userRouter from './app/routes/user.routes.js'
 
 const app = express()
 
-// `https://vini0112.github.io` || 
+//  'http://localhost:4200'|| 
 app.use(cors({
-    origin: 'http://localhost:4200', 
+    origin: `https://vini0112.github.io`, 
     credentials: true ,// allowing cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH' ,'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

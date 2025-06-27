@@ -173,7 +173,7 @@
 
 
 .explore1{
-    background-image: url('clothes-store/src/assets/homeImgs/explore_small.jpg');
+    background-image: url('/clothes-store/assets/homeImgs/explore_small.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -194,7 +194,7 @@
 }
 
 .explore2{
-    background-image: url('clothes-store/src/assets/homeImgs/explore2_small.jpg');
+    background-image: url('/clothes-store/assets/homeImgs/explore2_small.jpg');
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;

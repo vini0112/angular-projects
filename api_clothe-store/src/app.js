@@ -10,7 +10,7 @@ import userRouter from './app/routes/user.routes.js'
 
 const app = express()
 
-//  'http://localhost:4200'|| 
+// 'http://localhost:4200'
 app.use(cors({
     origin: 'https://vini0112.github.io', 
     credentials: true ,// allowing cookies

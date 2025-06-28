@@ -15,9 +15,12 @@
                 
             </mat-slide-toggle>
 
-            <a aria-label="user-detail" routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a>
+            <a aria-label="user-detail" routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)">
+                <i class="fa-solid fa-user"></i>
+            </a>
             
-            <a aria-label="developer_side" data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)"><i class="fa-solid fa-screwdriver-wrench"></i>
+            <a aria-label="developer_side" data-testid="devIcon" routerLink="/developer_side" *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
             </a>
 
             <a aria-label="favorites" routerLink="/favorites"><i  class="fa-regular fa-heart" ></i></a>
@@ -75,11 +78,23 @@
 
                 <li><a aria-label="favorites" routerLink="/favorites"><i class="fa-regular fa-heart"></i></a></li>
                 
-                <li ><a aria-label="developer_side" routerLink="/developer_side"><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
+                <li *ngIf="(DEV_logged$ | async) && (isAuthenticated$ | async)">
+                    <a aria-label="developer_side" routerLink="/developer_side">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </a>
+                </li>
 
-                 <li><a aria-label="user-detail" routerLink="/user-detail" *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)"><i class="fa-solid fa-user"></i></a></li>
+                <li *ngIf="(isAuthenticated$ | async) || (DEV_logged$ | async)">
+                    <a aria-label="user-detail" routerLink="/user-detail" >
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
 
-                <li aria-label="login" *ngIf="!(isAuthenticated$ | async) || !(auth0.isAuthenticated$)"><a routerLink="/login" ><i class="fa-solid fa-user"></i></a></li>
+                <li aria-label="login" *ngIf="!(isAuthenticated$ | async) || !(auth0.isAuthenticated$)">
+                    <a routerLink="/login" >
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
 
                 <li *ngIf="(isAuthenticated$ | async)">
                     <a aria-label="logout icon" routerLink="/home" (click)="logout()">

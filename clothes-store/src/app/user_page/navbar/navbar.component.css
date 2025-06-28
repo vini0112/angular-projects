@@ -222,7 +222,7 @@
 
 .btnCart{
     width: 100%;
-    height: 50px;
+    height: 65px;
     display: flex;
 }
 
@@ -262,12 +262,12 @@
     position: fixed;
     top: 0%;
     left: 100%;
-    height: 100%;
+    height: 100dvh;
     bottom: 0;
     width: 60px;
     z-index: 10;
     transition: 0.3s ease;
-    background-color: rgba(255, 255, 255, 0.91);
+    background-color: var(--bg-color);
     box-shadow: 5px 5px 5px 2px black;
 }
 
@@ -288,7 +288,7 @@
 
 #mobileLinks li a{
     font-size: 1.5rem;
-    color: black;
+    color: var(--text-color);
 }
 
 /* dropdown mobile */
@@ -422,12 +422,32 @@
         position: fixed;
         top: 0%;
         left: 100%;
-        height: 100vh;
+        height: 100dvh;
         width: 100%;
     }
     #aside.active{
         left: calc(100% - 100%);
     }
+    .closeAside {
+        position: relative;
+        width: 100%;
+        height: 40px;
+    }
+
+    .asideContent{
+        width: 100%;
+        height: 750px;
+    }
+
+    .btnCart{
+        width: 100%;
+        height: 80px;
+        display: flex;
+    }
+
+
+
+
 }
 
 @media screen and (max-width: 380px) {

@@ -146,6 +146,10 @@ h5{
         align-items: center;
     }
 
+    .boxFooterBody .boxBody1, .boxBody2, .boxBody3{
+        margin: 0;
+    }
+
     /* FOOTER FOOTER */
     .boxFooterFooter span{
         font-size: 1rem;

@@ -628,6 +628,11 @@
         gap: 1rem;
     }
 
+    .bestSellersBox h3{
+        padding-left: 15px;
+        padding-bottom: 10px;
+    }
+
     .bestSellersCard{
         position: relative;
         height: 300px;

@@ -280,7 +280,9 @@ tbody{
 
     :host{
         display: grid;
-        grid-template-rows: 1fr 1fr; 
+        grid-template-rows: 1fr 1fr;
+        border: 2px solid black;
+        height: 900px;
     }
 
     .firstBlock{
@@ -327,7 +329,7 @@ tbody{
 
     .boxTableAllUsers{
         margin-top: .5rem;
-        height: 80%;
+        /* height: 80%; */
         overflow-x: auto;
     } 
 

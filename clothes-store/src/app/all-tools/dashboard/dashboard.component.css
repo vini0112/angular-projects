@@ -1,6 +1,6 @@
 
 :host{
-    height: calc(100vh - 12vh);
+    height: 100%;
     display: grid;
     grid-template-areas: 
     'aside main';
@@ -90,9 +90,16 @@ main{
 }
 
 
+/* main */
+
+main{
+    height: 100%;
+}
+
+
 @media (max-width: 820px){
 
-    :host{
+    /* :host{
         height: calc(100vh - 12vh);
         display: grid;
         grid-template-areas: 
@@ -100,12 +107,11 @@ main{
         grid-template-columns: 1fr 3fr;
         grid-template-rows: auto;
         gap: 10px;
-    }
+    } */
 }
 
 @media screen and (max-width: 480px){
     :host{
-        
         grid-template-areas: 
         "aside"
         "main";
@@ -118,12 +124,18 @@ main{
         flex-wrap: wrap;
         gap: 0rem;
         justify-content: space-evenly;        
-    }
+    } 
     
 }
 
 @media screen and (max-width: 380px){
     
-
+    :host{
+        height: 230vh;
+        grid-template-areas: 
+        "aside"
+        "main";
+        grid-template-columns: 1fr;
+    }
     
 }

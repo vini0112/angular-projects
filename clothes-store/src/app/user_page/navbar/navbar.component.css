@@ -161,7 +161,8 @@
 /* aside */
 #aside{
     position: fixed;
-    top: 0%;
+    top: 0;
+    bottom: 0;
     left: 100%;
     height: 100vh;
     background-color: var(--bg-color);
@@ -260,10 +261,10 @@
 
 #mobileSide{
     position: fixed;
-    top: 0%;
-    left: 100%;
-    height: 100dvh;
+    top: 0;
     bottom: 0;
+    left: 100vw;
+    height: 100dvh;
     width: 60px;
     z-index: 10;
     transition: 0.3s ease;
@@ -283,7 +284,7 @@
 }
 
 #mobileSide.activeMobile{
-    left: calc(100% - 60px);
+    left: calc(100vw - 60px);
 }
 
 #mobileLinks li a{

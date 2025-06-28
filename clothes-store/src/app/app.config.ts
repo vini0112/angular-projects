@@ -46,10 +46,10 @@ export const appConfig: ApplicationConfig = {
       domain: 'dev-mqk5g6s65qigreb3.us.auth0.com',
       clientId: 'xhYGNIDKx5rgmkcE4oslXSOE2aK6Ohmb',
       useRefreshTokens: true,
-      useRefreshTokensFallback: true ,
+      useRefreshTokensFallback: true,
       authorizationParams: {
         audience: 'clothe_store_api',
-        redirect_uri: isBrowser ? window.location.origin : 'http://localhost:4200'
+        redirect_uri: isBrowser ? window.location.origin : 'https://vini0112.github.io'
       }
     }),
 

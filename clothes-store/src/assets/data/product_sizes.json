@@ -1,0 +1,311 @@
+[
+    {
+        "product_id": 1,
+        "label": "S"
+    },
+    {
+        "product_id": 1,
+        "label": "M"
+    },
+    {
+        "product_id": 1,
+        "label": "L"
+    },
+    {
+        "product_id": 1,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 2,
+        "label": "S"
+    },
+    {
+        "product_id": 2,
+        "label": "M"
+    },
+    {
+        "product_id": 2,
+        "label": "L"
+    },
+    {
+        "product_id": 2,
+        "label": "XL"
+    },
+    
+    {
+        "product_id": 3,
+        "label": "S"
+    },
+    {
+        "product_id": 3,
+        "label": "M"
+    },
+    {
+        "product_id": 3,
+        "label": "L"
+    },
+
+    {
+        "product_id": 4,
+        "label": "S"
+    },
+    {
+        "product_id": 4,
+        "label": "M"
+    },
+    {
+        "product_id": 4,
+        "label": "L"
+    },
+    {
+        "product_id": 4,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 5,
+        "label": "S"
+    },
+    {
+        "product_id": 5,
+        "label": "M"
+    },
+    {
+        "product_id": 5,
+        "label": "L"
+    },
+    {
+        "product_id": 5,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 6,
+        "label": "S"
+    },
+    {
+        "product_id": 6,
+        "label": "M"
+    },
+    {
+        "product_id": 6,
+        "label": "L"
+    },
+    {
+        "product_id": 6,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 7,
+        "label": "S"
+    },
+    {
+        "product_id": 7,
+        "label": "M"
+    },
+    {
+        "product_id": 7,
+        "label": "L"
+    },
+    {
+        "product_id": 7,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 8,
+        "label": "S"
+    },
+    {
+        "product_id": 8,
+        "label": "M"
+    },
+    {
+        "product_id": 8,
+        "label": "L"
+    },
+    {
+        "product_id": 8,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 9,
+        "label": "S"
+    },
+    {
+        "product_id": 9,
+        "label": "M"
+    },
+    {
+        "product_id": 9,
+        "label": "L"
+    },
+    {
+        "product_id": 9,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 10,
+        "label": 9
+    },
+    {
+        "product_id": 10,
+        "label": 9.5
+    },
+    {
+        "product_id": 10,
+        "label": 10
+    },
+
+    {
+        "product_id": 11,
+        "label": 9
+    },
+    {
+        "product_id": 11,
+        "label": 9.5
+    },
+    {
+        "product_id": 11,
+        "label": 10
+    },
+
+    {
+        "product_id": 12,
+        "label": 9
+    },
+    {
+        "product_id": 12,
+        "label": 9.5
+    },
+    {
+        "product_id": 12,
+        "label": 10
+    },
+
+    {
+        "product_id": 13,
+        "label": 9
+    },
+    {
+        "product_id": 13,
+        "label": 9.5
+    },
+    {
+        "product_id": 13,
+        "label": 10
+    },
+
+    {
+        "product_id": 14,
+        "label": 5
+    },
+    {
+        "product_id": 14,
+        "label": 5.5
+    },
+    {
+        "product_id": 14,
+        "label": 6
+    },
+
+    {
+        "product_id": 15,
+        "label": 5
+    },
+    {
+        "product_id": 15,
+        "label": 5.5
+    },
+    {
+        "product_id": 15,
+        "label": 6
+    },
+
+    {
+        "product_id": 16,
+        "label": "S"
+    },
+    {
+        "product_id": 16,
+        "label": "M"
+    },
+    {
+        "product_id": 16,
+        "label": "L"
+    },
+    {
+        "product_id": 16,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 17,
+        "label": "S"
+    },
+    {
+        "product_id": 17,
+        "label": "M"
+    },
+    {
+        "product_id": 17,
+        "label": "L"
+    },
+    {
+        "product_id": 17,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 18,
+        "label": "S"
+    },
+    {
+        "product_id": 18,
+        "label": "M"
+    },
+    {
+        "product_id": 18,
+        "label": "L"
+    },
+    {
+        "product_id": 18,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 19,
+        "label": "S"
+    },
+    {
+        "product_id": 19,
+        "label": "M"
+    },
+    {
+        "product_id": 19,
+        "label": "L"
+    },
+    {
+        "product_id": 19,
+        "label": "XL"
+    },
+
+    {
+        "product_id": 20,
+        "label": "S"
+    },
+    {
+        "product_id": 20,
+        "label": "M"
+    },
+    {
+        "product_id": 20,
+        "label": "L"
+    } 
+
+
+]

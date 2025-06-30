@@ -48,6 +48,7 @@ export class ProductDetailComponent{
     switchMap(params =>{
       const id = params.get('id');
       return this.productsService.getProductSize(parseInt(id!))
+      
     })
   );
 

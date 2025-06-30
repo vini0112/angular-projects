@@ -1,0 +1,18 @@
+{
+    "ammount":680,
+    "email":"vinilocsilva@gmail.com",
+    "idusers":0,
+    "purchases":6,
+    "username":"vinicius",
+    "address":[
+        {
+            "apartment":"ajdf",
+            "city":"new york",
+            "country":"Brazil",
+            "houseNumber":140,
+            "state":"sweden",
+            "street":"morgan street",
+            "zipCode":1000
+        }
+    ]
+}

@@ -124,5 +124,28 @@ export class listCartServices{
     )
 
 
+    // 
+
+    private isOpen = new BehaviorSubject<boolean>(false);
+    public isOpen$ = this.isOpen.asObservable();
+
+    openCart() {
+        this.isOpen.next(true);
+        document.body.classList.add('body_no_scroll');
+    }
+
+    closeCart() {
+        this.isOpen.next(false);
+        document.body.classList.remove('body_no_scroll');
+    }
+
+    toggleCart() {
+        const open = this.isOpen.getValue();
+        this.isOpen.next(!open);
+        document.body.classList.toggle('body_no_scroll', !open);
+    }
+
+
+
 }
 

@@ -78,7 +78,8 @@ export const routes: Routes = [
     },
 
     {
-        path: 'product/:id',
+        //product
+        path: 'assets/data/products.json/:id',
         loadComponent: () => import('./user_page/product-detail/product-detail.component').then(m => m.ProductDetailComponent)
     },
     

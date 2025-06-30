@@ -58,17 +58,19 @@ export class NavbarComponent implements OnInit{
   openCart(){
     this.isAsideCartOpen = !this.isAsideCartOpen
     this.shadowActive = true
+    this.listCartService.openCart()
   }
 
   btnCloseCart(){
     this.isAsideCartOpen = false
     this.shadowActive = false
+    this.listCartService.closeCart()
   }
 
   btnXcloseCart(){
     this.isAsideCartOpen = false
     this.shadowActive = false
-
+    this.listCartService.closeCart()
   }
 
 
@@ -76,6 +78,7 @@ export class NavbarComponent implements OnInit{
   openMobileAsideBar(){
     this.mobileSideActive = !this.mobileSideActive
     this.shadowActive = true
+    this.listCartService.openCart()
   }
 
   removeShadow(){
@@ -84,6 +87,8 @@ export class NavbarComponent implements OnInit{
       this.isAsideCartOpen = false
       this.mobileSideActive = false
       this.sexoChosen = false
+      this.listCartService.closeCart()
+
     }
   }
 

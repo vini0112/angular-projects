@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit{
         password: [null, [Validators.required, Validators.minLength(4)]]
       })
 
-  } 
+  }
 
 
   ngOnInit(): void {}
@@ -126,7 +126,7 @@ export class LoginComponent implements OnInit{
   onSubmitSignIn(){  
     this.submittedSignInForm = true
 
-    if(this.signInForm.valid){
+    if(this.signInForm.valid){ 
         this.loginService.gettingIn(this.signInForm.value).subscribe({
           next: () =>{
             console.log('success login')
@@ -142,7 +142,13 @@ export class LoginComponent implements OnInit{
           }
 
         })
-    }else{
+    }
+    else if(this.signInForm.invalid){ // DUMMY LOGIN
+      this.loginService.gettingInDummy(this.signInForm.value)
+      this.userService.getUserDetails()
+
+    }
+    else{
       
       this.message.showMessage('Form Invalid!', "error")
     }

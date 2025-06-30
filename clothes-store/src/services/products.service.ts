@@ -16,10 +16,10 @@ export class ProductsService {
   private allProductsSubject = new BehaviorSubject<productModule[]>([])
   allProducts$ = this.allProductsSubject.asObservable()
   
-
+  //${this.apiUrl}/clothes
   getProducts(): void{
     
-    this.http.get<productModule[]>(`${this.apiUrl}/clothes`).subscribe({
+    this.http.get<productModule[]>(`assets/data/products.json`).subscribe({
       next: (res) =>{
         this.allProductsSubject.next(res)
         console.log('Products received!')
@@ -45,14 +45,26 @@ export class ProductsService {
     )
   }
 
+  // ORIGINAL
+  // getProductById(id: number): Observable<productModule> {
+  //   return this.http.get<productModule>(`${this.apiUrl}/product/${id}`);
+  // }
+  // getProductSize(id: number): Observable<productSize[]>{
+  //   return this.http.get<productSize[]>(`${this.apiUrl}/product-size/${id}`)
+  // }
 
   getProductById(id: number): Observable<productModule> {
-    return this.http.get<productModule>(`${this.apiUrl}/product/${id}`);
+    return this.http.get<productModule[]>(`assets/data/products.json`)
+    .pipe(
+      map(products => products.find(product => product.id === id)!)
+    )
   }
-
   
   getProductSize(id: number): Observable<productSize[]>{
-    return this.http.get<productSize[]>(`${this.apiUrl}/product-size/${id}`)
+    return this.http.get<productSize[]>(`assets/data/product_sizes.json`)
+    .pipe(
+      map(sizes => sizes.filter(size => size.product_id === id))
+    )
   }
 
 

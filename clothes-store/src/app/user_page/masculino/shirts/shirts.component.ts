@@ -63,7 +63,8 @@ export class ShirtsComponent{
 
 
   productDetails(id: number){
-    this.router.navigate(['product/',id])
+    // product/
+    this.router.navigate(['assets/data/products.json/',id])
   }
 
 }

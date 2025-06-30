@@ -22,13 +22,15 @@ export class dashboardService{
     usersData$ = this.GetUsersData.asObservable()
 
 
+    //${this.api}/dashboard-data
     getDashboardData(): Observable<dashboardData>{
-        return this.http.get<dashboardData>(`${this.api}/dashboard-data`)
+        return this.http.get<dashboardData>(`assets/data/dashboard_data.json`)
     }
 
 
+    // ${this.api}/dashboard-users
     getDashBoardUsersData(){
-        this.http.get<dashboardUsersData[]>(`${this.api}/dashboard-users`).subscribe({
+        this.http.get<dashboardUsersData[]>(`assets/data/dashboard_userData.json`).subscribe({
             next: (res) =>{
                 console.log('Users information received!')
                 this.GetUsersData.next(res)

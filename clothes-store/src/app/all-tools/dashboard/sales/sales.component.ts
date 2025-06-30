@@ -44,7 +44,6 @@ export class SalesComponent implements OnInit{
     this.dashboardService.getDashboardData()
     .subscribe({
       next: (res: any) =>{
-        
         this.yearSales = res.total_sales
         this.revenue = res.revenue
         this.invoices$ = of(res.invoices)

@@ -31,17 +31,24 @@ export class AuthLoginService{
 
 
 
-
   // PAGE ACCESS
   private accessToForm_shipping_and_Payment = false
+
 
   register(form: registering): Observable<string>{
     return this.http.post<string>(`${this.api}/addingUser`, form)
   }
 
+  gettingInDummy(form: login){
+    console.log("DUMMY LOGIN WORKING!")
+    this.IsDeveloper.next(true)
+    this.isAuth.next(true)
+    this.saveToken('fadjfkldjfjd')
+  }
 
 
   gettingIn(credentials: {form: login}): Observable<{accessToken: string, developerMsg: string}>{
+    
     return this.http.post<{accessToken: string, developerMsg: string}>(`${this.api}/entrando`, credentials, {withCredentials: true})
     .pipe(
       tap(response => {

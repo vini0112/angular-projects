@@ -281,7 +281,6 @@ tbody{
     :host{
         display: grid;
         grid-template-rows: 1fr 1fr;
-        border: 2px solid black;
         height: 900px;
     }
 
@@ -328,6 +327,7 @@ tbody{
     }
 
     .boxTableAllUsers{
+        border: 2px solid black;
         margin-top: .5rem;
         /* height: 80%; */
         overflow-x: auto;
@@ -335,6 +335,12 @@ tbody{
 
     .boxTableAllUsers table{
         width: 530px;
+    }
+
+    .boxTableAllUsers table tbody{
+        margin-top: .3rem;
+        height: 100%;
+        overflow-y: auto;
     }
     
     

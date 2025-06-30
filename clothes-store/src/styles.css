@@ -33,6 +33,21 @@ body{
     color: var(--text-color) !important;
 }
 
+
+
+/* NAVBAR */
+
+
+@media screen and (max-width: 480px){
+    .body_no_scroll{
+        overflow-y: hidden;
+        position: fixed;
+        width: 100%;
+    }
+}
+
+
+
 /* HOME */
 .dark-theme #navigationProducts .boxCategory{
     background-color: rgb(186 186 186) !important;

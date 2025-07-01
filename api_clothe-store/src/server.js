@@ -14,11 +14,11 @@ const port = 3000
 
 const io = new Server(server,{
     cors: {
-        origin: ['https://vini0112.github.io'], 
+        origin: ['http://localhost:4200'], 
         methods: ['GET', 'POST'],
     }
 })
-//  'http://localhost:4200'
+//  
 
 
 setupSocket(io)

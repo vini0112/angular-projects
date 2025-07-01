@@ -23,7 +23,6 @@ export class UserService {
   getUserDetails(){
     this.http.get<userDetails>(`assets/data/userDetail_data.json`).subscribe({
       next: (res) =>{
-        console.log(res)
         console.log('User data received!')
         this.userDetailBehaviorSubj.next(res)
       },

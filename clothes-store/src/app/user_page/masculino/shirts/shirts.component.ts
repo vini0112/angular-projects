@@ -28,8 +28,8 @@ export class ShirtsComponent{
   
                 .map(product => {
                   if(product.image && product.image.includes('/upload')){
-                    if(!product.image.startsWith('https://vini0112.github.io')){
-                      product.image = `https://vini0112.github.io${product.image}`
+                    if(!product.image.startsWith('http://localhost:3000')){
+                      product.image = `http://localhost:3000${product.image}`
                     }
                   }
   

@@ -66,6 +66,9 @@ export class ProductsService {
       map(sizes => sizes.filter(size => size.product_id === id))
     )
   }
+  
+
+
 
 
   updateProduct(dados: EditingProduct): Observable<EditingProduct>{

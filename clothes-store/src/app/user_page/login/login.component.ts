@@ -143,7 +143,7 @@ export class LoginComponent implements OnInit{
 
         })
     }
-    else if(this.signInForm.invalid){ // DUMMY LOGIN
+    else if(this.signInForm.invalid){ // DUMMY
       this.loginService.gettingInDummy(this.signInForm.value)
       this.userService.getUserDetails()
 

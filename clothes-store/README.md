@@ -46,7 +46,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 - ngx-socket.io to real-time responses, but i'm just using it to get the online users in real time. So i'm displaying the online users in the dashboard only for the ADM.
 - Angular-Material only used to get the toggle button of dark-theme
 
-  ## 📌 Dummy Database Simulation 📌
+## 📌 Dummy Database Simulation 📌
 - The project is running in the web with a dummy database to simulate the real functionality, it is located in assets inside of src!
 - Below i'm gonna show you where the modifications happened:
     - Some services are pointing to the dummy json but i'm putting the original code in the comment above of the dummy logic, just replace it.
@@ -58,7 +58,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
     - APP ROUTES -> the original routes are in the comment above the changed routes! just one modified that one with the commet above.
     - in product detail i've changed the url too! but is in the comment above.
       
-  ## 📌 Displaying product images 📌
+## 📌 Displaying product images 📌
 - Pay attention in the code below:
 ```
 .map(product => {

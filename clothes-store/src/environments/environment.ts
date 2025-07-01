@@ -5,3 +5,6 @@ export const environment = {
 };
 
 
+// "deploy": "ng build --configuration production --base-href 'https://vini0112.github.io/angular-projects/' && npx angular-cli-ghpages --dir=dist/clothes-store",
+
+

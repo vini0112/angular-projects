@@ -153,6 +153,8 @@ export class NavbarComponent implements OnInit{
   buyClick$ = new Subject<void>();
 
   buying(){
+    
+    this.listCartService.closeCart()
 
     this.buyClick$.pipe(
 

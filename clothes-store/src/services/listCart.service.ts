@@ -36,28 +36,23 @@ export class listCartServices{
 
     addingToCart(product: cartList){
         const currentProduct = this.cart.getValue()
-        const existe = currentProduct.find(item => item.id === product.id)
+        const productExist = currentProduct.find(item => item.id === product.id)
         
-        if(existe){
-
-            if(existe.cart_quantity! < existe.quantity){
-                let newQuantity = existe.cart_quantity! += 1
-
-                if(newQuantity <= existe.quantity){
-                    existe.cart_quantity = newQuantity
-                }else{
-                    this.messageService.showMessage('Max Reached', 'info')
-                }
-                
-            }else{
-                this.messageService.showMessage('Max Reached', 'info')
-            }
-            
-        }else{
+        if(!productExist){
             currentProduct.push({...product, cart_quantity: 1})
         }
-        
+
+        else{
+            if(productExist.cart_quantity! >= productExist.quantity){
+                this.messageService.showMessage('Max Reached', 'info')
+                return
+            }
+
+            productExist.cart_quantity! += 1
+        }
+
         this.updateLocalStorage(currentProduct)
+        
     }
 
 
@@ -66,7 +61,6 @@ export class listCartServices{
         const product = currentProduct.find(item => item.id === productId)
 
         if(product){
-            
             product.cart_quantity!--
             this.updateLocalStorage(currentProduct)
             
@@ -74,7 +68,6 @@ export class listCartServices{
                 this.removingProduct(productId)
             }
         }
-        
         
     }
 
@@ -86,28 +79,28 @@ export class listCartServices{
 
 
     addingOneMore(productId: number){
-        const product = this.cart.getValue()
-        const existProduct = product.find(item => item.id == productId)
+        const cartProducts = this.cart.getValue()
+        const index = cartProducts.findIndex(item => item.id === productId)
 
-        if(existProduct){
-
-            if(existProduct.cart_quantity! < existProduct.quantity){
-                let newQuantity = existProduct.cart_quantity! += 1
-                
-
-                if(newQuantity <= existProduct.quantity){
-                    existProduct.cart_quantity = newQuantity
-                }else{
-
-                    this.messageService.showMessage('Max Reached', 'info')
-                }
-
-            }else{
-                this.messageService.showMessage('Max Reached', 'info')
-            }
-
+        if(index === -1){
+            this.messageService.showMessage('Product not found in the cart!', 'info')
+            return
         }
-        this.updateLocalStorage(product)
+        
+        const product = cartProducts[index]
+
+        if(product.cart_quantity! >= product.quantity){
+            this.messageService.showMessage('Max Reached', 'info')
+            return
+        }
+
+        cartProducts[index] ={
+            ...product,
+            cart_quantity: product.cart_quantity! + 1
+        }
+
+
+        this.updateLocalStorage(cartProducts)
         
     }
     

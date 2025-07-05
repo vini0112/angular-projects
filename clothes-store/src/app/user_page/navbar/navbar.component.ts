@@ -16,7 +16,6 @@ import { CheckoutPaymentService } from '../../../services/checkout-payment.servi
 import { ValidateUserDetailsService } from '../../../services/validate-user-details.service';
 
 
-
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink, NgClass, AsyncPipe, NgIf, MatSlideToggleModule, FormsModule], 
@@ -30,14 +29,13 @@ export class NavbarComponent implements OnInit{
   listCartService = inject(listCartServices)
   authLoginService = inject(AuthLoginService)
   router = inject(Router)
-  route = inject(ActivatedRoute)
   themeService = inject(ThemeService)
+  route = inject(ActivatedRoute)
   localstorageService = inject(LocalStorageService)
   auth0 = inject(AuthService)
   userService = inject(UserService)
   checkoutService = inject(CheckoutPaymentService)
   validateUserDetailsService = inject(ValidateUserDetailsService)
-
 
 
   isDarkMode = this.localstorageService.getItem('dark_theme') === 'true' ? true : false
@@ -148,19 +146,16 @@ export class NavbarComponent implements OnInit{
     this.auth0.logout({ logoutParams: { returnTo: window.location.origin } });
   }
 
-  
-
-  buyClick$ = new Subject<void>();
 
   buying(){
     
     this.listCartService.closeCart()
 
     this.buyClick$.pipe(
-
+      take(1),
       withLatestFrom(
         combineLatest([this.isAuthenticated$, this.userService.userDetail$]).pipe(
-          take(1),
+          
           tap(([userAuth, userDetail]) => {
 
             if(!userAuth){
@@ -196,6 +191,11 @@ export class NavbarComponent implements OnInit{
     ).subscribe()
     
   }
+  
+
+  buyClick$ = new Subject<void>();
+
+
 
 
 
@@ -204,6 +204,7 @@ export class NavbarComponent implements OnInit{
     this.themeService.toggleDarkMode(isDarkMode)
   }
 
+  
   
   
 

@@ -104,11 +104,11 @@ class loginService {
     loginAuth0_service(body){
 
         return new Promise((resolve, reject) =>{
-            const {nickname, email, sub} = body.user 
+            const {nickname, email, sub} = body.user
 
             if(!nickname || !email || !sub){
                 return reject({ message: 'Nickname/Email/Sub is messing!'});
-            } 
+            }
 
             const sql = 'SELECT * FROM users'
 

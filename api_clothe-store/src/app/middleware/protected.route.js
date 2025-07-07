@@ -1,4 +1,7 @@
 
+import jwt from 'jsonwebtoken';
+import config from '../config/env.js';
+
 
 const protectedRoute = (req, res, next) => {
     let authHeader = req.headers.authorization;
@@ -9,13 +12,17 @@ const protectedRoute = (req, res, next) => {
     
     let token = authHeader.split(' ')[1];
 
-    
-    if(!token){
-        return res.status(404).json({message: 'Token not found!'})
-    }
+    try{
+        const decoded = jwt.verify(token, config.JWT.SECRET_KEY);
 
-    console.log('✅ Authorization Header Received!')
-    next()
+        console.log('✅ Authorization Header Received!')
+        req.user = decoded // Attach the decoded user information to the request object
+        next()
+
+    }catch(err){
+        console.error('❌ Token invalid:', err.message);
+        return res.status(401).json({ message: 'Invalid or expired token' });
+    }
 
 }
 

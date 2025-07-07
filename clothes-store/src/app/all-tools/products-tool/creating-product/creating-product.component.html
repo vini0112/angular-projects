@@ -17,7 +17,6 @@
         </select>
         <span class="erroMsg" *ngIf="submitted && sectionSelect.invalid">Section required</span>
 
-
         <select name="sexo" formControlName="sexo" (change)="resetCheckBoxAfterChanges()">
             <option value="" disabled selected>Choose your sexo</option>
             <option value="masc" *ngIf="sectionSelect.value !== 'jackets'">Masculine</option>

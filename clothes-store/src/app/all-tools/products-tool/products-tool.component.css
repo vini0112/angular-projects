@@ -6,7 +6,6 @@
 }
 
 
-
 /* erro menssage */
 .erroMsg{
     color: red;
@@ -121,9 +120,11 @@ tbody tr td button{
 
 .edit{
     background-color: blue;
+    cursor: pointer;
 }
 .del{
     background-color: red;
+    cursor: pointer;
 }
 
 
@@ -158,8 +159,10 @@ form{
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    
 }
+
+
+
 .boxEditModel form.EditionSentPage{
     display: none;
 }
@@ -171,17 +174,18 @@ form{
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
+    width:100%;
 }
 .boxInputsEdit input, select{
     padding-left: 5px;
-    width: 120%;
+    width: 90%;
     outline: none;
     border: 1px solid black;
     height: 45px;
     border-radius: 5px;
 }
 .boxInputsEdit textarea{
-    width: 120%;
+    width: 90%;
     height: 75px;
     border-radius: 5px;
     padding-left: 5px;
@@ -196,10 +200,12 @@ form{
 }
 .boxBtnsEdit button{
     border: none;
-    padding: .3rem .7rem;
+    padding: .8rem 1.2rem;
     border-radius: 5px;
     color: white;
     font-weight: 600;
+    cursor: pointer;
+    
 }
 .boxBtnsEdit button:first-child{
     background-color: red;

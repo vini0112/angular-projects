@@ -53,7 +53,6 @@ body{
     background-color: rgb(186 186 186) !important;
 }
 
-
 .dark-theme .boxBanner .advertasing h2, .dark-theme .boxBanner .advertasing span{
     text-shadow: 1px 1px 5px black;
 }
@@ -79,12 +78,11 @@ body{
 
 /* shipping form */
 
-.dark-theme form {
+/* .dark-theme form {
     background-color: #c9cfd0 !important;
     padding: 20px;
     border-radius: 20px;
-}
-
+} */
 
 
 /* spinner */

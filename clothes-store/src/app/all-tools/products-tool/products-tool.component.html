@@ -59,7 +59,7 @@
     <form #editForm="ngForm" [ngClass]="{'EditionSentPage': openEditionPage}" data-testid="editForm">
         <div class="boxInputsEdit">
 
-            <input type="text" name="productName" [(ngModel)]="editItemData.name" #productName="ngModel" required>
+            <input type="text" name="productName" [(ngModel)]="editItemData.name" #productName="ngModel" required placeholder="Product name">
             <span class="erroMsg" *ngIf="productName.errors?.['required']">Required</span>
 
             <select name="section" [(ngModel)]="editItemData.section">
@@ -78,14 +78,14 @@
                 <option value="femi" *ngIf="editItemData.sexo !== 'femi'">Feminine</option>
             </select>
             
-            <input type="number" name="price" [(ngModel)]="editItemData.price" #price="ngModel" required>
+            <input type="number" name="price" [(ngModel)]="editItemData.price" #price="ngModel" required placeholder="Price" >
             <span class="erroMsg" *ngIf="price.errors?.['required']">Required</span>
 
 
-            <input type="number" name="quantity" [(ngModel)]="editItemData.quantity" #qtd="ngModel" required>
+            <input type="number" name="quantity" [(ngModel)]="editItemData.quantity" #qtd="ngModel" required placeholder="Quantity">
             <span class="erroMsg" *ngIf="qtd.errors?.['required']">Required</span>
 
-            <textarea name="info" [(ngModel)]="editItemData.info" #info="ngModel" maxlength="100" required></textarea>
+            <textarea name="info" [(ngModel)]="editItemData.info" #info="ngModel" maxlength="100" required placeholder="Product Information" ></textarea>
             
             <span class="erroMsg" *ngIf="info.errors?.['required']">Required</span>
 

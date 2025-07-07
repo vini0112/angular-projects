@@ -36,6 +36,7 @@ export class NavbarComponent implements OnInit{
   userService = inject(UserService)
   checkoutService = inject(CheckoutPaymentService)
   validateUserDetailsService = inject(ValidateUserDetailsService)
+  // plataformId = inject(PLATFORM_ID)
 
 
   isDarkMode = this.localstorageService.getItem('dark_theme') === 'true' ? true : false
@@ -96,7 +97,6 @@ export class NavbarComponent implements OnInit{
     this.sexoChosen = !this.sexoChosen
   }
 
-  plataformId: object = inject(PLATFORM_ID)
   
 
   
@@ -147,6 +147,8 @@ export class NavbarComponent implements OnInit{
   }
 
 
+  buyClick$ = new Subject<void>();
+
   buying(){
     
     this.listCartService.closeCart()
@@ -193,7 +195,6 @@ export class NavbarComponent implements OnInit{
   }
   
 
-  buyClick$ = new Subject<void>();
 
 
 

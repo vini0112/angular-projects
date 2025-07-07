@@ -3,6 +3,7 @@ import productControllers from "../controllers/product_controller.js";
 import {storage} from '../../multer.config.js'
 import multer from "multer";
 import verifyJWT from "../middleware/verifyJWT.js";
+import protectedRoute from "../middleware/protected.route.js";
 
 
 
@@ -19,16 +20,16 @@ router.get('/product-size/:id', productControllers.productSize)
 
 
 // post
-router.post('/create-clothes', verifyJWT, upload.single('image'),  productControllers.postingClothes)
+router.post('/create-clothes', protectedRoute, upload.single('image'),  productControllers.postingClothes)
 
 // update
-router.put('/clothes/:id', verifyJWT, productControllers.updateClothe)
+router.put('/clothes/:id', protectedRoute, productControllers.updateClothe)
 
 // update favorite with patch
 router.patch('/clothesFavorite/:id', productControllers.changeFavorite)
 
 // delete
-router.delete('/clothes/:id',verifyJWT, productControllers.deletingClothe)
+router.delete('/clothes/:id', protectedRoute, productControllers.deletingClothe)
 
 
 

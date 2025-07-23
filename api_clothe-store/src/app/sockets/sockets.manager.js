@@ -1,6 +1,5 @@
 
 import sokectAuth from "../middleware/socketAuth.js"
-import userHandler from "./userHandler.js"
 
 let onlineUsers = new Set()
 
@@ -16,9 +15,6 @@ export function setupSocket(io){
 
         io.emit('Online-users', onlineUsers.size)
         
-        
-        // userHandler(socket, io);
-
         socket.on('disconnect', () =>{
             console.log('❌ ',socket.user.email, ' disconnect!')
             io.emit("Online-users", onlineUsers.size)

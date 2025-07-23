@@ -69,9 +69,7 @@ class productService{
             await connection.promise().execute(sql2, params)
             
             resolve({message: 'Product Created!'})
-
         })
-        
 
     }
 

@@ -2,7 +2,6 @@ import  Router from "express";
 import productControllers from "../controllers/product_controller.js";
 import {storage} from '../../multer.config.js'
 import multer from "multer";
-import verifyJWT from "../middleware/verifyJWT.js";
 import protectedRoute from "../middleware/protected.route.js";
 
 

@@ -104,7 +104,7 @@ export class CreatingProductComponent implements AfterViewInit{
           this.clearForm()
         },
         error: (err) => {
-          console.log('product not created!', err)
+          console.log('product not created: ', err)
         }
       })
     }
@@ -140,13 +140,26 @@ export class CreatingProductComponent implements AfterViewInit{
     {sexo: 'masc', section: 'shoes',label: 10, value: 10},
   ]
 
-
+  fileError: string | null = null
+  
   onFileSelect(img: any){
     const file = img.target.files[0]
+    
     if(file){
-      this.selectedFile = file 
-      this.postForm.patchValue({image: file})
+      const maxSizeBytes = 2 * 1024 * 1024; // 2MB
+
+      if(file.size > maxSizeBytes){
+        this.fileError = 'File size exceeds 2MB limit.'
+        this.selectedFile = null;
+        
+      }else{
+        this.fileError = null
+        this.selectedFile = file 
+        this.postForm.patchValue({image: file})
+      }
+
     }
+
   }
 
 

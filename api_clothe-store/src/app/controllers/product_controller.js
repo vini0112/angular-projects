@@ -48,9 +48,9 @@ class productControllers{
 
             const imagePath = `/upload/${file.filename}`
             dados.image = imagePath
-            
+
             const row = await productService.posting(dados)
-            res.status(201).json(row)
+            res.status(201).json(row) 
 
         }catch(err){
             console.log('Error in posting new product: ',err.message)

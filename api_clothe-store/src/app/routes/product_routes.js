@@ -1,14 +1,11 @@
 import  Router from "express";
 import productControllers from "../controllers/product_controller.js";
-import {storage} from '../../multer.config.js'
-import multer from "multer";
+import {upload} from '../../multer.config.js'
 import protectedRoute from "../middleware/protected.route.js";
 
 
 
 const router = Router()
-
-const upload = multer({storage})
 
 
 // getting all 
@@ -18,8 +15,8 @@ router.get('/product/:id', productControllers.getById)
 router.get('/product-size/:id', productControllers.productSize)
 
 
-// post
-router.post('/create-clothes', protectedRoute, upload.single('image'),  productControllers.postingClothes)
+// post protectedRoute,
+router.post('/create-clothes',  upload.single('image'),  productControllers.postingClothes)
 
 // update
 router.put('/clothes/:id', protectedRoute, productControllers.updateClothe)

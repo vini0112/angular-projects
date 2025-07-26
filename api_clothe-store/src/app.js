@@ -7,6 +7,8 @@ import cookieParse from 'cookie-parser'
 import dashboardRouter from './app/routes/dashboard.routes.js'
 import stripeRoute from './app/routes/stripe.route.js'
 import userRouter from './app/routes/user.routes.js'
+import multer from 'multer'
+
 
 const app = express()
 
@@ -31,6 +33,14 @@ app.use(dashboardRouter)
 app.use(userRouter)
 app.use('/upload', express.static('upload')) 
 
+app.use((err, req, res, next) =>{
+    if(err instanceof multer.MulterError){
+        return res.status(400).json({error: err.message})
+    }else if(err){
+        return res.status(400).json({error: err.message})
+    }
+    next()
+})
 
 
 

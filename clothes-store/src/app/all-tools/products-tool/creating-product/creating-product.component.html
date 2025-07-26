@@ -66,7 +66,8 @@
 
 
         <input type="file" name="image" (change)="onFileSelect($event)" #inputImage>
-        <span class="erroMsg specialMargin" *ngIf="submitted && postForm.controls['image'].invalid">Image required</span>
+        <span class="erroMsg specialMargin" *ngIf="submitted && postForm.controls['image'].invalid && fileError === null">Image required</span>
+        <span class="erroMsg specialMargin" *ngIf="fileError !== null" >{{fileError}}</span>
 
         <div class="boxTextArea">
             <textarea name="info" placeholder="product information..." formControlName="info"></textarea>

@@ -82,6 +82,10 @@ export const routes: Routes = [
         path: 'assets/data/products.json/:id',
         loadComponent: () => import('./user_page/product-detail/product-detail.component').then(m => m.ProductDetailComponent)
     },
+    {
+        path: "test",
+        loadComponent: () => import('./user_page/test-socket/test-socket.component').then(m => m.TestSocketComponent)
+    },
     
     { 
         path: '**', redirectTo: 'home'

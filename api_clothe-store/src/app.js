@@ -9,6 +9,7 @@ import stripeRoute from './app/routes/stripe.route.js'
 import userRouter from './app/routes/user.routes.js'
 import multer from 'multer'
 
+import testSocketRouter from './app/routes/test-socket.js'
 
 const app = express()
 
@@ -31,6 +32,9 @@ app.use(loginRouter)
 app.use(productRouter)
 app.use(dashboardRouter)
 app.use(userRouter)
+
+app.use(testSocketRouter)
+
 app.use('/upload', express.static('upload')) 
 
 app.use((err, req, res, next) =>{

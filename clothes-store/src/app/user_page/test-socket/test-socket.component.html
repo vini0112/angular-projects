@@ -1,0 +1,16 @@
+
+<form [formGroup]="scheduleForm" >
+    <div class="form-group">
+        <label>Message:</label>
+        <input type="text" class="form-control" name="message" formControlName="message" placeholder="Enter your message">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
+</form>
+
+<div class="boxMessages">
+    @for(message of messages; track $index) {
+        <div>
+            <p>{{ message }}</p>
+        </div>
+    }
+</div>

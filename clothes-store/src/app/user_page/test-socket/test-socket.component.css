@@ -1,0 +1,21 @@
+
+:host{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid black;
+    height: 80vh;
+    padding: 10px;
+}
+
+
+form{
+    border: 2px solid black;
+}
+
+
+.boxMessages{
+    border: 2px solid black;
+}
+
+
+

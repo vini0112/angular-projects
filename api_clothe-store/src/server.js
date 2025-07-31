@@ -15,7 +15,7 @@ const port = 3000
 const io = new Server(server,{
     cors: {
         origin: ['http://localhost:4200'], 
-        methods: ['GET', 'POST'],
+        methods: ['GET', 'POST', "PUT", "DELETE"],
     }
 })
 //  

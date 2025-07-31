@@ -4,6 +4,7 @@ import { LocalStorageService } from './localStorage.service';
 import { AuthServiceService } from './auth-service.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
+import { socketFormData } from '../modules/socket_crud.module';
 
 
 @Injectable({
@@ -69,8 +70,7 @@ export class SocketService{
 
   // CRUD
 
-  createService(price: number, worker: string){
-    const data = {price: price, worker: worker}
+  createService(data: socketFormData){
     this.socket.emit('service:create', data)
   }
 

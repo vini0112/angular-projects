@@ -6,6 +6,7 @@ export function setupServicesSocket(io, socket){
     
 
     socket.on('service:create', async (data) =>{
+        
         try{
             const dateNow = new Date().getDay()
             const sql = "INSERT INTO test (price, worker, day) VALUES (?, ?, ?)"
@@ -30,7 +31,7 @@ export function setupServicesSocket(io, socket){
         } catch (err) {
             console.error(err);
             socket.emit('service:error', 'Error fetching services');
-        } 
+        }
     });
 
 

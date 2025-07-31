@@ -38,7 +38,7 @@ export class TestSocketComponent {
   constructor(private fb: FormBuilder){
 
     this.scheduleForm = this.fb.group({
-      service: [""],
+      worker: [""],
       price: [""]
     })
 
@@ -48,7 +48,10 @@ export class TestSocketComponent {
 
 
   sendMessage(){
-    this.socketService.createService(100, 'vini')
+    if(this.scheduleForm.valid){
+      this.socketService.createService(this.scheduleForm.value)
+    }
+    
   }
 
   deletingService(id: number){

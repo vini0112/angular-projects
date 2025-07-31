@@ -3,6 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { LocalStorageService } from './localStorage.service';
 import { AuthServiceService } from './auth-service.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ export class SocketService{
   
   private receivingOnlineUsers = new BehaviorSubject<number>(0)
   onlineUsers$ = this.receivingOnlineUsers.asObservable()
+
 
   localStorageService = inject(LocalStorageService)
   authService = inject(AuthServiceService)
@@ -65,11 +67,32 @@ export class SocketService{
     })
   }
 
+  // CRUD
+
+  createService(price: number, worker: string){
+    const data = {price: price, worker: worker}
+    this.socket.emit('service:create', data)
+  }
+
+
+  onServiceCreated(): Observable<any>{
+    return this.socket.fromEvent<string, string>('service:created')
+  }
 
   
+  getAllServices(): Observable<any[]> {
+    this.socket.emit('service:getAll'); // request the full list
+    return this.socket.fromEvent('service:list'); // expect array
+  }
 
-  
-  
+
+  deleteService(id: number) {
+    this.socket.emit('service:delete', id)
+  }
+
+  onServiceDeleted(): Observable<number>{
+    return this.socket.fromEvent<number, string>('service:deleted')
+  }
 
 
 

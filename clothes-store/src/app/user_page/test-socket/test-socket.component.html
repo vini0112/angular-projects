@@ -1,16 +1,25 @@
 
 <form [formGroup]="scheduleForm" >
     <div class="form-group">
-        <label>Message:</label>
-        <input type="text" class="form-control" name="message" formControlName="message" placeholder="Enter your message">
+        <label>Service</label>
+        <input type="text" class="form-control" name="service" formControlName="service">
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input type="number" class="form-control" name="price" formControlName="price">
     </div>
     <button type="button" class="btn btn-primary" (click)="sendMessage()">Send</button>
 </form>
 
 <div class="boxMessages">
-    @for(message of messages; track $index) {
-        <div>
-            <p>{{ message }}</p>
+    @for(message of messages$ | async; track $index) {
+        <div class="service">
+            <p>{{ message.worker }}</p>
+            <p>{{ message.price }}</p>
+            <div>
+                <button>Edit</button>
+                <button (click)="deletingService(message.idtest)" >Delete</button>
+            </div>
         </div>
     }
 </div>

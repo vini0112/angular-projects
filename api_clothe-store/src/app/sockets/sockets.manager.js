@@ -16,7 +16,7 @@ export function setupSocket(io){
 
         io.emit('Online-users', onlineUsers.size)
 
-        setupServicesSocket(io) // Initialize services socket
+        setupServicesSocket(io, socket) // Initialize services socket
         
         socket.on('disconnect', () =>{
             console.log('❌ ',socket.user.email, ' disconnect!')

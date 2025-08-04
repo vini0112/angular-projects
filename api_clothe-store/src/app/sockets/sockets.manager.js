@@ -21,7 +21,7 @@ export function setupSocket(io){
         socket.on('disconnect', () =>{
             console.log('❌ ',socket.user.email, ' disconnect!')
             io.emit("Online-users", onlineUsers.size)
-        }) 
+        })
 
     })
     
